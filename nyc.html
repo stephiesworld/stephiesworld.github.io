@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New York — Stephie's World</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .guide-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: softAppear 0.8s ease 0.1s forwards;
+    }
+
+    .guide-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5rem 3rem 2.5rem;
+      position: relative;
+    }
+
+    .guide-city {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      color: rgba(232, 224, 212, 0.65);
+    }
+
+    .guide-subtitle {
+      font-size: 0.48rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.22);
+      margin-top: 0.6rem;
+    }
+
+    .guide-header::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: rgba(232, 224, 212, 0.1);
+      margin-top: 2rem;
+    }
+
+    /* Map */
+    .map-wrapper {
+      width: 100%;
+      height: 500px;
+      position: relative;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .leaflet-container {
+      background: #141414;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Attribution styling */
+    .leaflet-control-attribution {
+      background: rgba(20, 20, 20, 0.8) !important;
+      color: rgba(232, 224, 212, 0.2) !important;
+      font-size: 0.45rem !important;
+      letter-spacing: 0.02em;
+    }
+
+    .leaflet-control-attribution a {
+      color: rgba(232, 224, 212, 0.3) !important;
+    }
+
+    .leaflet-control-zoom {
+      border: none !important;
+    }
+
+    .leaflet-control-zoom a {
+      background: rgba(20, 20, 20, 0.9) !important;
+      color: rgba(232, 224, 212, 0.4) !important;
+      border: 1px solid rgba(232, 224, 212, 0.08) !important;
+    }
+
+    .leaflet-control-zoom a:hover {
+      background: rgba(30, 30, 30, 0.95) !important;
+      color: rgba(232, 224, 212, 0.7) !important;
+    }
+
+    /* Custom pin */
+    .map-pin-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(232, 224, 212, 0.65);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .map-pin-dot:hover {
+      background: rgba(232, 224, 212, 1);
+      transform: scale(1.4);
+    }
+
+    /* Popup */
+    .leaflet-popup-content-wrapper {
+      background: #1a1a1a !important;
+      border: 1px solid rgba(232, 224, 212, 0.08) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.6) !important;
+      color: #e8e0d4;
+    }
+
+    .leaflet-popup-tip {
+      background: #1a1a1a !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 1.2rem 1.5rem 1.3rem !important;
+      min-width: 160px;
+      max-width: 220px;
+    }
+
+    .popup-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(232, 224, 212, 0.85);
+      margin-bottom: 0.2rem;
+    }
+
+    .popup-category {
+      font-size: 0.42rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.28);
+      margin-bottom: 0.55rem;
+    }
+
+    .popup-desc {
+      font-size: 0.68rem;
+      line-height: 1.8;
+      color: rgba(232, 224, 212, 0.48);
+    }
+
+    .leaflet-popup-close-button {
+      color: rgba(232, 224, 212, 0.25) !important;
+      font-size: 14px !important;
+      top: 8px !important;
+      right: 10px !important;
+    }
+
+    .leaflet-popup-close-button:hover {
+      color: rgba(232, 224, 212, 0.55) !important;
+      background: none !important;
+    }
+
+    /* Guide list */
+    .guide-list {
+      max-width: 620px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 4.5rem 3rem 6rem;
+    }
+
+    .guide-list-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.46rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.22);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .spot-category-group {
+      margin-bottom: 2.8rem;
+    }
+
+    .spot-category-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.44rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.25);
+      padding-bottom: 0.8rem;
+      margin-bottom: 0.2rem;
+      border-bottom: 1px solid rgba(232, 224, 212, 0.05);
+    }
+
+    .spot-item {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(232, 224, 212, 0.04);
+    }
+
+    .spot-item:last-child {
+      border-bottom: none;
+    }
+
+    .spot-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(232, 224, 212, 0.65);
+      margin-bottom: 0.2rem;
+    }
+
+    .spot-location {
+      font-size: 0.46rem;
+      letter-spacing: 0.07em;
+      color: rgba(232, 224, 212, 0.22);
+      margin-bottom: 0.4rem;
+    }
+
+    .spot-desc {
+      font-size: 0.76rem;
+      line-height: 1.95;
+      color: rgba(232, 224, 212, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .guide-header {
+        padding: 4rem 1.5rem 1.5rem;
+      }
+
+      .map-wrapper {
+        height: 360px;
+      }
+
+      .guide-list {
+        padding: 2.5rem 1.5rem 4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="guide-page">
+
+    <header class="guide-header">
+      <a href="index.html" class="back-btn" style="text-decoration: none;">&larr;</a>
+      <p class="guide-city">New York</p>
+      <p class="guide-subtitle">a personal guide</p>
+    </header>
+
+    <div class="map-wrapper">
+      <div id="map"></div>
+    </div>
+
+    <div class="guide-list">
+      <p class="guide-list-label">Selected places</p>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Coffee</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Watchhouse</p>
+          <p class="spot-location">660 Fifth Avenue &middot; Midtown</p>
+          <p class="spot-desc">A London import with a very cute, quaint, upscale teddy-bear-like decor. Great pastries, coffee, and design.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">La Cabra</p>
+          <p class="spot-location">284 Lafayette Street &middot; SoHo</p>
+          <p class="spot-desc">A Copenhagen coffee shop that landed in SoHo and kept all its calm. Single origin, very good, and it&rsquo;s always packed &mdash; but seats open up quickly.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Restaurants</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Torrisi</p>
+          <p class="spot-location">275 Mulberry Street &middot; NoLIta</p>
+          <p class="spot-desc">Order the martini, order the fusilli, and go with your best friend.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">Atomix</p>
+          <p class="spot-location">104 East 30th Street &middot; NoMad</p>
+          <p class="spot-desc">Two Michelin stars and somehow the most welcoming room in New York. Korean tasting menu done in a way that makes you forget you&rsquo;re at a tasting menu, but will remember years later.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">Yunnan Rice Noodle House</p>
+          <p class="spot-location">274 Grand Street &middot; Chinatown</p>
+          <p class="spot-desc">Open 24 hours, complimentary noodle refills, sit in the back for more peace and quiet.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">L&rsquo;Industrie</p>
+          <p class="spot-location">197 Grand Street &middot; Little Italy</p>
+          <p class="spot-desc">Order the fig pizza. I hosted a work happy hour for 300 people and this was the first one gone, if that&rsquo;s enough data.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Bookshops</p>
+
+        <div class="spot-item">
+          <p class="spot-name">McNally Jackson</p>
+          <p class="spot-location">134 Prince Street &middot; SoHo &nbsp;&middot;&nbsp; 76 North 4th Street &middot; Williamsburg</p>
+          <p class="spot-desc">My favorite independent bookshop in the city. Two locations &mdash; SoHo and Williamsburg &mdash; and the vibe is perfect.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Museums</p>
+
+        <div class="spot-item">
+          <p class="spot-name">The Whitney</p>
+          <p class="spot-location">99 Gansevoort Street &middot; Meatpacking District</p>
+          <p class="spot-desc">More New Yorkers per square foot than any other museum in the city, which tells you it&rsquo;s the right one. Don&rsquo;t skip the fifth floor views.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">The Met</p>
+          <p class="spot-location">1000 Fifth Avenue &middot; Upper East Side</p>
+          <p class="spot-desc">I&rsquo;ve been over fifteen times &mdash; sometimes on my own and sometimes as a tour guide to friends &mdash; and still feel excited to explore more. Don&rsquo;t attempt to scale the whole thing in one visit &mdash; pick a wing, go deep, then come back another day.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Parks</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Domino Park</p>
+          <p class="spot-location">15 River Street &middot; Williamsburg</p>
+          <p class="spot-desc">The best waterfront park in the city. The view of Manhattan from the Williamsburg side is genuinely one of my favorite things about living here.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">Central Park Reservoir</p>
+          <p class="spot-location">Central Park &middot; Upper West &amp; East Side</p>
+          <p class="spot-desc">The first time I came here it took my breath away. Your first time is going to be the best time.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="footer">
+      <p class="footer-quote">&ldquo;No one can build you the bridge on which you, and only you, must cross the river of life.&rdquo; &mdash; Nietzsche</p>
+    </footer>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map', {
+      center: [40.748, -73.978],
+      zoom: 12,
+      zoomControl: true,
+      scrollWheelZoom: false
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    map.zoomControl.setPosition('bottomright');
+
+    function pinIcon() {
+      return L.divIcon({
+        className: '',
+        html: '<div class="map-pin-dot"></div>',
+        iconSize: [7, 7],
+        iconAnchor: [3, 3],
+        popupAnchor: [0, -8]
+      });
+    }
+
+    var spots = [
+      { name: 'Watchhouse', category: 'Coffee', location: '660 Fifth Avenue · Midtown', desc: 'A London import with a very cute, quaint, upscale teddy-bear-like decor. Great pastries, coffee, and design.', lat: 40.7588, lng: -73.9764 },
+      { name: 'La Cabra', category: 'Coffee', location: '284 Lafayette Street · SoHo', desc: 'A Copenhagen coffee shop that landed in SoHo and kept all its calm. Always packed, but seats open up quickly.', lat: 40.7239, lng: -73.9972 },
+      { name: 'Torrisi', category: 'Restaurant', location: '275 Mulberry Street · NoLIta', desc: 'Order the martini, order the fusilli, and go with your best friend.', lat: 40.7230, lng: -73.9962 },
+      { name: 'Atomix', category: 'Restaurant', location: '104 East 30th Street · NoMad', desc: 'Two Michelin stars and somehow the most welcoming room in New York. You\'ll remember it years later.', lat: 40.7452, lng: -73.9826 },
+      { name: 'Yunnan Rice Noodle House', category: 'Restaurant', location: '274 Grand Street · Chinatown', desc: 'Open 24 hours, complimentary noodle refills, sit in the back for more peace and quiet.', lat: 40.7163, lng: -73.9953 },
+      { name: 'L\'Industrie', category: 'Pizza', location: '197 Grand Street · Little Italy', desc: 'Order the fig pizza. I hosted a work happy hour for 300 people and this was the first one gone, if that\'s enough data.', lat: 40.7191, lng: -73.9977 },
+      { name: 'McNally Jackson — SoHo', category: 'Bookshop', location: '134 Prince Street · SoHo', desc: 'My favorite independent bookshop in the city. The vibe is perfect.', lat: 40.7256, lng: -73.9978 },
+      { name: 'McNally Jackson — Williamsburg', category: 'Bookshop', location: '76 North 4th Street · Williamsburg', desc: 'My favorite independent bookshop in the city. The vibe is perfect.', lat: 40.7164, lng: -73.9580 },
+      { name: 'The Whitney', category: 'Museum', location: '99 Gansevoort Street · Meatpacking', desc: 'More New Yorkers per square foot than any other museum in the city. Don\'t skip the fifth floor views.', lat: 40.7396, lng: -74.0088 },
+      { name: 'The Met', category: 'Museum', location: '1000 Fifth Avenue · Upper East Side', desc: 'Been over fifteen times and still feel excited to explore more. Pick a wing, go deep, come back another day.', lat: 40.7794, lng: -73.9632 },
+      { name: 'Domino Park', category: 'Park', location: '15 River Street · Williamsburg', desc: 'The best waterfront park in the city. The view of Manhattan from the Williamsburg side is one of my favorite things about living here.', lat: 40.7143, lng: -73.9645 },
+      { name: 'Central Park Reservoir', category: 'Park', location: 'Central Park · Upper West & East Side', desc: 'The first time I came here it took my breath away. Your first time is going to be the best time.', lat: 40.7851, lng: -73.9622 }
+    ];
+
+    spots.forEach(function(s) {
+      var html = '<div class="popup-name">' + s.name + '</div>' +
+                 '<div class="popup-category">' + s.category + '</div>' +
+                 '<div class="popup-desc">' + s.desc + '</div>';
+      L.marker([s.lat, s.lng], { icon: pinIcon() })
+        .addTo(map)
+        .bindPopup(html, { maxWidth: 240 });
+    });
+  </script>
+
+</body>
+</html>
