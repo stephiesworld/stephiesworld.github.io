@@ -592,3 +592,23 @@ h1, h2, h3 {
     padding: 0 1rem;
   }
 }
+
+/* ─── City Guide Link ─── */
+.city-guide-link {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-size: 0.44rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(232, 224, 212, 0.28);
+  text-decoration: none;
+  border-bottom: none !important;
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.city-guide-link:hover {
+  color: rgba(232, 224, 212, 0.55) !important;
+  letter-spacing: 0.22em;
+  border-bottom: none !important;
+}
