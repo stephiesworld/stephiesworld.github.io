@@ -203,6 +203,8 @@ h1, h2, h3 {
   margin-top: 0.8rem;
   letter-spacing: 0.05em;
   direction: rtl;
+  text-decoration: none;
+  cursor: default;
 }
 
 .world-header::after {
