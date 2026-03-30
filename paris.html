@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paris — Stephie's World</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .guide-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: softAppear 0.8s ease 0.1s forwards;
+    }
+
+    .guide-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5rem 3rem 2.5rem;
+      position: relative;
+    }
+
+    .guide-city {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      color: rgba(232, 224, 212, 0.65);
+    }
+
+    .guide-subtitle {
+      font-size: 0.48rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.22);
+      margin-top: 0.6rem;
+    }
+
+    .guide-header::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: rgba(232, 224, 212, 0.1);
+      margin-top: 2rem;
+    }
+
+    .map-wrapper {
+      width: 100%;
+      height: 500px;
+      position: relative;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .leaflet-container {
+      background: #141414;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .leaflet-control-attribution {
+      background: rgba(20, 20, 20, 0.8) !important;
+      color: rgba(232, 224, 212, 0.2) !important;
+      font-size: 0.45rem !important;
+      letter-spacing: 0.02em;
+    }
+
+    .leaflet-control-attribution a {
+      color: rgba(232, 224, 212, 0.3) !important;
+    }
+
+    .leaflet-control-zoom {
+      border: none !important;
+    }
+
+    .leaflet-control-zoom a {
+      background: rgba(20, 20, 20, 0.9) !important;
+      color: rgba(232, 224, 212, 0.4) !important;
+      border: 1px solid rgba(232, 224, 212, 0.08) !important;
+    }
+
+    .leaflet-control-zoom a:hover {
+      background: rgba(30, 30, 30, 0.95) !important;
+      color: rgba(232, 224, 212, 0.7) !important;
+    }
+
+    .map-pin-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(232, 224, 212, 0.65);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .map-pin-dot:hover {
+      background: rgba(232, 224, 212, 1);
+      transform: scale(1.4);
+    }
+
+    .leaflet-popup-content-wrapper {
+      background: #1a1a1a !important;
+      border: 1px solid rgba(232, 224, 212, 0.08) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.6) !important;
+      color: #e8e0d4;
+    }
+
+    .leaflet-popup-tip {
+      background: #1a1a1a !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 1.2rem 1.5rem 1.3rem !important;
+      min-width: 160px;
+      max-width: 220px;
+    }
+
+    .popup-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(232, 224, 212, 0.85);
+      margin-bottom: 0.2rem;
+    }
+
+    .popup-category {
+      font-size: 0.42rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.28);
+      margin-bottom: 0.55rem;
+    }
+
+    .popup-desc {
+      font-size: 0.68rem;
+      line-height: 1.8;
+      color: rgba(232, 224, 212, 0.48);
+    }
+
+    .leaflet-popup-close-button {
+      color: rgba(232, 224, 212, 0.25) !important;
+      font-size: 14px !important;
+      top: 8px !important;
+      right: 10px !important;
+    }
+
+    .leaflet-popup-close-button:hover {
+      color: rgba(232, 224, 212, 0.55) !important;
+      background: none !important;
+    }
+
+    .guide-list {
+      max-width: 620px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 4.5rem 3rem 6rem;
+    }
+
+    .guide-list-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.46rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.22);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .spot-category-group {
+      margin-bottom: 2.8rem;
+    }
+
+    .spot-category-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.44rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.25);
+      padding-bottom: 0.8rem;
+      margin-bottom: 0.2rem;
+      border-bottom: 1px solid rgba(232, 224, 212, 0.05);
+    }
+
+    .spot-item {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(232, 224, 212, 0.04);
+    }
+
+    .spot-item:last-child {
+      border-bottom: none;
+    }
+
+    .spot-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(232, 224, 212, 0.65);
+      margin-bottom: 0.2rem;
+    }
+
+    .spot-location {
+      font-size: 0.46rem;
+      letter-spacing: 0.07em;
+      color: rgba(232, 224, 212, 0.22);
+      margin-bottom: 0.4rem;
+    }
+
+    .spot-desc {
+      font-size: 0.76rem;
+      line-height: 1.95;
+      color: rgba(232, 224, 212, 0.5);
+    }
+
+    .guide-general-note {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(232, 224, 212, 0.05);
+      text-align: center;
+    }
+
+    .guide-general-note p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 2;
+      color: rgba(232, 224, 212, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .guide-header {
+        padding: 4rem 1.5rem 1.5rem;
+      }
+
+      .map-wrapper {
+        height: 360px;
+      }
+
+      .guide-list {
+        padding: 2.5rem 1.5rem 4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="guide-page">
+
+    <header class="guide-header">
+      <a href="index.html" class="back-btn" style="text-decoration: none;">&larr;</a>
+      <p class="guide-city">Paris</p>
+      <p class="guide-subtitle">a personal guide</p>
+    </header>
+
+    <div class="map-wrapper">
+      <div id="map"></div>
+    </div>
+
+    <div class="guide-list">
+      <p class="guide-list-label">Selected places</p>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Fitness</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Burning Bar</p>
+          <p class="spot-location">42 Avenue Raymond Poincar&eacute; &middot; 16th arr.</p>
+          <p class="spot-desc">Hot pilates, afrohouse music, mood lighting, French-speaking instructors. My favorite workout class in the entire world. I don&rsquo;t say that lightly.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Museums</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Mus&eacute;e Rodin</p>
+          <p class="spot-location">77 Rue de Varenne &middot; 7th arr.</p>
+          <p class="spot-desc">One of the most peaceful museums in Paris, with a garden that does most of the heavy lifting. Plan to stay longer than you think.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">Fondation Louis Vuitton</p>
+          <p class="spot-location">8 Avenue du Mahatma Gandhi &middot; Bois de Boulogne</p>
+          <p class="spot-desc">My favorite art museum I&rsquo;ve ever visited. They only show one exhibit at a time, and each level traces the arc of the artist&rsquo;s life &mdash; the inspirations, the catalysts, the turning points. You leave understanding not just what someone made, but why.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Restaurants</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Au P&rsquo;tit Curieux</p>
+          <p class="spot-location">27 Rue de Sambre-et-Meuse &middot; 10th arr.</p>
+          <p class="spot-desc">My best friend Mackenzie and I have had multiple four-hour dinners here &mdash; sometimes twice in the same trip. The owner is funny and charming. One of those places you come back to every visit without even deciding to.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">Cojean</p>
+          <p class="spot-location">28 Rue du Bac &middot; 7th arr.</p>
+          <p class="spot-desc">Healthy bowls clearly marked with protein content. If I lived in Paris full time, this would be my daily fast casual. Multiple locations across the city.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Parks</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Jardin du Luxembourg</p>
+          <p class="spot-location">6th arr.</p>
+          <p class="spot-desc">The most beautiful park in the world, and I will stand by that. Tennis courts on site, which is just unfair to every other park in existence.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Shopping</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Citypharma</p>
+          <p class="spot-location">26 Rue du Four &middot; 6th arr.</p>
+          <p class="spot-desc">The French pharmacy experience is non-negotiable. Go in without a list, leave with fifteen things you didn&rsquo;t know you needed. I&rsquo;ve spent more money here than I&rsquo;ll admit.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">From Future</p>
+          <p class="spot-location">Le Marais &middot; multiple locations</p>
+          <p class="spot-desc">My favorite sweater shop in the world. Delightful, colorful cashmere in the most charming little store. You will leave with something.</p>
+        </div>
+      </div>
+
+      <div class="spot-category-group">
+        <p class="spot-category-label">Explore</p>
+
+        <div class="spot-item">
+          <p class="spot-name">Rue du Bac</p>
+          <p class="spot-location">7th arr.</p>
+          <p class="spot-desc">Walk the whole thing. One of the most charming streets in Paris &mdash; great shops, a good energy, and my first Paris address was number 52.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">Saint-Germain-des-Pr&eacute;s</p>
+          <p class="spot-location">6th arr.</p>
+          <p class="spot-desc">My favorite arrondissement. The area around the main square has everything &mdash; little restaurants, great shops, the right kind of crowd. Just walk around.</p>
+        </div>
+
+        <div class="spot-item">
+          <p class="spot-name">The Seine at Sunset</p>
+          <p class="spot-location">Les Berges de la Seine</p>
+          <p class="spot-desc">You have to go for a run here during sunset. One of the best running routes in the world &mdash; and yes, I am completely biased about this city.</p>
+        </div>
+      </div>
+
+      <div class="guide-general-note">
+        <p>A few universal rules: every boulangerie is the right boulangerie.<br>Every coffee is fine. Every meal will probably be good.<br>Every bookstore is an adventure &mdash; being beautiful is mandatory in Paris.<br>Paris has very low floors and very high ceilings.</p>
+      </div>
+
+    </div>
+
+    <footer class="footer">
+      <p class="footer-quote">&ldquo;No one can build you the bridge on which you, and only you, must cross the river of life.&rdquo; &mdash; Nietzsche</p>
+    </footer>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map', {
+      center: [48.858, 2.318],
+      zoom: 13,
+      zoomControl: true,
+      scrollWheelZoom: false
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    map.zoomControl.setPosition('bottomright');
+
+    function pinIcon() {
+      return L.divIcon({
+        className: '',
+        html: '<div class="map-pin-dot"></div>',
+        iconSize: [7, 7],
+        iconAnchor: [3, 3],
+        popupAnchor: [0, -8]
+      });
+    }
+
+    var spots = [
+      { name: 'Burning Bar', category: 'Fitness', desc: 'Hot pilates, afrohouse music, mood lighting, French-speaking instructors. My favorite workout class in the entire world.', lat: 48.86642, lng: 2.28597 },
+      { name: 'Mus\u00e9e Rodin', category: 'Museum', desc: 'One of the most peaceful museums in Paris, with a garden that does most of the heavy lifting.', lat: 48.8551, lng: 2.3158 },
+      { name: 'Fondation Louis Vuitton', category: 'Museum', desc: 'My favorite art museum I\'ve ever visited. You leave understanding not just what someone made, but why.', lat: 48.8767, lng: 2.2634 },
+      { name: 'Au P\'tit Curieux', category: 'Restaurant', desc: 'Multiple four-hour dinners here with my best friend, sometimes twice in the same trip. The owner is funny and charming.', lat: 48.8747, lng: 2.3727 },
+      { name: 'Cojean', category: 'Restaurant', desc: 'Healthy bowls clearly marked with protein content. My go-to fast casual in Paris.', lat: 48.8558, lng: 2.3268 },
+      { name: 'Jardin du Luxembourg', category: 'Park', desc: 'The most beautiful park in the world. Tennis courts on site, which is unfair to every other park in existence.', lat: 48.8469, lng: 2.3372 },
+      { name: 'Citypharma', category: 'Shop', desc: 'The French pharmacy experience is non-negotiable. Go in without a list, leave with fifteen things you didn\'t know you needed.', lat: 48.8530, lng: 2.3337 },
+      { name: 'Rue du Bac', category: 'Explore', desc: 'Walk the whole thing. One of the most charming streets in Paris — my first Paris address was number 52.', lat: 48.8510, lng: 2.3238 },
+      { name: 'Saint-Germain-des-Pr\u00e9s', category: 'Explore', desc: 'My favorite arrondissement. Little restaurants, great shops, the right kind of crowd. Just walk around.', lat: 48.8540, lng: 2.3336 },
+      { name: 'The Seine at Sunset', category: 'Run', desc: 'Run here during sunset. One of the best running routes in the world — and yes, I am completely biased about this city.', lat: 48.8583, lng: 2.3374 },
+      { name: 'From Future', category: 'Shop', desc: 'My favorite sweater shop in the world. Delightful, colorful cashmere. You will leave with something.', lat: 48.8606, lng: 2.3567 }
+    ];
+
+    spots.forEach(function(s) {
+      var html = '<div class="popup-name">' + s.name + '</div>' +
+                 '<div class="popup-category">' + s.category + '</div>' +
+                 '<div class="popup-desc">' + s.desc + '</div>';
+      L.marker([s.lat, s.lng], { icon: pinIcon() })
+        .addTo(map)
+        .bindPopup(html, { maxWidth: 240 });
+    });
+  </script>
+
+</body>
+</html>
