@@ -210,12 +210,14 @@
     </main>
 
     <footer class="footer">
-      <p class="footer-quote">&ldquo;No one can build you the bridge on which you, and only you, must cross the river of life.&rdquo; &mdash; Nietzsche</p>
+      <p class="footer-quote" id="footerQuote"></p>
     </footer>
 
   </div>
 
+  <script src="quotes.js"></script>
   <script>
+    setRandomQuote();
     // Enter site
     document.getElementById('enterBtn').addEventListener('click', function() {
       document.getElementById('landing').classList.add('landing-exit');

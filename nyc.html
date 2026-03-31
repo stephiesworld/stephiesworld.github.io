@@ -364,13 +364,15 @@
     </div>
 
     <footer class="footer">
-      <p class="footer-quote">&ldquo;No one can build you the bridge on which you, and only you, must cross the river of life.&rdquo; &mdash; Nietzsche</p>
+      <p class="footer-quote" id="footerQuote"></p>
     </footer>
 
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="quotes.js"></script>
   <script>
+    setRandomQuote();
     var map = L.map('map', {
       center: [40.748, -73.978],
       zoom: 12,
