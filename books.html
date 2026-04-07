@@ -81,9 +81,9 @@
     .book-bubble:nth-child(8) .bubble-ring { animation-delay: 2.45s; }
 
     .bubble-ring {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
+      width: 120px;
+      height: 180px;
+      border-radius: 10px;
       overflow: hidden;
       border: 1px solid rgba(232, 224, 212, 0.08);
       animation: float 5s ease-in-out infinite;
@@ -237,8 +237,8 @@
       }
 
       .bubble-ring {
-        width: 110px;
-        height: 110px;
+        width: 100px;
+        height: 150px;
       }
 
       .book-detail {
@@ -283,19 +283,19 @@
         title: 'Klara and the Sun',
         author: 'Kazuo Ishiguro',
         isbn: '9780571364886',
-        desc: 'One of my favorite books of all time. Ishiguro writes from the perspective of an artificial friend observing the humans around her — and somehow, by the end, you\'ve thought more deeply about love, sacrifice, and what it means to be a person than you bargained for.'
+        desc: 'One of my favorite books of all time. Ishiguro writes from the perspective of an artificial friend observing the humans around her — and by the end, you\'ve thought more deeply about love, sacrifice, and what it means to be a person than you expected.'
       },
       {
         title: 'The Creative Act',
         author: 'Rick Rubin',
         isbn: '9780593652886',
-        desc: 'A guide to creative living that I return to again and again. Less about making art and more about how to exist in the world as someone who pays attention. Every page has something worth underlining.'
+        desc: 'A Bible to creative living that I return to again and again. Less about making art and more about how to exist in the world as someone who pays attention.'
       },
       {
         title: "Man's Search for Meaning",
         author: 'Viktor Frankl',
         isbn: '9780807014271',
-        desc: 'Viktor Frankl\'s account of surviving the Holocaust and the philosophy of meaning he built from it. The argument is simple and devastating: those who have a why can bear almost any how. One of the most important books I\'ve ever read.'
+        desc: 'Viktor Frankl\'s account of surviving the Holocaust and the philosophy of meaning he built from it. The argument is simple: those who have a why can bear almost any how.'
       },
       {
         title: 'When Breath Becomes Air',
@@ -319,13 +319,13 @@
         title: 'Brave New World',
         author: 'Aldous Huxley',
         isbn: '9780060850524',
-        desc: 'Still relevant, still unsettling. The dystopia here isn\'t built on fear — it\'s built on pleasure and distraction, which somehow feels closer to home.'
+        desc: 'Still relevant, still unsettling. The dystopia here is built on pleasure and distraction.'
       },
       {
         title: 'The Wedding People',
         author: 'Alison Espach',
         isbn: '9781250284426',
-        desc: 'My favorite book I read in 2025. This one found me in a Parisian bookshop — which is exactly the right way to find a book like this.'
+        desc: 'My favorite book I read in 2025. This one found me in a Parisian bookshop in August 2025.'
       }
     ];
 
@@ -334,11 +334,25 @@
     books.forEach(function(book, i) {
       var bubble = document.createElement('div');
       bubble.className = 'book-bubble';
-      bubble.innerHTML =
-        '<div class="bubble-ring">' +
-          '<img src="https://covers.openlibrary.org/b/isbn/' + book.isbn + '-L.jpg" alt="' + book.title + '" />' +
-        '</div>' +
-        '<p class="bubble-title">' + book.title + '</p>';
+
+      var ring = document.createElement('div');
+      ring.className = 'bubble-ring';
+
+      var img = document.createElement('img');
+      img.alt = book.title;
+      img.src = 'https://covers.openlibrary.org/b/isbn/' + book.isbn + '-L.jpg';
+      img.onerror = function() {
+        this.onerror = null;
+        this.src = 'https://books.google.com/books/content?vid=ISBN' + book.isbn + '&printsec=frontcover&img=1&zoom=1&source=gbs_api';
+      };
+
+      var titleEl = document.createElement('p');
+      titleEl.className = 'bubble-title';
+      titleEl.textContent = book.title;
+
+      ring.appendChild(img);
+      bubble.appendChild(ring);
+      bubble.appendChild(titleEl);
 
       bubble.addEventListener('click', function() {
         document.querySelectorAll('.book-bubble').forEach(function(b) { b.classList.remove('active'); });
