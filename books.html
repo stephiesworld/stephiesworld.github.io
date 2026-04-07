@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading — Stephie's World</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .books-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: softAppear 0.8s ease 0.1s forwards;
+    }
+
+    .guide-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5rem 3rem 2.5rem;
+      position: relative;
+    }
+
+    .guide-city {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      color: rgba(232, 224, 212, 0.65);
+    }
+
+    .guide-subtitle {
+      font-size: 0.48rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.22);
+      margin-top: 0.6rem;
+    }
+
+    .guide-header::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: rgba(232, 224, 212, 0.1);
+      margin-top: 2rem;
+    }
+
+    /* Bubble grid */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem 2rem;
+      max-width: 680px;
+      width: 100%;
+      margin: 3rem auto 6rem;
+      padding: 0 3rem;
+    }
+
+    .book-bubble {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .book-bubble:nth-child(1) .bubble-ring { animation-delay: 0s; }
+    .book-bubble:nth-child(2) .bubble-ring { animation-delay: 0.7s; }
+    .book-bubble:nth-child(3) .bubble-ring { animation-delay: 1.4s; }
+    .book-bubble:nth-child(4) .bubble-ring { animation-delay: 2.1s; }
+    .book-bubble:nth-child(5) .bubble-ring { animation-delay: 0.35s; }
+    .book-bubble:nth-child(6) .bubble-ring { animation-delay: 1.05s; }
+    .book-bubble:nth-child(7) .bubble-ring { animation-delay: 1.75s; }
+    .book-bubble:nth-child(8) .bubble-ring { animation-delay: 2.45s; }
+
+    .bubble-ring {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(232, 224, 212, 0.08);
+      animation: float 5s ease-in-out infinite;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .book-bubble:hover .bubble-ring {
+      border-color: rgba(232, 224, 212, 0.25);
+    }
+
+    .book-bubble.active .bubble-ring {
+      border-color: rgba(232, 224, 212, 0.4);
+    }
+
+    .bubble-ring img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: brightness(0.8) saturate(0.75);
+      transition: filter 0.4s ease;
+    }
+
+    .book-bubble:hover .bubble-ring img,
+    .book-bubble.active .bubble-ring img {
+      filter: brightness(1) saturate(1);
+    }
+
+    .bubble-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(232, 224, 212, 0.4);
+      text-align: center;
+      margin-top: 0.8rem;
+      line-height: 1.4;
+      transition: color 0.3s ease;
+    }
+
+    .book-bubble:hover .bubble-title,
+    .book-bubble.active .bubble-title {
+      color: rgba(232, 224, 212, 0.65);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-9px); }
+    }
+
+    /* Detail overlay */
+    .detail-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 90;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .detail-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Detail panel */
+    .book-detail {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1c1c1c;
+      border-top: 1px solid rgba(232, 224, 212, 0.08);
+      padding: 2.5rem 3rem 3rem;
+      z-index: 100;
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+      max-height: 55vh;
+      overflow-y: auto;
+    }
+
+    .book-detail.visible {
+      transform: translateY(0);
+    }
+
+    .detail-inner {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .detail-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.8rem;
+      background: none;
+      border: none;
+      color: rgba(232, 224, 212, 0.25);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      padding: 0.25rem;
+      line-height: 1;
+    }
+
+    .detail-close:hover {
+      color: rgba(232, 224, 212, 0.6);
+    }
+
+    .detail-category {
+      font-size: 0.42rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.25);
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(232, 224, 212, 0.8);
+      margin-bottom: 0.2rem;
+      line-height: 1.3;
+    }
+
+    .detail-author {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: rgba(232, 224, 212, 0.3);
+      margin-bottom: 1.2rem;
+    }
+
+    .detail-desc {
+      font-size: 0.8rem;
+      line-height: 2;
+      color: rgba(232, 224, 212, 0.55);
+    }
+
+    @media (max-width: 768px) {
+      .guide-header {
+        padding: 4rem 1.5rem 1.5rem;
+      }
+
+      .books-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 1.5rem;
+        padding: 0 2rem;
+        margin: 2rem auto 4rem;
+      }
+
+      .bubble-ring {
+        width: 110px;
+        height: 110px;
+      }
+
+      .book-detail {
+        padding: 2rem 1.5rem 2.5rem;
+        max-height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="books-page">
+
+    <header class="guide-header">
+      <a href="index.html" class="back-btn" style="text-decoration: none;">&larr;</a>
+      <p class="guide-city">Reading</p>
+      <p class="guide-subtitle">a few favorites</p>
+    </header>
+
+    <div class="books-grid" id="booksGrid"></div>
+
+  </div>
+
+  <!-- Overlay -->
+  <div class="detail-overlay" id="detailOverlay"></div>
+
+  <!-- Detail panel -->
+  <div class="book-detail" id="bookDetail">
+    <button class="detail-close" id="detailClose">&times;</button>
+    <div class="detail-inner">
+      <p class="detail-category">Favorite</p>
+      <p class="detail-title" id="detailTitle"></p>
+      <p class="detail-author" id="detailAuthor"></p>
+      <p class="detail-desc" id="detailDesc"></p>
+    </div>
+  </div>
+
+  <script src="quotes.js"></script>
+  <script>
+    var books = [
+      {
+        title: 'Klara and the Sun',
+        author: 'Kazuo Ishiguro',
+        isbn: '9780571364886',
+        desc: 'One of my favorite books of all time. Ishiguro writes from the perspective of an artificial friend observing the humans around her — and somehow, by the end, you\'ve thought more deeply about love, sacrifice, and what it means to be a person than you bargained for.'
+      },
+      {
+        title: 'The Creative Act',
+        author: 'Rick Rubin',
+        isbn: '9780593652886',
+        desc: 'A guide to creative living that I return to again and again. Less about making art and more about how to exist in the world as someone who pays attention. Every page has something worth underlining.'
+      },
+      {
+        title: "Man's Search for Meaning",
+        author: 'Viktor Frankl',
+        isbn: '9780807014271',
+        desc: 'Viktor Frankl\'s account of surviving the Holocaust and the philosophy of meaning he built from it. The argument is simple and devastating: those who have a why can bear almost any how. One of the most important books I\'ve ever read.'
+      },
+      {
+        title: 'When Breath Becomes Air',
+        author: 'Paul Kalanithi',
+        isbn: '9780812988406',
+        desc: 'You will laugh, you will cry. A neurosurgeon diagnosed with terminal cancer writes about what makes a life worth living — from both sides of the operating table. Left a lasting impression ten years later.'
+      },
+      {
+        title: 'The Inner Game of Tennis',
+        author: 'W. Timothy Gallwey',
+        isbn: '9780679778318',
+        desc: 'Trust your body. Quiet the mind. Trust the instinct that has thousands of years of history. That\'s the summary — and it applies to everything, not just tennis.'
+      },
+      {
+        title: 'Open',
+        author: 'Andre Agassi',
+        isbn: '9780307388407',
+        desc: 'An incredibly vulnerable and honest account of a top tennis player. Agassi hated tennis for most of his career — and somehow that makes it one of the most compelling sports memoirs ever written.'
+      },
+      {
+        title: 'Brave New World',
+        author: 'Aldous Huxley',
+        isbn: '9780060850524',
+        desc: 'Still relevant, still unsettling. The dystopia here isn\'t built on fear — it\'s built on pleasure and distraction, which somehow feels closer to home.'
+      },
+      {
+        title: 'The Wedding People',
+        author: 'Alison Espach',
+        isbn: '9781250284426',
+        desc: 'My favorite book I read in 2025. This one found me in a Parisian bookshop — which is exactly the right way to find a book like this.'
+      }
+    ];
+
+    var grid = document.getElementById('booksGrid');
+
+    books.forEach(function(book, i) {
+      var bubble = document.createElement('div');
+      bubble.className = 'book-bubble';
+      bubble.innerHTML =
+        '<div class="bubble-ring">' +
+          '<img src="https://covers.openlibrary.org/b/isbn/' + book.isbn + '-L.jpg" alt="' + book.title + '" />' +
+        '</div>' +
+        '<p class="bubble-title">' + book.title + '</p>';
+
+      bubble.addEventListener('click', function() {
+        document.querySelectorAll('.book-bubble').forEach(function(b) { b.classList.remove('active'); });
+        bubble.classList.add('active');
+        document.getElementById('detailTitle').textContent = book.title;
+        document.getElementById('detailAuthor').textContent = book.author;
+        document.getElementById('detailDesc').textContent = book.desc;
+        document.getElementById('bookDetail').classList.add('visible');
+        document.getElementById('detailOverlay').classList.add('visible');
+      });
+
+      grid.appendChild(bubble);
+    });
+
+    function closeDetail() {
+      document.getElementById('bookDetail').classList.remove('visible');
+      document.getElementById('detailOverlay').classList.remove('visible');
+      document.querySelectorAll('.book-bubble').forEach(function(b) { b.classList.remove('active'); });
+    }
+
+    document.getElementById('detailClose').addEventListener('click', closeDetail);
+    document.getElementById('detailOverlay').addEventListener('click', closeDetail);
+  </script>
+
+</body>
+</html>
