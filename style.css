@@ -197,23 +197,23 @@ h1, h2, h3 {
   color: rgba(232, 224, 212, 0.35);
 }
 
-.world-maktub {
-  font-size: 1.4rem;
-  color: rgba(232, 224, 212, 0.25);
-  margin-top: 0.8rem;
-  letter-spacing: 0.05em;
-  direction: rtl;
-  text-decoration: none;
-  cursor: default;
+
+.world-tagline {
+  font-size: 0.4rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(232, 224, 212, 0.13);
+  margin-top: 1rem;
 }
 
 .world-header::after {
   content: '';
   display: block;
-  width: 30px;
+  width: 40px;
   height: 1px;
-  background: rgba(232, 224, 212, 0.1);
-  margin-top: 2rem;
+  background: rgba(232, 224, 212, 0.18);
+  margin-top: 1.8rem;
 }
 
 /* ─── Accordion ─── */
@@ -222,12 +222,14 @@ h1, h2, h3 {
   max-width: 620px;
   width: 100%;
   margin: 0 auto;
-  padding: 4rem 3rem 6rem;
+  padding: 0.5rem 3rem 6rem;
+  counter-reset: section;
 }
 
 .accordion-item {
   text-align: center;
   margin-bottom: 0;
+  counter-increment: section;
 }
 
 .accordion-item + .accordion-item {
@@ -242,11 +244,22 @@ h1, h2, h3 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.35rem;
   font-weight: 300;
-  color: rgba(232, 224, 212, 0.4);
+  color: rgba(232, 224, 212, 0.52);
   padding: 2.2rem 0;
   cursor: pointer;
   transition: color 0.4s ease, letter-spacing 0.4s ease, opacity 0.4s ease;
   letter-spacing: 0.06em;
+}
+
+.accordion-trigger::before {
+  content: counter(section, decimal-leading-zero);
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.52rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: rgba(232, 224, 212, 0.22);
+  margin-bottom: 0.3rem;
 }
 
 .accordion-trigger:hover {
@@ -535,11 +548,22 @@ h1, h2, h3 {
 
 .footer-quote {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0.02em;
-  color: rgba(232, 224, 212, 0.6);
+  color: rgba(232, 224, 212, 0.45);
+}
+
+.footer-maktub {
+  display: block;
+  text-align: right;
+  margin-top: 1.2rem;
+  font-size: 1rem;
+  color: rgba(232, 224, 212, 0.18);
+  text-decoration: none;
+  direction: rtl;
+  transition: color 0.3s ease;
 }
 
 /* ─── Responsive ─── */
@@ -574,10 +598,6 @@ h1, h2, h3 {
   .accordion-trigger {
     font-size: 1.1rem;
     padding: 1.6rem 0;
-  }
-
-  .world-maktub {
-    font-size: 1.1rem;
   }
 
   .book-item {
