@@ -557,10 +557,10 @@ h1, h2, h3 {
 
 .footer-maktub {
   display: block;
-  text-align: right;
+  text-align: center;
   margin-top: 1.2rem;
   font-size: 1rem;
-  color: rgba(232, 224, 212, 0.18);
+  color: rgba(232, 224, 212, 0.25);
   text-decoration: none;
   direction: rtl;
   transition: color 0.3s ease;
