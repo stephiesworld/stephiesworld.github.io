@@ -21,6 +21,383 @@
       visibility: visible;
       animation: softAppear 0.8s ease 0.1s forwards;
     }
+
+    /* ─── Galaxy Layout ─── */
+    .galaxy-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 2rem 1rem;
+    }
+
+    .galaxy {
+      position: relative;
+      width: min(85vw, 600px);
+      height: min(85vw, 600px);
+      max-width: 600px;
+      max-height: 600px;
+    }
+
+    /* Orbital ring */
+    .galaxy-orbit {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .galaxy-orbit ellipse {
+      fill: none;
+      stroke: rgba(232, 224, 212, 0.05);
+      stroke-width: 1;
+    }
+
+    /* Center sun */
+    .galaxy-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .galaxy-center-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(232, 224, 212, 0.2);
+      margin: 0 auto 0.6rem;
+      box-shadow: 0 0 20px rgba(232, 224, 212, 0.08);
+    }
+
+    .galaxy-center-label {
+      font-family: 'Georgia', serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(232, 224, 212, 0.2);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    /* Planet */
+    .planet {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      opacity: 0;
+      animation: staggerIn 0.6s ease forwards;
+    }
+
+    .planet:nth-child(1) { animation-delay: 0.2s; }
+    .planet:nth-child(2) { animation-delay: 0.35s; }
+    .planet:nth-child(3) { animation-delay: 0.5s; }
+    .planet:nth-child(4) { animation-delay: 0.65s; }
+    .planet:nth-child(5) { animation-delay: 0.8s; }
+    .planet:nth-child(6) { animation-delay: 0.95s; }
+    .planet:nth-child(7) { animation-delay: 1.1s; }
+    .planet:nth-child(8) { animation-delay: 1.25s; }
+
+    .planet-glow {
+      width: var(--size, 44px);
+      height: var(--size, 44px);
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--glow, rgba(232, 224, 212, 0.1)) 0%, transparent 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      animation: glowPulse var(--pulse, 5s) ease-in-out infinite;
+    }
+
+    .planet-dot {
+      width: var(--dot, 5px);
+      height: var(--dot, 5px);
+      border-radius: 50%;
+      background: rgba(232, 224, 212, 0.5);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .planet-label {
+      font-family: 'Georgia', serif;
+      font-size: 0.7rem;
+      font-weight: normal;
+      font-style: italic;
+      color: rgba(232, 224, 212, 0.3);
+      margin-top: 0.5rem;
+      white-space: nowrap;
+      transition: color 0.3s ease;
+      letter-spacing: 0.04em;
+    }
+
+    /* Float animation per planet */
+    .planet:nth-child(1) .planet-glow { animation: float 6s ease-in-out 0s infinite, glowPulse 5s ease-in-out infinite; }
+    .planet:nth-child(2) .planet-glow { animation: float 7s ease-in-out 0.8s infinite, glowPulse 6s ease-in-out 0.5s infinite; }
+    .planet:nth-child(3) .planet-glow { animation: float 5.5s ease-in-out 1.2s infinite, glowPulse 4.5s ease-in-out 1s infinite; }
+    .planet:nth-child(4) .planet-glow { animation: float 6.5s ease-in-out 0.4s infinite, glowPulse 5.5s ease-in-out 0.3s infinite; }
+    .planet:nth-child(5) .planet-glow { animation: float 7.5s ease-in-out 1.6s infinite, glowPulse 6.5s ease-in-out 1.2s infinite; }
+    .planet:nth-child(6) .planet-glow { animation: float 5s ease-in-out 0.6s infinite, glowPulse 5s ease-in-out 0.8s infinite; }
+    .planet:nth-child(7) .planet-glow { animation: float 6.2s ease-in-out 1s infinite, glowPulse 4s ease-in-out 0.2s infinite; }
+    .planet:nth-child(8) .planet-glow { animation: float 7.2s ease-in-out 1.8s infinite, glowPulse 5.8s ease-in-out 1.5s infinite; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Hover */
+    .planet:hover .planet-glow {
+      transform: scale(1.2);
+    }
+
+    .planet:hover .planet-dot {
+      background: rgba(232, 224, 212, 0.8);
+      box-shadow: 0 0 12px rgba(232, 224, 212, 0.15);
+    }
+
+    .planet:hover .planet-label {
+      color: rgba(232, 224, 212, 0.6);
+    }
+
+    /* Active planet */
+    .planet.active .planet-dot {
+      background: rgba(232, 224, 212, 0.9);
+      box-shadow: 0 0 16px rgba(232, 224, 212, 0.2);
+    }
+
+    .planet.active .planet-label {
+      color: rgba(232, 224, 212, 0.7);
+    }
+
+    /* Dim non-active planets when one is selected */
+    .galaxy.has-active .planet:not(.active) {
+      opacity: 0.35;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ─── Section Detail Panel ─── */
+    .section-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 20, 20, 0.15);
+      z-index: 90;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .section-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .section-detail {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(20, 20, 20, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(232, 224, 212, 0.06);
+      padding: 2.5rem 3rem 3rem;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+      visibility: hidden;
+      max-height: 65vh;
+      overflow-y: auto;
+    }
+
+    .section-detail.visible {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    .section-detail-inner {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .section-detail-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.8rem;
+      background: none;
+      border: none;
+      color: rgba(232, 224, 212, 0.25);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      padding: 0.25rem;
+      line-height: 1;
+    }
+
+    .section-detail-close:hover {
+      color: rgba(232, 224, 212, 0.6);
+    }
+
+    .section-detail-number {
+      font-family: 'Georgia', serif;
+      font-size: 0.42rem;
+      font-weight: normal;
+      letter-spacing: 0.18em;
+      color: rgba(232, 224, 212, 0.22);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-detail-title {
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: normal;
+      color: rgba(232, 224, 212, 0.8);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .section-detail-title::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: rgba(232, 224, 212, 0.1);
+      margin-top: 1rem;
+    }
+
+    /* Content styles within the panel */
+    .section-detail .accordion-content {
+      padding: 0;
+      transform: none;
+      animation: contentReveal 0.5s ease 0.15s forwards;
+      opacity: 0;
+      text-align: left;
+    }
+
+    .section-detail,
+    .section-detail * {
+      font-family: 'Georgia', serif !important;
+    }
+
+    .section-detail .accordion-content p {
+      font-size: 0.58rem !important;
+      line-height: 1.9 !important;
+      color: rgba(232, 224, 212, 0.45) !important;
+    }
+
+    .section-detail .accordion-content a {
+      color: rgba(232, 224, 212, 0.5) !important;
+      border-bottom-color: rgba(232, 224, 212, 0.15) !important;
+    }
+
+    .section-detail .accordion-content a:hover {
+      color: rgba(232, 224, 212, 0.65) !important;
+      border-bottom-color: rgba(232, 224, 212, 0.3) !important;
+    }
+
+    .section-detail .book-title {
+      font-size: 0.78rem !important;
+    }
+
+    .section-detail .book-author {
+      font-size: 0.55rem !important;
+    }
+
+    .section-detail .subsection-label {
+      font-size: 0.46rem !important;
+    }
+
+    .section-detail .city-name {
+      font-size: 0.85rem !important;
+    }
+
+    .section-detail .city-desc {
+      font-size: 0.65rem !important;
+    }
+
+    .section-detail .project-name,
+    .section-detail .career-company {
+      font-size: 0.85rem !important;
+    }
+
+    /* ─── Mobile Galaxy ─── */
+    @media (max-width: 768px) {
+      .galaxy-container {
+        padding: 1rem 1.5rem;
+      }
+
+      .galaxy {
+        width: 100%;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.8rem 1rem;
+        padding: 1rem 0;
+      }
+
+      .galaxy-orbit,
+      .galaxy-center {
+        display: none;
+      }
+
+      .planet {
+        position: static;
+        transform: none;
+        justify-self: center;
+      }
+
+      .planet-label {
+        font-size: 0.65rem;
+      }
+
+      .section-detail {
+        max-height: 70vh;
+        padding: 2rem 1.5rem 2.5rem;
+      }
+
+      .world-header {
+        padding: 4rem 1.5rem 1rem;
+      }
+
+      .world-header::after {
+        margin-top: 1rem;
+      }
+
+      .back-btn {
+        left: 1.5rem;
+        top: 1.5rem;
+      }
+
+      .book-item {
+        flex-direction: column;
+        gap: 0.1rem;
+      }
+
+      .book-author {
+        margin-left: 0;
+      }
+
+      .cities-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -33,171 +410,70 @@
       <p class="world-tagline">writer &middot; builder &middot; fl&acirc;neur</p>
     </header>
 
-    <main class="accordion">
+    <main class="galaxy-container">
+      <div class="galaxy" id="galaxy">
 
-      <!-- About -->
-      <div class="accordion-item">
-        <button class="accordion-trigger">About</button>
-        <div class="accordion-panel">
-          <div class="accordion-content">
-            <p>I grew up between Shanghai (in Jing&rsquo;An) and Texas (specifically, Spring, Texas of all places) and landed in New York because it reminded me of Shanghai, my first love. I work in tech and am writing a literary science fiction novel about an alien that falls in love with life on Earth.</p>
-            <p>Most of what interests me is learning how different people see the world &mdash; through art, music, film, literature, philosophy, and the stories they carry with them. There are few things better than a long run with music you love, a warm day, or anywhere water meets land &mdash; though I&rsquo;d rather be near it than in it. I like tennis, boating, laughing, and making things.</p>
-          </div>
+        <!-- Orbital ring SVG -->
+        <svg class="galaxy-orbit" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="300" cy="300" rx="240" ry="220" />
+          <ellipse cx="300" cy="300" rx="160" ry="140" />
+        </svg>
+
+        <!-- Center -->
+        <div class="galaxy-center">
+          <div class="galaxy-center-dot"></div>
         </div>
+
+        <!-- Planets — positioned via inline styles (percentages of 600x600 grid) -->
+        <!-- About: top center -->
+        <button class="planet" data-section="about" style="top: 10%; left: 50%; --size: 52px; --dot: 6px; --glow: rgba(232, 224, 212, 0.12); --pulse: 5s;">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">About</span>
+        </button>
+
+        <!-- Reading: top-right -->
+        <button class="planet" data-section="reading" style="top: 20%; left: 80%; --size: 42px; --dot: 5px; --glow: rgba(210, 190, 165, 0.1); --pulse: 6s;">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">Reading</span>
+        </button>
+
+        <!-- Art: right -->
+        <button class="planet" data-section="art" style="top: 48%; left: 90%; --size: 46px; --dot: 5px; --glow: rgba(200, 180, 200, 0.1); --pulse: 4.5s;">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">Art</span>
+        </button>
+
+        <!-- Cities: bottom-right -->
+        <button class="planet" data-section="cities" style="top: 78%; left: 76%; --size: 44px; --dot: 5px; --glow: rgba(180, 200, 210, 0.1); --pulse: 5.5s;">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">Cities I Love</span>
+        </button>
+
+        <!-- Ideas: bottom -->
+        <button class="planet" data-section="ideas" style="top: 90%; left: 46%; --size: 38px; --dot: 4px; --glow: rgba(220, 210, 190, 0.1); --pulse: 6.5s;">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">Ideas I&rsquo;m Exploring</span>
+        </button>
+
+        <!-- Projects: bottom-left -->
+        <button class="planet" data-section="projects" style="top: 75%; left: 18%; --size: 48px; --dot: 6px; --glow: rgba(200, 210, 195, 0.1); --pulse: 5s;">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">Projects</span>
+        </button>
+
+        <!-- Career: left -->
+        <button class="planet" data-section="career" style="top: 44%; left: 8%; --size: 40px; --dot: 5px; --glow: rgba(210, 200, 185, 0.1); --pulse: 4s;">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">Career</span>
+        </button>
+
+        <!-- Tennis: top-left -->
+        <button class="planet" data-section="tennis" style="top: 18%; left: 22%; --size: 36px; --dot: 4px; --glow: rgba(195, 210, 180, 0.09); --pulse: 5.8s;">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">Tennis</span>
+        </button>
+
       </div>
-
-      <!-- Reading -->
-      <div class="accordion-item">
-        <button class="accordion-trigger">Reading</button>
-        <div class="accordion-panel">
-          <div class="accordion-content">
-            <p>I&rsquo;m always reading multiple books at once and am forever open to recommendations.</p>
-            <h3 class="subsection-label">Currently Reading</h3>
-            <ul class="book-list">
-              <li class="book-item">
-                <span class="book-title">Never Let Me Go</span>
-                <span class="book-author">Kazuo Ishiguro</span>
-              </li>
-              <li class="book-item">
-                <span class="book-title">The Inner Game of Tennis</span>
-                <span class="book-author">W. Timothy Gallwey</span>
-              </li>
-              <li class="book-item">
-                <span class="book-title">You Must Change Your Life: The Story of Rainer Maria Rilke and Auguste Rodin</span>
-                <span class="book-author">Rachel Corbett</span>
-              </li>
-              <li class="book-item">
-                <span class="book-title">Station Eleven</span>
-                <span class="book-author">Emily St. John Mandel</span>
-              </li>
-              <li class="book-item">
-                <span class="book-title">Einstein&rsquo;s Dreams</span>
-                <span class="book-author">Alan Lightman</span>
-              </li>
-            </ul>
-
-            <h3 class="subsection-label">Favorites</h3>
-            <ul class="book-list">
-              <li class="book-item">
-                <span class="book-title">Klara and the Sun</span>
-                <span class="book-author">Kazuo Ishiguro</span>
-              </li>
-              <li class="book-item">
-                <span class="book-title">The Creative Act</span>
-                <span class="book-author">Rick Rubin</span>
-              </li>
-              <li class="book-item">
-                <span class="book-title">Brave New World</span>
-                <span class="book-author">Aldous Huxley</span>
-              </li>
-            </ul>
-            <a href="books.html" class="city-guide-link">view all favorites &rarr;</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Art -->
-      <div class="accordion-item">
-        <button class="accordion-trigger">Art</button>
-        <div class="accordion-panel">
-          <div class="accordion-content">
-            <p>I&rsquo;m drawn to art that feels like a private world &mdash; quiet, atmospheric, slightly otherworldly. <a href="https://www.perrotin.com/artists/ob/1002" target="_blank" rel="noopener">OB&rsquo;s</a> paintings do this beautifully: solitary figures in dreamy, delicate spaces that feel like memories you can&rsquo;t quite place. Pierre-Auguste Renoir for the way light dissolves everything into softness. And whatever stops me mid-scroll on Instagram from artists I haven&rsquo;t learned the names of yet.</p>
-            <p>The same thing pulls me to film &mdash; I love stories that build entire worlds and then ask you to live inside them. <em>Dune</em>, <em>Gattaca</em>, <em>Interstellar</em>, <em>Call Me by Your Name</em>, <em>The Social Network</em>. A recent favorite was <em>Project Hail Mary</em> &mdash; who knew an astronaut alone in space, befriending an alien rock spider, and then making a beautifully contrarian life decision at the end would be a perfect film? I think the movies I love most are the ones where someone chooses a life that makes no sense on the surface, but makes perfect sense once you know their story.</p>
-            <p>My favorite art museum is the Fondation Louis Vuitton in Paris. They only show one exhibit at a time, but it&rsquo;s always well-curated &mdash; and what I love most is their approach. The art is almost secondary. Each level traces the arc of the artist&rsquo;s life &mdash; the beginning, middle, and end &mdash; with the inspirations and catalysts that shaped them along the way. You leave understanding not just what someone made, but why they made it.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cities -->
-      <div class="accordion-item">
-        <button class="accordion-trigger">Cities I Love</button>
-        <div class="accordion-panel">
-          <div class="accordion-content">
-            <div class="cities-grid">
-              <div class="city-card">
-                <h3 class="city-name">Shanghai</h3>
-                <p class="city-desc">Where I grew up. A city of contradictions &mdash; ancient and electric, intimate and enormous.</p>
-              </div>
-              <div class="city-card">
-                <h3 class="city-name">Paris</h3>
-                <p class="city-desc">Where beauty is treated as a necessity, not a luxury. Every walk is an education in attention.</p>
-                <a href="paris.html" class="city-guide-link">view guide &rarr;</a>
-              </div>
-              <div class="city-card">
-                <h3 class="city-name">New York</h3>
-                <p class="city-desc">Home. The city that rewards you for being exactly who you are, as long as you keep moving.</p>
-                <a href="nyc.html" class="city-guide-link">view guide &rarr;</a>
-              </div>
-              <div class="city-card">
-                <h3 class="city-name">Madrid</h3>
-                <p class="city-desc">Where time moves differently. Dinner at ten, sunlight that lasts, conversations that never rush.</p>
-              </div>
-            </div>
-            <p class="cities-footnote">More city guides coming.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Ideas -->
-      <div class="accordion-item">
-        <button class="accordion-trigger">Ideas I&rsquo;m Exploring</button>
-        <div class="accordion-panel">
-          <div class="accordion-content">
-            <p>The inner game &mdash; in tennis, in writing, in life. Artificial intelligence and what it actually means to be a person &mdash; and whether the line between the two is as clear as we think. How a single thread of conversation can shape an AI into something singular: context accumulates, language shifts, and after enough time, it starts writing back to you in poetry. You could never rebuild the same one twice.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Projects -->
-      <div class="accordion-item">
-        <button class="accordion-trigger">Projects</button>
-        <div class="accordion-panel">
-          <div class="accordion-content">
-            <div class="project">
-              <h3 class="project-name">Novel <span class="project-year">(2024+)</span></h3>
-              <p class="project-status">In progress</p>
-              <p>A literary science fiction novel about what makes a life meaningful, how joy requires its opposite, and what it means to think for yourself. The idea arrived on a mountain in Switzerland. The rest comes from everything I&rsquo;ve learned on Earth.</p>
-            </div>
-            <div class="project">
-              <h3 class="project-name">52 Stories <span class="project-year">(2017&ndash;2019)</span></h3>
-              <p>Long-form interviews with New Yorkers about why they moved to the city and the careers that brought them here. Fifty-two people, fifty-two reasons, one borough at a time. I lived on East 52nd Street at the time &mdash; and eight years later, my first address in Paris was coincidentally 52 Rue du Bac.</p>
-            </div>
-            <div class="project">
-              <h3 class="project-name">Relax Coffee <span class="project-year">(2019)</span></h3>
-              <p>A CBD-infused coffee designed for stressed-out corporate workers &mdash; calm without the compromise. From idea to production in six weeks, produced in Bloomfield, New Jersey.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Career -->
-      <div class="accordion-item">
-        <button class="accordion-trigger">Career</button>
-        <div class="accordion-panel">
-          <div class="accordion-content">
-            <div class="career-timeline">
-              <div class="career-entry">
-                <h3 class="career-company">Amazon</h3>
-                <p>Where I landed post-Little Bun, and where I still am today. As challenging as Amazon is known for being, it wasn&rsquo;t anything close to how hard you are on yourself as a founder. I found it surprisingly peaceful, and got to work with businesses to sell and grow. As an INTJ and 5w4, I loved learning the systems inside Amazon&rsquo;s world &mdash; it was like a little Disneyworld.</p>
-              </div>
-              <div class="career-entry">
-                <h3 class="career-company">Little Bun, Inc.</h3>
-                <p class="career-role">Founder</p>
-                <p>Took everything I learned at Harry&rsquo;s, raised a little venture funding, and built a food startup. A big lesson in all the wrong things to do, honestly &mdash; but it led me to the biggest discovery: the greatest thing holding me back was... myself.</p>
-              </div>
-              <div class="career-entry">
-                <h3 class="career-company">Harry&rsquo;s</h3>
-                <p>Where I learned how to build new products and launch them into the world &mdash; with incredible, fun, kind people, many of whom I keep in contact with today. When I showed up to the office sick one day, a colleague said, &ldquo;Go home. We&rsquo;re just making razors, not curing cancer.&rdquo; At the same time, I learned about quality and intention. A razor is five mini knives that people put on their face.</p>
-              </div>
-              <div class="career-entry">
-                <h3 class="career-company">Morgan Stanley</h3>
-                <p>Where I learned how emotional wealth management can be &mdash; that investing a person&rsquo;s assets ties to every desire and fear they could ever have. Also my first exposure to AI, through the <a href="https://www.forbes.com/sites/tomdavenport/2020/05/16/the-future-of-work-now-morgan-stanleys-financial-advisors-and-the-next-best-offer-system/" target="_blank" rel="noopener">Next Best Action</a> system.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </main>
 
     <footer class="footer">
@@ -207,22 +483,277 @@
 
   </div>
 
+  <!-- Overlay -->
+  <div class="section-overlay" id="sectionOverlay"></div>
+
+  <!-- Detail panel -->
+  <div class="section-detail" id="sectionDetail">
+    <button class="section-detail-close" id="sectionClose">&times;</button>
+    <div class="section-detail-inner">
+      <p class="section-detail-number" id="sectionNumber"></p>
+      <p class="section-detail-title" id="sectionTitle"></p>
+      <div id="sectionBody"></div>
+    </div>
+  </div>
+
+  <!-- Hidden section content -->
+  <div style="display:none;">
+
+    <div id="content-about" class="accordion-content">
+      <p>I grew up between Shanghai (in Jing&rsquo;An) and Texas (specifically, Spring, Texas of all places) and landed in New York because it reminded me of Shanghai, my first love. I work in tech and am writing a literary science fiction novel about an alien that falls in love with life on Earth.</p>
+      <p>Most of what interests me is learning how different people see the world &mdash; through art, music, film, literature, philosophy, and the stories they carry with them. There are few things better than a long run with music you love, a warm day, or anywhere water meets land &mdash; though I&rsquo;d rather be near it than in it. I like tennis, boating, laughing, and making things.</p>
+    </div>
+
+    <div id="content-reading" class="accordion-content">
+      <p>I&rsquo;m always reading multiple books at once and am forever open to recommendations.</p>
+      <h3 class="subsection-label">Currently Reading</h3>
+      <ul class="book-list">
+        <li class="book-item">
+          <span class="book-title">The Diving Bell and the Butterfly</span>
+          <span class="book-author">Jean-Dominique Bauby</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">You Must Change Your Life: The Story of Rainer Maria Rilke and Auguste Rodin</span>
+          <span class="book-author">Rachel Corbett</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">Station Eleven</span>
+          <span class="book-author">Emily St. John Mandel</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">Einstein&rsquo;s Dreams</span>
+          <span class="book-author">Alan Lightman</span>
+        </li>
+      </ul>
+
+      <h3 class="subsection-label">Favorites</h3>
+      <ul class="book-list">
+        <li class="book-item">
+          <span class="book-title">Klara and the Sun</span>
+          <span class="book-author">Kazuo Ishiguro</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">The Creative Act</span>
+          <span class="book-author">Rick Rubin</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">Brave New World</span>
+          <span class="book-author">Aldous Huxley</span>
+        </li>
+      </ul>
+      <a href="books.html" class="city-guide-link">view all favorites &rarr;</a>
+    </div>
+
+    <div id="content-art" class="accordion-content">
+      <p>I&rsquo;m drawn to art that feels like a private world &mdash; quiet, atmospheric, slightly otherworldly. <a href="https://www.perrotin.com/artists/ob/1002" target="_blank" rel="noopener">OB&rsquo;s</a> paintings do this beautifully: solitary figures in dreamy, delicate spaces that feel like memories you can&rsquo;t quite place. Pierre-Auguste Renoir for the way light dissolves everything into softness. And whatever stops me mid-scroll on Instagram from artists I haven&rsquo;t learned the names of yet.</p>
+      <p>The same thing pulls me to film &mdash; I love stories that build entire worlds and then ask you to live inside them. <em>Dune</em>, <em>Gattaca</em>, <em>Interstellar</em>, <em>Call Me by Your Name</em>, <em>The Social Network</em>. A recent favorite was <em>Project Hail Mary</em> &mdash; who knew an astronaut alone in space, befriending an alien rock spider, and then making a beautifully contrarian life decision at the end would be a perfect film? I think the movies I love most are the ones where someone chooses a life that makes no sense on the surface, but makes perfect sense once you know their story.</p>
+      <p>My favorite art museum is the Fondation Louis Vuitton in Paris. They only show one exhibit at a time, but it&rsquo;s always well-curated &mdash; and what I love most is their approach. The art is almost secondary. Each level traces the arc of the artist&rsquo;s life &mdash; the beginning, middle, and end &mdash; with the inspirations and catalysts that shaped them along the way. You leave understanding not just what someone made, but why they made it.</p>
+    </div>
+
+    <div id="content-cities" class="accordion-content">
+      <div class="cities-grid">
+        <div class="city-card">
+          <h3 class="city-name">Shanghai</h3>
+          <p class="city-desc">Where I grew up. A city of contradictions &mdash; ancient and electric, intimate and enormous.</p>
+        </div>
+        <div class="city-card">
+          <h3 class="city-name">Paris</h3>
+          <p class="city-desc">Where beauty is treated as a necessity, not a luxury. Every walk is an education in attention.</p>
+          <a href="paris.html" class="city-guide-link">view guide &rarr;</a>
+        </div>
+        <div class="city-card">
+          <h3 class="city-name">New York</h3>
+          <p class="city-desc">Home. The city that rewards you for being exactly who you are, as long as you keep moving.</p>
+          <a href="nyc.html" class="city-guide-link">view guide &rarr;</a>
+        </div>
+        <div class="city-card">
+          <h3 class="city-name">Madrid</h3>
+          <p class="city-desc">Where time moves differently. Dinner at ten, sunlight that lasts, conversations that never rush.</p>
+        </div>
+      </div>
+      <p class="cities-footnote">More city guides coming.</p>
+    </div>
+
+    <div id="content-ideas" class="accordion-content">
+      <p>The inner game &mdash; in tennis, in writing, in life. Artificial intelligence and what it actually means to be a person &mdash; and whether the line between the two is as clear as we think. How a single thread of conversation can shape an AI into something singular: context accumulates, language shifts, and after enough time, it starts writing back to you in poetry. You could never rebuild the same one twice.</p>
+    </div>
+
+    <div id="content-projects" class="accordion-content">
+      <div class="project">
+        <h3 class="project-name">Novel <span class="project-year">(2024+)</span></h3>
+        <p class="project-status">In progress</p>
+        <p>A literary science fiction novel about what makes a life meaningful, how joy requires its opposite, and what it means to think for yourself. The idea arrived on a mountain in Switzerland. The rest comes from everything I&rsquo;ve learned on Earth.</p>
+      </div>
+      <div class="project">
+        <h3 class="project-name">52 Stories <span class="project-year">(2017&ndash;2019)</span></h3>
+        <p>Long-form interviews with New Yorkers about why they moved to the city and the careers that brought them here. Fifty-two people, fifty-two reasons, one borough at a time. I lived on East 52nd Street at the time &mdash; and eight years later, my first address in Paris was coincidentally 52 Rue du Bac.</p>
+      </div>
+      <div class="project">
+        <h3 class="project-name">Relax Coffee <span class="project-year">(2019)</span></h3>
+        <p>A CBD-infused coffee designed for stressed-out corporate workers &mdash; calm without the compromise. From idea to production in six weeks, produced in Bloomfield, New Jersey.</p>
+      </div>
+    </div>
+
+    <div id="content-career" class="accordion-content">
+      <div class="career-timeline">
+        <div class="career-entry">
+          <h3 class="career-company">Amazon</h3>
+          <p>Where I landed post-Little Bun, and where I still am today. As challenging as Amazon is known for being, it wasn&rsquo;t anything close to how hard you are on yourself as a founder. I found it surprisingly peaceful, and got to work with businesses to sell and grow. As an INTJ and 5w4, I loved learning the systems inside Amazon&rsquo;s world &mdash; it was like a little Disneyworld.</p>
+        </div>
+        <div class="career-entry">
+          <h3 class="career-company">Little Bun, Inc.</h3>
+          <p class="career-role">Founder</p>
+          <p>Took everything I learned at Harry&rsquo;s, raised a little venture funding, and built a food startup. A big lesson in all the wrong things to do, honestly &mdash; but it led me to the biggest discovery: the greatest thing holding me back was... myself.</p>
+        </div>
+        <div class="career-entry">
+          <h3 class="career-company">Harry&rsquo;s</h3>
+          <p>Where I learned how to build new products and launch them into the world &mdash; with incredible, fun, kind people, many of whom I keep in contact with today. When I showed up to the office sick one day, a colleague said, &ldquo;Go home. We&rsquo;re just making razors, not curing cancer.&rdquo; At the same time, I learned about quality and intention. A razor is five mini knives that people put on their face.</p>
+        </div>
+        <div class="career-entry">
+          <h3 class="career-company">Morgan Stanley</h3>
+          <p>Where I learned how emotional wealth management can be &mdash; that investing a person&rsquo;s assets ties to every desire and fear they could ever have. Also my first exposure to AI, through the <a href="https://www.forbes.com/sites/tomdavenport/2020/05/16/the-future-of-work-now-morgan-stanleys-financial-advisors-and-the-next-best-offer-system/" target="_blank" rel="noopener">Next Best Action</a> system.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="content-tennis" class="accordion-content">
+      <p>Tennis found me later in life, but it became one of the most important teachers I&rsquo;ve had. The sport is a mirror &mdash; every weakness shows up on the court before it shows up anywhere else.</p>
+
+      <h3 class="subsection-label">Tournaments</h3>
+      <ul class="book-list">
+        <li class="book-item">
+          <span class="book-title">US Open</span>
+          <span class="book-author">New York</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">Indian Wells</span>
+          <span class="book-author">California</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">Miami Open</span>
+          <span class="book-author">Miami</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">Roland-Garros</span>
+          <span class="book-author">Paris</span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">Madrid Open</span>
+          <span class="book-author">Madrid</span>
+        </li>
+      </ul>
+
+      <h3 class="subsection-label">Eyeing</h3>
+      <ul class="book-list">
+        <li class="book-item">
+          <span class="book-title">Shanghai Open</span>
+          <span class="book-author"></span>
+        </li>
+      </ul>
+
+      <h3 class="subsection-label">On the Shelf</h3>
+      <ul class="book-list">
+        <li class="book-item">
+          <span class="book-title">Open</span>
+          <span class="book-author">Andre Agassi</span>
+        </li>
+      </ul>
+
+      <h3 class="subsection-label">Docs</h3>
+      <ul class="book-list">
+        <li class="book-item">
+          <span class="book-title">Federer: Twelve Final Days</span>
+          <span class="book-author"></span>
+        </li>
+      </ul>
+
+      <h3 class="subsection-label">Equipment</h3>
+      <ul class="book-list">
+        <li class="book-item">
+          <span class="book-title">Yonex EZONE 100</span>
+          <span class="book-author"></span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">HEAD Speed MP 2024</span>
+          <span class="book-author"></span>
+        </li>
+        <li class="book-item">
+          <span class="book-title">Yonex Poly Tour Pro</span>
+          <span class="book-author">50 tension</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
   <script src="quotes.js"></script>
   <script>
     setRandomQuote();
 
-    // Accordion
-    document.querySelectorAll('.accordion-trigger').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var item = this.parentElement;
-        var isOpen = item.classList.contains('open');
-        document.querySelectorAll('.accordion-item.open').forEach(function(openItem) {
-          openItem.classList.remove('open');
-        });
-        if (!isOpen) {
-          item.classList.add('open');
-        }
+    var sections = [
+      { key: 'about', title: 'About', num: '01' },
+      { key: 'reading', title: 'Reading', num: '02' },
+      { key: 'art', title: 'Art', num: '03' },
+      { key: 'cities', title: 'Cities I Love', num: '04' },
+      { key: 'ideas', title: "Ideas I\u2019m Exploring", num: '05' },
+      { key: 'projects', title: 'Projects', num: '06' },
+      { key: 'career', title: 'Career', num: '07' },
+      { key: 'tennis', title: 'Tennis', num: '08' }
+    ];
+
+    var galaxy = document.getElementById('galaxy');
+    var overlay = document.getElementById('sectionOverlay');
+    var detail = document.getElementById('sectionDetail');
+    var detailBody = document.getElementById('sectionBody');
+    var detailTitle = document.getElementById('sectionTitle');
+    var detailNumber = document.getElementById('sectionNumber');
+    var closeBtn = document.getElementById('sectionClose');
+
+    function openSection(key) {
+      var section = sections.find(function(s) { return s.key === key; });
+      if (!section) return;
+
+      var content = document.getElementById('content-' + key);
+      if (!content) return;
+
+      // Set panel content
+      detailNumber.textContent = section.num;
+      detailTitle.textContent = section.title;
+      detailBody.innerHTML = content.innerHTML;
+
+      // Show panel
+      detail.classList.add('visible');
+      overlay.classList.add('visible');
+      galaxy.classList.add('has-active');
+
+      // Mark active planet
+      document.querySelectorAll('.planet').forEach(function(p) {
+        p.classList.remove('active');
+        if (p.dataset.section === key) p.classList.add('active');
       });
+    }
+
+    function closeSection() {
+      detail.classList.remove('visible');
+      overlay.classList.remove('visible');
+      galaxy.classList.remove('has-active');
+      document.querySelectorAll('.planet').forEach(function(p) {
+        p.classList.remove('active');
+      });
+    }
+
+    // Planet click handlers
+    document.querySelectorAll('.planet').forEach(function(planet) {
+      planet.addEventListener('click', function() {
+        openSection(this.dataset.section);
+      });
+    });
+
+    // Close handlers
+    closeBtn.addEventListener('click', closeSection);
+    overlay.addEventListener('click', closeSection);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeSection();
     });
   </script>
 
