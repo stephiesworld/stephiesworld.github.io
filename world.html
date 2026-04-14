@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stephie's World — Stephanie Del Paggio</title>
-  <meta name="description" content="The personal world of Stephanie Del Paggio — writer, builder, and wanderer based in New York.">
+  <meta name="description" content="The personal world of Stephanie Del Paggio — writer, tinkerer, and wanderer based in New York.">
   <meta name="keywords" content="Stephanie Del Paggio, Stephie Del Paggio, writer, New York, tech, literary fiction">
   <meta property="og:title" content="Stephie's World — Stephanie Del Paggio">
-  <meta property="og:description" content="Writer, builder, wanderer. Based in New York.">
+  <meta property="og:description" content="Writer, tinkerer, wanderer. Based in New York.">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://stephiesworld.com/world.html">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -189,150 +189,137 @@
       transition: opacity 0.4s ease;
     }
 
-    /* ─── Section Detail Panel ─── */
-    .section-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(20, 20, 20, 0.15);
-      z-index: 90;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-
-    .section-overlay.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .section-detail {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(20, 20, 20, 0.75);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(232, 224, 212, 0.06);
-      padding: 2.5rem 3rem 3rem;
-      z-index: 100;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
-      visibility: hidden;
-      max-height: 65vh;
-      overflow-y: auto;
-    }
-
-    .section-detail.visible {
-      opacity: 1;
-      transform: translateY(0);
-      visibility: visible;
-    }
-
-    .section-detail-inner {
+    /* ─── Inline Section Content ─── */
+    .section-inline {
       max-width: 560px;
+      width: 100%;
       margin: 0 auto;
+      padding: 0 3rem 4rem;
+      opacity: 0;
+      animation: softAppear 0.5s ease forwards;
     }
 
-    .section-detail-close {
-      position: absolute;
-      top: 1.2rem;
-      right: 1.8rem;
-      background: none;
-      border: none;
-      color: rgba(232, 224, 212, 0.25);
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      padding: 0.25rem;
-      line-height: 1;
-    }
-
-    .section-detail-close:hover {
-      color: rgba(232, 224, 212, 0.6);
-    }
-
-    .section-detail-number {
+    .section-inline-number {
       font-family: 'Georgia', serif;
       font-size: 0.42rem;
       font-weight: normal;
       letter-spacing: 0.18em;
-      color: rgba(232, 224, 212, 0.22);
+      color: rgba(232, 224, 212, 0.2);
       margin-bottom: 0.4rem;
+      text-align: center;
     }
 
-    .section-detail-title {
+    .section-inline-title {
       font-family: 'Georgia', serif;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: normal;
-      color: rgba(232, 224, 212, 0.8);
-      margin-bottom: 1.5rem;
+      color: rgba(232, 224, 212, 0.6);
+      margin-bottom: 1.2rem;
       letter-spacing: 0.04em;
+      text-align: center;
     }
 
-    .section-detail-title::after {
+    .section-inline-title::after {
       content: '';
       display: block;
       width: 24px;
       height: 1px;
-      background: rgba(232, 224, 212, 0.1);
-      margin-top: 1rem;
+      background: rgba(232, 224, 212, 0.08);
+      margin: 0.8rem auto 0;
     }
 
-    /* Content styles within the panel */
-    .section-detail .accordion-content {
+    .section-inline-close {
+      display: block;
+      margin: 2rem auto 0;
+      background: none;
+      border: none;
+      font-family: 'Georgia', serif;
+      font-size: 0.42rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232, 224, 212, 0.25);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .section-inline-close:hover {
+      color: rgba(232, 224, 212, 0.5);
+    }
+
+    /* Content styles inline */
+    .section-inline .accordion-content {
       padding: 0;
       transform: none;
-      animation: contentReveal 0.5s ease 0.15s forwards;
-      opacity: 0;
+      opacity: 1;
       text-align: left;
     }
 
-    .section-detail,
-    .section-detail * {
+    .section-inline,
+    .section-inline * {
       font-family: 'Georgia', serif !important;
     }
 
-    .section-detail .accordion-content p {
+    .section-inline .accordion-content p {
       font-size: 0.58rem !important;
-      line-height: 1.9 !important;
+      line-height: 2 !important;
+      color: rgba(232, 224, 212, 0.4) !important;
+      font-weight: normal !important;
+    }
+
+    .section-inline .accordion-content a {
       color: rgba(232, 224, 212, 0.45) !important;
+      border-bottom: 1px solid rgba(232, 224, 212, 0.12) !important;
+      text-decoration: none !important;
     }
 
-    .section-detail .accordion-content a {
-      color: rgba(232, 224, 212, 0.5) !important;
-      border-bottom-color: rgba(232, 224, 212, 0.15) !important;
+    .section-inline .accordion-content a:hover {
+      color: rgba(232, 224, 212, 0.6) !important;
+      border-bottom-color: rgba(232, 224, 212, 0.25) !important;
     }
 
-    .section-detail .accordion-content a:hover {
-      color: rgba(232, 224, 212, 0.65) !important;
-      border-bottom-color: rgba(232, 224, 212, 0.3) !important;
+    .section-inline .book-title {
+      font-size: 0.72rem !important;
+      font-weight: normal !important;
     }
 
-    .section-detail .book-title {
+    .section-inline .book-author {
+      font-size: 0.52rem !important;
+      font-weight: normal !important;
+    }
+
+    .section-inline .subsection-label {
+      font-size: 0.44rem !important;
+      font-weight: normal !important;
+    }
+
+    .section-inline .city-name {
       font-size: 0.78rem !important;
+      font-weight: normal !important;
     }
 
-    .section-detail .book-author {
-      font-size: 0.55rem !important;
+    .section-inline .city-desc {
+      font-size: 0.58rem !important;
+      font-weight: normal !important;
     }
 
-    .section-detail .subsection-label {
-      font-size: 0.46rem !important;
+    .section-inline .project-name,
+    .section-inline .career-company {
+      font-size: 0.78rem !important;
+      font-weight: normal !important;
     }
 
-    .section-detail .city-name {
-      font-size: 0.85rem !important;
+    .section-inline .career-role,
+    .section-inline .project-status {
+      font-weight: normal !important;
     }
 
-    .section-detail .city-desc {
-      font-size: 0.65rem !important;
+    .section-inline .city-guide-link {
+      font-family: 'Georgia', serif !important;
+      color: rgba(232, 224, 212, 0.25) !important;
     }
 
-    .section-detail .project-name,
-    .section-detail .career-company {
-      font-size: 0.85rem !important;
+    .section-inline .city-guide-link:hover {
+      color: rgba(232, 224, 212, 0.45) !important;
     }
 
     /* ─── Mobile Galaxy ─── */
@@ -367,9 +354,8 @@
         font-size: 0.65rem;
       }
 
-      .section-detail {
-        max-height: 70vh;
-        padding: 2rem 1.5rem 2.5rem;
+      .section-inline {
+        padding: 0 1.5rem 3rem;
       }
 
       .world-header {
@@ -407,7 +393,7 @@
     <header class="world-header">
       <a href="index.html" class="back-btn" style="text-decoration:none;">&larr;</a>
       <p class="world-title">Stephie's World</p>
-      <p class="world-tagline">writer &middot; builder &middot; fl&acirc;neur</p>
+      <p class="world-tagline">writer &middot; tinkerer &middot; fl&acirc;neur</p>
     </header>
 
     <main class="galaxy-container">
@@ -483,18 +469,8 @@
 
   </div>
 
-  <!-- Overlay -->
-  <div class="section-overlay" id="sectionOverlay"></div>
-
-  <!-- Detail panel -->
-  <div class="section-detail" id="sectionDetail">
-    <button class="section-detail-close" id="sectionClose">&times;</button>
-    <div class="section-detail-inner">
-      <p class="section-detail-number" id="sectionNumber"></p>
-      <p class="section-detail-title" id="sectionTitle"></p>
-      <div id="sectionBody"></div>
-    </div>
-  </div>
+  <!-- Inline section content area (appears below galaxy) -->
+  <div id="sectionInline"></div>
 
   <!-- Hidden section content -->
   <div style="display:none;">
@@ -702,12 +678,8 @@
     ];
 
     var galaxy = document.getElementById('galaxy');
-    var overlay = document.getElementById('sectionOverlay');
-    var detail = document.getElementById('sectionDetail');
-    var detailBody = document.getElementById('sectionBody');
-    var detailTitle = document.getElementById('sectionTitle');
-    var detailNumber = document.getElementById('sectionNumber');
-    var closeBtn = document.getElementById('sectionClose');
+    var inlineContainer = document.getElementById('sectionInline');
+    var currentSection = null;
 
     function openSection(key) {
       var section = sections.find(function(s) { return s.key === key; });
@@ -716,14 +688,23 @@
       var content = document.getElementById('content-' + key);
       if (!content) return;
 
-      // Set panel content
-      detailNumber.textContent = section.num;
-      detailTitle.textContent = section.title;
-      detailBody.innerHTML = content.innerHTML;
+      // If clicking same planet, close it
+      if (currentSection === key) {
+        closeSection();
+        return;
+      }
 
-      // Show panel
-      detail.classList.add('visible');
-      overlay.classList.add('visible');
+      currentSection = key;
+
+      // Build inline content
+      inlineContainer.innerHTML =
+        '<div class="section-inline">' +
+          '<p class="section-inline-number">' + section.num + '</p>' +
+          '<p class="section-inline-title">' + section.title + '</p>' +
+          '<div class="accordion-content">' + content.innerHTML + '</div>' +
+          '<button class="section-inline-close" onclick="closeSection()">close</button>' +
+        '</div>';
+
       galaxy.classList.add('has-active');
 
       // Mark active planet
@@ -731,11 +712,14 @@
         p.classList.remove('active');
         if (p.dataset.section === key) p.classList.add('active');
       });
+
+      // Scroll to content
+      inlineContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function closeSection() {
-      detail.classList.remove('visible');
-      overlay.classList.remove('visible');
+      currentSection = null;
+      inlineContainer.innerHTML = '';
       galaxy.classList.remove('has-active');
       document.querySelectorAll('.planet').forEach(function(p) {
         p.classList.remove('active');
@@ -749,9 +733,7 @@
       });
     });
 
-    // Close handlers
-    closeBtn.addEventListener('click', closeSection);
-    overlay.addEventListener('click', closeSection);
+    // Escape to close
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeSection();
     });

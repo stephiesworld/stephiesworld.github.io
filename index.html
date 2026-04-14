@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stephie's World — Stephanie Del Paggio</title>
-  <meta name="description" content="The personal world of Stephanie Del Paggio — writer, builder, and wanderer based in New York.">
+  <meta name="description" content="The personal world of Stephanie Del Paggio — writer, tinkerer, and wanderer based in New York.">
   <meta name="keywords" content="Stephanie Del Paggio, Stephie Del Paggio, writer, New York, tech, literary fiction">
   <meta property="og:title" content="Stephie's World — Stephanie Del Paggio">
-  <meta property="og:description" content="Writer, builder, wanderer. Based in New York.">
+  <meta property="og:description" content="Writer, tinkerer, wanderer. Based in New York.">
   <meta property="og:type" content="website">
   <script type="application/ld+json">
   {
@@ -35,7 +35,7 @@
         <img src="photo.png" alt="Stephanie Del Paggio" class="landing-image">
       </div>
       <h1 class="sr-only">Stephanie Del Paggio</h1>
-      <p class="landing-welcome">welcome</p>
+      <p class="landing-welcome" id="greeting">welcome</p>
       <button class="landing-enter" id="enterBtn" aria-label="Enter site">
         <span class="enter-text">enter</span>
       </button>
@@ -43,6 +43,15 @@
   </div>
 
   <script>
+    var greetings = [
+      '\u4F60\u597D',
+      'bonjour',
+      'ciao',
+      'greetings'
+    ];
+    var greeting = greetings[Math.floor(Math.random() * greetings.length)];
+    document.getElementById('greeting').textContent = greeting;
+
     document.getElementById('enterBtn').addEventListener('click', function() {
       document.getElementById('landing').classList.add('landing-exit');
       setTimeout(function() {
