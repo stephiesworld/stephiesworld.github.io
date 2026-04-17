@@ -615,6 +615,343 @@ h1, h2, h3 {
   }
 }
 
+/* ─── Cosmos: starfield, nebula, shooting stars ─── */
+.cosmos {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  transform: translate3d(var(--cosmos-x, 0), var(--cosmos-y, 0), 0);
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cosmos-star {
+  position: absolute;
+  background: #e8e0d4;
+  border-radius: 50%;
+  opacity: var(--min, 0.1);
+  animation: twinkle var(--dur, 4s) ease-in-out var(--delay, 0s) infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: var(--min, 0.1); }
+  50% { opacity: var(--max, 0.5); }
+}
+
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  animation: nebulaDrift 28s ease-in-out infinite;
+}
+
+.nebula-warm {
+  width: 60vw;
+  height: 60vw;
+  top: 8%;
+  left: 38%;
+  background: radial-gradient(circle, rgba(232, 200, 160, 0.07) 0%, transparent 70%);
+}
+
+.nebula-cool {
+  width: 55vw;
+  height: 55vw;
+  top: 45%;
+  left: 8%;
+  background: radial-gradient(circle, rgba(160, 180, 220, 0.05) 0%, transparent 70%);
+  animation-delay: -14s;
+  animation-direction: reverse;
+}
+
+@keyframes nebulaDrift {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(2vw, -2vw); }
+  66% { transform: translate(-2vw, 2vw); }
+}
+
+.shooting-wrap {
+  position: absolute;
+  width: 100vw;
+  height: 1px;
+  left: 0;
+  pointer-events: none;
+  transform-origin: 0 0;
+}
+
+.shooting-wrap.s1 { top: 22%; transform: rotate(14deg); }
+.shooting-wrap.s2 { top: 68%; transform: rotate(-9deg); }
+
+.shooting-star {
+  position: absolute;
+  width: 130px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(232, 224, 212, 0.55) 60%, rgba(232, 224, 212, 0.9) 100%);
+  left: 0;
+  opacity: 0;
+  animation: shoot var(--dur, 15s) ease-in var(--delay, 6s) infinite;
+}
+
+@keyframes shoot {
+  0% { transform: translateX(-150px); opacity: 0; }
+  2% { opacity: 1; }
+  12% { opacity: 1; }
+  18% { transform: translateX(110vw); opacity: 0; }
+  100% { transform: translateX(110vw); opacity: 0; }
+}
+
+/* World content sits above cosmos */
+.world { position: relative; z-index: 1; }
+.landing { z-index: 1000; }
+
+/* Galaxy parallax (applied inside world.html too) */
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmos-star, .nebula, .shooting-star {
+    animation: none !important;
+  }
+  .cosmos { transition: none !important; transform: none !important; }
+}
+
+/* ─── Theme: Cherry Accent (cosmic base + cherry signature color) ─── */
+body.theme-cherry-accent .galaxy-center-dot {
+  background: rgba(220, 55, 80, 0.8);
+  box-shadow:
+    0 0 18px rgba(220, 55, 80, 0.32),
+    0 0 40px rgba(200, 40, 70, 0.16),
+    0 0 90px rgba(180, 30, 60, 0.09);
+  animation: sunBreathCherryAccent 6s ease-in-out infinite;
+}
+
+@keyframes sunBreathCherryAccent {
+  0%, 100% {
+    box-shadow:
+      0 0 18px rgba(220, 55, 80, 0.32),
+      0 0 40px rgba(200, 40, 70, 0.16),
+      0 0 90px rgba(180, 30, 60, 0.09);
+  }
+  50% {
+    box-shadow:
+      0 0 26px rgba(235, 75, 100, 0.5),
+      0 0 58px rgba(210, 50, 75, 0.28),
+      0 0 120px rgba(190, 40, 70, 0.15);
+  }
+}
+
+body.theme-cherry-accent .nebula-warm {
+  background: radial-gradient(circle, rgba(220, 60, 85, 0.1) 0%, transparent 70%);
+}
+
+body.theme-cherry-accent .nebula-cool {
+  background: radial-gradient(circle, rgba(200, 90, 110, 0.06) 0%, transparent 70%);
+}
+
+body.theme-cherry-accent .shooting-star {
+  background: linear-gradient(90deg, transparent 0%, rgba(235, 85, 105, 0.6) 60%, rgba(250, 110, 130, 0.95) 100%);
+}
+
+body.theme-cherry-accent .galaxy-constellation {
+  stroke: rgba(220, 70, 95, 0.13);
+}
+
+body.theme-cherry-accent .planet:hover .planet-dot {
+  background: rgba(235, 75, 95, 0.85);
+  box-shadow: 0 0 14px rgba(235, 75, 95, 0.28);
+}
+
+body.theme-cherry-accent .planet.active .planet-dot {
+  background: rgba(235, 75, 95, 0.95);
+  box-shadow: 0 0 18px rgba(235, 75, 95, 0.35);
+}
+
+body.theme-cherry-accent .section-inline .accordion-content a:hover {
+  color: rgba(235, 85, 105, 0.85) !important;
+  border-bottom-color: rgba(235, 85, 105, 0.45) !important;
+}
+
+body.theme-cherry-accent .footer-maktub:hover {
+  color: rgba(235, 85, 105, 0.75);
+}
+
+/* ─── Theme: Cherry Full (cream canvas + deep cherry typography) ─── */
+body.theme-cherry-full {
+  background: #fbf5ea;
+  color: #5c111e;
+}
+
+body.theme-cherry-full .landing { background: #fbf5ea; }
+body.theme-cherry-full .landing-welcome { color: rgba(139, 30, 47, 0.65); }
+body.theme-cherry-full .enter-text { color: rgba(139, 30, 47, 0.6); }
+body.theme-cherry-full .landing-enter:hover .enter-text { color: rgba(139, 30, 47, 0.9); }
+
+body.theme-cherry-full .world-title { color: rgba(139, 30, 47, 0.6); }
+body.theme-cherry-full .world-tagline { color: rgba(139, 30, 47, 0.5); }
+body.theme-cherry-full .world-header::after { background: rgba(139, 30, 47, 0.22); }
+body.theme-cherry-full .back-btn { color: rgba(139, 30, 47, 0.4); }
+body.theme-cherry-full .back-btn:hover { color: rgba(139, 30, 47, 0.8); }
+
+body.theme-cherry-full .cosmos-star,
+body.theme-cherry-full .shooting-wrap { display: none; }
+
+body.theme-cherry-full .nebula-warm {
+  background: radial-gradient(circle, rgba(220, 110, 130, 0.22) 0%, transparent 70%);
+}
+
+body.theme-cherry-full .nebula-cool {
+  background: radial-gradient(circle, rgba(200, 140, 150, 0.12) 0%, transparent 70%);
+}
+
+body.theme-cherry-full .galaxy-orbit ellipse {
+  stroke: rgba(139, 30, 47, 0.16);
+}
+
+body.theme-cherry-full .galaxy-constellation {
+  stroke: rgba(139, 30, 47, 0.22);
+}
+
+body.theme-cherry-full .galaxy-center-dot {
+  background: rgba(179, 40, 60, 0.9);
+  box-shadow:
+    0 0 18px rgba(179, 40, 60, 0.32),
+    0 0 40px rgba(210, 90, 110, 0.22),
+    0 0 90px rgba(220, 140, 150, 0.18);
+  animation: sunBreathCherryFull 6s ease-in-out infinite;
+}
+
+@keyframes sunBreathCherryFull {
+  0%, 100% {
+    box-shadow:
+      0 0 18px rgba(179, 40, 60, 0.32),
+      0 0 40px rgba(210, 90, 110, 0.22),
+      0 0 90px rgba(220, 140, 150, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 26px rgba(179, 40, 60, 0.5),
+      0 0 58px rgba(210, 90, 110, 0.32),
+      0 0 120px rgba(220, 140, 150, 0.24);
+  }
+}
+
+body.theme-cherry-full .planet-dot {
+  background: rgba(179, 40, 60, 0.75);
+}
+
+body.theme-cherry-full .planet-glow {
+  background: radial-gradient(circle, rgba(220, 110, 130, 0.28) 0%, transparent 70%);
+}
+
+body.theme-cherry-full .planet:hover .planet-dot {
+  background: rgba(179, 40, 60, 1);
+  box-shadow: 0 0 14px rgba(179, 40, 60, 0.38);
+}
+
+body.theme-cherry-full .planet.active .planet-dot {
+  background: rgba(179, 40, 60, 1);
+  box-shadow: 0 0 20px rgba(179, 40, 60, 0.45);
+}
+
+body.theme-cherry-full .planet-label {
+  color: rgba(139, 30, 47, 0.5);
+}
+
+body.theme-cherry-full .planet:hover .planet-label {
+  color: rgba(139, 30, 47, 0.85);
+}
+
+body.theme-cherry-full .section-inline-number,
+body.theme-cherry-full .section-inline-title {
+  color: rgba(139, 30, 47, 0.65) !important;
+}
+
+body.theme-cherry-full .section-inline-title::after {
+  background: rgba(139, 30, 47, 0.22) !important;
+}
+
+body.theme-cherry-full .section-inline .accordion-content p {
+  color: rgba(92, 17, 30, 0.8) !important;
+}
+
+body.theme-cherry-full .section-inline .accordion-content a {
+  color: rgba(179, 40, 60, 0.85) !important;
+  border-bottom-color: rgba(179, 40, 60, 0.3) !important;
+}
+
+body.theme-cherry-full .section-inline .accordion-content a:hover {
+  color: rgba(179, 40, 60, 1) !important;
+  border-bottom-color: rgba(179, 40, 60, 0.55) !important;
+}
+
+body.theme-cherry-full .section-inline-close {
+  color: rgba(139, 30, 47, 0.45) !important;
+}
+
+body.theme-cherry-full .section-inline-close:hover {
+  color: rgba(139, 30, 47, 0.8) !important;
+}
+
+body.theme-cherry-full .footer-quote {
+  color: rgba(139, 30, 47, 0.7);
+}
+
+body.theme-cherry-full .footer-maktub {
+  color: rgba(139, 30, 47, 0.45);
+}
+
+body.theme-cherry-full .footer-maktub:hover {
+  color: rgba(139, 30, 47, 0.8);
+}
+
+/* Cherry-full subsection content (books, cities, etc.) */
+body.theme-cherry-full .section-inline .book-title,
+body.theme-cherry-full .section-inline .city-name,
+body.theme-cherry-full .section-inline .project-name,
+body.theme-cherry-full .section-inline .career-company {
+  color: rgba(139, 30, 47, 0.85) !important;
+}
+
+body.theme-cherry-full .section-inline .book-author,
+body.theme-cherry-full .section-inline .city-desc,
+body.theme-cherry-full .section-inline .project-status,
+body.theme-cherry-full .section-inline .career-role,
+body.theme-cherry-full .section-inline .project-year,
+body.theme-cherry-full .section-inline .subsection-label {
+  color: rgba(139, 30, 47, 0.55) !important;
+}
+
+body.theme-cherry-full .section-inline .book-item {
+  border-color: rgba(139, 30, 47, 0.1) !important;
+}
+
+body.theme-cherry-full .section-inline .career-entry {
+  border-left-color: rgba(139, 30, 47, 0.2) !important;
+}
+
+body.theme-cherry-full .section-inline .career-entry::before {
+  background: rgba(179, 40, 60, 0.7) !important;
+}
+
+body.theme-cherry-full .section-inline .cities-grid {
+  background: rgba(139, 30, 47, 0.08) !important;
+}
+
+body.theme-cherry-full .section-inline .city-card {
+  background: #fbf5ea !important;
+}
+
+body.theme-cherry-full .section-inline .city-guide-link {
+  color: rgba(139, 30, 47, 0.5) !important;
+}
+
+body.theme-cherry-full .section-inline .city-guide-link:hover {
+  color: rgba(139, 30, 47, 0.85) !important;
+}
+
+body.theme-cherry-full .section-inline .cities-footnote {
+  color: rgba(139, 30, 47, 0.5) !important;
+}
+
 /* ─── City Guide Link ─── */
 .city-guide-link {
   display: inline-block;

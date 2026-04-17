@@ -37,6 +37,8 @@
       height: min(85vw, 600px);
       max-width: 600px;
       max-height: 600px;
+      transform: translate3d(var(--galaxy-x, 0), var(--galaxy-y, 0), 0);
+      transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     /* Orbital ring */
@@ -44,12 +46,28 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
+      overflow: visible;
     }
 
     .galaxy-orbit ellipse {
       fill: none;
-      stroke: rgba(232, 224, 212, 0.05);
+      stroke: rgba(232, 224, 212, 0.09);
       stroke-width: 1;
+    }
+
+    .galaxy-constellation {
+      fill: none;
+      stroke: rgba(232, 224, 212, 0.08);
+      stroke-width: 1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 3000;
+      stroke-dashoffset: 3000;
+      animation: drawConstellation 5s ease 0.6s forwards;
+    }
+
+    @keyframes drawConstellation {
+      to { stroke-dashoffset: 0; }
     }
 
     /* Center sun */
@@ -64,12 +82,31 @@
     }
 
     .galaxy-center-dot {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: rgba(232, 224, 212, 0.2);
-      margin: 0 auto 0.6rem;
-      box-shadow: 0 0 20px rgba(232, 224, 212, 0.08);
+      background: rgba(232, 224, 212, 0.4);
+      margin: 0 auto;
+      box-shadow:
+        0 0 18px rgba(232, 224, 212, 0.2),
+        0 0 40px rgba(232, 200, 160, 0.1),
+        0 0 90px rgba(232, 200, 160, 0.06);
+      animation: sunBreath 6s ease-in-out infinite;
+    }
+
+    @keyframes sunBreath {
+      0%, 100% {
+        box-shadow:
+          0 0 18px rgba(232, 224, 212, 0.2),
+          0 0 40px rgba(232, 200, 160, 0.1),
+          0 0 90px rgba(232, 200, 160, 0.06);
+      }
+      50% {
+        box-shadow:
+          0 0 24px rgba(232, 224, 212, 0.32),
+          0 0 56px rgba(232, 200, 160, 0.15),
+          0 0 120px rgba(232, 200, 160, 0.1);
+      }
     }
 
     .galaxy-center-label {
@@ -388,21 +425,41 @@
 </head>
 <body>
 
+  <script>
+    // Theme switcher: default is cherry-full. Override with ?theme=cosmic or ?theme=cherry-accent
+    (function() {
+      var t = new URLSearchParams(window.location.search).get('theme');
+      if (t === 'cosmic') return;
+      if (t === 'cherry-accent') { document.body.classList.add('theme-cherry-accent'); return; }
+      document.body.classList.add('theme-cherry-full');
+    })();
+  </script>
+
+  <!-- Cosmic background: starfield + nebula + shooting stars -->
+  <div class="cosmos" id="cosmos" aria-hidden="true">
+    <div class="nebula nebula-warm"></div>
+    <div class="nebula nebula-cool"></div>
+    <div class="shooting-wrap s1"><div class="shooting-star" style="--dur: 16s; --delay: 5s;"></div></div>
+    <div class="shooting-wrap s2"><div class="shooting-star" style="--dur: 22s; --delay: 13s;"></div></div>
+  </div>
+
   <div class="world" id="world">
 
     <header class="world-header">
       <a href="index.html" class="back-btn" style="text-decoration:none;">&larr;</a>
       <p class="world-title">Stephie's World</p>
-      <p class="world-tagline">writer &middot; tinkerer &middot; fl&acirc;neur</p>
     </header>
 
     <main class="galaxy-container">
       <div class="galaxy" id="galaxy">
 
-        <!-- Orbital ring SVG -->
+        <!-- Orbital ring + constellation SVG -->
         <svg class="galaxy-orbit" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
           <ellipse cx="300" cy="300" rx="240" ry="220" />
           <ellipse cx="300" cy="300" rx="160" ry="140" />
+          <!-- Constellation: ring through the 8 planets -->
+          <polyline class="galaxy-constellation"
+            points="300,60 480,120 540,288 456,468 276,540 108,450 48,264 132,108 300,60" />
         </svg>
 
         <!-- Center -->
@@ -665,6 +722,58 @@
 
   <script src="quotes.js"></script>
   <script>
+    // Starfield: scatter tiny twinkling stars into .cosmos
+    (function() {
+      var cosmos = document.getElementById('cosmos');
+      if (!cosmos) return;
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var count = window.innerWidth < 600 ? 70 : 130;
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < count; i++) {
+        var s = document.createElement('div');
+        s.className = 'cosmos-star';
+        var big = Math.random() < 0.12;
+        var size = big ? 2 : 1;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.top = (Math.random() * 100).toFixed(2) + '%';
+        s.style.left = (Math.random() * 100).toFixed(2) + '%';
+        var min = (Math.random() * 0.15 + 0.05);
+        var max = (Math.random() * 0.45 + 0.35);
+        s.style.setProperty('--min', min.toFixed(2));
+        s.style.setProperty('--max', max.toFixed(2));
+        s.style.setProperty('--dur', (Math.random() * 4 + 3).toFixed(1) + 's');
+        s.style.setProperty('--delay', (Math.random() * 6).toFixed(1) + 's');
+        if (reduced) { s.style.opacity = min.toFixed(2); }
+        frag.appendChild(s);
+      }
+      cosmos.appendChild(frag);
+    })();
+
+    // Mouse parallax: cosmos drifts one way, galaxy the other — subtle depth
+    (function() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.matchMedia('(hover: none)').matches) return; // skip on touch
+      var root = document.documentElement;
+      var ticking = false;
+      var tx = 0, ty = 0;
+      document.addEventListener('mousemove', function(e) {
+        var nx = (e.clientX / window.innerWidth - 0.5);
+        var ny = (e.clientY / window.innerHeight - 0.5);
+        tx = nx; ty = ny;
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(function() {
+            root.style.setProperty('--cosmos-x', (tx * -12).toFixed(1) + 'px');
+            root.style.setProperty('--cosmos-y', (ty * -12).toFixed(1) + 'px');
+            root.style.setProperty('--galaxy-x', (tx * 6).toFixed(1) + 'px');
+            root.style.setProperty('--galaxy-y', (ty * 6).toFixed(1) + 'px');
+            ticking = false;
+          });
+        }
+      });
+    })();
+
     setRandomQuote();
 
     var sections = [
