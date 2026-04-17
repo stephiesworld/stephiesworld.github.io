@@ -133,7 +133,18 @@
       z-index: 3;
       opacity: 0;
       animation: staggerIn 0.6s ease forwards;
+      text-decoration: none;
+      color: inherit;
     }
+
+    .planet-ext {
+      font-size: 0.55rem;
+      opacity: 0.6;
+      margin-left: 0.15rem;
+      transition: opacity 0.3s ease;
+    }
+
+    .planet:hover .planet-ext { opacity: 1; }
 
     .planet:nth-child(1) { animation-delay: 0.2s; }
     .planet:nth-child(2) { animation-delay: 0.35s; }
@@ -516,6 +527,12 @@
           <span class="planet-label">Tennis</span>
         </button>
 
+        <!-- Curiosities: inner ring, external link to Substack -->
+        <a href="https://stephiesuniverse.substack.com" target="_blank" rel="noopener" class="planet" style="top: 30%; left: 50%; --size: 50px; --dot: 6px; --glow: rgba(220, 110, 140, 0.15); --pulse: 5.2s;" aria-label="Curiosities — my Substack (opens in new tab)">
+          <div class="planet-glow"><div class="planet-dot"></div></div>
+          <span class="planet-label">Curiosities<span class="planet-ext">&#x2197;</span></span>
+        </a>
+
       </div>
     </main>
 
@@ -836,8 +853,9 @@
       });
     }
 
-    // Planet click handlers
+    // Planet click handlers (anchor-based planets navigate themselves)
     document.querySelectorAll('.planet').forEach(function(planet) {
+      if (planet.tagName === 'A') return;
       planet.addEventListener('click', function() {
         openSection(this.dataset.section);
       });
