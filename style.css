@@ -705,26 +705,19 @@ h1, h2, h3 {
 
 /* ─── Theme: Cherry Accent (cosmic base + cherry signature color) ─── */
 body.theme-cherry-accent .galaxy-center-dot {
-  background: rgba(220, 55, 80, 0.8);
-  box-shadow:
-    0 0 18px rgba(220, 55, 80, 0.32),
-    0 0 40px rgba(200, 40, 70, 0.16),
-    0 0 90px rgba(180, 30, 60, 0.09);
+  color: rgba(220, 55, 80, 0.9);
+  filter: drop-shadow(0 0 8px rgba(220, 55, 80, 0.25));
   animation: sunBreathCherryAccent 6s ease-in-out infinite;
 }
 
 @keyframes sunBreathCherryAccent {
   0%, 100% {
-    box-shadow:
-      0 0 18px rgba(220, 55, 80, 0.32),
-      0 0 40px rgba(200, 40, 70, 0.16),
-      0 0 90px rgba(180, 30, 60, 0.09);
+    filter: drop-shadow(0 0 8px rgba(220, 55, 80, 0.25));
+    opacity: 0.9;
   }
   50% {
-    box-shadow:
-      0 0 26px rgba(235, 75, 100, 0.5),
-      0 0 58px rgba(210, 50, 75, 0.28),
-      0 0 120px rgba(190, 40, 70, 0.15);
+    filter: drop-shadow(0 0 14px rgba(235, 75, 100, 0.4));
+    opacity: 1;
   }
 }
 
@@ -800,26 +793,19 @@ body.theme-cherry-full .galaxy-constellation {
 }
 
 body.theme-cherry-full .galaxy-center-dot {
-  background: rgba(179, 40, 60, 0.9);
-  box-shadow:
-    0 0 18px rgba(179, 40, 60, 0.32),
-    0 0 40px rgba(210, 90, 110, 0.22),
-    0 0 90px rgba(220, 140, 150, 0.18);
+  color: rgba(179, 40, 60, 0.9);
+  filter: drop-shadow(0 0 8px rgba(179, 40, 60, 0.25));
   animation: sunBreathCherryFull 6s ease-in-out infinite;
 }
 
 @keyframes sunBreathCherryFull {
   0%, 100% {
-    box-shadow:
-      0 0 18px rgba(179, 40, 60, 0.32),
-      0 0 40px rgba(210, 90, 110, 0.22),
-      0 0 90px rgba(220, 140, 150, 0.18);
+    filter: drop-shadow(0 0 8px rgba(179, 40, 60, 0.25));
+    opacity: 0.9;
   }
   50% {
-    box-shadow:
-      0 0 26px rgba(179, 40, 60, 0.5),
-      0 0 58px rgba(210, 90, 110, 0.32),
-      0 0 120px rgba(220, 140, 150, 0.24);
+    filter: drop-shadow(0 0 14px rgba(179, 40, 60, 0.45));
+    opacity: 1;
   }
 }
 

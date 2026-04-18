@@ -82,30 +82,22 @@
     }
 
     .galaxy-center-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(232, 224, 212, 0.4);
-      margin: 0 auto;
-      box-shadow:
-        0 0 18px rgba(232, 224, 212, 0.2),
-        0 0 40px rgba(232, 200, 160, 0.1),
-        0 0 90px rgba(232, 200, 160, 0.06);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 30px;
+      line-height: 1;
+      color: rgba(232, 224, 212, 0.55);
+      filter: drop-shadow(0 0 8px rgba(232, 200, 160, 0.2));
       animation: sunBreath 6s ease-in-out infinite;
     }
 
     @keyframes sunBreath {
       0%, 100% {
-        box-shadow:
-          0 0 18px rgba(232, 224, 212, 0.2),
-          0 0 40px rgba(232, 200, 160, 0.1),
-          0 0 90px rgba(232, 200, 160, 0.06);
+        filter: drop-shadow(0 0 8px rgba(232, 200, 160, 0.2));
+        opacity: 0.85;
       }
       50% {
-        box-shadow:
-          0 0 24px rgba(232, 224, 212, 0.32),
-          0 0 56px rgba(232, 200, 160, 0.15),
-          0 0 120px rgba(232, 200, 160, 0.1);
+        filter: drop-shadow(0 0 14px rgba(232, 200, 160, 0.32));
+        opacity: 1;
       }
     }
 
@@ -476,7 +468,7 @@
 
         <!-- Center -->
         <div class="galaxy-center">
-          <div class="galaxy-center-dot"></div>
+          <div class="galaxy-center-dot">&#10086;</div>
         </div>
 
         <!-- Planets — positioned via inline styles (percentages of 600x600 grid) -->
