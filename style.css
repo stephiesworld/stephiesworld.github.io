@@ -186,13 +186,14 @@ h1, h2, h3 {
 }
 
 
-.world-tagline {
-  font-size: 0.4rem;
+.world-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
   font-weight: 300;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
   color: rgba(232, 224, 212, 0.3);
-  margin-top: 1rem;
+  margin-top: 0.4rem;
 }
 
 .world-header::after {
@@ -774,7 +775,7 @@ body.theme-cherry-full .enter-text { color: rgba(139, 30, 47, 0.6); }
 body.theme-cherry-full .landing-enter:hover .enter-text { color: rgba(139, 30, 47, 0.9); }
 
 body.theme-cherry-full .world-title { color: rgba(139, 30, 47, 0.6); }
-body.theme-cherry-full .world-tagline { color: rgba(139, 30, 47, 0.5); }
+body.theme-cherry-full .world-subtitle { color: rgba(139, 30, 47, 0.5); }
 body.theme-cherry-full .world-header::after { background: rgba(139, 30, 47, 0.22); }
 body.theme-cherry-full .back-btn { color: rgba(139, 30, 47, 0.4); }
 body.theme-cherry-full .back-btn:hover { color: rgba(139, 30, 47, 0.8); }
