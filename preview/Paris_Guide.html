@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Paris Guide · Stephie's World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/site.css" />
+<style>
+  .g-shell { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 28px var(--page-pad) 80px; }
+  .g-top { display: flex; justify-content: space-between; padding: 12px 0 40px; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; }
+  .g-top a:hover { color: var(--ember); }
+  .g-top a { color: inherit; text-decoration: none; }
+
+  .g-hero {
+    padding: 48px 0 56px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 72px;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: end;
+  }
+  .g-hero .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ember); margin-bottom: 18px; }
+  .g-hero h1 {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: clamp(72px, 10vw, 160px); line-height: 0.9; margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .g-hero h1 em { color: var(--ember); }
+  .g-hero .sub { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 420px; }
+
+  /* Sections */
+  .g-section { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+  .g-section:last-of-type { border-bottom: 0; }
+  .g-sec-head {
+    display: grid; grid-template-columns: 200px 1fr; gap: 40px;
+    align-items: baseline; margin-bottom: 36px;
+  }
+  .g-sec-head .num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-mute); }
+  .g-sec-head h2 {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px); line-height: 0.95; margin: 0;
+    letter-spacing: -0.015em;
+  }
+  .g-sec-head h2 em { color: var(--ember); }
+
+  .g-intro {
+    font-family: var(--serif); font-style: italic; font-size: 19px;
+    line-height: 1.7; color: var(--ink-soft);
+    max-width: 680px;
+    margin: 0 0 40px 240px;
+  }
+  .g-intro em { color: var(--ember); font-style: italic; }
+
+  .g-list { display: grid; grid-template-columns: 200px 1fr; gap: 40px; }
+  .g-list .side {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.26em;
+    text-transform: uppercase; color: var(--ink-mute);
+  }
+  .g-entries { display: flex; flex-direction: column; }
+  .g-entry {
+    display: grid; grid-template-columns: 80px 1fr auto; gap: 24px;
+    padding: 22px 0; align-items: baseline;
+    border-bottom: 1px dashed var(--rule);
+    transition: background .4s;
+  }
+  .g-entry:last-child { border-bottom: 0; }
+  .g-entry:hover { background: rgba(232,197,189,0.15); }
+  .g-entry .idx {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
+    color: var(--ember);
+  }
+  .g-entry .body { display: flex; flex-direction: column; gap: 4px; }
+  .g-entry .name {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: 26px; line-height: 1.15; color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .g-entry .note {
+    font-family: var(--serif); font-style: italic; font-size: 15px;
+    color: var(--ink-soft); line-height: 1.5; max-width: 560px;
+  }
+  .g-entry .place {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--ink-mute);
+    white-space: nowrap;
+  }
+
+  .g-quote {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: clamp(30px, 3.4vw, 46px); line-height: 1.25;
+    color: var(--ink); text-align: center;
+    padding: 80px 0; max-width: 900px; margin: 0 auto;
+    letter-spacing: -0.008em;
+  }
+  .g-quote em { color: var(--ember); }
+  .g-quote .attr { display: block; font-family: var(--mono); font-style: normal; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-mute); margin-top: 24px; }
+
+  .g-foot {
+    padding-top: 64px; text-align: center;
+    font-family: var(--serif); font-style: italic;
+    color: var(--ink-mute); font-size: 13px; line-height: 1.9;
+  }
+  .g-foot .mark { color: var(--ember); font-size: 22px; margin: 10px 0; display: inline-block; }
+
+  @media (max-width: 900px) {
+    .g-hero { grid-template-columns: 1fr; gap: 28px; }
+    .g-sec-head, .g-list { grid-template-columns: 1fr; gap: 12px; }
+    .g-intro { margin-left: 0; }
+    .g-entry { grid-template-columns: 50px 1fr; }
+    .g-entry .place { grid-column: 2 / 3; }
+  }
+</style>
+</head>
+<body>
+
+<div class="g-shell">
+
+  <nav class="g-top">
+    <a href="Cities.html"><em>← back to cities</em></a>
+    <div><em>an archive</em> / <em>cities</em> / <em>paris</em></div>
+  </nav>
+
+  <section class="g-hero">
+    <div>
+      <div class="eyebrow">a field guide · paris</div>
+      <h1><em>Paris,<br/>a <em>field<br/>guide</em>.</em></h1>
+    </div>
+    <div class="sub">
+      <em>A working list.</em> Places I return to, things I learned to love slowly, and the small corners of the city that feel like they were made for a long afternoon with nowhere to be.
+    </div>
+  </section>
+
+  <section class="g-section">
+    <div class="g-sec-head">
+      <div class="num">I. / museums</div>
+      <h2><em>Where I keep<br/>going <em>back</em>.</em></h2>
+    </div>
+    <p class="g-intro">
+      Paris is a city that <em>rewards patience</em>. These are the museums where I've spent the longest afternoons, and the ones I return to whenever I'm passing through.
+    </p>
+    <div class="g-list">
+      <div class="side">iv entries</div>
+      <div class="g-entries">
+        <div class="g-entry"><div class="idx">01</div><div class="body"><div class="name"><em>Fondation Louis Vuitton</em></div><div class="note">My favorite museum anywhere. One exhibit at a time. The arc of an artist's life traced floor by floor — beginning, middle, end, and the inspirations that shaped them.</div></div><div class="place">16e · bois de boulogne</div></div>
+        <div class="g-entry"><div class="idx">02</div><div class="body"><div class="name"><em>Musée Rodin</em></div><div class="note">A garden of sculptures, then the house. Read <em>You Must Change Your Life</em> before you go.</div></div><div class="place">7e</div></div>
+        <div class="g-entry"><div class="idx">03</div><div class="body"><div class="name"><em>Musée de l'Orangerie</em></div><div class="note">The two oval rooms of water lilies. Show up early. Sit a while.</div></div><div class="place">1er · tuileries</div></div>
+        <div class="g-entry"><div class="idx">04</div><div class="body"><div class="name"><em>Musée d'Orsay</em></div><div class="note">Renoir on the top floor. The clock window you've seen a thousand times in photos is better in person.</div></div><div class="place">7e</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g-section">
+    <div class="g-sec-head">
+      <div class="num">II. / cafés &amp; tables</div>
+      <h2><em>Long<br/><em>afternoons</em>.</em></h2>
+    </div>
+    <div class="g-list">
+      <div class="side">v entries</div>
+      <div class="g-entries">
+        <div class="g-entry"><div class="idx">01</div><div class="body"><div class="name"><em>Café de Flore</em></div><div class="note">Touristy and I don't care. Order the chocolat chaud. Sit upstairs.</div></div><div class="place">6e · saint-germain</div></div>
+        <div class="g-entry"><div class="idx">02</div><div class="body"><div class="name"><em>Du Pain et des Idées</em></div><div class="note">The escargot pistache. Arrive before 11.</div></div><div class="place">10e</div></div>
+        <div class="g-entry"><div class="idx">03</div><div class="body"><div class="name"><em>Le Bon Marché · Rose Bakery</em></div><div class="note">After browsing the ground floor. The light through the skylight is half the reason to go.</div></div><div class="place">7e · rue du bac</div></div>
+        <div class="g-entry"><div class="idx">04</div><div class="body"><div class="name"><em>Breizh Café</em></div><div class="note">Buckwheat galettes. Order one savory, one sweet, a cider in between.</div></div><div class="place">3e · marais</div></div>
+        <div class="g-entry"><div class="idx">05</div><div class="body"><div class="name"><em>Clown Bar</em></div><div class="note">Small menu, big natural wine list, the best room.</div></div><div class="place">11e</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="g-quote">
+    <em>"In Paris, beauty is treated as a necessity,<br/>not a luxury."</em>
+    <span class="attr">— a note to self</span>
+  </div>
+
+  <section class="g-section">
+    <div class="g-sec-head">
+      <div class="num">III. / walks</div>
+      <h2><em>The<br/><em>routes</em>.</em></h2>
+    </div>
+    <div class="g-list">
+      <div class="side">iii walks</div>
+      <div class="g-entries">
+        <div class="g-entry"><div class="idx">01</div><div class="body"><div class="name"><em>Rue du Bac → Pont Royal → Tuileries</em></div><div class="note">Morning walk. Finish with coffee at Angelina if you have time.</div></div><div class="place">7e → 1er</div></div>
+        <div class="g-entry"><div class="idx">02</div><div class="body"><div class="name"><em>Canal Saint-Martin at dusk</em></div><div class="note">A slow walk north. Stop at Ten Belles. Keep walking.</div></div><div class="place">10e · 19e</div></div>
+        <div class="g-entry"><div class="idx">03</div><div class="body"><div class="name"><em>Île Saint-Louis loop</em></div><div class="note">Any hour. Berthillon sorbet if the line isn't mad.</div></div><div class="place">4e</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g-section">
+    <div class="g-sec-head">
+      <div class="num">IV. / the address</div>
+      <h2><em>52 Rue<br/>du Bac</em></h2>
+    </div>
+    <p class="g-intro">
+      My first Paris address. I lived on East 52nd Street in New York for years before — so the coincidence felt like a little wink from the universe. The number follows me around.
+    </p>
+  </section>
+
+  <footer class="g-foot">
+    <div>a chapter of <em>stephie's world</em></div>
+    <div class="mark">✶</div>
+    <div><em>more guides coming.</em></div>
+  </footer>
+
+</div>
+
+</body>
+</html>

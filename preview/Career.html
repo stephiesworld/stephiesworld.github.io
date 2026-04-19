@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Career · Stephie's World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/site.css" />
+<style>
+  .cv-shell { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 28px var(--page-pad) 80px; }
+  .cv-top { display: flex; justify-content: space-between; padding: 12px 0 40px; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; }
+  .cv-top a { color: inherit; text-decoration: none; }
+  .cv-top a:hover { color: var(--ember); }
+
+  .cv-hero { padding: 48px 0 72px; border-bottom: 1px solid var(--rule); margin-bottom: 0; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: end; }
+  .cv-hero .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ember); margin-bottom: 18px; }
+  .cv-hero h1 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(64px, 9vw, 140px); line-height: 0.9; margin: 0; letter-spacing: -0.02em; }
+  .cv-hero h1 em { color: var(--ember); }
+  .cv-hero .sub { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 440px; }
+
+  /* Timeline */
+  .cv-timeline {
+    display: grid; grid-template-columns: 180px 1px 1fr;
+    gap: 0 60px;
+    padding: 80px 0 40px;
+  }
+  .cv-line { background: var(--rule); position: relative; }
+  .cv-line::before { content: ""; position: absolute; top: 0; left: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--ember); }
+  .cv-line::after { content: ""; position: absolute; bottom: 0; left: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--ember); }
+
+  .cv-dates { display: flex; flex-direction: column; gap: 200px; padding-top: 8px; }
+  .cv-entries { display: flex; flex-direction: column; gap: 200px; padding-top: 8px; }
+
+  .cv-date {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--ink-mute);
+    text-align: right;
+    position: relative;
+  }
+  .cv-date .yr { font-family: var(--serif); font-style: italic; font-size: 34px; font-weight: 400; color: var(--ink); letter-spacing: -0.01em; display: block; margin-top: 4px; text-transform: none; }
+  .cv-date::after {
+    content: ""; position: absolute; top: 18px; right: -63px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--paper); border: 1.5px solid var(--ember);
+  }
+
+  .cv-entry { position: relative; }
+  .cv-entry .role { font-family: var(--mono); font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ember); margin-bottom: 10px; }
+  .cv-entry h2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(36px, 5vw, 58px); line-height: 1; margin: 0 0 20px; letter-spacing: -0.015em; }
+  .cv-entry .tag { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ink-mute); margin-bottom: 24px; }
+  .cv-entry .tag em { color: var(--ember); }
+  .cv-entry p { font-family: var(--serif); font-style: italic; font-size: 17px; line-height: 1.7; color: var(--ink-soft); max-width: 640px; margin: 0 0 16px; }
+  .cv-entry p em { color: var(--ember); font-style: italic; }
+  .cv-entry .quote {
+    border-left: 2px solid var(--ember);
+    padding: 6px 0 6px 20px;
+    font-family: var(--serif); font-style: italic;
+    font-size: 19px; line-height: 1.5; color: var(--ink);
+    margin: 24px 0; max-width: 560px;
+  }
+
+  .cv-foot { padding: 96px 0 0; text-align: center; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; line-height: 1.9; }
+  .cv-foot .mark { color: var(--ember); font-size: 22px; margin: 10px 0; display: inline-block; }
+
+  @media (max-width: 900px) {
+    .cv-hero { grid-template-columns: 1fr; gap: 28px; }
+    .cv-timeline { grid-template-columns: 1fr; gap: 32px; }
+    .cv-line { display: none; }
+    .cv-date { text-align: left; }
+    .cv-date::after { display: none; }
+    .cv-dates, .cv-entries { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cv-shell">
+  <nav class="cv-top">
+    <a href="World_A.html"><em>← back to stephie's world</em></a>
+    <div><em>an archive</em> / <em>career</em></div>
+  </nav>
+
+  <section class="cv-hero">
+    <div>
+      <div class="eyebrow">chapter vii · career</div>
+      <h1><em>A working life,<br/>in <em>chapters</em>.</em></h1>
+    </div>
+    <div class="sub">
+      Morgan Stanley → Harry's → Little Bun → Amazon. A trail of things I've made and what each one taught me.
+    </div>
+  </section>
+
+  <div class="cv-timeline">
+    <div class="cv-dates">
+      <div class="cv-date">present<span class="yr">Amazon</span></div>
+      <div class="cv-date">founder<span class="yr">Little Bun</span></div>
+      <div class="cv-date">where I learned<span class="yr">Harry's</span></div>
+      <div class="cv-date">where I started<span class="yr">Morgan Stanley</span></div>
+    </div>
+
+    <div class="cv-line"></div>
+
+    <div class="cv-entries">
+      <div class="cv-entry">
+        <div class="role">iv. / present</div>
+        <h2><em>Amazon</em></h2>
+        <div class="tag"><em>post</em> · little bun</div>
+        <p>As challenging as Amazon is known for being, it wasn't anything close to how hard you are on yourself as a founder.</p>
+        <p>I get to work with businesses to sell and grow, and I've loved learning the systems inside Amazon's world — the logistics, the scale, the invisible infrastructure most shoppers never see.</p>
+      </div>
+
+      <div class="cv-entry">
+        <div class="role">iii. / founder</div>
+        <h2><em>Little Bun, Inc.</em></h2>
+        <div class="tag"><em>a food startup</em> · raised venture funding</div>
+        <p>Took everything I learned at Harry's and built a food startup. A big lesson in all the wrong things to do, honestly — but I wouldn't trade it.</p>
+        <div class="quote"><em>"Founding teaches you how hard you can be on yourself before it teaches you anything else."</em></div>
+      </div>
+
+      <div class="cv-entry">
+        <div class="role">ii. / where I learned to build</div>
+        <h2><em>Harry's</em></h2>
+        <div class="tag"><em>new products</em> · quality &amp; intention</div>
+        <p>Built new products with <em>incredible, fun, kind</em> people. When I showed up to the office sick one day, a colleague said —</p>
+        <div class="quote"><em>"Go home. We're just making razors, not curing cancer."</em></div>
+        <p>At the same time — a razor is five mini knives that people put on their face. Worth a little care.</p>
+      </div>
+
+      <div class="cv-entry">
+        <div class="role">i. / where I started</div>
+        <h2><em>Morgan Stanley</em></h2>
+        <div class="tag"><em>wealth management</em> · first exposure to AI</div>
+        <p>Through the <em>Next Best Action</em> system — and where I learned how emotional wealth management can be. Investing a person's assets ties to every desire and fear they could ever have.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="cv-foot">
+    <div>a chapter of <em>stephie's world</em></div>
+    <div class="mark">✶</div>
+    <div><em>"The making is the learning."</em></div>
+  </footer>
+</div>
+
+</body>
+</html>

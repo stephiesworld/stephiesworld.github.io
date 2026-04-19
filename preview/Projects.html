@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Projects · Stephie's World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/site.css" />
+<style>
+  .pf-shell { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 28px var(--page-pad) 80px; }
+  .pf-top { display: flex; justify-content: space-between; padding: 12px 0 40px; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; }
+  .pf-top a { color: inherit; text-decoration: none; }
+  .pf-top a:hover { color: var(--ember); }
+
+  .pf-hero { padding: 48px 0 72px; border-bottom: 1px solid var(--rule); margin-bottom: 72px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: end; }
+  .pf-hero .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ember); margin-bottom: 18px; }
+  .pf-hero h1 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(64px, 9vw, 140px); line-height: 0.9; margin: 0; letter-spacing: -0.02em; }
+  .pf-hero h1 em { color: var(--ember); }
+  .pf-hero .sub { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 440px; }
+
+  /* Case files */
+  .pf-case {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    box-shadow: 0 30px 80px -40px rgba(42,26,24,0.25);
+    margin-bottom: 40px;
+    position: relative;
+    display: grid; grid-template-columns: 1fr 1.4fr;
+    min-height: 420px;
+  }
+  .pf-case.reverse { grid-template-columns: 1.4fr 1fr; }
+  .pf-case.reverse .pf-side { order: 2; border-left: 1px solid rgba(42,26,24,0.12); border-right: 0; }
+
+  .pf-side {
+    padding: 40px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border-right: 1px solid rgba(42,26,24,0.12);
+    background: rgba(232,197,189,0.2);
+  }
+  .pf-side .top-row { display: flex; justify-content: space-between; align-items: start; }
+  .pf-side .file-no { font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-mute); }
+  .pf-side .status {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
+    padding: 4px 10px; border: 1px solid var(--ember); color: var(--ember);
+    border-radius: 2px;
+  }
+  .pf-side .status.done { border-color: var(--ink-mute); color: var(--ink-mute); }
+  .pf-side .side-meta { display: flex; flex-direction: column; gap: 14px; }
+  .pf-side .side-meta .row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-mute); padding: 8px 0; border-bottom: 1px dashed var(--rule); }
+  .pf-side .side-meta .row .v { color: var(--ink); font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 14px; }
+
+  .pf-body { padding: 48px 56px; display: flex; flex-direction: column; justify-content: center; }
+  .pf-body .cat { font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ember); margin-bottom: 14px; }
+  .pf-body h2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(42px, 5.5vw, 72px); line-height: 0.95; margin: 0 0 24px; letter-spacing: -0.015em; }
+  .pf-body h2 em { color: var(--ember); }
+  .pf-body p { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 580px; margin: 0 0 16px; }
+  .pf-body p em { color: var(--ember); font-style: italic; }
+  .pf-body .kicker {
+    border-left: 2px solid var(--ember);
+    padding: 6px 0 6px 20px;
+    font-family: var(--serif); font-style: italic;
+    font-size: 17px; color: var(--ink); max-width: 520px;
+    margin-top: 20px;
+  }
+
+  .pf-foot { padding: 96px 0 0; text-align: center; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; line-height: 1.9; }
+  .pf-foot .mark { color: var(--ember); font-size: 22px; margin: 10px 0; display: inline-block; }
+
+  @media (max-width: 900px) {
+    .pf-hero { grid-template-columns: 1fr; gap: 28px; }
+    .pf-case, .pf-case.reverse { grid-template-columns: 1fr; }
+    .pf-case.reverse .pf-side { order: 0; border-right: 1px solid rgba(42,26,24,0.12); border-left: 0; border-bottom: 1px solid rgba(42,26,24,0.12); }
+    .pf-side { border-right: 0; border-bottom: 1px solid rgba(42,26,24,0.12); }
+  }
+</style>
+</head>
+<body>
+
+<div class="pf-shell">
+  <nav class="pf-top">
+    <a href="World_A.html"><em>← back to stephie's world</em></a>
+    <div><em>an archive</em> / <em>projects</em></div>
+  </nav>
+
+  <section class="pf-hero">
+    <div>
+      <div class="eyebrow">chapter vi · projects</div>
+      <h1><em>Three works,<br/>in <em>progress</em>.</em></h1>
+    </div>
+    <div class="sub">
+      Some finished, some in progress, some beautifully abandoned. Each one taught me the next.
+    </div>
+  </section>
+
+  <article class="pf-case">
+    <div class="pf-side">
+      <div class="top-row">
+        <div class="file-no">file no. 001</div>
+        <div class="status">in progress</div>
+      </div>
+      <div class="side-meta">
+        <div class="row"><span>year</span><span class="v">2024 +</span></div>
+        <div class="row"><span>form</span><span class="v">novel</span></div>
+        <div class="row"><span>genre</span><span class="v">literary sci-fi</span></div>
+        <div class="row"><span>status</span><span class="v">writing</span></div>
+      </div>
+    </div>
+    <div class="pf-body">
+      <div class="cat">a novel</div>
+      <h2><em>About an alien<br/>who falls in love<br/>with <em>Earth</em>.</em></h2>
+      <p>A novel about what makes a life meaningful, how joy requires its opposite, and what it means to <em>think for yourself</em>.</p>
+      <p>The rest of the book comes from everything I've learned here on Earth — places, people, books, songs, small hours. All of it shows up somewhere.</p>
+    </div>
+  </article>
+
+  <article class="pf-case reverse">
+    <div class="pf-side">
+      <div class="top-row">
+        <div class="file-no">file no. 002</div>
+        <div class="status done">completed</div>
+      </div>
+      <div class="side-meta">
+        <div class="row"><span>years</span><span class="v">2017–2019</span></div>
+        <div class="row"><span>form</span><span class="v">long-form interviews</span></div>
+        <div class="row"><span>count</span><span class="v">52 stories</span></div>
+        <div class="row"><span>home</span><span class="v">East 52nd St</span></div>
+      </div>
+    </div>
+    <div class="pf-body">
+      <div class="cat">an interview project</div>
+      <h2><em>52 Stories,<br/>one borough<br/>at a <em>time</em>.</em></h2>
+      <p>Fifty-two New Yorkers. Fifty-two reasons they moved to the city. I lived on <em>East 52nd Street</em> at the time — and eight years later, my first Paris address was <em>52 Rue du Bac</em>.</p>
+      <div class="kicker"><em>The number follows me around. I've stopped trying to explain it.</em></div>
+    </div>
+  </article>
+
+  <article class="pf-case">
+    <div class="pf-side">
+      <div class="top-row">
+        <div class="file-no">file no. 003</div>
+        <div class="status done">shipped</div>
+      </div>
+      <div class="side-meta">
+        <div class="row"><span>year</span><span class="v">2019</span></div>
+        <div class="row"><span>role</span><span class="v">founder</span></div>
+        <div class="row"><span>speed</span><span class="v">6 weeks</span></div>
+        <div class="row"><span>made in</span><span class="v">Bloomfield, NJ</span></div>
+      </div>
+    </div>
+    <div class="pf-body">
+      <div class="cat">a product</div>
+      <h2><em>Relax Coffee</em></h2>
+      <p><em>CBD-infused coffee.</em> Calm without the compromise.</p>
+      <p>From idea to production in <em>six weeks</em>, produced in Bloomfield, New Jersey. The fastest I've ever gone from a sentence to a thing you could hold in your hand.</p>
+    </div>
+  </article>
+
+  <footer class="pf-foot">
+    <div>a chapter of <em>stephie's world</em></div>
+    <div class="mark">✶</div>
+    <div><em>"Each one taught me the next."</em></div>
+  </footer>
+</div>
+
+</body>
+</html>

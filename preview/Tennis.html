@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tennis · Stephie's World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/site.css" />
+<style>
+  .tn-shell { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 28px var(--page-pad) 80px; }
+  .tn-top { display: flex; justify-content: space-between; padding: 12px 0 40px; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; }
+  .tn-top a { color: inherit; text-decoration: none; }
+  .tn-top a:hover { color: var(--ember); }
+
+  .tn-hero {
+    padding: 48px 0 72px; border-bottom: 1px solid var(--rule);
+    margin-bottom: 0;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: end;
+    position: relative;
+  }
+  .tn-hero .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ember); margin-bottom: 18px; }
+  .tn-hero h1 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(64px, 9vw, 140px); line-height: 0.9; margin: 0; letter-spacing: -0.02em; }
+  .tn-hero h1 em { color: var(--ember); }
+  .tn-hero .sub { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 440px; }
+
+  /* Court diagram */
+  .tn-court-wrap { padding: 64px 0; text-align: center; }
+  .tn-court {
+    width: 100%; max-width: 780px; margin: 0 auto; aspect-ratio: 2/1;
+    background: rgba(58, 70, 50, 0.08);
+    border: 2px solid var(--ember);
+    position: relative;
+    box-shadow: 0 30px 60px -40px rgba(42,26,24,0.25);
+  }
+  .tn-court::before, .tn-court::after { content: ""; position: absolute; background: var(--ember); }
+  .tn-court::before { /* net */ left: 50%; top: -8px; bottom: -8px; width: 2px; transform: translateX(-50%); }
+  .tn-court::after { /* baseline hint */ left: 0; right: 0; top: 50%; height: 1px; transform: translateY(-50%); opacity: 0.4; }
+  .tn-court .svc-l, .tn-court .svc-r {
+    position: absolute; top: 20%; bottom: 20%;
+    border: 1px solid var(--ember); opacity: 0.5;
+  }
+  .tn-court .svc-l { left: 10%; right: 50%; border-right: 0; }
+  .tn-court .svc-r { left: 50%; right: 10%; border-left: 0; }
+  .tn-court .mid {
+    position: absolute; top: 50%; left: 10%; right: 10%;
+    border-top: 1px dashed var(--ember); opacity: 0.3;
+  }
+  .tn-court .label {
+    position: absolute; font-family: var(--serif); font-style: italic;
+    font-size: 14px; color: var(--ink-soft);
+    background: var(--paper); padding: 2px 8px;
+  }
+  .tn-court .label.top-left { top: -14px; left: 24px; }
+  .tn-court .label.top-right { top: -14px; right: 24px; }
+
+  /* Section */
+  .tn-sec { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+  .tn-sec:last-of-type { border-bottom: 0; }
+  .tn-sec-head { display: flex; justify-content: space-between; align-items: end; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
+  .tn-sec-head h2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(32px, 4vw, 52px); margin: 0; letter-spacing: -0.01em; }
+  .tn-sec-head h2 em { color: var(--ember); }
+  .tn-sec-head .meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute); }
+
+  /* Scorecard table */
+  .tn-scorecard {
+    width: 100%; border-collapse: collapse;
+    font-family: var(--serif);
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+  }
+  .tn-scorecard thead tr { background: rgba(42,26,24,0.05); }
+  .tn-scorecard th {
+    text-align: left; padding: 14px 20px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--ink-mute); font-weight: 500;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tn-scorecard td {
+    padding: 18px 20px; border-bottom: 1px dashed var(--rule);
+    font-style: italic; font-size: 17px; color: var(--ink);
+  }
+  .tn-scorecard td.no { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; color: var(--ember); font-style: normal; width: 60px; }
+  .tn-scorecard td.surf { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-mute); font-style: normal; width: 120px; }
+  .tn-scorecard td em { color: var(--ember); }
+  .tn-scorecard tbody tr:hover { background: rgba(232,197,189,0.18); }
+  .tn-scorecard tr.eyeing td { color: var(--ember); }
+  .tn-scorecard tr.eyeing td.no::before { content: "→ "; }
+
+  /* Spec block */
+  .tn-specs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid var(--rule); }
+  .tn-spec {
+    padding: 28px 24px;
+    border-right: 1px solid var(--rule);
+    background: var(--paper-warm);
+  }
+  .tn-spec:last-child { border-right: 0; }
+  .tn-spec .k { font-family: var(--mono); font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ember); margin-bottom: 10px; }
+  .tn-spec h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 24px; margin: 0 0 6px; line-height: 1.1; }
+  .tn-spec .detail { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--ink-mute); text-transform: uppercase; }
+
+  /* On the shelf */
+  .tn-shelf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .tn-card {
+    padding: 32px; background: var(--paper-warm);
+    border: 1px solid var(--rule);
+  }
+  .tn-card .k { font-family: var(--mono); font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ember); margin-bottom: 12px; }
+  .tn-card h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 32px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .tn-card .by { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-mute); }
+
+  .tn-foot { padding: 96px 0 0; text-align: center; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; line-height: 1.9; }
+  .tn-foot .mark { color: var(--ember); font-size: 22px; margin: 10px 0; display: inline-block; }
+
+  @media (max-width: 900px) {
+    .tn-hero { grid-template-columns: 1fr; gap: 28px; }
+    .tn-specs, .tn-shelf-grid { grid-template-columns: 1fr; }
+    .tn-spec { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .tn-scorecard td.surf { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tn-shell">
+  <nav class="tn-top">
+    <a href="World_A.html"><em>← back to stephie's world</em></a>
+    <div><em>an archive</em> / <em>tennis</em></div>
+  </nav>
+
+  <section class="tn-hero">
+    <div>
+      <div class="eyebrow">chapter viii · tennis</div>
+      <h1><em>A quiet<br/><em>teacher</em>.</em></h1>
+    </div>
+    <div class="sub">
+      Tennis found me later in life. It became one of the most important teachers I've had — every weakness shows up on the court before it shows up anywhere else.
+    </div>
+  </section>
+
+  <div class="tn-court-wrap">
+    <div class="tn-court">
+      <div class="svc-l"></div><div class="svc-r"></div><div class="mid"></div>
+      <div class="label top-left">deuce</div>
+      <div class="label top-right">ad</div>
+    </div>
+  </div>
+
+  <section class="tn-sec">
+    <div class="tn-sec-head">
+      <h2><em>Tournaments</em></h2>
+      <div class="meta">seen · v · eyeing · i</div>
+    </div>
+    <table class="tn-scorecard">
+      <thead><tr><th>no.</th><th>tournament</th><th>city</th><th>surface</th></tr></thead>
+      <tbody>
+        <tr><td class="no">01</td><td><em>US Open</em></td><td>New York</td><td class="surf">hard</td></tr>
+        <tr><td class="no">02</td><td><em>Indian Wells</em></td><td>California</td><td class="surf">hard</td></tr>
+        <tr><td class="no">03</td><td><em>Miami Open</em></td><td>Miami</td><td class="surf">hard</td></tr>
+        <tr><td class="no">04</td><td><em>Roland-Garros</em></td><td>Paris</td><td class="surf">clay</td></tr>
+        <tr><td class="no">05</td><td><em>Madrid Open</em></td><td>Madrid</td><td class="surf">clay</td></tr>
+        <tr class="eyeing"><td class="no">06</td><td><em>Shanghai Open</em></td><td>Shanghai · home, full circle</td><td class="surf">hard</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="tn-sec">
+    <div class="tn-sec-head">
+      <h2><em>The Kit</em></h2>
+      <div class="meta">racquets &amp; string</div>
+    </div>
+    <div class="tn-specs">
+      <div class="tn-spec">
+        <div class="k">racquet · i</div>
+        <h3><em>Yonex</em></h3>
+        <div class="detail">EZONE 100</div>
+      </div>
+      <div class="tn-spec">
+        <div class="k">racquet · ii</div>
+        <h3><em>HEAD</em></h3>
+        <div class="detail">Speed MP · 2024</div>
+      </div>
+      <div class="tn-spec">
+        <div class="k">string</div>
+        <h3><em>Poly Tour Pro</em></h3>
+        <div class="detail">Yonex · 50 tension</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tn-sec">
+    <div class="tn-sec-head">
+      <h2><em>On the Shelf</em></h2>
+      <div class="meta">reading &amp; watching the game</div>
+    </div>
+    <div class="tn-shelf-grid">
+      <div class="tn-card">
+        <div class="k">memoir</div>
+        <h3><em>Open</em></h3>
+        <div class="by">Andre Agassi</div>
+      </div>
+      <div class="tn-card">
+        <div class="k">documentary</div>
+        <h3><em>Federer:<br/>Twelve Final Days</em></h3>
+        <div class="by">2024</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="tn-foot">
+    <div>a chapter of <em>stephie's world</em></div>
+    <div class="mark">✶</div>
+    <div><em>"The inner game is the only one that ever really mattered."</em></div>
+  </footer>
+</div>
+
+</body>
+</html>

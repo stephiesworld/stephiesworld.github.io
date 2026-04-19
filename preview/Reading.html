@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reading · Stephie's World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/site.css" />
+<style>
+  .rd-shell { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 28px var(--page-pad) 80px; }
+  .rd-top { display: flex; justify-content: space-between; padding: 12px 0 40px; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; }
+  .rd-top a:hover { color: var(--ember); }
+
+  /* Book spines across the top */
+  .rd-shelf {
+    display: flex; gap: 4px; align-items: flex-end;
+    height: 220px; padding: 0 8px 0;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+  .rd-spine {
+    flex: 1; min-width: 28px; max-width: 58px;
+    display: flex; align-items: center; justify-content: center;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-family: var(--serif); font-style: italic;
+    font-size: 13px; color: var(--ink);
+    padding: 18px 0;
+    box-shadow: inset -2px 0 0 rgba(42,26,24,0.08), inset 2px 0 0 rgba(255,255,255,0.4);
+    transition: transform .4s, filter .4s;
+    cursor: default;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+  .rd-spine:hover { transform: translateY(-10px); filter: brightness(1.05); }
+  .rd-spine .author { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-family: var(--mono); font-style: normal; color: rgba(255,255,255,0.7); margin-top: 10px; }
+
+  .rd-frontis {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end;
+    padding: 0 0 72px;
+  }
+  .rd-frontis .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ember); margin-bottom: 18px; }
+  .rd-frontis h1 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(54px, 7vw, 112px); line-height: 0.95; margin: 0; color: var(--ink); letter-spacing: -0.015em; max-width: 580px; }
+  .rd-frontis h1 em { color: var(--ember); }
+  .rd-frontis .intro { font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.7; color: var(--ink-soft); max-width: 460px; justify-self: end; }
+
+  /* Open book for currently reading */
+  .rd-open-section { padding: 72px 0; }
+  .rd-section-head { display: flex; justify-content: space-between; align-items: end; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
+  .rd-section-head h2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(32px, 4vw, 52px); margin: 0; letter-spacing: -0.01em; }
+  .rd-section-head .meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute); }
+
+  .rd-book {
+    position: relative;
+    background: var(--paper-warm);
+    display: grid; grid-template-columns: 1fr 1fr;
+    box-shadow: 0 30px 80px -30px rgba(42,26,24,0.3), inset 0 0 0 1px rgba(42,26,24,0.06);
+    margin-bottom: 28px;
+    min-height: 320px;
+  }
+  .rd-book::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(42,26,24,0.15);
+    box-shadow: -8px 0 18px -8px rgba(42,26,24,0.15), 8px 0 18px -8px rgba(42,26,24,0.15);
+  }
+  .rd-page { padding: 48px 56px; }
+  .rd-page .cat { font-family: var(--mono); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ember); margin-bottom: 18px; }
+  .rd-page h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 34px; line-height: 1.1; margin: 0 0 10px; letter-spacing: -0.01em; color: var(--ink); }
+  .rd-page .auth { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--ink-soft); margin-bottom: 24px; }
+  .rd-page .pull { font-family: var(--serif); font-style: italic; font-size: 16px; line-height: 1.65; color: var(--ink-soft); border-left: 1px solid var(--ember); padding-left: 16px; max-width: 90%; }
+  .rd-page .footnote { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute); margin-top: 32px; }
+
+  /* Library card catalogue for favorites */
+  .rd-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .rd-card {
+    padding: 32px 28px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    min-height: 260px;
+    transition: background .5s;
+  }
+  .rd-card:hover { background: rgba(232,197,189,0.18); }
+  .rd-card:nth-child(3n) { border-right: 0; }
+  .rd-card .no { font-family: var(--mono); font-size: 9px; letter-spacing: 0.26em; color: var(--ink-mute); position: absolute; top: 16px; right: 18px; }
+  .rd-card .perf { position: absolute; top: 18px; left: 18px; width: 12px; height: 12px; border: 1px dashed rgba(42,26,24,0.35); border-radius: 50%; }
+  .rd-card .cat { font-family: var(--mono); font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ember); margin: 32px 0 12px; }
+  .rd-card h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .rd-card .auth { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--ink-mute); }
+  .rd-card .stamp { position: absolute; bottom: 16px; left: 18px; font-family: var(--mono); font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ember); opacity: 0.6; }
+
+  .rd-foot { padding: 96px 0 0; text-align: center; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; line-height: 1.9; }
+  .rd-foot .mark { color: var(--ember); font-size: 22px; margin: 10px 0; display: inline-block; }
+
+  @media (max-width: 900px) {
+    .rd-frontis { grid-template-columns: 1fr; gap: 32px; }
+    .rd-book { grid-template-columns: 1fr; }
+    .rd-book::before { display: none; }
+    .rd-cards { grid-template-columns: 1fr; }
+    .rd-card { border-right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="rd-shell">
+
+  <nav class="rd-top">
+    <a href="World_A.html"><em>← back to stephie's world</em></a>
+    <div><em>an archive</em> / <em>reading</em></div>
+  </nav>
+
+  <div class="rd-shelf">
+    <div class="rd-spine" style="background:#8a4a5c;color:#faf4ee;">The Diving Bell and the Butterfly<div class="author">Bauby</div></div>
+    <div class="rd-spine" style="background:#c98a3a;color:#2a1a18;">You Must Change Your Life<div class="author" style="color:rgba(42,26,24,0.55)">Corbett</div></div>
+    <div class="rd-spine" style="background:#2a3a2a;color:#f0ede2;">Station Eleven<div class="author">Mandel</div></div>
+    <div class="rd-spine" style="background:#c2453a;color:#faf4ee;">Einstein's Dreams<div class="author">Lightman</div></div>
+    <div class="rd-spine" style="background:#3a3a4a;color:#f0ede2;">Klara and the Sun<div class="author">Ishiguro</div></div>
+    <div class="rd-spine" style="background:#d88b6a;color:#2a1a18;">The Creative Act<div class="author" style="color:rgba(42,26,24,0.55)">Rubin</div></div>
+    <div class="rd-spine" style="background:#1a1513;color:#e8c5bd;">Brave New World<div class="author">Huxley</div></div>
+  </div>
+
+  <section class="rd-frontis">
+    <div>
+      <div class="eyebrow">chapter ii · reading</div>
+      <h1><em>Four books at once, <em>always</em>.</em></h1>
+    </div>
+    <p class="intro">
+      The nightstand is never empty. One memoir, one novel, one biography, one thing I can't quite classify. Whatever feels right when I wake up decides what I read that morning.
+    </p>
+  </section>
+
+  <section class="rd-open-section">
+    <div class="rd-section-head">
+      <h2><em>Currently Reading</em></h2>
+      <div class="meta">on the nightstand · iv</div>
+    </div>
+
+    <div class="rd-book">
+      <div class="rd-page">
+        <div class="cat">memoir</div>
+        <h3><em>The Diving Bell and the Butterfly</em></h3>
+        <div class="auth">Jean-Dominique Bauby</div>
+        <p class="pull"><em>"I know of nothing so somberly beautiful as a mind freed from its body — typing a sentence, one blink at a time."</em></p>
+        <div class="footnote">paperback · re-read · april</div>
+      </div>
+      <div class="rd-page">
+        <div class="cat">biography</div>
+        <h3><em>You Must Change Your Life</em></h3>
+        <div class="auth">Rachel Corbett · Rilke &amp; Rodin</div>
+        <p class="pull"><em>"About the long apprenticeship of attention — how a young poet learns to see by watching a sculptor work."</em></p>
+        <div class="footnote">hardcover · slow read · april</div>
+      </div>
+    </div>
+
+    <div class="rd-book">
+      <div class="rd-page">
+        <div class="cat">fiction</div>
+        <h3><em>Station Eleven</em></h3>
+        <div class="auth">Emily St. John Mandel</div>
+        <p class="pull"><em>"A travelling symphony after the end of the world — the theatre troupe on horseback, Shakespeare by firelight."</em></p>
+        <div class="footnote">paperback · mornings · april</div>
+      </div>
+      <div class="rd-page">
+        <div class="cat">fiction</div>
+        <h3><em>Einstein's Dreams</em></h3>
+        <div class="auth">Alan Lightman</div>
+        <p class="pull"><em>"Short chapters, each a different theory of time. I read one a night, like a prayer."</em></p>
+        <div class="footnote">paperback · nights · april</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rd-open-section">
+    <div class="rd-section-head">
+      <h2><em>Favorites</em></h2>
+      <div class="meta">books I return to</div>
+    </div>
+
+    <div class="rd-cards">
+      <div class="rd-card">
+        <div class="perf"></div>
+        <div class="no">no. 001</div>
+        <div class="cat">fiction · 2021</div>
+        <h3><em>Klara and the Sun</em></h3>
+        <div class="auth">Kazuo Ishiguro</div>
+        <div class="stamp">✦ returned · many times</div>
+      </div>
+      <div class="rd-card">
+        <div class="perf"></div>
+        <div class="no">no. 002</div>
+        <div class="cat">non-fiction · 2023</div>
+        <h3><em>The Creative Act</em></h3>
+        <div class="auth">Rick Rubin</div>
+        <div class="stamp">✦ returned · many times</div>
+      </div>
+      <div class="rd-card">
+        <div class="perf"></div>
+        <div class="no">no. 003</div>
+        <div class="cat">fiction · 1932</div>
+        <h3><em>Brave New World</em></h3>
+        <div class="auth">Aldous Huxley</div>
+        <div class="stamp">✦ returned · many times</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="rd-foot">
+    <div>a chapter of <em>stephie's world</em></div>
+    <div class="mark">✶</div>
+    <div><em>"Always open to recommendations." — me</em></div>
+  </footer>
+
+</div>
+
+</body>
+</html>

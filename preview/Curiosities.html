@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Curiosities · Stephie's World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/site.css" />
+<style>
+  .cu-shell { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 28px var(--page-pad) 80px; }
+  .cu-top { display: flex; justify-content: space-between; padding: 12px 0 40px; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; }
+  .cu-top a { color: inherit; text-decoration: none; }
+  .cu-top a:hover { color: var(--ember); }
+
+  .cu-hero { padding: 48px 0 56px; border-bottom: 1px solid var(--rule); margin-bottom: 72px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: end; }
+  .cu-hero .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ember); margin-bottom: 18px; }
+  .cu-hero h1 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(64px, 9vw, 140px); line-height: 0.9; margin: 0; letter-spacing: -0.02em; }
+  .cu-hero h1 em { color: var(--ember); }
+  .cu-hero .sub { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 440px; }
+
+  /* Index card grid — a "cabinet of curiosities" */
+  .cu-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .cu-card {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    padding: 28px 26px 22px;
+    position: relative;
+    min-height: 220px;
+    display: flex; flex-direction: column;
+    transition: transform .4s, background .4s;
+    box-shadow: 0 10px 30px -20px rgba(42,26,24,0.25);
+  }
+  .cu-card:hover { transform: translateY(-4px); background: rgba(232,197,189,0.3); }
+  .cu-card .no { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; color: var(--ink-mute); margin-bottom: 16px; }
+  .cu-card .tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ember); margin-bottom: 10px; }
+  .cu-card h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.005em; color: var(--ink); }
+  .cu-card p { font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.6; color: var(--ink-soft); margin: 0; flex: 1; }
+  .cu-card p em { color: var(--ember); font-style: italic; }
+  .cu-card .hole { position: absolute; top: 14px; right: 18px; width: 10px; height: 10px; border-radius: 50%; border: 1px dashed rgba(42,26,24,0.3); }
+
+  /* Featured Substack */
+  .cu-substack {
+    margin: 80px 0;
+    padding: 64px 56px;
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    box-shadow: 0 30px 80px -40px rgba(42,26,24,0.25);
+  }
+  .cu-substack .tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ember); margin-bottom: 14px; }
+  .cu-substack h2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(44px, 5.5vw, 76px); line-height: 0.95; margin: 0 0 18px; letter-spacing: -0.015em; }
+  .cu-substack h2 em { color: var(--ember); }
+  .cu-substack p { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 500px; margin: 0 0 24px; }
+  .cu-substack .cta {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    padding: 14px 22px; background: var(--ember); color: var(--paper);
+    text-decoration: none;
+    transition: background .3s;
+  }
+  .cu-substack .cta:hover { background: var(--ink); }
+
+  .cu-sec-head { display: flex; justify-content: space-between; align-items: end; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
+  .cu-sec-head h2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(32px, 4vw, 52px); margin: 0; letter-spacing: -0.01em; }
+  .cu-sec-head h2 em { color: var(--ember); }
+  .cu-sec-head .meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute); }
+
+  .cu-foot { padding: 96px 0 0; text-align: center; font-family: var(--serif); font-style: italic; color: var(--ink-mute); font-size: 13px; line-height: 1.9; }
+  .cu-foot .mark { color: var(--ember); font-size: 22px; margin: 10px 0; display: inline-block; }
+
+  @media (max-width: 900px) {
+    .cu-hero, .cu-substack { grid-template-columns: 1fr; gap: 28px; }
+    .cu-grid { grid-template-columns: 1fr; }
+    .cu-substack { padding: 40px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cu-shell">
+  <nav class="cu-top">
+    <a href="World_A.html"><em>← back to stephie's world</em></a>
+    <div><em>an archive</em> / <em>curiosities</em></div>
+  </nav>
+
+  <section class="cu-hero">
+    <div>
+      <div class="eyebrow">chapter ix · curiosities</div>
+      <h1><em>A <em>cabinet</em><br/>of curiosities.</em></h1>
+    </div>
+    <div class="sub">
+      Small questions, strange facts, beautiful distractions. The things that stop me mid-scroll. A shelf of little wonders.
+    </div>
+  </section>
+
+  <section class="cu-substack">
+    <div>
+      <div class="tag">the substack ✶</div>
+      <h2><em>Stephie's<br/>Universe</em></h2>
+    </div>
+    <div>
+      <p>Longer notes, half-finished essays, the things that don't quite fit anywhere else. Sent out when I have something to say — never on a schedule.</p>
+      <a class="cta" href="https://stephiesuniverse.substack.com" target="_blank" rel="noopener">subscribe ↗</a>
+    </div>
+  </section>
+
+  <div class="cu-sec-head">
+    <h2><em>The Cabinet</em></h2>
+    <div class="meta">ix entries · always growing</div>
+  </div>
+
+  <div class="cu-grid">
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 001</div>
+      <div class="tag">language</div>
+      <h3><em>The word "saudade"</em></h3>
+      <p>Portuguese. The feeling of missing something you aren't sure ever existed. I think about this one <em>constantly</em>.</p>
+    </article>
+
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 002</div>
+      <div class="tag">physics</div>
+      <h3><em>Each photon remembers<br/>every path</em></h3>
+      <p>Feynman's sum-over-histories. A photon travels every possible route between two points; what we see is the <em>interference</em> of all of them.</p>
+    </article>
+
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 003</div>
+      <div class="tag">number</div>
+      <h3><em>Why the number 52<br/>follows me</em></h3>
+      <p>East 52nd Street, 52 Stories, 52 Rue du Bac. Somewhere between coincidence and <em>a small conspiracy</em>.</p>
+    </article>
+
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 004</div>
+      <div class="tag">biology</div>
+      <h3><em>Octopus colorblindness</em></h3>
+      <p>They can't see color — and yet they match their surroundings perfectly. Current theory: their <em>skin itself</em> senses light.</p>
+    </article>
+
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 005</div>
+      <div class="tag">philosophy</div>
+      <h3><em>The ship of Theseus,<br/>but for people</em></h3>
+      <p>Every seven years, almost every cell in your body is replaced. At what point are you still the same person? (I don't think it's a body question.)</p>
+    </article>
+
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 006</div>
+      <div class="tag">sound</div>
+      <h3><em>Two violins are louder<br/>than one — barely</em></h3>
+      <p>Ten violins aren't ten times louder than one. Sound doesn't add linearly; it adds in <em>decibels</em>. The whole orchestra is doing less than you think.</p>
+    </article>
+
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 007</div>
+      <div class="tag">astronomy</div>
+      <h3><em>The light from<br/>Proxima b</em></h3>
+      <p>The nearest known exoplanet. Light from it takes <em>four years</em> to reach us. Whatever we see of it is four years old — a small letter from the past.</p>
+    </article>
+
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 008</div>
+      <div class="tag">habit</div>
+      <h3><em>The first warm day<br/>of spring</em></h3>
+      <p>Everyone in New York spills into the parks at once. No plans. No announcement. An entire city <em>agreeing to something</em> without saying a word.</p>
+    </article>
+
+    <article class="cu-card">
+      <div class="hole"></div>
+      <div class="no">no. 009</div>
+      <div class="tag">writing</div>
+      <h3><em>The book you're<br/>almost ready to write</em></h3>
+      <p>Is always the one you've been avoiding. The <em>resistance</em> is the signal. The thing you keep putting off is usually the thing worth doing.</p>
+    </article>
+  </div>
+
+  <footer class="cu-foot">
+    <div>a chapter of <em>stephie's world</em></div>
+    <div class="mark">✶</div>
+    <div><em>"The things that stop me mid-scroll."</em></div>
+  </footer>
+</div>
+
+</body>
+</html>
