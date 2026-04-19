@@ -2,18 +2,18 @@
 /* Palette derived from the parent site screenshot */
 
 :root {
-  --paper: #faf4ee;
+  --paper: #fbf5ea;
   --paper-warm: #f5ead8;
   --paper-deep: #efd9c9;
   --blush: #e8c5bd;
   --blush-soft: #f2d9d1;
-  --ember: #c2453a;
+  --ember: #8b1e2f;
   --ember-soft: #d97a6e;
   --ink: #2a1a18;
   --ink-soft: #4a3834;
   --ink-mute: #8a6e66;
   --rule: rgba(42, 26, 24, 0.14);
-  --glow: rgba(194, 69, 58, 0.35);
+  --glow: rgba(139, 30, 47, 0.35);
 
   --serif: 'Cormorant Garamond', 'EB Garamond', 'Times New Roman', Times, serif;
   --serif-display: 'Cormorant Garamond', 'EB Garamond', 'Times New Roman', Times, serif;
@@ -255,7 +255,7 @@ body::before {
   position: absolute;
   inset: 8%;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(232, 197, 189, 0.9), rgba(194, 69, 58, 0.15) 55%, transparent 75%);
+  background: radial-gradient(circle at 35% 35%, rgba(232, 197, 189, 0.9), rgba(139, 30, 47, 0.15) 55%, transparent 75%);
   filter: blur(2px);
 }
 .now .visual .vinyl {
@@ -317,7 +317,7 @@ body::before {
 }
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 var(--glow); }
-  100% { box-shadow: 0 0 0 14px rgba(194, 69, 58, 0); }
+  100% { box-shadow: 0 0 0 14px rgba(139, 30, 47, 0); }
 }
 .now .detail h2 {
   font-family: var(--serif-display);
@@ -884,7 +884,7 @@ body[data-density="4"] .mixtapes { grid-template-columns: repeat(4, 1fr); gap: 4
 
 /* palette variations */
 body[data-palette="cream"] {
-  --paper: #faf4ee; --ember: #c2453a; --blush: #e8c5bd; --ink: #2a1a18;
+  --paper: #fbf5ea; --ember: #8b1e2f; --blush: #e8c5bd; --ink: #2a1a18;
 }
 body[data-palette="ink"] {
   --paper: #1a1513; --paper-warm: #241c19; --paper-deep: #2a201d;

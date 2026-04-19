@@ -30,7 +30,7 @@ window.MIXTAPES = [
     year: 2026,
     mood: "the band you almost named",
     trackCount: 56,
-    color: "#c2453a",
+    color: "#8b1e2f",
     playlistUrl: "https://open.spotify.com/playlist/5WAcqPmgnVP3T40YOEEMpK",
     playlistId: "5WAcqPmgnVP3T40YOEEMpK",
   },

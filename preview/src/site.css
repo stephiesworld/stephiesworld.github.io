@@ -1,18 +1,18 @@
 /* ========== Stephie's World — Site-wide ========== */
 
 :root {
-  --paper: #faf4ee;
+  --paper: #fbf5ea;
   --paper-warm: #f5ead8;
   --paper-deep: #efd9c9;
   --blush: #e8c5bd;
   --blush-soft: #f2d9d1;
-  --ember: #c2453a;
+  --ember: #8b1e2f;
   --ember-soft: #d97a6e;
   --ink: #2a1a18;
   --ink-soft: #4a3834;
   --ink-mute: #8a6e66;
   --rule: rgba(42, 26, 24, 0.14);
-  --glow: rgba(194, 69, 58, 0.35);
+  --glow: rgba(139, 30, 47, 0.35);
 
   --serif: 'Cormorant Garamond', 'EB Garamond', 'Times New Roman', Times, serif;
   --mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
@@ -173,8 +173,8 @@ a { color: inherit; text-decoration: none; }
   animation: wa-pulse 4s ease-in-out infinite;
 }
 @keyframes wa-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(194,69,58,0.35); transform: scale(1); }
-  50%      { box-shadow: 0 0 0 8px rgba(194,69,58,0); transform: scale(1.25); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139,30,47,0.35); transform: scale(1); }
+  50%      { box-shadow: 0 0 0 8px rgba(139,30,47,0); transform: scale(1.25); }
 }
 .wa-node .name {
   font-family: var(--serif);

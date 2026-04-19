@@ -55,7 +55,7 @@ function HeroConstellation() {
 }
 
 // Starfield inside mixtape art
-function Starfield({ seed = 1, color = "#c2453a" }) {
+function Starfield({ seed = 1, color = "#8b1e2f" }) {
   const stars = React.useMemo(() => {
     const arr = [];
     let s = seed;
