@@ -1,0 +1,44 @@
+/* Stephie's World — dark console theme
+   Shared globals: reset, fonts, keyframes, and :hover utilities.
+   Structural styles live inline on each page for fidelity to the design. */
+
+html, body {
+  margin: 0;
+  background: #0a0b09;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+a { color: #e6ecd7; }
+
+/* ---- keyframes ---- */
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes floatglyph {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(6deg); }
+}
+
+/* ---- hover utilities (inline styles carry the transitions) ---- */
+.h-nav:hover   { background: #12140f; color: #e6ecd7; }   /* inactive nav cells + logo off-home */
+.h-row:hover   { background: #12140f; color: #e6ecd7; }   /* directory + city rows */
+.h-contact:hover { padding-left: 14px; color: #a7d17e; }  /* big contact links */
+.h-hl:hover    { background: #e9e42e; color: #111; }      /* art + breadcrumb inline links */
+.h-repo:hover  { background: #1a1d15; }                   /* code repo rows */
+.h-teaser:hover{ background: #171a12; }                   /* shell teaser block */
+.h-load:hover  { background: #e9e42e; color: #111; }      /* map "Load map" button */
+.h-tab:hover   { opacity: .7; }                           /* field guide city tabs */
+.h-btn:hover   { background: #12140f; color: #e6ecd7; }   /* spotify / send-a-book buttons */
+
+/* ---- Leaflet overrides (Field Guide) ---- */
+.leaflet-container { font-family: 'IBM Plex Mono', monospace; background: #0f110d; }
+.leaflet-popup-content-wrapper {
+  border-radius: 0; border: 1px solid #2c3025; box-shadow: none;
+  background: #12140f; color: #e6ecd7;
+}
+.leaflet-popup-tip { border: 1px solid #2c3025; background: #12140f; }
+.leaflet-popup-content { margin: 10px 14px; }
+.fg-pin {
+  background: #e9e42e; border: 2px solid #111;
+  width: 16px; height: 16px; border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg); box-sizing: border-box;
+}

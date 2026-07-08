@@ -1,95 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tennis · Stephie's World</title>
-  <meta name="description" content="Tennis as a mirror, the tournaments, the kit, and the game within the game.">
-  <link rel="canonical" href="https://stephiesworld.com/tennis.html">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="world.css">
-  <style>
-    .court-wrap { padding: 40px 0 8px; }
-    .court { width: 100%; max-width: 640px; height: auto; display: block; margin: 0 auto; }
-    .court line, .court rect, .court path { fill: none; stroke: rgba(139,30,47,0.42); stroke-width: 1.4; }
-    .court .fill { fill: rgba(232,197,189,0.16); stroke: none; }
-    .court .net { stroke: var(--cherry); stroke-width: 2; stroke-dasharray: 3 4; }
-    .court-cap { text-align: center; font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-faint); margin-top: 12px; }
-    .tennis-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 56px; }
-    @media (max-width: 860px) { .tennis-cols { grid-template-columns: 1fr; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tennis · Stephie's World</title>
+<meta name="description" content="The sport that became a mirror.">
+<meta property="og:title" content="Tennis · Stephie's World">
+<meta property="og:description" content="The sport that became a mirror.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://stephiesworld.com/tennis.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="console.css">
 </head>
 <body>
-  <div class="room">
-    <nav class="room-nav">
-      <a href="world.html" class="back"><em>← the world</em></a>
-      <span class="folio">viii / nine</span>
-    </nav>
+<div style="min-height:100%;background:#0a0b09;background-image:radial-gradient(#181a14 1px,transparent 1px);background-size:22px 22px;padding:44px 24px 70px;box-sizing:border-box;">
+  <div style="max-width:1040px;margin:0 auto;background:#0f110d;border:1px solid #2c3025;overflow:hidden;color:#e6ecd7;box-shadow:0 24px 60px -30px #000;">
 
-    <header class="room-head">
-      <div>
-        <p class="eyebrow">chapter viii</p>
-        <h1>Tennis</h1>
+    <!-- persistent nav -->
+    <div style="display:flex;flex-wrap:wrap;border-bottom:1px solid #2c3025;font-family:'IBM Plex Mono',monospace;align-items:stretch;">
+      <a class="h-nav" href="index.html" style="padding:11px 16px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;letter-spacing:.02em;border-right:1px solid #2c3025;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:7px;transition:background .12s,color .12s;">❦ STEPHIE'S WORLD</a>
+      <a class="h-nav" href="about.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">01 ABOUT</a>
+      <a class="h-nav" href="reading.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">02 READING</a>
+      <a class="h-nav" href="cities.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">03 CITIES</a>
+      <a class="h-nav" href="work.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">04 WORK</a>
+      <a href="tennis.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;color:#0f110d;background:#a7d17e;display:flex;align-items:center;">05 TENNIS</a>
+      <a class="h-nav" href="shell.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">06 SHELL</a>
+      <a class="h-nav" href="index.html#contact" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">07 CONTACT</a>
+    </div>
+
+    <!-- page header -->
+    <div style="padding:40px 30px 34px;border-bottom:1px solid #2c3025;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f7a5e;">05 — Tennis</div>
+      <h1 style="font-weight:700;font-size:clamp(40px,11vw,74px);line-height:.9;letter-spacing:-.03em;margin:14px 0 0;text-transform:uppercase;">Tennis</h1>
+    </div>
+
+    <!-- pull quote -->
+    <div style="padding:40px 30px;border-bottom:1px solid #2c3025;">
+      <p style="margin:0;font-size:30px;font-weight:500;line-height:1.18;letter-spacing:-.02em;text-wrap:pretty;max-width:30ch;">Tennis found me later in life and became one of the most important teachers I've had — the sport is a mirror.</p>
+      <p style="margin:22px 0 0;font-size:16px;line-height:1.65;color:#c9d1bd;max-width:66ch;">Every weakness shows up on the court before it shows up anywhere else. Learning to lose well, to stay present between points, to trust a swing you've hit ten thousand times — it's the inner game, and I keep chasing it.</p>
+    </div>
+
+    <!-- NEXT UP / eyeing shanghai -->
+    <div style="padding:18px 30px;border-bottom:1px solid #2c3025;display:flex;gap:16px;align-items:baseline;background:#12140f;font-family:'IBM Plex Mono',monospace;">
+      <span style="font-size:12px;font-weight:700;letter-spacing:.1em;color:#e9e42e;white-space:nowrap;">// NEXT UP</span>
+      <p style="margin:0;font-size:16px;font-weight:400;line-height:1.5;color:#d3dcc4;font-family:'Space Grotesk',sans-serif;">Eyeing the Shanghai Open — a full-circle trip back to my first home, racquet in hand.</p>
+    </div>
+
+    <!-- tournaments + racquets -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #2c3025;font-family:'IBM Plex Mono',monospace;">
+      <div style="padding:28px 30px;border-right:1px solid #2c3025;">
+        <div style="font-size:10px;letter-spacing:.12em;color:#6f7a5e;margin-bottom:14px;">TOURNAMENTS ATTENDED</div>
+        <div style="font-size:15px;line-height:2;color:#c9d1bd;">US Open<br>Indian Wells<br>Miami Open<br>Roland-Garros<br>Madrid Open<br><span style="font-weight:700;color:#a7d17e;">▸ Shanghai Open (soon)</span></div>
       </div>
-      <p class="intro">It found me late and turned into one of my best teachers. The sport is a mirror. Every weakness shows up here first.</p>
-    </header>
-
-    <div class="court-wrap">
-      <svg class="court" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A tennis court, drawn from above.">
-        <rect class="fill" x="40" y="40" width="640" height="280"/>
-        <rect x="40" y="40" width="640" height="280"/>
-        <line x1="40" y1="75" x2="680" y2="75"/>
-        <line x1="40" y1="285" x2="680" y2="285"/>
-        <line x1="188" y1="75" x2="188" y2="285"/>
-        <line x1="532" y1="75" x2="532" y2="285"/>
-        <line x1="188" y1="180" x2="532" y2="180"/>
-        <line x1="40" y1="176" x2="52" y2="176"/><line x1="40" y1="176" x2="40" y2="184"/>
-        <line x1="668" y1="176" x2="680" y2="176"/><line x1="680" y1="176" x2="680" y2="184"/>
-        <line class="net" x1="360" y1="34" x2="360" y2="326"/>
-      </svg>
-      <p class="court-cap">the mirror, from above</p>
-    </div>
-
-    <div class="rule-head">
-      <h2>Tournaments I&rsquo;ve been to</h2>
-      <span class="meta">five, so far</span>
-    </div>
-    <ul class="ledger">
-      <li><span class="l-title">US Open</span><span class="l-meta">New York</span></li>
-      <li><span class="l-title">Indian Wells</span><span class="l-meta">California</span></li>
-      <li><span class="l-title">Miami Open</span><span class="l-meta">Miami</span></li>
-      <li><span class="l-title">Roland-Garros</span><span class="l-meta">Paris</span></li>
-      <li><span class="l-title">Madrid Open</span><span class="l-meta">Madrid</span></li>
-    </ul>
-
-    <div class="rule-head">
-      <h2>The rest of the bag</h2>
-      <span class="meta">wishlist &middot; kit &middot; watching</span>
-    </div>
-    <div class="tennis-cols">
-      <div>
-        <ul class="ledger">
-          <li><span class="l-title">Shanghai Open</span><span class="l-meta">still eyeing</span></li>
-          <li><span class="l-title">Open</span><span class="l-meta">Agassi · on the shelf</span></li>
-          <li><span class="l-title">Twelve Final Days</span><span class="l-meta">Federer · watching</span></li>
-        </ul>
-      </div>
-      <div>
-        <ul class="ledger">
-          <li><span class="l-title">Yonex EZONE 100</span><span class="l-meta">racquet</span></li>
-          <li><span class="l-title">HEAD Speed MP</span><span class="l-meta">2024</span></li>
-          <li><span class="l-title">Yonex Poly Tour Pro</span><span class="l-meta">50 tension</span></li>
-        </ul>
+      <div style="padding:28px 30px;">
+        <div style="font-size:10px;letter-spacing:.12em;color:#6f7a5e;margin-bottom:14px;">IN THE BAG</div>
+        <div style="font-size:15px;line-height:2;color:#c9d1bd;">Yonex EZONE 100<br>HEAD Speed MP 2024<br>Yonex Poly Tour Pro @ 50</div>
       </div>
     </div>
 
-    <footer class="room-foot">
-      <span class="mark">❦</span>
-      <p><a href="world.html">back to the world</a></p>
-    </footer>
+    <!-- footer -->
+    <div style="padding:26px 30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6f7a5e;">
+      <a href="work.html" style="text-decoration:none;color:#a7d17e;border-bottom:1px solid #a7d17e;padding-bottom:2px;letter-spacing:.04em;">← WORK</a>
+      <a href="shell.html" style="text-decoration:none;color:#a7d17e;border-bottom:1px solid #a7d17e;padding-bottom:2px;letter-spacing:.04em;">NEXT — THE SHELL →</a>
+    </div>
+
   </div>
+</div>
 </body>
 </html>

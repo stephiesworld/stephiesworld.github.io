@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Shell · Stephie's World</title>
+<meta name="description" content="A working terminal — type your way through the universe.">
+<meta property="og:title" content="The Shell · Stephie's World">
+<meta property="og:description" content="A working terminal — type your way through the universe.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://stephiesworld.com/shell.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="console.css">
+</head>
+<body>
+<div style="min-height:100%;background:#0a0b09;background-image:radial-gradient(#181a14 1px,transparent 1px);background-size:22px 22px;padding:44px 24px 70px;box-sizing:border-box;">
+  <div style="max-width:1040px;margin:0 auto;background:#0f110d;border:1px solid #2c3025;overflow:hidden;color:#e6ecd7;box-shadow:0 24px 60px -30px #000;">
+
+    <!-- persistent nav -->
+    <div style="display:flex;flex-wrap:wrap;border-bottom:1px solid #2c3025;font-family:'IBM Plex Mono',monospace;align-items:stretch;">
+      <a class="h-nav" href="index.html" style="padding:11px 16px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;letter-spacing:.02em;border-right:1px solid #2c3025;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:7px;transition:background .12s,color .12s;">❦ STEPHIE'S WORLD</a>
+      <a class="h-nav" href="about.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">01 ABOUT</a>
+      <a class="h-nav" href="reading.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">02 READING</a>
+      <a class="h-nav" href="cities.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">03 CITIES</a>
+      <a class="h-nav" href="work.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">04 WORK</a>
+      <a class="h-nav" href="tennis.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">05 TENNIS</a>
+      <a href="shell.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;color:#0f110d;background:#a7d17e;display:flex;align-items:center;">06 SHELL</a>
+      <a class="h-nav" href="index.html#contact" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;text-decoration:none;display:flex;align-items:center;transition:background .12s,color .12s;">07 CONTACT</a>
+    </div>
+
+    <!-- page header -->
+    <div style="padding:32px 30px 28px;border-bottom:1px solid #2c3025;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f7a5e;">06 — The Shell</div>
+      <h1 style="font-weight:700;font-size:clamp(40px,11vw,74px);line-height:.9;letter-spacing:-.03em;margin:14px 0 0;text-transform:uppercase;">The Shell</h1>
+      <p style="margin:16px 0 0;font-size:15px;line-height:1.6;color:#c9d1bd;max-width:60ch;">A working terminal. Everything on this site is reachable by command — poke around. Try <span style="font-family:'IBM Plex Mono',monospace;background:#e9e42e;color:#111;padding:1px 6px;">help</span>, <span style="font-family:'IBM Plex Mono',monospace;background:#e9e42e;color:#111;padding:1px 6px;">29</span>, or <span style="font-family:'IBM Plex Mono',monospace;background:#e9e42e;color:#111;padding:1px 6px;">❦</span>.</p>
+    </div>
+
+    <!-- TERMINAL -->
+    <div style="padding:24px 30px;border-bottom:1px solid #2c3025;">
+      <div id="term" style="background:#12140f;border:1px solid #2c3025;overflow:hidden;font-family:'IBM Plex Mono',monospace;color:#c9d1bd;cursor:text;">
+        <div style="background:#1a1d15;border-bottom:1px solid #2a2d22;padding:9px 14px;display:flex;align-items:center;gap:8px;">
+          <span style="width:10px;height:10px;border-radius:50%;background:#e0a15b;"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#c9d1bd;opacity:.4;"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#7fae5f;"></span>
+          <span style="margin-left:10px;font-size:11px;color:#6f7a5e;">stephie@world: ~/universe</span>
+        </div>
+        <div style="padding:22px 24px;min-height:340px;">
+          <pre style="margin:0 0 14px;color:#a7d17e;font-size:12px;line-height:1.35;white-space:pre;overflow:hidden;">   ,adPPYba, ,adPPYb,d8   ❦
+  a8"     "" 88    `"88   Stephanie Del Paggio
+  8b         88     88    writer · tinkerer · wanderer
+  "8a,   ,aa 88b,  ,d88   Shanghai → Texas → New York
+   `"Ybbd8"' "8"Ybbd88"   an alien's love letter to Earth</pre>
+          <div id="history"></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+            <span style="font-size:13px;color:#7fae5f;white-space:nowrap;">stephie@world:~$</span>
+            <input id="cmd" placeholder="type a command…" spellcheck="false" autocomplete="off" style="flex:1;background:transparent;border:none;outline:none;color:#e6ecd7;font-family:'IBM Plex Mono',monospace;font-size:13px;caret-color:#a7d17e;padding:2px 0;" />
+            <span style="display:inline-block;width:8px;height:16px;background:#a7d17e;animation:blink 1s step-end infinite;"></span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8478;line-height:1.8;">try: help · about · reading · cities · projects · repos · career · tennis · film · museum · 29 · ❦ · sudo · clear</div>
+    </div>
+
+    <!-- footer -->
+    <div style="padding:26px 30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6f7a5e;">
+      <a href="tennis.html" style="text-decoration:none;color:#a7d17e;border-bottom:1px solid #a7d17e;padding-bottom:2px;letter-spacing:.04em;">← TENNIS</a>
+      <a href="index.html" style="text-decoration:none;color:#a7d17e;border-bottom:1px solid #a7d17e;padding-bottom:2px;letter-spacing:.04em;">BACK TO THE WORLD →</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var historyEl = document.getElementById('history');
+  var input = document.getElementById('cmd');
+  var term = document.getElementById('term');
+  var history = [{ cmd: null, out: "Last login: today · ttys001\nType a command — try 'help', 'about', 'cities', or '❦'." }];
+
+  function data() {
+    return {
+      about1: "I grew up between Shanghai (in Jing'An) and Texas — Spring, Texas of all places — and landed in New York because it reminded me of Shanghai, my first love. I work in tech and am writing a literary science-fiction novel about an alien that falls in love with life on Earth.",
+      art: "I'm drawn to art that feels like a private world — quiet, atmospheric, slightly otherworldly. OB's paintings do this beautifully. Pierre-Auguste Renoir for the way light dissolves everything into softness.",
+      film: "I love stories that build entire worlds and ask you to live inside them: Dune, Gattaca, Interstellar, Call Me by Your Name, The Social Network, Project Hail Mary.",
+      museum: "My favorite museum is the Fondation Louis Vuitton in Paris. One exhibit at a time, each level tracing the arc of an artist's life. You leave understanding why someone made the work, not just what it is.",
+      ideas: "The inner game — in tennis, in writing, in life. AI and what it means to be a person. How a single thread of conversation can shape an AI into something singular, and whether you could rebuild the same one twice.",
+      tennis: "Tennis found me later in life but became one of my most important teachers. The sport is a mirror — every weakness shows up on the court first.",
+      readingNow: [
+        { title: 'The Diving Bell and the Butterfly', author: 'Jean-Dominique Bauby' },
+        { title: 'You Must Change Your Life', author: 'Rachel Corbett' },
+        { title: 'Station Eleven', author: 'Emily St. John Mandel' },
+        { title: "Einstein's Dreams", author: 'Alan Lightman' }
+      ],
+      favorites: [
+        { title: 'Klara and the Sun', author: 'Kazuo Ishiguro' },
+        { title: 'The Creative Act', author: 'Rick Rubin' },
+        { title: 'Brave New World', author: 'Aldous Huxley' }
+      ],
+      cities: [
+        { name: 'Houston', note: 'Place of birth.' },
+        { name: 'Shanghai', note: '(First) home. My first exposure to the world.' },
+        { name: 'New York', note: 'Home.' },
+        { name: 'Paris', note: 'My favorite city on earth.' },
+        { name: 'Madrid', note: 'The first city I fell in love with.' },
+        { name: 'Interlaken', note: 'The birthplace of the novel, 29.' }
+      ],
+      projects: [
+        { year: '2024+', name: '29 — Novel, in progress' },
+        { year: "'17–'19", name: '52 Stories' },
+        { year: '2019', name: 'Relax Coffee' }
+      ],
+      repos: [
+        { name: 'henry', lang: 'typescript', desc: 'A Vendor Central co-pilot for Amazon sellers.' },
+        { name: 'portraits', lang: 'typescript', desc: 'Three live data portraits from real-time feeds.' },
+        { name: 'cherry', lang: 'html', desc: 'Feedback loops.' },
+        { name: 'stanley', lang: '—', desc: 'A British calendar butler.' },
+        { name: 'stephiesworld.github.io', lang: 'html', desc: "Stephie's World — the personal website." }
+      ],
+      career: [
+        { name: 'Amazon', desc: 'Selling & growing businesses; loved the systems.' },
+        { name: 'Little Bun, Inc.', desc: 'Founder. A food startup, and a masterclass in what not to do.' },
+        { name: "Harry's", desc: 'Learned to build and launch products with kind, fun people.' },
+        { name: 'Morgan Stanley', desc: 'Learned how emotional wealth management is. First exposure to AI.' }
+      ]
+    };
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function render() {
+    var html = '';
+    for (var i = 0; i < history.length; i++) {
+      var h = history[i];
+      html += '<div style="margin-bottom:9px;">';
+      if (h.cmd) {
+        html += '<div style="font-size:13px;color:#c9d1bd;"><span style="color:#7fae5f;">stephie@world</span>:~$ ' + esc(h.cmd) + '</div>';
+      }
+      html += '<div style="font-size:13px;color:#9fb083;white-space:pre-wrap;line-height:1.55;margin-top:2px;">' + esc(h.out) + '</div>';
+      html += '</div>';
+    }
+    historyEl.innerHTML = html;
+  }
+
+  function runCmd(raw) {
+    var c = (raw || '').trim().toLowerCase();
+    if (c === '') { input.value = ''; return; }
+    var D = data();
+    var out;
+    if (c === 'clear') { history = []; input.value = ''; render(); return; }
+    else if (c === 'help') out = "sections: about · reading · favorites · cities · ideas · art · film · museum · projects · repos · career · tennis · work · contact · now · clear · ❦";
+    else if (c === 'whoami') out = "stephanie del paggio — writer, tinkerer, wanderer · Shanghai → Texas → New York";
+    else if (c === 'ls') out = "about.md  reading/  cities/  ideas.md  art.md  projects/  career.log  tennis.md  contact.txt";
+    else if (c === 'now') out = "▸ Writing the novel. Reading multiple books at once. Planning a stop at the Shanghai Open.";
+    else if (c === 'about') out = D.about1;
+    else if (c === 'reading') out = D.readingNow.map(function (b) { return '  ' + b.title + ' — ' + b.author; }).join('\n');
+    else if (c === 'favorites' || c === 'faves') out = D.favorites.map(function (b) { return '  ★ ' + b.title + ' — ' + b.author; }).join('\n');
+    else if (c === 'cities') out = D.cities.map(function (x) { return '  ' + x.name + ' — ' + x.note; }).join('\n');
+    else if (c === 'ideas') out = D.ideas;
+    else if (c === 'art') out = D.art;
+    else if (c === 'film') out = D.film;
+    else if (c === 'museum') out = D.museum;
+    else if (c === 'repos' || c === 'code') out = D.repos.map(function (r) { return '  ' + r.name + '  [' + r.lang + ']  ' + r.desc; }).join('\n');
+    else if (c === 'work') out = "work: stephiedelpaggio.vercel.app";
+    else if (c === 'projects') out = D.projects.map(function (p) { return '  [' + p.year + '] ' + p.name; }).join('\n');
+    else if (c === 'career') out = D.career.map(function (j) { return '  ' + j.name + ' — ' + j.desc; }).join('\n');
+    else if (c === 'tennis') out = D.tennis + '\n  tournaments: US Open · Indian Wells · Miami · Roland-Garros · Madrid · (eyeing Shanghai)';
+    else if (c === 'contact') out = "say hello: stephiesuniverse@gmail.com\nCuriosities (مكتوب): stephiesuniverse.substack.com\nwork: stephiedelpaggio.vercel.app\ngithub: github.com/stephiesworld\nlinkedin: /in/sdelpaggio   ·   instagram: @sdelpaggio";
+    else if (c === 'github' || c === 'git') out = "github.com/stephiesworld — tinkering in the open";
+    else if (c === 'sudo' || c.indexOf('sudo ') === 0) out = "nice try. this universe has no root — only soil.";
+    else if (c === '29') out = "   ❦\n  \\|/   29 — conceived in Interlaken. an alien learns to love the Earth.\n   |";
+    else if (c === '❦' || c === 'flower' || c === 'novel') out = "   ❦\n  \\|/   the novel is called 29. an alien learns to love the Earth, one ordinary day at a time.\n   |";
+    else out = "command not found: " + c + " — try 'help'";
+    history.push({ cmd: raw, out: out });
+    input.value = '';
+    render();
+  }
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); runCmd(input.value); input.scrollIntoView({ block: 'nearest' }); }
+  });
+  term.addEventListener('click', function (e) {
+    if (window.getSelection && String(window.getSelection())) return;
+    input.focus();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

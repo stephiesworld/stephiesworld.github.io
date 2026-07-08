@@ -1,84 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stephie's World · Stephanie Del Paggio</title>
-  <meta name="description" content="The personal world of Stephanie Del Paggio, writer, tinkerer, and wanderer based in New York.">
-  <meta name="keywords" content="Stephanie Del Paggio, Stephie Del Paggio, writer, New York, tech, literary fiction">
-  <meta property="og:title" content="Stephie's World · Stephanie Del Paggio">
-  <meta property="og:description" content="Writer, tinkerer, wanderer. A personal universe.">
-  <meta property="og:type" content="website">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Stephanie Del Paggio",
-    "alternateName": "Stephie Del Paggio",
-    "url": "https://stephiesworld.com",
-    "jobTitle": "Writer & Technologist",
-    "address": { "@type": "PostalAddress", "addressLocality": "New York" }
-  }
-  </script>
-  <link rel="canonical" href="https://stephiesworld.com/">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="world.css">
-  <style>
-    .door {
-      position: fixed; inset: 0; z-index: 1000;
-      display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.85s ease, visibility 0.85s ease;
-    }
-    .door.leaving { opacity: 0; visibility: hidden; }
-    .door-inner { position: relative; z-index: 2; text-align: center; }
-    .door-crest {
-      font-family: Georgia, serif; font-size: 30px; color: var(--cherry-bright);
-      opacity: 0; filter: drop-shadow(0 0 16px var(--glow));
-      animation: doorRise 1.6s ease 0.1s forwards, breathe 6s ease-in-out 1.6s infinite;
-    }
-    @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-    .door-welcome {
-      font-family: var(--serif); font-style: italic; font-weight: 500;
-      font-size: clamp(46px, 8vw, 84px); letter-spacing: 0.01em;
-      color: var(--cherry); margin: 22px 0 34px;
-      opacity: 0; animation: doorRise 1.6s ease 0.35s forwards;
-    }
-    .door-enter {
-      background: none; border: none; cursor: pointer; padding: 12px;
-      font-family: var(--mono); font-size: 10px; font-weight: 400;
-      letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-mute);
-      opacity: 0; animation: doorRise 1.6s ease 0.95s forwards;
-      transition: color 0.4s ease, letter-spacing 0.4s ease;
-    }
-    .door-enter:hover { color: var(--cherry); letter-spacing: 0.44em; }
-    @keyframes doorRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    @media (prefers-reduced-motion: reduce) {
-      .door-crest, .door-welcome, .door-enter { animation: none !important; opacity: 1 !important; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stephie's World · Stephanie Del Paggio</title>
+<meta name="description" content="A personal universe — Shanghai to Texas to New York. Writer, tinkerer, wanderer.">
+<meta name="keywords" content="Stephanie Del Paggio, Stephie Del Paggio, writer, New York, literary fiction, tennis">
+<meta property="og:title" content="Stephie's World · Stephanie Del Paggio">
+<meta property="og:description" content="A personal universe — Shanghai to Texas to New York.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://stephiesworld.com/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Stephanie Del Paggio",
+  "alternateName": "Stephie Del Paggio",
+  "url": "https://stephiesworld.com",
+  "jobTitle": "Writer & Technologist",
+  "address": { "@type": "PostalAddress", "addressLocality": "New York" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="console.css">
 </head>
 <body>
+<div style="min-height:100%;background:#0a0b09;background-image:radial-gradient(#181a14 1px,transparent 1px);background-size:22px 22px;padding:44px 24px 70px;box-sizing:border-box;">
+  <div style="max-width:1040px;margin:0 auto;background:#0f110d;border:1px solid #2c3025;overflow:hidden;color:#e6ecd7;box-shadow:0 24px 60px -30px #000;">
 
-  <div class="door" id="door">
-    <div class="door-inner">
-      <h1 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Stephanie Del Paggio</h1>
-      <div class="door-crest">&#10086;</div>
-      <p class="door-welcome" id="greeting">welcome</p>
-      <button class="door-enter" id="enterBtn" aria-label="Enter site"><span>enter</span></button>
+    <!-- statusline -->
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;background:#0b0d0a;border-bottom:1px solid #2c3025;padding:9px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;color:#6f7a5e;">
+      <span style="display:flex;align-items:center;gap:8px;"><span style="width:7px;height:7px;border-radius:50%;background:#a7d17e;box-shadow:0 0 6px #a7d17e;"></span><span style="color:#9fb083;">stephie@world</span><span>:~$ online</span></span>
+      <span style="display:flex;align-items:center;gap:14px;"><span>V.03 · BUILD 2026.07</span><span style="color:#9fb083;"><span id="clock">--:--:--</span> EST</span><span>40.71°N 74.00°W</span></span>
     </div>
+
+    <!-- ticker -->
+    <div style="background:#12140f;color:#9fb083;overflow:hidden;white-space:nowrap;border-bottom:1px solid #2c3025;">
+      <div style="display:inline-block;padding:7px 0;animation:marquee 26s linear infinite;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;">
+        <span style="padding:0 18px;">STEPHIE'S WORLD ❦ A PERSONAL UNIVERSE ❦ SHANGHAI → TEXAS → NEW YORK ❦ ALWAYS WHERE WATER MEETS LAND ❦ STEPHIE'S WORLD ❦ A PERSONAL UNIVERSE ❦ SHANGHAI → TEXAS → NEW YORK ❦ ALWAYS WHERE WATER MEETS LAND ❦ </span>
+      </div>
+    </div>
+
+    <!-- persistent nav -->
+    <div style="display:flex;flex-wrap:wrap;border-bottom:1px solid #2c3025;font-family:'IBM Plex Mono',monospace;align-items:stretch;">
+      <a href="index.html" style="padding:11px 16px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;letter-spacing:.02em;border-right:1px solid #2c3025;text-decoration:none;color:#0f110d;background:#a7d17e;white-space:nowrap;display:flex;align-items:center;gap:7px;">❦ STEPHIE'S WORLD</a>
+      <a class="h-nav" href="about.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;color:#9fb083;display:flex;align-items:center;transition:background .12s,color .12s;">01 ABOUT</a>
+      <a class="h-nav" href="reading.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;color:#9fb083;display:flex;align-items:center;transition:background .12s,color .12s;">02 READING</a>
+      <a class="h-nav" href="cities.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;color:#9fb083;display:flex;align-items:center;transition:background .12s,color .12s;">03 CITIES</a>
+      <a class="h-nav" href="work.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;color:#9fb083;display:flex;align-items:center;transition:background .12s,color .12s;">04 WORK</a>
+      <a class="h-nav" href="tennis.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;color:#9fb083;display:flex;align-items:center;transition:background .12s,color .12s;">05 TENNIS</a>
+      <a class="h-nav" href="shell.html" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;border-right:1px solid #2c3025;text-decoration:none;color:#9fb083;display:flex;align-items:center;transition:background .12s,color .12s;">06 SHELL</a>
+      <a class="h-nav" href="#contact" style="flex:1 1 0;min-width:96px;padding:11px 12px;font-size:11px;letter-spacing:.06em;text-decoration:none;color:#9fb083;display:flex;align-items:center;transition:background .12s,color .12s;">07 CONTACT</a>
+    </div>
+
+    <!-- hero grid -->
+    <div style="display:flex;flex-wrap:wrap;border-bottom:1px solid #2c3025;">
+      <div style="flex:1 1 340px;min-width:0;padding:44px 30px 40px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f7a5e;">~/identity — a personal universe</div>
+        <h1 style="font-weight:700;font-size:clamp(46px,13vw,96px);line-height:.86;letter-spacing:-.04em;margin:16px 0 0;text-transform:uppercase;color:#f3f6ea;">Stephanie<br>Del&nbsp;Paggio</h1>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.06em;color:#9fb083;margin:20px 0 0;">SHANGHAI → TEXAS → NEW YORK</p>
+      </div>
+      <div style="flex:1 1 220px;border-left:1px solid #2c3025;display:flex;flex-direction:column;background:#0b0d0a;">
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;font-size:74px;color:#a7d17e;animation:floatglyph 5s ease-in-out infinite;">❦</div>
+        <div style="border-top:1px solid #2c3025;padding:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:2;color:#9fb083;">
+          <div style="display:flex;justify-content:space-between;gap:12px;white-space:nowrap;"><span style="color:#6f7a5e;">status</span><span style="color:#e9e42e;">writing <span style="color:#e0736b;">♥</span> building</span></div>
+          <div style="display:flex;justify-content:space-between;gap:12px;white-space:nowrap;"><span style="color:#6f7a5e;">project</span><span>29</span></div>
+          <div style="display:flex;justify-content:space-between;gap:12px;white-space:nowrap;"><span style="color:#6f7a5e;">location</span><span>nyc</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- now -->
+    <div style="padding:18px 30px;border-bottom:1px solid #2c3025;display:flex;gap:16px;align-items:baseline;background:#12140f;font-family:'IBM Plex Mono',monospace;">
+      <span style="font-size:12px;font-weight:700;letter-spacing:.1em;color:#e9e42e;white-space:nowrap;">// NOW</span>
+      <p style="margin:0;font-size:16px;font-weight:400;line-height:1.5;color:#d3dcc4;font-family:'Space Grotesk',sans-serif;">Writing a literary sci-fi novel about an alien that falls in love with life on Earth. Planning a stop at the Shanghai Open.</p>
+    </div>
+
+    <!-- short intro -->
+    <div style="padding:34px 30px;border-bottom:1px solid #2c3025;">
+      <p style="margin:0;font-size:24px;font-weight:500;line-height:1.24;letter-spacing:-.02em;text-wrap:pretty;max-width:34ch;color:#eef2e3;">I grew up between Shanghai and Texas, and landed in New York, where I've been for 10 years now.</p>
+      <p style="margin:12px 0 0;font-size:14px;line-height:1.5;color:#8a927a;">Find me in Paris, sometimes.</p>
+      <a href="about.html" style="display:inline-block;margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-decoration:none;color:#a7d17e;border-bottom:1px solid #a7d17e;padding-bottom:2px;">cat ./about →</a>
+    </div>
+
+    <!-- DIRECTORY -->
+    <div style="border-bottom:1px solid #2c3025;">
+      <div style="padding:12px 30px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f7a5e;border-bottom:1px solid #2c3025;background:#0b0d0a;">$ ls ~/universe — 6 dirs</div>
+      <a class="h-row" href="about.html" style="display:grid;grid-template-columns:150px 44px minmax(0,180px) minmax(0,1fr) auto;border-bottom:1px solid #1c1f17;text-decoration:none;cursor:pointer;transition:background .12s,color .12s;align-items:center;color:#c9d1bd;">
+        <div style="padding:18px 0 18px 30px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6f7a5e;">drwxr-xr-x</div>
+        <div style="padding:18px 0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#a7d17e;">01</div>
+        <div style="padding:18px 16px;font-size:24px;font-weight:700;text-transform:lowercase;letter-spacing:-.02em;color:inherit;">about</div>
+        <div style="padding:18px 16px;font-size:14px;line-height:1.4;color:#8a927a;">Art, film, music, and the ideas I can't stop turning over.</div>
+        <div style="padding:18px 30px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#a7d17e;">→</div>
+      </a>
+      <a class="h-row" href="reading.html" style="display:grid;grid-template-columns:150px 44px minmax(0,180px) minmax(0,1fr) auto;border-bottom:1px solid #1c1f17;text-decoration:none;cursor:pointer;transition:background .12s,color .12s;align-items:center;color:#c9d1bd;">
+        <div style="padding:18px 0 18px 30px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6f7a5e;">drwxr-xr-x</div>
+        <div style="padding:18px 0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#a7d17e;">02</div>
+        <div style="padding:18px 16px;font-size:24px;font-weight:700;text-transform:lowercase;letter-spacing:-.02em;color:inherit;">reading</div>
+        <div style="padding:18px 16px;font-size:14px;line-height:1.4;color:#8a927a;">Multiple books at once, plus the ones that rearranged me.</div>
+        <div style="padding:18px 30px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#a7d17e;">→</div>
+      </a>
+      <a class="h-row" href="cities.html" style="display:grid;grid-template-columns:150px 44px minmax(0,180px) minmax(0,1fr) auto;border-bottom:1px solid #1c1f17;text-decoration:none;cursor:pointer;transition:background .12s,color .12s;align-items:center;color:#c9d1bd;">
+        <div style="padding:18px 0 18px 30px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6f7a5e;">drwxr-xr-x</div>
+        <div style="padding:18px 0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#a7d17e;">03</div>
+        <div style="padding:18px 16px;font-size:24px;font-weight:700;text-transform:lowercase;letter-spacing:-.02em;color:inherit;">cities</div>
+        <div style="padding:18px 16px;font-size:14px;line-height:1.4;color:#8a927a;">Field guides to the places I love — Shanghai, Paris, New York.</div>
+        <div style="padding:18px 30px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#a7d17e;">→</div>
+      </a>
+      <a class="h-row" href="work.html" style="display:grid;grid-template-columns:150px 44px minmax(0,180px) minmax(0,1fr) auto;border-bottom:1px solid #1c1f17;text-decoration:none;cursor:pointer;transition:background .12s,color .12s;align-items:center;color:#c9d1bd;">
+        <div style="padding:18px 0 18px 30px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6f7a5e;">drwxr-xr-x</div>
+        <div style="padding:18px 0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#a7d17e;">04</div>
+        <div style="padding:18px 16px;font-size:24px;font-weight:700;text-transform:lowercase;letter-spacing:-.02em;color:inherit;">work</div>
+        <div style="padding:18px 16px;font-size:14px;line-height:1.4;color:#8a927a;">A novel in progress, past projects, code, and where I've built.</div>
+        <div style="padding:18px 30px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#a7d17e;">→</div>
+      </a>
+      <a class="h-row" href="tennis.html" style="display:grid;grid-template-columns:150px 44px minmax(0,180px) minmax(0,1fr) auto;border-bottom:1px solid #1c1f17;text-decoration:none;cursor:pointer;transition:background .12s,color .12s;align-items:center;color:#c9d1bd;">
+        <div style="padding:18px 0 18px 30px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6f7a5e;">drwxr-xr-x</div>
+        <div style="padding:18px 0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#a7d17e;">05</div>
+        <div style="padding:18px 16px;font-size:24px;font-weight:700;text-transform:lowercase;letter-spacing:-.02em;color:inherit;">tennis</div>
+        <div style="padding:18px 16px;font-size:14px;line-height:1.4;color:#8a927a;">The sport that became a mirror.</div>
+        <div style="padding:18px 30px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#a7d17e;">→</div>
+      </a>
+      <a class="h-row" href="shell.html" style="display:grid;grid-template-columns:150px 44px minmax(0,180px) minmax(0,1fr) auto;border-bottom:1px solid #1c1f17;text-decoration:none;cursor:pointer;transition:background .12s,color .12s;align-items:center;color:#c9d1bd;">
+        <div style="padding:18px 0 18px 30px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6f7a5e;">drwxr-xr-x</div>
+        <div style="padding:18px 0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#a7d17e;">06</div>
+        <div style="padding:18px 16px;font-size:24px;font-weight:700;text-transform:lowercase;letter-spacing:-.02em;color:inherit;">shell</div>
+        <div style="padding:18px 16px;font-size:14px;line-height:1.4;color:#8a927a;">A working terminal. Type your way through my universe.</div>
+        <div style="padding:18px 30px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#a7d17e;">→</div>
+      </a>
+    </div>
+
+    <!-- shell teaser -->
+    <a class="h-teaser" href="shell.html" style="display:block;text-decoration:none;background:#12140f;color:#a7d17e;border-bottom:1px solid #2c3025;font-family:'IBM Plex Mono',monospace;padding:20px 30px;transition:background .15s;">
+      <div style="font-size:11px;color:#6f7a5e;letter-spacing:.1em;margin-bottom:8px;">// PSST — THERE'S A WORKING TERMINAL</div>
+      <div style="font-size:15px;color:#e6ecd7;"><span style="color:#7fae5f;">stephie@world</span>:~$ <span style="color:#e0a15b;">open ./shell</span> — type your way through the whole universe <span style="display:inline-block;width:8px;height:15px;background:#a7d17e;vertical-align:-2px;margin-left:2px;animation:blink 1s step-end infinite;"></span></div>
+    </a>
+
+    <!-- CONTACT footer -->
+    <div id="contact" style="padding:36px 30px 30px;scroll-margin-top:12px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f7a5e;margin-bottom:18px;">07 — contact</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <a class="h-contact" href="mailto:stephiesuniverse@gmail.com" style="font-size:clamp(26px,7vw,38px);font-weight:700;letter-spacing:-.03em;cursor:pointer;text-decoration:none;color:#eef2e3;transition:padding-left .18s,color .12s;">SAY HELLO ↗</a>
+        <a class="h-contact" href="https://stephiesuniverse.substack.com" target="_blank" rel="noopener" style="font-size:clamp(26px,7vw,38px);font-weight:700;letter-spacing:-.03em;cursor:pointer;text-decoration:none;color:#eef2e3;transition:padding-left .18s,color .12s;">CURIOSITIES ↗</a>
+        <a class="h-contact" href="bookshelf.html" style="font-size:clamp(26px,7vw,38px);font-weight:700;letter-spacing:-.03em;cursor:pointer;text-decoration:none;color:#eef2e3;transition:padding-left .18s,color .12s;">THE BOOKSHELF →</a>
+      </div>
+      <div style="margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:#6f7a5e;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <span>SET IN SPACE GROTESK / IBM PLEX MONO</span>
+        <span>© 2026 STEPHANIE DEL PAGGIO — مكتوب</span>
+      </div>
+    </div>
+
   </div>
+</div>
 
-  <script>
-    var greetings = ['你好', 'bonjour', 'ciao', 'hola', 'welcome'];
-    document.getElementById('greeting').textContent = greetings[Math.floor(Math.random() * greetings.length)];
-    document.getElementById('enterBtn').addEventListener('click', function () {
-      document.getElementById('door').classList.add('leaving');
-      setTimeout(function () { window.location.href = 'world.html'; }, 800);
-    });
-  </script>
-
+<script>
+  (function () {
+    var el = document.getElementById('clock');
+    function tick() {
+      var s;
+      try { s = new Date().toLocaleTimeString('en-US', { hour12: false, timeZone: 'America/New_York' }); }
+      catch (e) { s = new Date().toLocaleTimeString('en-US', { hour12: false }); }
+      el.textContent = s;
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
 </body>
 </html>
