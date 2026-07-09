@@ -42,3 +42,21 @@ a { color: #e6ecd7; }
   width: 16px; height: 16px; border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg); box-sizing: border-box;
 }
+
+/* ---- mobile: collapse the fixed-column row grids so they don't overlap ----
+   These grids carry their columns as inline styles, so the overrides need
+   !important to win. Below 640px every "label | body" row stacks to one
+   column, and the home directory keeps num · name · → on one line with the
+   blurb wrapping full-width beneath. */
+@media (max-width: 640px) {
+  /* generic two-part rows (cities, work projects/career/repos, tennis split) */
+  .stack-row { grid-template-columns: 1fr !important; }
+  .stack-row > * { border-right: none !important; overflow-wrap: anywhere; }
+
+  /* home directory: drop the perms column, keep num · name · arrow, blurb below */
+  .dir-row { grid-template-columns: auto 1fr auto !important; }
+  .dir-row > :nth-child(1) { display: none !important; }                 /* perms */
+  .dir-row > :nth-child(2) { padding-left: 26px !important; }            /* num */
+  .dir-row > :nth-child(5) { grid-row: 1 !important; grid-column: 3 !important; }              /* arrow, top-right */
+  .dir-row > :nth-child(4) { grid-column: 1 / -1 !important; padding: 0 26px 18px !important; } /* blurb, full width below */
+}
