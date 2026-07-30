@@ -171,10 +171,23 @@ def _coverage(report: Report) -> str:
             "absence of findings in those files as absence of evidence."
         )
     if report.model_refs:
+        # Catalog files are collapsed into one MODEL_REGISTRY summary each, so
+        # "found" and "reported" are different numbers. Saying otherwise would
+        # overstate coverage in the very section whose job is not to.
+        catalogs = {f.location.path for f in report.findings if f.id == "MODEL_REGISTRY"}
+        suppressed = sum(1 for r in report.model_refs if r.location.path in catalogs)
+        total = len(report.model_refs)
+        detail = (
+            f" {suppressed} of those sit in {len(catalogs)} file(s) detected as model "
+            f"catalogs and were collapsed into one summary each; the remaining "
+            f"{total - suppressed} are reported individually."
+            if suppressed
+            else ""
+        )
         lines.append(
-            f"- {len(report.model_refs)} model-ID string(s) found outside call sites "
-            "(constants, config, registries, fixtures). These are reported but never "
-            "auto-fixed: a registry that *serves* a model legitimately keeps the old ID."
+            f"- {total} model-ID string(s) found outside call sites (constants, config, "
+            f"registries, fixtures).{detail} None are auto-fixed: a registry that "
+            "*serves* a model legitimately keeps the old ID."
         )
     if report.skipped:
         lines.append(f"- {len(report.skipped)} file(s) skipped (unreadable or unparseable).")

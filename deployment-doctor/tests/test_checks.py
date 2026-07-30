@@ -374,3 +374,12 @@ def test_below_the_registry_threshold_entries_are_still_reported():
     findings = checks.run(ctx)
     assert "MODEL_RETIRED" in ids(findings)
     assert "MODEL_REGISTRY" not in ids(findings)
+
+
+def test_coverage_distinguishes_found_from_reported_model_refs():
+    """The coverage section must not claim every reference was reported when the
+    catalog heuristic collapsed most of them."""
+    report = analyse(Path.cwd(), use_llm=False, effort="high", today=TODAY)
+    coverage = reportmod.markdown(report, target="self")
+    assert "collapsed into one summary each" in coverage
+    assert "are reported individually" in coverage
