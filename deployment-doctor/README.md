@@ -42,8 +42,21 @@ deployment-doctor --search "why is my prompt not caching"   # retrieval demo
 
 The deterministic checks are **stdlib-only** — no install step, no API key, no
 network. Add `--llm` (or `--llm-agent`) for the judgement pass, which needs
-`pip install -e ".[llm]"` and either `ANTHROPIC_API_KEY` or an `ant auth login`
-profile.
+`pip install -e ".[llm]"` and a credential.
+
+For the credential, pick one:
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."            # this terminal only
+echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshrc   # every terminal, forever
+printf 'ANTHROPIC_API_KEY=sk-ant-...\n' > .env   # this project (gitignored)
+ant auth login                                    # no key to manage at all
+```
+
+A `.env` is read from the target directory or any parent, and never overrides a
+variable already exported — an explicit `export` should always win, or "which
+key am I actually using" becomes guesswork. If no credential is found, the run
+says so and continues with the deterministic checks rather than failing.
 
 Exit code is 1 if anything at or above `--fail-on` (default `high`) is found, so
 it drops into CI as-is.

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from datetime import date
 from pathlib import Path
 
@@ -383,3 +384,74 @@ def test_coverage_distinguishes_found_from_reported_model_refs():
     coverage = reportmod.markdown(report, target="self")
     assert "collapsed into one summary each" in coverage
     assert "are reported individually" in coverage
+
+
+# --------------------------------------------------------------------------- #
+# .env loading
+# --------------------------------------------------------------------------- #
+
+
+def test_env_parses_the_forms_people_actually_write():
+    from doctor.env import parse
+
+    parsed = parse(
+        "\n".join(
+            [
+                "# a comment",
+                "",
+                "ANTHROPIC_API_KEY=sk-ant-plain",
+                "export EXPORTED=yes",
+                'QUOTED="has spaces"',
+                "SINGLE='single'",
+                "TRAILING=value # trailing comment",
+                'HASH_IN_SECRET="abc#def"',
+                "not a pair",
+            ]
+        )
+    )
+    assert parsed == {
+        "ANTHROPIC_API_KEY": "sk-ant-plain",
+        "EXPORTED": "yes",
+        "QUOTED": "has spaces",
+        "SINGLE": "single",
+        "TRAILING": "value",
+        # A `#` inside a quoted value is part of the secret, not a comment.
+        "HASH_IN_SECRET": "abc#def",
+    }
+
+
+def test_env_does_not_override_an_explicit_export(tmp_path, monkeypatch):
+    """A key exported in the shell must beat a file on disk, or 'which key am I
+    using' becomes guesswork."""
+    from doctor import env as envmod
+
+    (tmp_path / ".env").write_text("ANTHROPIC_API_KEY=from-file\nOTHER=from-file\n")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "from-shell")
+    monkeypatch.delenv("OTHER", raising=False)
+
+    applied = envmod.load(tmp_path)
+
+    assert os.environ["ANTHROPIC_API_KEY"] == "from-shell"
+    assert os.environ["OTHER"] == "from-file"
+    assert set(applied) == {"OTHER"}
+
+
+def test_env_is_found_in_a_parent_directory(tmp_path, monkeypatch):
+    from doctor import env as envmod
+
+    (tmp_path / ".env").write_text("FOUND_UPWARD=1\n")
+    nested = tmp_path / "a" / "b"
+    nested.mkdir(parents=True)
+    monkeypatch.delenv("FOUND_UPWARD", raising=False)
+
+    assert envmod.find(nested) == tmp_path / ".env"
+    assert envmod.load(nested) == {"FOUND_UPWARD": "1"}
+
+
+def test_env_describe_never_prints_a_value():
+    from doctor.env import describe
+
+    note = describe({"ANTHROPIC_API_KEY": "sk-ant-supersecret"})
+    assert "ANTHROPIC_API_KEY" in note
+    assert "supersecret" not in note
+    assert describe({}) == ""

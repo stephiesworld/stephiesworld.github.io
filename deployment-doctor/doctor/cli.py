@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from datetime import date
 from pathlib import Path
 
-from . import agent, checks, extract, fix as fixmod, llm, report as reportmod
+from . import agent, checks, env as envmod, extract, fix as fixmod, llm, report as reportmod
 from .model import Report, Severity
 
 _SKIP_DIRS = {
@@ -170,6 +171,22 @@ def main(argv: list[str] | None = None) -> int:
     if not root.exists():
         print(f"error: {root} does not exist", file=sys.stderr)
         return _EXIT_ERROR
+
+    if args.llm or args.llm_agent:
+        applied = envmod.load(root)
+        if note := envmod.describe(applied):
+            print(note)
+        if not any(
+            os.environ.get(name)
+            for name in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_PROFILE")
+        ):
+            print(
+                "warning: no ANTHROPIC_API_KEY found in the environment or a .env file.\n"
+                "         The judgement pass will be skipped. Set it with:\n"
+                '           export ANTHROPIC_API_KEY="sk-ant-..."\n'
+                "         or add it to a .env file (already gitignored), or run `ant auth login`.",
+                file=sys.stderr,
+            )
 
     report = analyse(
         root,
