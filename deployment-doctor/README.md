@@ -37,6 +37,7 @@ deployment-doctor ../some-repo                       # deterministic checks only
 deployment-doctor ../some-repo --format markdown -o report.md
 deployment-doctor ../some-repo --fix --dry-run       # show mechanical fixes
 deployment-doctor --list-checks                      # the catalog
+deployment-doctor --search "why is my prompt not caching"   # retrieval demo
 ```
 
 The deterministic checks are **stdlib-only** — no install step, no API key, no
@@ -88,6 +89,7 @@ payload can't be assembled in advance, which is exactly when you need a loop.
 | `checks/` | ~30 pure functions over the facts. Registered by decorator. |
 | `llm.py` | Judgement pass, single call. |
 | `agent.py` | Judgement pass, agent loop with `grep` / `read_file` tools. |
+| `retrieval/` | Search over a docs corpus — keyword (BM25) and meaning-based. Not used by the analyser: `knowledge.py` fits in a prompt. See [`docs/retrieval.md`](docs/retrieval.md). |
 | `report.py` | Markdown / JSON / terminal rendering, scorecard, coverage note. |
 | `fix.py` | Line-scoped auto-fixes, verified before writing. |
 

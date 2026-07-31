@@ -132,7 +132,34 @@ def main(argv: list[str] | None = None) -> int:
         help="exit non-zero at this severity or above (default: high)",
     )
     parser.add_argument("--list-checks", action="store_true", help="print the check catalog")
+    parser.add_argument(
+        "--search",
+        metavar="QUERY",
+        help="search the docs corpus instead of auditing code (see --corpus, -k)",
+    )
+    parser.add_argument(
+        "--corpus",
+        type=Path,
+        default=Path(__file__).resolve().parent.parent / "corpus",
+        help="folder of Markdown to search (default: bundled corpus/)",
+    )
+    parser.add_argument(
+        "-k",
+        type=int,
+        default=5,
+        help="how many results to return (default: 5). Try several — there is no "
+        "single right value; see docs/retrieval.md",
+    )
+    parser.add_argument(
+        "--show",
+        action="store_true",
+        help="with --search, print the full text of each result as it would be "
+        "pasted into a prompt",
+    )
     args = parser.parse_args(argv)
+
+    if args.search:
+        return _search(args)
 
     if args.list_checks:
         for registered in checks.all_checks():
@@ -181,6 +208,41 @@ def main(argv: list[str] | None = None) -> int:
     threshold = Severity[args.fail_on.upper()]
     if any(f.severity >= threshold for f in report.findings):
         return _EXIT_FINDINGS
+    return _EXIT_CLEAN
+
+
+def _search(args) -> int:
+    """Retrieval demo. Deliberately separate from the audit path: the analyser
+    needs no retrieval, because `knowledge.py` fits in a prompt."""
+    from .retrieval.corpus import load_corpus
+    from .retrieval.keyword import KeywordRetriever
+
+    if not args.corpus.exists():
+        print(f"error: corpus {args.corpus} does not exist", file=sys.stderr)
+        return _EXIT_ERROR
+
+    chunks = load_corpus(args.corpus)
+    retriever = KeywordRetriever()
+    retriever.index(chunks)
+    hits = retriever.search(args.search, k=args.k)
+
+    print(f'{len(chunks)} chunk(s) indexed from {args.corpus.name}/ · query: "{args.search}"')
+    if not hits:
+        print("\nNo matches. The words in your question do not appear in the corpus —")
+        print("which is exactly the case where meaning-based search would help.")
+        return _EXIT_CLEAN
+
+    print(f"\nTop {len(hits)} of {args.k} requested:\n")
+    for rank, hit in enumerate(hits, start=1):
+        print(f"{rank}. [{hit.score:5.2f}] {hit.chunk}")
+        print(f"        matched: {', '.join(hit.matched)}")
+        if args.show:
+            body = "\n".join(f"        | {line}" for line in hit.chunk.render().splitlines())
+            print(body)
+        print()
+
+    print("Raise -k to see more. If the answer you wanted is not here, that is the")
+    print("retrieval failing — not the model. Fix retrieval first.")
     return _EXIT_CLEAN
 
 
