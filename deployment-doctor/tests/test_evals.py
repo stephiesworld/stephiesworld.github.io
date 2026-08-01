@@ -36,7 +36,7 @@ HEALTHY = caselib.by_name("healthy")
 
 def test_the_graded_set_is_wired_up():
     assert SICK is not None and HEALTHY is not None
-    assert caselib.total_weight() == 7
+    assert caselib.total_weight() == 9
 
 
 def test_a_correct_finding_scores_as_a_hit():
@@ -116,7 +116,7 @@ def test_silence_on_the_healthy_file_is_a_miss_not_a_pass():
     reviewer that never speaks."""
     result = score_case(HEALTHY, [])
     assert result.recall == 0.0
-    assert result.missed == ["tools-without-loop"]
+    assert "tools-without-loop" in result.missed
 
 
 def test_healthy_case_hit():
@@ -133,7 +133,7 @@ def test_healthy_case_hit():
         ],
     )
     assert result.found == ["tools-without-loop"]
-    assert result.recall == 1.0
+    assert 0 < result.recall < 1.0  # one of three; the others are still missed
 
 
 def test_recall_is_weighted():
@@ -150,4 +150,72 @@ def test_recall_is_weighted():
         ],
     )
     assert result.earned == 1
-    assert result.possible == 5
+    assert result.possible == 5  # sick case only
+
+
+# --------------------------------------------------------------------------- #
+# Request shaping
+#
+# Added after an eval run 400'd on two of three models: the request was built
+# for the model it was developed against and sent unchanged to the others.
+# Sonnet 5 rejects `fallbacks`; Haiku 4.5 rejects adaptive thinking and has no
+# `effort` parameter at all. An eval that cannot run a model cannot compare it.
+# --------------------------------------------------------------------------- #
+
+
+def test_opus_5_gets_the_full_request():
+    from doctor.llm import _request
+
+    req = _request("claude-opus-5", "payload", "high")
+    assert req["thinking"] == {"type": "adaptive"}
+    assert req["fallbacks"] == "default"
+    assert req["output_config"]["effort"] == "high"
+
+
+def test_sonnet_5_keeps_thinking_but_drops_fallbacks():
+    """The two capabilities are independent — one cannot stand in for the other."""
+    from doctor.llm import _request
+
+    req = _request("claude-sonnet-5", "payload", "high")
+    assert req["thinking"] == {"type": "adaptive"}
+    assert "fallbacks" not in req
+    assert "betas" not in req
+
+
+def test_haiku_gets_neither_thinking_nor_effort():
+    from doctor.llm import _request
+
+    req = _request("claude-haiku-4-5", "payload", "high")
+    assert "thinking" not in req
+    assert "fallbacks" not in req
+    assert "effort" not in req["output_config"]
+    assert req["output_config"]["format"]["type"] == "json_schema"
+
+
+def test_unknown_model_gets_the_conservative_shape():
+    """A model the catalog has never heard of is likelier to be newer than
+    older, but guessing either way risks a 400 that fails the whole run. Send
+    the plain request instead."""
+    from doctor.llm import _request
+
+    req = _request("claude-something-7", "payload", "high")
+    assert "thinking" not in req
+    assert "fallbacks" not in req
+
+
+def test_effort_clamps_to_what_the_model_has():
+    from doctor import knowledge
+    from doctor.llm import _request
+
+    req = _request("claude-opus-4-6", "payload", "xhigh")
+    assert req["output_config"]["effort"] in knowledge.MODELS["claude-opus-4-6"].effort_levels
+
+
+def test_the_rubric_is_identical_across_models():
+    """The comparison is only meaningful if the prompt is held fixed. If this
+    ever diverges, the eval is measuring two things at once."""
+    from doctor.llm import _request
+
+    shapes = [_request(m, "payload", "high")["system"]
+              for m in ("claude-opus-5", "claude-sonnet-5", "claude-haiku-4-5")]
+    assert shapes[0] == shapes[1] == shapes[2]

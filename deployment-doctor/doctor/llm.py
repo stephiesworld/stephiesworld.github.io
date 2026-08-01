@@ -137,6 +137,56 @@ _SCHEMA = {
 }
 
 
+def _request(model: str, payload: str, effort: str) -> dict:
+    """Build the request for *this* model, not for the one we developed against.
+
+    Everything except the model was hard-coded until an eval run tried Sonnet 5
+    and Haiku 4.5 and got a 400 from each: Sonnet 5 rejects `fallbacks`, and
+    Haiku 4.5 rejects adaptive thinking. Both are exactly the defect class this
+    tool reports in other people's code — a request shaped for one model and
+    sent to another — so the fix reads the capability off the catalog rather
+    than assuming.
+
+    An unknown model gets the conservative shape: no optional parameters. Better
+    a plainer request that runs than a richer one that 400s.
+    """
+    from . import knowledge
+
+    info = knowledge.lookup(knowledge.strip_provider_prefix(model)[0])
+
+    # `format` is universal; `effort` is not — an empty `effort_levels` means the
+    # model has no effort parameter at all and 400s on one, so it is added only
+    # where the catalog says it exists.
+    output_config: dict = {"format": {"type": "json_schema", "schema": _SCHEMA}}
+    if info is None or info.effort_levels:
+        output_config["effort"] = effort
+
+    req: dict = {
+        "model": model,
+        "max_tokens": 16000,
+        "output_config": output_config,
+        # The rubric is the cached prefix; the payload varies per run and sits
+        # after it, which is the whole point. Held byte-identical across models
+        # so an eval comparison measures the model and nothing else.
+        "system": [{"type": "text", "text": RUBRIC, "cache_control": {"type": "ephemeral"}}],
+        "messages": [{"role": "user", "content": payload}],
+    }
+
+    if info is not None and info.supports_adaptive_thinking:
+        req["thinking"] = {"type": "adaptive"}
+
+    if info is not None and info.supports_server_fallbacks:
+        req["betas"] = [FALLBACK_BETA]
+        req["fallbacks"] = "default"
+
+    if info is not None and info.effort_levels and effort not in info.effort_levels:
+        # Asking for a level this model has never had is a 400. Clamp to its
+        # highest rather than failing the run over a knob.
+        req["output_config"]["effort"] = info.effort_levels[-1]
+
+    return req
+
+
 @dataclass
 class LLMResult:
     findings: list[Finding]
@@ -168,21 +218,7 @@ def review(payload: str, *, effort: str = "high", model: str = MODEL) -> LLMResu
         return LLMResult([], error=f"could not construct client: {exc}")
 
     try:
-        with client.beta.messages.stream(
-            model=model,
-            max_tokens=16000,
-            betas=[FALLBACK_BETA],
-            fallbacks="default",
-            thinking={"type": "adaptive"},
-            output_config={
-                "effort": effort,
-                "format": {"type": "json_schema", "schema": _SCHEMA},
-            },
-            # The rubric is the cached prefix; the payload varies per run and sits
-            # after it, which is the whole point.
-            system=[{"type": "text", "text": RUBRIC, "cache_control": {"type": "ephemeral"}}],
-            messages=[{"role": "user", "content": payload}],
-        ) as stream:
+        with client.beta.messages.stream(**_request(model, payload, effort)) as stream:
             response = stream.get_final_message()
     except Exception as exc:  # noqa: BLE001
         return LLMResult([], error=f"{type(exc).__name__}: {exc}")

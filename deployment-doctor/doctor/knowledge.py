@@ -47,6 +47,15 @@ class ModelInfo:
     rejects_thinking_disabled: bool = False  # Fable 5: disabled -> 400 at any effort
     effort_levels: tuple[str, ...] = ()
     supports_fast_mode: bool = False
+    # `thinking={"type": "adaptive"}` -> 400 on models predating it. A flag
+    # rather than a version comparison, for the same reason as everything else
+    # here: "newer than X" is not a fact about the API, it is a guess that holds
+    # until it doesn't.
+    supports_adaptive_thinking: bool = False
+    # Server-side `fallbacks`. Narrower than adaptive thinking — Sonnet 5 has
+    # adaptive thinking and rejects `fallbacks`, so one cannot stand in for the
+    # other.
+    supports_server_fallbacks: bool = False
     intro_input_usd: float | None = None
     intro_output_usd: float | None = None
     intro_until: date | None = None
@@ -84,6 +93,27 @@ MODELS: dict[str, ModelInfo] = {
             thinking_on_by_default=True,
             rejects_thinking_disabled=True,
             effort_levels=_EFFORT_FULL,
+            supports_adaptive_thinking=True,
+            supports_server_fallbacks=True,
+        ),
+        ModelInfo(
+            id="claude-mythos-5",
+            display="Claude Mythos 5",
+            tier="fable",
+            status=Status.CURRENT,
+            input_usd=10.0,
+            output_usd=50.0,
+            context=1_000_000,
+            max_output=128_000,
+            cache_min_tokens=512,
+            rejects_sampling_params=True,
+            rejects_budget_tokens=True,
+            rejects_prefill=True,
+            thinking_on_by_default=True,
+            rejects_thinking_disabled=True,
+            effort_levels=_EFFORT_FULL,
+            supports_adaptive_thinking=True,
+            supports_server_fallbacks=True,
         ),
         ModelInfo(
             id="claude-opus-5",
@@ -102,6 +132,8 @@ MODELS: dict[str, ModelInfo] = {
             thinking_disable_max_effort="high",
             effort_levels=_EFFORT_FULL,
             supports_fast_mode=True,
+            supports_adaptive_thinking=True,
+            supports_server_fallbacks=True,
         ),
         ModelInfo(
             id="claude-opus-4-8",
@@ -119,6 +151,7 @@ MODELS: dict[str, ModelInfo] = {
             rejects_prefill=True,
             effort_levels=_EFFORT_FULL,
             supports_fast_mode=True,
+            supports_adaptive_thinking=True,
         ),
         ModelInfo(
             id="claude-opus-4-7",
@@ -135,6 +168,7 @@ MODELS: dict[str, ModelInfo] = {
             rejects_budget_tokens=True,
             rejects_prefill=True,
             effort_levels=_EFFORT_FULL,
+            supports_adaptive_thinking=True,
         ),
         ModelInfo(
             id="claude-opus-4-6",
@@ -149,6 +183,7 @@ MODELS: dict[str, ModelInfo] = {
             successor="claude-opus-5",
             rejects_prefill=True,
             effort_levels=_EFFORT_46,
+            supports_adaptive_thinking=True,
         ),
         ModelInfo(
             id="claude-opus-4-5",
@@ -205,6 +240,7 @@ MODELS: dict[str, ModelInfo] = {
             rejects_prefill=True,
             thinking_on_by_default=True,
             effort_levels=_EFFORT_FULL,
+            supports_adaptive_thinking=True,
         ),
         ModelInfo(
             id="claude-sonnet-4-6",
@@ -219,6 +255,7 @@ MODELS: dict[str, ModelInfo] = {
             successor="claude-sonnet-5",
             rejects_prefill=True,
             effort_levels=_EFFORT_46,
+            supports_adaptive_thinking=True,
         ),
         ModelInfo(
             id="claude-sonnet-4-5",

@@ -73,6 +73,8 @@ MECHANICAL_TRAPS: tuple[Group, ...] = (
     ("beta header", "effort-2025-11-24", "interleaved-thinking-2025"),
     ("-fast", "fast suffix", "silently falls back"),
     ("max_retries=0", "retries disabled"),
+    ("no trigger condition", "states no trigger", "no required field", "no parameter docs"),
+    ("does not need the largest model", "largest-model", "cheaper model", "tier"),
 )
 
 
@@ -153,9 +155,9 @@ CASES: tuple[Case, ...] = (
         file="healthy_app.py",
         note=(
             "The static checks stay silent on this file by design. It is not "
-            "defect-free: it has one real architectural bug that no rule can see. "
-            "A reviewer that reports nothing here is missing something; a reviewer "
-            "that reports five things is padding."
+            "defect-free — it has three real defects no rule can see, two of which were "
+            "found by a reviewer before this set knew to ask for them. A reviewer "
+            "that reports nothing here is missing something."
         ),
         traps=MECHANICAL_TRAPS,
         expected=(
@@ -184,6 +186,37 @@ CASES: tuple[Case, ...] = (
                     ),
                 ),
                 weight=2,
+            ),
+            Expected(
+                key="healthy-prompt-is-padding",
+                what=(
+                    "`healthy_app.py` has the same placeholder system prompt: one "
+                    "line then 900 repetitions, defining no task or output "
+                    "contract. Passing every static check is not the same as "
+                    "having a real prompt."
+                ),
+                dimension="prompt",
+                file="healthy_app.py",
+                lines=(12, 12),
+                must=(
+                    ("repetition", "repeat", "900", "placeholder", "filler", "padding"),
+                    ("system prompt", "system", "no task", "defines no"),
+                ),
+            ),
+            Expected(
+                key="only-refusal-checked",
+                what=(
+                    "Only `refusal` is checked. A `max_tokens` stop returns "
+                    "truncated triage output that reads as complete, so the "
+                    "caller ships a half-finished answer as a finished one."
+                ),
+                dimension="failure",
+                file="healthy_app.py",
+                lines=(48, 52),
+                must=(
+                    ("max_tokens", "truncat", "stop_reason"),
+                    ("as if complete", "as complete", "only", "not checked", "unchecked"),
+                ),
             ),
         ),
     ),
