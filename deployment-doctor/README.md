@@ -39,6 +39,7 @@ deployment-doctor ../some-repo --format markdown -o report.md
 deployment-doctor ../some-repo --fix --dry-run       # show mechanical fixes
 deployment-doctor --list-checks                      # the catalog
 deployment-doctor --search "why is my prompt not caching"   # retrieval demo
+deployment-doctor --eval                             # score the judgement pass
 ```
 
 The deterministic checks are **stdlib-only** — no install step, no API key, no
@@ -197,6 +198,42 @@ report that hides its blind spots reads as a clean bill of health:
 - **The catalog goes stale.** `knowledge.py` carries a `KNOWLEDGE_AS_OF` date
   and every report prints it. Unknown IDs are reported as *either* a typo *or* a
   stale catalog, because from inside the tool those are indistinguishable.
+
+## Grading the judgement pass
+
+The deterministic checks are unit-tested: same input, same output, forever. The
+judgement pass cannot be tested that way — the model answers differently each
+run — so it is **graded** instead.
+
+`doctor/evals/cases.py` holds the graded set: for each fixture, the findings a
+competent reviewer should produce, and the mechanical findings the rubric told
+it to stay silent about. `--eval` runs the pass against every case, matches the
+output, and prints a table:
+
+```
+  model                  effort   recall   traps  found      cost    time
+  -----------------------------------------------------------------------
+  claude-opus-5          high        86%      0%      6 $  0.1183     94s
+  claude-sonnet-5        high        71%     14%      7 $  0.0710     61s
+  claude-haiku-4-5       high        29%     43%      7 $  0.0237     22s
+```
+
+**Recall** is the share of real findings caught. **Traps** is the share of
+output that repeated a check the static analyser already ran — a reviewer that
+scores well there is doing the job it was asked to do, not a different, easier
+one. That second column is why this set exists: recall alone would reward a
+model that lists every mechanical defect it can see.
+
+This is also the answer to "can we use a cheaper model?" Hold the prompt fixed,
+vary the model, read the numbers. Set the bar you'll accept *before* running it,
+or the number just talks you into the answer you wanted.
+
+Scoring is keyword-based and deterministic — no model grades another model here.
+A judge would cost money on every run, which discourages running it, and would
+add a second source of variance, so a score drop would no longer tell you
+whether the reviewer regressed or the judge did. The cost is that an unusually
+phrased correct finding can be missed; those surface as `unscored`, where you
+can read them and widen the case.
 
 ## Development
 

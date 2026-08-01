@@ -134,6 +134,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--list-checks", action="store_true", help="print the check catalog")
     parser.add_argument(
+        "--eval",
+        action="store_true",
+        help="score the judgement pass against the graded set in doctor/evals/cases.py. "
+        "Costs money — the table prints how much.",
+    )
+    parser.add_argument(
+        "--models",
+        help="with --eval, comma-separated models to compare (default: opus 5, sonnet 5, haiku 4.5)",
+    )
+    parser.add_argument(
         "--serve",
         action="store_true",
         help="run the browser UI instead of printing a report. The credential stays "
@@ -179,6 +189,26 @@ def main(argv: list[str] | None = None) -> int:
     if not root.exists():
         print(f"error: {root} does not exist", file=sys.stderr)
         return _EXIT_ERROR
+
+    if args.eval:
+        from . import evals as evalmod
+
+        applied = envmod.load(root)
+        if note := envmod.describe(applied):
+            print(note)
+        models = (
+            [m.strip() for m in args.models.split(",") if m.strip()]
+            if args.models
+            else list(evalmod.DEFAULT_MODELS)
+        )
+        today = date.today()
+        runs = []
+        for name in models:
+            print(f"running {name} @ {args.effort} …", file=sys.stderr)
+            runs.append(evalmod.run_model(name, effort=args.effort, today=today))
+        print()
+        print(evalmod.render(runs))
+        return _EXIT_CLEAN
 
     if args.serve:
         from . import serve as servemod

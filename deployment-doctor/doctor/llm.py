@@ -146,9 +146,14 @@ class LLMResult:
     cache_read_tokens: int = 0
 
 
-def review(payload: str, *, effort: str = "high") -> LLMResult:
+def review(payload: str, *, effort: str = "high", model: str = MODEL) -> LLMResult:
     """Run the judgement pass. Never raises — a failure here degrades the report,
-    it does not fail the run."""
+    it does not fail the run.
+
+    `model` is a parameter rather than a constant so the eval harness can hold
+    the prompt fixed and vary only the model. That is the whole comparison: if
+    the rubric changed between runs, the numbers would not be comparable.
+    """
     try:
         import anthropic
     except ImportError:
@@ -164,7 +169,7 @@ def review(payload: str, *, effort: str = "high") -> LLMResult:
 
     try:
         with client.beta.messages.stream(
-            model=MODEL,
+            model=model,
             max_tokens=16000,
             betas=[FALLBACK_BETA],
             fallbacks="default",
