@@ -33,6 +33,7 @@ customer, not a dashboard nobody opens.
 ```bash
 pip install -e .
 
+deployment-doctor --serve                            # browser UI, no terminal after this
 deployment-doctor ../some-repo                       # deterministic checks only
 deployment-doctor ../some-repo --format markdown -o report.md
 deployment-doctor ../some-repo --fix --dry-run       # show mechanical fixes
@@ -60,6 +61,28 @@ says so and continues with the deterministic checks rather than failing.
 
 Exit code is 1 if anything at or above `--fail-on` (default `high`) is found, so
 it drops into CI as-is.
+
+## The browser UI
+
+`--serve` starts a local server on `127.0.0.1:8420` and opens a page. Pick a
+directory, pick a mode, click Run.
+
+```
+browser  →  this server (holds the credential)  →  Anthropic API
+```
+
+That indirection is not a convenience — it is the only shape that works. The
+Anthropic API sends no CORS headers, so a browser request is blocked before it
+leaves the page; and a key embedded in client-side JavaScript is readable by
+anyone who opens devtools. So the credential stays in the server process, and
+the page is told only *whether* one was found, never what it is. This is the
+same architecture every production agent uses; the terminal doesn't disappear,
+it moves to whoever deploys the server.
+
+Stdlib-only, matching the deterministic path — no Flask, no build step. Bound to
+loopback, because the endpoint reads the filesystem. Paths from the page are
+confined to the directory the server started in, by the same resolve-then-verify
+rule the agent's sandbox uses.
 
 ## Architecture
 

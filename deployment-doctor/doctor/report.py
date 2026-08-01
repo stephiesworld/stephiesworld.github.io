@@ -47,6 +47,16 @@ def scores(report: Report) -> dict[str, int]:
     return out
 
 
+def overall(dim_scores: dict[str, int]) -> int:
+    """The headline number: an unweighted mean of the dimension scores.
+
+    Unweighted on purpose. Weighting the dimensions would encode an opinion
+    about which kind of defect matters most, and that opinion belongs to the
+    reader, not the tool — the severity of each finding already carries it.
+    """
+    return round(sum(dim_scores.values()) / len(dim_scores))
+
+
 def _bar(score: int, width: int = 20) -> str:
     filled = round(score / 100 * width)
     return "█" * filled + "░" * (width - filled)
@@ -56,12 +66,12 @@ def markdown(report: Report, *, target: str) -> str:
     findings = report.sorted_findings()
     counts = report.by_severity()
     dim_scores = scores(report)
-    overall = round(sum(dim_scores.values()) / len(dim_scores))
+    overall_score = overall(dim_scores)
 
     out: list[str] = []
     out.append(f"# Deployment Doctor — `{target}`\n")
     out.append(
-        f"**{overall}/100** across {report.files_scanned} file(s), "
+        f"**{overall_score}/100** across {report.files_scanned} file(s), "
         f"{len(report.call_sites)} API call site(s). "
         f"Model catalog as of {knowledge.KNOWLEDGE_AS_OF}.\n"
     )
@@ -206,6 +216,7 @@ def to_json(report: Report, *, target: str) -> str:
             "files_scanned": report.files_scanned,
             "call_sites": len(report.call_sites),
             "scores": scores(report),
+            "overall": overall(scores(report)),
             "llm_ran": report.llm_ran,
             "llm_error": report.llm_error,
             "findings": [
@@ -234,8 +245,8 @@ def terminal(report: Report, *, target: str) -> str:
     for the iteration loop."""
     lines = [f"Deployment Doctor — {target}"]
     dim_scores = scores(report)
-    overall = round(sum(dim_scores.values()) / len(dim_scores))
-    lines.append(f"  score {overall}/100 · {len(report.findings)} finding(s)")
+    overall_score = overall(dim_scores)
+    lines.append(f"  score {overall_score}/100 · {len(report.findings)} finding(s)")
     lines.append("")
     for finding in report.sorted_findings():
         lines.append(f"  {_ICON[finding.severity]} {finding.location}  {finding.title}")

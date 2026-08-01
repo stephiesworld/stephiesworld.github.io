@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deployment Doctor</title>
+<style>
+  :root {
+    --paper:#F6F7F9; --card:#FFFFFF; --ink:#171E26; --muted:#5C6875;
+    --line:#DCE1E8; --accent:#1F5F8B; --accent-dim:#E8F0F6;
+    --critical:#B3261E; --high:#A85B00; --medium:#8A7100; --low:#6B7683; --info:#96A0AC;
+    --ok:#1E6E45; --code-bg:#F1F3F6;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--paper:#101519;--card:#171D24;--ink:#E6EBF0;--muted:#95A2B0;
+      --line:#2A323C;--accent:#6FB2DA;--accent-dim:#17303F;
+      --critical:#F08B84;--high:#E5A455;--medium:#CBB55A;--low:#8B97A6;--info:#6E7B89;
+      --ok:#63C08C;--code-bg:#1B212A;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 var(--sans);
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px}
+
+  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+  h1{font-size:24px;margin:0;letter-spacing:-.01em}
+  .tag{font:600 10px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+       color:var(--accent);background:var(--accent-dim);padding:5px 8px;border-radius:3px}
+  .sub{color:var(--muted);font-size:13px;margin:6px 0 26px}
+  .sub code{font:12px var(--mono);background:var(--code-bg);padding:1px 5px;border-radius:3px}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 20px}
+  .controls{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end}
+  @media (max-width:640px){.controls{grid-template-columns:1fr}}
+  label{display:block;font:600 11px/1 var(--sans);letter-spacing:.09em;
+        text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  input[type=text]{width:100%;font:13px var(--mono);color:var(--ink);background:var(--paper);
+    border:1px solid var(--line);border-radius:5px;padding:9px 11px}
+  input[type=text]:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+  .modes{display:flex;gap:0;margin:16px 0 0;border:1px solid var(--line);
+         border-radius:5px;overflow:hidden;width:fit-content;max-width:100%;flex-wrap:wrap}
+  .modes button{font:500 13px var(--sans);color:var(--muted);background:var(--card);
+    border:0;border-right:1px solid var(--line);padding:9px 15px;cursor:pointer}
+  .modes button:last-child{border-right:0}
+  .modes button[aria-pressed=true]{background:var(--accent);color:#fff}
+  .mode-note{color:var(--muted);font-size:12.5px;margin:9px 0 0;min-height:1.4em}
+
+  .run{font:600 14px var(--sans);color:#fff;background:var(--accent);border:0;
+       border-radius:5px;padding:11px 26px;cursor:pointer;white-space:nowrap}
+  .run:disabled{opacity:.5;cursor:default}
+
+  .status{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);
+          margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;
+       background:var(--low);vertical-align:1px}
+  .dot.on{background:var(--ok)} .dot.off{background:var(--critical)}
+
+  .scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));
+          gap:10px;margin:26px 0 18px}
+  .score{background:var(--card);border:1px solid var(--line);border-radius:7px;
+         padding:13px 14px}
+  .score .n{font:600 26px/1 var(--sans);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .score .k{font:600 10px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+            color:var(--muted);margin-top:7px}
+  .bar{height:3px;border-radius:2px;background:var(--line);margin-top:9px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent)}
+
+  .filters{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}
+  .chip{font:500 12px var(--sans);color:var(--muted);background:var(--card);
+    border:1px solid var(--line);border-radius:20px;padding:5px 12px;cursor:pointer}
+  .chip[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .chip .c{font-variant-numeric:tabular-nums;opacity:.65;margin-left:5px}
+
+  .find{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--low);
+        border-radius:0 7px 7px 0;padding:14px 16px;margin-bottom:9px}
+  .find.critical{border-left-color:var(--critical)}
+  .find.high{border-left-color:var(--high)}
+  .find.medium{border-left-color:var(--medium)}
+  .find.low{border-left-color:var(--low)}
+  .find.info{border-left-color:var(--info)}
+  .fhead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .sev{font:700 9.5px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+       padding:4px 6px;border-radius:3px;color:#fff;background:var(--low)}
+  .critical .sev{background:var(--critical)} .high .sev{background:var(--high)}
+  .medium .sev{background:var(--medium)} .info .sev{background:var(--info)}
+  .ftitle{font-weight:600;flex:1;min-width:200px}
+  .loc{font:12px var(--mono);color:var(--muted)}
+  .fbody{font-size:14px;color:var(--muted);margin:9px 0 0}
+  .fmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+  .pill{font:600 10px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+        color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:4px 6px}
+  .pill.llm{color:var(--accent);border-color:var(--accent);background:var(--accent-dim)}
+  .remedy{font-size:13.5px;background:var(--code-bg);border-radius:5px;
+          padding:9px 11px;margin-top:10px}
+  .remedy b{font:600 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;
+            color:var(--muted);display:block;margin-bottom:4px}
+
+  .msg{border-radius:7px;padding:13px 15px;margin:18px 0;font-size:13.5px}
+  .msg.err{background:color-mix(in srgb,var(--critical) 11%,transparent);
+           border:1px solid color-mix(in srgb,var(--critical) 35%,transparent)}
+  .msg.note{background:var(--accent-dim);border:1px solid var(--line);color:var(--muted)}
+  .spin{display:inline-block;width:12px;height:12px;border:2px solid var(--line);
+    border-top-color:var(--accent);border-radius:50%;animation:sp .7s linear infinite;
+    margin-right:8px;vertical-align:-1px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  .empty{text-align:center;color:var(--muted);padding:46px 20px;font-size:14px}
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
+         color:var(--muted);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Deployment Doctor</h1>
+    <span class="tag" id="checkcount">loading</span>
+  </header>
+  <p class="sub">
+    Audits a codebase's Claude API integration. Your key stays on the server —
+    the browser never sees it, because it never could.
+    Serving <code id="root">…</code>
+  </p>
+
+  <div class="panel">
+    <div class="controls">
+      <div>
+        <label for="path">Directory to audit</label>
+        <input type="text" id="path" value="tests/fixtures" spellcheck="false"
+               autocapitalize="off" autocorrect="off">
+      </div>
+      <button class="run" id="run">Run audit</button>
+    </div>
+
+    <div class="modes" role="group" aria-label="Audit mode">
+      <button data-mode="static" aria-pressed="true">Static only</button>
+      <button data-mode="llm" aria-pressed="false">+ Judgement</button>
+      <button data-mode="agent" aria-pressed="false">+ Agent loop</button>
+    </div>
+    <p class="mode-note" id="modenote"></p>
+
+    <div class="status">
+      <span><span class="dot" id="d-cred"></span><span id="t-cred">checking…</span></span>
+      <span><span class="dot" id="d-sdk"></span><span id="t-sdk">checking…</span></span>
+    </div>
+  </div>
+
+  <div id="out"></div>
+
+  <footer>
+    Deterministic checks are stdlib-only: no key, no network, no tokens.
+    The judgement passes call the API and cost money.
+  </footer>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const NOTES = {
+  static: "~30 rule-based checks over the parsed source. Instant, free, no key needed.",
+  llm:    "Static checks, then one API call for the judgement a rule cannot make. 30–90s.",
+  agent:  "Static checks, then a real agent loop — the model gets grep and read_file and picks what to read. 1–3 min.",
+};
+let mode = "static", busy = false;
+
+$("#modenote").textContent = NOTES.static;
+
+document.querySelectorAll(".modes button").forEach(b => b.onclick = () => {
+  mode = b.dataset.mode;
+  document.querySelectorAll(".modes button")
+    .forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  $("#modenote").textContent = NOTES[mode];
+});
+
+fetch("/api/status").then(r => r.json()).then(s => {
+  $("#root").textContent = s.root;
+  $("#checkcount").textContent = s.checks + " checks";
+  const cred = $("#d-cred"), sdk = $("#d-sdk");
+  cred.className = "dot " + (s.credential ? "on" : "off");
+  $("#t-cred").textContent = s.credential
+    ? `credential found via ${s.credential}${s.from_env_file ? " (.env)" : ""}`
+    : "no credential — static checks only";
+  sdk.className = "dot " + (s.sdk_installed ? "on" : "off");
+  $("#t-sdk").textContent = s.sdk_installed
+    ? "anthropic SDK installed"
+    : 'SDK missing — run pip install -e ".[llm]"';
+});
+
+$("#run").onclick = async () => {
+  if (busy) return;
+  busy = true;
+  $("#run").disabled = true;
+  const started = Date.now();
+  const tick = setInterval(() => {
+    const s = Math.round((Date.now() - started) / 1000);
+    $("#out").querySelector(".el") && ($("#out").querySelector(".el").textContent = s + "s");
+  }, 1000);
+
+  $("#out").innerHTML =
+    `<div class="msg note"><span class="spin"></span>Running ${mode} audit… <b class="el">0s</b></div>`;
+
+  try {
+    const res = await fetch("/api/audit", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ path: $("#path").value, mode }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || res.statusText);
+    render(data);
+  } catch (e) {
+    $("#out").innerHTML = `<div class="msg err"><b>Audit failed.</b><br>${esc(e.message)}</div>`;
+  } finally {
+    clearInterval(tick);
+    busy = false;
+    $("#run").disabled = false;
+  }
+};
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g,
+  c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const ORDER = ["critical", "high", "medium", "low", "info"];
+
+function render(d) {
+  const f = d.findings || [];
+  const counts = {};
+  f.forEach(x => counts[x.severity] = (counts[x.severity] || 0) + 1);
+
+  let h = "";
+
+  if (d.llm_error) h += `<div class="msg err"><b>Judgement pass:</b> ${esc(d.llm_error)}</div>`;
+  if (d.llm_note)  h += `<div class="msg note">${esc(d.llm_note)}</div>`;
+
+  h += `<div class="scores">
+    ${score("overall", d.overall)}
+    ${Object.entries(d.scores || {}).map(([k, v]) => score(k, v)).join("")}
+  </div>`;
+
+  h += `<div class="filters">
+    <button class="chip" data-sev="all" aria-pressed="true">All<span class="c">${f.length}</span></button>
+    ${ORDER.filter(s => counts[s]).map(s =>
+      `<button class="chip" data-sev="${s}" aria-pressed="false">${s}<span class="c">${counts[s]}</span></button>`
+    ).join("")}
+  </div><div id="list">`;
+
+  h += f.length
+    ? f.map(card).join("")
+    : `<div class="empty">No findings. ${d.files_scanned} file(s), ${d.call_sites} call site(s).</div>`;
+
+  h += `</div><div class="msg note">
+    Scanned ${d.files_scanned} file(s), ${d.call_sites} call site(s).
+    Catalog current as of ${esc(d.knowledge_as_of)}.
+    ${d.mode === "static" ? "Judgement pass not run — prompt quality, tool design, and architecture were not assessed." : ""}
+    ${(d.skipped || []).length ? `Skipped ${d.skipped.length} unreadable file(s).` : ""}
+  </div>`;
+
+  $("#out").innerHTML = h;
+
+  document.querySelectorAll(".chip").forEach(c => c.onclick = () => {
+    document.querySelectorAll(".chip")
+      .forEach(x => x.setAttribute("aria-pressed", String(x === c)));
+    const want = c.dataset.sev;
+    document.querySelectorAll(".find").forEach(el => {
+      el.style.display = want === "all" || el.classList.contains(want) ? "" : "none";
+    });
+  });
+}
+
+function score(key, val) {
+  if (val === undefined || val === null) return "";
+  return `<div class="score"><div class="n">${val}</div>
+    <div class="k">${esc(key)}</div>
+    <div class="bar"><i style="width:${Math.max(0, Math.min(100, val))}%"></i></div></div>`;
+}
+
+function card(x) {
+  const isLLM = (x.check || "").startsWith("llm");
+  return `<div class="find ${esc(x.severity)}">
+    <div class="fhead">
+      <span class="sev">${esc(x.severity)}</span>
+      <span class="ftitle">${esc(x.title)}</span>
+      <span class="loc">${esc(x.file)}:${x.line}</span>
+    </div>
+    ${x.detail ? `<p class="fbody">${esc(x.detail)}</p>` : ""}
+    ${x.remedy ? `<div class="remedy"><b>Fix</b>${esc(x.remedy)}</div>` : ""}
+    <div class="fmeta">
+      <span class="pill">${esc(x.id)}</span>
+      ${isLLM ? '<span class="pill llm">model judgement</span>' : ""}
+      ${x.autofixable ? '<span class="pill">auto-fixable</span>' : ""}
+      ${x.cost_signal ? `<span class="pill">${esc(x.cost_signal)}</span>` : ""}
+      ${isLLM && x.confidence != null ? `<span class="pill">confidence ${x.confidence}</span>` : ""}
+    </div>
+  </div>`;
+}
+</script>
+</body>
+</html>

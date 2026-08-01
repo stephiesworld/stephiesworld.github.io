@@ -134,6 +134,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--list-checks", action="store_true", help="print the check catalog")
     parser.add_argument(
+        "--serve",
+        action="store_true",
+        help="run the browser UI instead of printing a report. The credential stays "
+        "in this process; the page never receives it.",
+    )
+    parser.add_argument("--port", type=int, default=8420, help="port for --serve (default: 8420)")
+    parser.add_argument("--no-open", action="store_true", help="with --serve, don't open a browser")
+    parser.add_argument(
         "--search",
         metavar="QUERY",
         help="search the docs corpus instead of auditing code (see --corpus, -k)",
@@ -171,6 +179,15 @@ def main(argv: list[str] | None = None) -> int:
     if not root.exists():
         print(f"error: {root} does not exist", file=sys.stderr)
         return _EXIT_ERROR
+
+    if args.serve:
+        from . import serve as servemod
+
+        applied = envmod.load(root)
+        if note := envmod.describe(applied):
+            print(note)
+        servemod.serve(root, port=args.port, open_browser=not args.no_open)
+        return _EXIT_CLEAN
 
     if args.llm or args.llm_agent:
         applied = envmod.load(root)
