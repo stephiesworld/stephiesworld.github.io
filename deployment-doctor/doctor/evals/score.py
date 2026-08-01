@@ -123,3 +123,31 @@ class RunResult:
     @property
     def errors(self) -> list[str]:
         return [c.error for c in self.cases if c.error]
+
+    def to_dict(self) -> dict:
+        return {
+            "model": self.model,
+            "effort": self.effort,
+            "recall": round(self.recall, 4),
+            "trap_rate": round(self.trap_rate, 4),
+            "total_findings": self.total_findings,
+            "unscored": self.unscored,
+            "cost_usd": round(self.cost_usd, 6),
+            "seconds": round(self.seconds, 1),
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "cache_read_tokens": self.cache_read_tokens,
+            "cases": [
+                {
+                    "case": c.case,
+                    "recall": round(c.recall, 4),
+                    "found": c.found,
+                    "missed": c.missed,
+                    "traps": c.traps,
+                    "unscored": c.unscored,
+                    "total_findings": c.total_findings,
+                    "error": c.error,
+                }
+                for c in self.cases
+            ],
+        }

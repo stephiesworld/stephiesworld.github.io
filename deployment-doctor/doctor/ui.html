@@ -108,6 +108,58 @@
   @keyframes sp{to{transform:rotate(360deg)}}
   @media (prefers-reduced-motion:reduce){.spin{animation:none}}
   .empty{text-align:center;color:var(--muted);padding:46px 20px;font-size:14px}
+
+  /* --- tabs --- */
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .tabs button{font:600 14px var(--sans);color:var(--muted);background:none;border:0;
+    border-bottom:2px solid transparent;padding:9px 14px;cursor:pointer;margin-bottom:-1px}
+  .tabs button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+
+  /* --- eval --- */
+  .lede{margin:0 0 20px;font-size:14px;color:var(--muted);max-width:64ch}
+  .lede b{color:var(--ink);font-weight:600}
+  .hint{font-size:12.5px;color:var(--muted);margin:7px 0 0;max-width:60ch}
+  .bar-set{padding:15px;background:var(--accent-dim);border-radius:7px;
+           border:1px solid var(--line)}
+  .bar-row{display:flex;align-items:center;gap:14px}
+  input[type=range]{flex:1;accent-color:var(--accent);max-width:340px}
+  #barout{font:600 20px var(--sans);font-variant-numeric:tabular-nums;
+          color:var(--accent);min-width:52px}
+  .picks{display:flex;gap:9px;flex-wrap:wrap}
+  .pick{display:flex;align-items:center;gap:8px;font-size:13.5px;
+    border:1px solid var(--line);border-radius:6px;padding:9px 13px;cursor:pointer;
+    background:var(--card)}
+  .pick:has(input:checked){border-color:var(--accent);background:var(--accent-dim)}
+  .pick input{accent-color:var(--accent);margin:0}
+  .pick .p{font:12px var(--mono);color:var(--muted)}
+
+  table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  table.cmp th{font:600 10px var(--sans);letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);text-align:right;padding:0 12px 9px;border-bottom:1px solid var(--line)}
+  table.cmp th:first-child{text-align:left}
+  table.cmp td{padding:12px;border-bottom:1px solid var(--line);text-align:right;
+    font-variant-numeric:tabular-nums}
+  table.cmp td:first-child{text-align:left;font-weight:600}
+  table.cmp tr.pending td{color:var(--muted)}
+  .verdict{font:700 9.5px var(--sans);letter-spacing:.09em;text-transform:uppercase;
+    padding:4px 7px;border-radius:3px;color:#fff}
+  .verdict.pass{background:var(--ok)} .verdict.fail{background:var(--critical)}
+  .big{font-size:17px;font-weight:600}
+  .wrapx{overflow-x:auto}
+
+  .cd{background:var(--card);border:1px solid var(--line);border-radius:7px;
+      padding:14px 16px;margin-bottom:9px}
+  .cd h4{margin:0 0 4px;font-size:14px}
+  .cd .fname{font:12px var(--mono);color:var(--muted)}
+  .row{display:flex;gap:9px;align-items:flex-start;padding:7px 0;font-size:13.5px;
+       border-top:1px solid var(--line);margin-top:9px}
+  .mark{font:700 10px var(--sans);letter-spacing:.06em;text-transform:uppercase;
+    padding:3px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;color:#fff}
+  .mark.hit{background:var(--ok)} .mark.miss{background:var(--critical)}
+  .mark.trap{background:var(--high)} .mark.unsc{background:var(--low)}
+  .casedump{margin-top:22px}
+  .casedump summary{cursor:pointer;font-weight:600;font-size:13.5px}
+  .casedump summary::marker{color:var(--muted)}
   footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
          color:var(--muted);font-size:12.5px}
 </style>
@@ -125,6 +177,53 @@
     Serving <code id="root">…</code>
   </p>
 
+  <div class="tabs" role="tablist">
+    <button role="tab" data-tab="audit" aria-selected="true">Audit</button>
+    <button role="tab" data-tab="eval" aria-selected="false">Grade the reviewer</button>
+  </div>
+
+  <!-- ============================ EVAL ============================ -->
+  <section id="tab-eval" hidden>
+    <div class="panel">
+      <p class="lede">
+        The static checks are unit-tested — same input, same output, forever. The
+        judgement pass can't be, because the model answers differently each run.
+        So it gets <b>graded</b> instead: run it against findings we wrote down in
+        advance, and count what it caught.
+      </p>
+
+      <div class="bar-set">
+        <label for="bar">Your acceptance bar — set it before you run</label>
+        <div class="bar-row">
+          <input type="range" id="bar" min="0" max="100" step="5" value="70">
+          <output id="barout">70%</output>
+        </div>
+        <p class="hint">
+          The minimum recall you'd accept to ship a model. Decide now: after you
+          see the numbers, it is very easy to talk yourself into whichever one
+          was cheapest.
+        </p>
+      </div>
+
+      <label style="margin-top:20px">Models to compare</label>
+      <div id="modelpick" class="picks"></div>
+
+      <div class="bar-row" style="margin-top:18px">
+        <button class="run" id="runeval">Run eval</button>
+        <span class="hint" id="evalcost">costs real money · ~1 min per model</span>
+      </div>
+    </div>
+
+    <div id="evalout"></div>
+
+    <details class="panel casedump">
+      <summary>What's being graded (<span id="ncases">…</span>)</summary>
+      <div id="caselist"></div>
+    </details>
+  </section>
+
+  <!-- ============================ AUDIT ============================ -->
+  <section id="tab-audit">
   <div class="panel">
     <div class="controls">
       <div>
@@ -149,6 +248,7 @@
   </div>
 
   <div id="out"></div>
+  </section>
 
   <footer>
     Deterministic checks are stdlib-only: no key, no network, no tokens.
@@ -174,9 +274,147 @@ document.querySelectorAll(".modes button").forEach(b => b.onclick = () => {
   $("#modenote").textContent = NOTES[mode];
 });
 
+/* ------------------------------- tabs ------------------------------- */
+document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".tabs button")
+    .forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  $("#tab-audit").hidden = b.dataset.tab !== "audit";
+  $("#tab-eval").hidden  = b.dataset.tab !== "eval";
+});
+
+/* ------------------------------- eval ------------------------------- */
+let bar = 0.70, evalBusy = false;
+$("#bar").oninput = e => {
+  bar = e.target.value / 100;
+  $("#barout").textContent = e.target.value + "%";
+  if (window.__runs) renderEval(window.__runs);   // re-verdict without re-running
+};
+
+$("#runeval").onclick = async () => {
+  if (evalBusy) return;
+  const models = [...document.querySelectorAll("#modelpick input:checked")]
+    .map(i => i.value);
+  if (!models.length) return;
+
+  evalBusy = true;
+  $("#runeval").disabled = true;
+  $("#bar").disabled = true;      // the bar is locked once the run starts
+  const runs = [];
+  window.__runs = runs;
+
+  for (const m of models) {
+    renderEval(runs, m);          // show the in-flight row
+    try {
+      const res = await fetch("/api/eval", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ model: m, effort: "high" }),
+      });
+      const d = await res.json();
+      if (!res.ok) throw new Error(d.error || res.statusText);
+      runs.push(d);
+    } catch (e) {
+      runs.push({ model: m, failed: e.message, recall: 0, trap_rate: 0,
+                  cost_usd: 0, seconds: 0, total_findings: 0, cases: [] });
+    }
+    renderEval(runs);
+  }
+
+  evalBusy = false;
+  $("#runeval").disabled = false;
+  $("#bar").disabled = false;
+};
+
+function renderEval(runs, inflight) {
+  const base = runs[0];
+  let h = `<div class="panel wrapx" style="margin-top:18px">
+    <table class="cmp"><thead><tr>
+      <th>model</th><th>recall</th><th>traps</th><th>findings</th>
+      <th>cost</th><th>time</th><th style="text-align:right">vs bar</th>
+    </tr></thead><tbody>`;
+
+  for (const r of runs) {
+    if (r.failed) {
+      h += `<tr><td>${esc(r.model)}</td>
+        <td colspan="6" style="text-align:left;color:var(--critical)">${esc(r.failed)}</td></tr>`;
+      continue;
+    }
+    const pass = r.recall >= bar;
+    h += `<tr>
+      <td>${esc(r.model)}</td>
+      <td class="big">${pct(r.recall)}</td>
+      <td>${pct(r.trap_rate)}</td>
+      <td>${r.total_findings}</td>
+      <td>$${r.cost_usd.toFixed(4)}</td>
+      <td>${Math.round(r.seconds)}s</td>
+      <td><span class="verdict ${pass ? "pass" : "fail"}">${pass ? "pass" : "below"}</span></td>
+    </tr>`;
+  }
+  if (inflight) {
+    h += `<tr class="pending"><td>${esc(inflight)}</td>
+      <td colspan="6" style="text-align:left"><span class="spin"></span>running…</td></tr>`;
+  }
+  h += `</tbody></table></div>`;
+
+  const done = runs.filter(r => !r.failed);
+  if (done.length > 1 && base && !base.failed) {
+    h += `<div class="msg note"><b>Against ${esc(base.model)}:</b><br>` +
+      done.slice(1).map(r => {
+        const q = base.recall ? r.recall / base.recall : 0;
+        const s = base.cost_usd ? 1 - r.cost_usd / base.cost_usd : 0;
+        const ok = r.recall >= bar;
+        return `${esc(r.model)} — ${pct(q)} of the recall, ${pct(s)} cheaper. ` +
+          (ok ? "Clears your bar." : `Below your ${pct(bar)} bar — the saving isn't the question.`);
+      }).join("<br>") + `</div>`;
+  }
+
+  for (const r of done) {
+    h += `<div class="cd"><h4>${esc(r.model)} <span class="fname">· ${pct(r.recall)} recall
+      · ${r.input_tokens.toLocaleString()} in / ${r.output_tokens.toLocaleString()} out</span></h4>`;
+    for (const c of r.cases) {
+      h += `<div class="fname" style="margin-top:11px">${esc(c.case)} — ${pct(c.recall)}</div>`;
+      if (c.error) h += `<div class="row"><span class="mark miss">error</span>${esc(c.error)}</div>`;
+      c.found.forEach(k => h += `<div class="row"><span class="mark hit">found</span>${esc(k)}</div>`);
+      c.missed.forEach(k => h += `<div class="row"><span class="mark miss">missed</span>${esc(k)}</div>`);
+      c.traps.forEach(t => h += `<div class="row"><span class="mark trap">trap</span>${esc(t)}</div>`);
+      c.unscored.forEach(u => h += `<div class="row"><span class="mark unsc">unscored</span>${esc(u)}</div>`);
+    }
+    h += `</div>`;
+  }
+
+  if (done.length) h += `<div class="msg note">
+    <b>Traps</b> are findings the static checks already report — the rubric told the
+    model to skip them. High recall with a high trap rate means it is padding.
+    <b>Unscored</b> matched nothing we wrote down: read them, then either add them
+    to <code>cases.py</code> or treat them as noise.</div>`;
+
+  $("#evalout").innerHTML = h;
+}
+
+const pct = n => Math.round(n * 100) + "%";
+
 fetch("/api/status").then(r => r.json()).then(s => {
   $("#root").textContent = s.root;
   $("#checkcount").textContent = s.checks + " checks";
+
+  $("#modelpick").innerHTML = (s.eval_models || []).map(m =>
+    `<label class="pick"><input type="checkbox" value="${esc(m.id)}" ${m.default ? "checked" : ""}>
+      <span>${esc(m.display)}</span><span class="p">$${m.input_usd}/MTok in</span></label>`
+  ).join("");
+
+  const cases = s.eval_cases || [];
+  const total = cases.reduce((a, c) => a + c.expected.length, 0);
+  $("#ncases").textContent = `${cases.length} file(s), ${total} expected finding(s)`;
+  $("#caselist").innerHTML = cases.map(c => `
+    <div class="cd"><h4>${esc(c.file)}</h4>
+      <p class="hint">${esc(c.note)}</p>
+      ${c.expected.map(e => `<div class="row"><span class="mark hit">${esc(e.dimension)}</span>
+        <span>${esc(e.what)}</span></div>`).join("")}
+    </div>`).join("");
+  if (!s.credential) {
+    $("#evalcost").textContent = "no credential found — the eval needs one";
+    $("#runeval").disabled = true;
+  }
   const cred = $("#d-cred"), sdk = $("#d-sdk");
   cred.className = "dot " + (s.credential ? "on" : "off");
   $("#t-cred").textContent = s.credential

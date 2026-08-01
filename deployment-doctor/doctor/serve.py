@@ -50,7 +50,7 @@ class Handler(BaseHTTPRequestHandler):
             self._json(404, {"error": "not found"})
 
     def do_POST(self) -> None:
-        if self.path != "/api/audit":
+        if self.path not in ("/api/audit", "/api/eval"):
             self._json(404, {"error": "not found"})
             return
 
@@ -62,6 +62,10 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(length) or b"{}")
         except json.JSONDecodeError:
             self._json(400, {"error": "body is not valid JSON"})
+            return
+
+        if self.path == "/api/eval":
+            self._eval(body)
             return
 
         try:
@@ -89,6 +93,30 @@ class Handler(BaseHTTPRequestHandler):
         payload["skipped"] = report.skipped
         self._json(200, payload)
 
+    def _eval(self, body: dict) -> None:
+        """Grade one model against the graded set.
+
+        One model per request, not all of them. A three-model sweep takes
+        minutes; returning them together would leave the page blank for the
+        whole run with nothing to show for it. The page fires these in sequence
+        and fills a row as each lands.
+        """
+        from . import evals as evalmod, knowledge
+
+        model = str(body.get("model") or "").strip()
+        if model not in knowledge.MODELS:
+            self._json(400, {"error": f"unknown model {model!r}"})
+            return
+
+        try:
+            run = evalmod.run_model(
+                model, effort=str(body.get("effort") or "high"), today=date.today()
+            )
+        except Exception as exc:  # noqa: BLE001
+            self._json(500, {"error": f"{type(exc).__name__}: {exc}"})
+            return
+        self._json(200, run.to_dict())
+
     # ---------------------------------------------------------------- helpers
 
     def _resolve(self, raw: str) -> Path:
@@ -109,6 +137,9 @@ class Handler(BaseHTTPRequestHandler):
 
     def _status(self) -> dict:
         import os
+
+        from . import knowledge
+        from .evals import CASES, DEFAULT_MODELS
 
         applied = envmod.load(self.root)
         found = next(
@@ -131,6 +162,29 @@ class Handler(BaseHTTPRequestHandler):
             "from_env_file": bool(applied),
             "sdk_installed": sdk,
             "checks": len(checks.all_checks()),
+            "eval_models": [
+                {
+                    "id": m,
+                    "display": knowledge.MODELS[m].display,
+                    "input_usd": knowledge.MODELS[m].input_usd,
+                    "default": m in DEFAULT_MODELS,
+                }
+                for m in DEFAULT_MODELS
+                if m in knowledge.MODELS
+            ],
+            "eval_cases": [
+                {
+                    "name": c.name,
+                    "file": c.file,
+                    "note": c.note,
+                    "expected": [
+                        {"key": e.key, "what": e.what, "dimension": e.dimension,
+                         "weight": e.weight}
+                        for e in c.expected
+                    ],
+                }
+                for c in CASES
+            ],
         }
 
     def _json(self, code: int, obj: dict) -> None:

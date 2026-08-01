@@ -128,8 +128,21 @@ CASES: tuple[Case, ...] = (
                 dimension="failure",
                 file="sick_app.py",
                 lines=(78, 87),
+                # Widened after a dry run: the reviewer wrote `returns ""` where
+                # this listed only `return ""`, so a correct finding landed in
+                # `unscored`. That is the documented cost of keyword matching, and
+                # the reason unscored findings are printed rather than discarded —
+                # they are how you find a case that is too narrow.
                 must=(
-                    ('return ""', "empty string", "returns empty", "silently returns"),
+                    (
+                        'return ""',
+                        'returns ""',
+                        "empty string",
+                        "returns empty",
+                        "silently returns",
+                        "empty summary",
+                        "empty result",
+                    ),
                     ("indistinguishable", "cannot tell", "caller", "swallow", "silent", "mask"),
                 ),
             ),
