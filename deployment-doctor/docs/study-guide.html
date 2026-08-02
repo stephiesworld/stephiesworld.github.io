@@ -1,0 +1,1414 @@
+<title>Deployment Doctor — Study Guide</title>
+
+<style>
+  :root {
+    --paper:      #F6F7F9;
+    --surface:    #FFFFFF;
+    --sunken:     #EDEFF3;
+    --ink:        #171E26;
+    --ink-soft:   #3D4753;
+    --muted:      #5C6773;
+    --line:       #DCE1E8;
+    --accent:     #1F5F8B;
+    --accent-dim: #E8F0F6;
+
+    --critical:   #B3261E;
+    --high:       #A85B00;
+    --medium:     #8A7100;
+    --low:        #6B7683;
+
+    --code-bg:    #F1F3F6;
+    --code-ink:   #26303C;
+
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Helvetica Neue", sans-serif;
+    --serif: ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+    --measure: 68ch;
+    --r: 4px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #101419;
+      --surface:    #171C23;
+      --sunken:     #1D232B;
+      --ink:        #E7ECF2;
+      --ink-soft:   #C2CBD6;
+      --muted:      #8B97A6;
+      --line:       #2A323C;
+      --accent:     #6FB2DA;
+      --accent-dim: #17303F;
+
+      --critical:   #F08B84;
+      --high:       #E5A455;
+      --medium:     #CBB55A;
+      --low:        #8B97A6;
+
+      --code-bg:    #1B212A;
+      --code-ink:   #D6DEE8;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #101419;
+    --surface:    #171C23;
+    --sunken:     #1D232B;
+    --ink:        #E7ECF2;
+    --ink-soft:   #C2CBD6;
+    --muted:      #8B97A6;
+    --line:       #2A323C;
+    --accent:     #6FB2DA;
+    --accent-dim: #17303F;
+    --critical:   #F08B84;
+    --high:       #E5A455;
+    --medium:     #CBB55A;
+    --low:        #8B97A6;
+    --code-bg:    #1B212A;
+    --code-ink:   #D6DEE8;
+  }
+
+  :root[data-theme="light"] {
+    --paper:      #F6F7F9;
+    --surface:    #FFFFFF;
+    --sunken:     #EDEFF3;
+    --ink:        #171E26;
+    --ink-soft:   #3D4753;
+    --muted:      #5C6773;
+    --line:       #DCE1E8;
+    --accent:     #1F5F8B;
+    --accent-dim: #E8F0F6;
+    --critical:   #B3261E;
+    --high:       #A85B00;
+    --medium:     #8A7100;
+    --low:        #6B7683;
+    --code-bg:    #F1F3F6;
+    --code-ink:   #26303C;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+  }
+
+  @media (min-width: 1040px) {
+    .wrap {
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 56px;
+      padding-right: 40px;
+    }
+  }
+
+  /* ---------- masthead ---------- */
+
+  header.masthead {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid var(--line);
+    padding: 56px 0 32px;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+
+  .standfirst {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: var(--measure);
+    margin: 0;
+  }
+
+  .meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  /* ---------- contents ---------- */
+
+  nav.toc { display: none; }
+
+  @media (min-width: 1040px) {
+    nav.toc {
+      display: block;
+      position: sticky;
+      top: 32px;
+      align-self: start;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+    nav.toc p {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+    nav.toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+    nav.toc a {
+      color: var(--muted);
+      text-decoration: none;
+      display: block;
+      border-left: 2px solid var(--line);
+      padding-left: 12px;
+    }
+    nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); border-left-color: var(--accent); }
+  }
+
+  main { grid-column: 1 / -1; min-width: 0; }
+  @media (min-width: 1040px) { main { grid-column: 2; } }
+
+  /* ---------- sections ---------- */
+
+  section { margin-bottom: 72px; scroll-margin-top: 24px; }
+
+  h2 {
+    font-family: var(--sans);
+    font-size: 27px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    font-weight: 650;
+    margin: 32px 0 10px;
+  }
+
+  p, ul, ol { max-width: var(--measure); }
+  p { margin: 0 0 16px; }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  li::marker { color: var(--muted); }
+
+  strong { font-weight: 650; color: var(--ink); }
+  em { font-style: italic; }
+
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- the two-part device: words, then code ---------- */
+
+  .plain {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--r);
+    padding: 20px 24px 6px;
+    margin: 0 0 20px;
+    max-width: var(--measure);
+  }
+
+  .plain > .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .plain p:last-child { margin-bottom: 16px; }
+
+  figure.code {
+    margin: 0 0 22px;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    overflow: hidden;
+  }
+
+  figure.code figcaption {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--sunken);
+  }
+
+  pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--code-ink);
+    tab-size: 2;
+  }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--code-ink);
+  }
+
+  pre code { background: none; padding: 0; font-size: inherit; }
+
+  /* ---------- interview callout ---------- */
+
+  .ask {
+    border: 1px dashed var(--line);
+    border-radius: var(--r);
+    padding: 18px 22px 4px;
+    margin: 0 0 22px;
+    max-width: var(--measure);
+    background: var(--accent-dim);
+  }
+
+  .ask > .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .ask p { font-style: italic; }
+
+  /* ---------- severity ---------- */
+
+  .sev-list { list-style: none; padding: 0; max-width: var(--measure); }
+  .sev-list li {
+    border-left: 3px solid var(--low);
+    padding: 4px 0 4px 14px;
+    margin-bottom: 14px;
+  }
+  .sev-list li.critical { border-left-color: var(--critical); }
+  .sev-list li.high     { border-left-color: var(--high); }
+  .sev-list li.medium   { border-left-color: var(--medium); }
+
+  .sev-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+  }
+  .critical .sev-name { color: var(--critical); }
+  .high .sev-name     { color: var(--high); }
+  .medium .sev-name   { color: var(--medium); }
+  .low .sev-name      { color: var(--low); }
+
+  /* ---------- tables ---------- */
+
+  .tablewrap { overflow-x: auto; margin: 0 0 22px; max-width: var(--measure); }
+  table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 14.5px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    border-bottom: 1px solid var(--ink-soft);
+  }
+  td:first-child { white-space: nowrap; }
+
+  /* ---------- misc ---------- */
+
+  hr { border: 0; border-top: 1px solid var(--line); margin: 0 0 32px; max-width: var(--measure); }
+
+  .lede {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: var(--measure);
+  }
+
+  .flow {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.75;
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 18px;
+    overflow-x: auto;
+    margin: 0 0 22px;
+    color: var(--ink-soft);
+  }
+
+  footer.end {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+    margin-top: 24px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--muted);
+    max-width: var(--measure);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Systems interview · prep</p>
+    <h1>Deployment Doctor, explained before the code</h1>
+    <p class="standfirst">
+      Every part of the tool in plain words first, then the code it turns into.
+      Read the words; the code is there to point at, not to memorise.
+    </p>
+    <div class="meta">
+      <span>~30 min read</span>
+      <span>11 sections</span>
+      <span>71 tests · 5 commits</span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Contents">
+    <p>Contents</p>
+    <ol>
+      <li><a href="#pitch">The 60-second pitch</a></li>
+      <li><a href="#idea">The one big idea</a></li>
+      <li><a href="#vocab">The vocabulary</a></li>
+      <li><a href="#knowledge">The facts that rot</a></li>
+      <li><a href="#extract">Reading the code</a></li>
+      <li><a href="#checks">The checks</a></li>
+      <li><a href="#llm">The judgement pass</a></li>
+      <li><a href="#loop">The agent loop</a></li>
+      <li><a href="#retrieval">Retrieval / RAG</a></li>
+      <li><a href="#testing">How you test it</a></li>
+      <li><a href="#questions">Likely questions</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <!-- ================================================ -->
+    <section id="pitch">
+      <h2>The 60-second pitch</h2>
+      <p class="kicker">Start here — this is what you say first</p>
+
+      <p class="lede">
+        You point it at a codebase that uses the Claude API. It tells you what
+        will break, what is silently costing money, and what is untested.
+      </p>
+
+      <p>
+        The reason it exists: that is the job an AI deployment manager does by
+        hand every week. You read a customer's integration and tell them what's
+        wrong with it. This automates the boring, mechanical two-thirds of that.
+      </p>
+
+      <p>
+        The interesting part isn't the checks — it's the split. Roughly thirty
+        checks run with <strong>no model at all</strong>: they read the code
+        directly, cost nothing, and give the same answer every time. Exactly one
+        step uses a model, for the questions no rule can answer.
+      </p>
+
+      <p>
+        <strong>Say that split out loud in the interview.</strong> It's the
+        design decision, and it's the thing most people get wrong in the other
+        direction — reaching for a model to do something a twenty-line function
+        does better.
+      </p>
+
+      <div class="ask">
+        <span class="label">If they ask "why not just use an LLM for all of it?"</span>
+        <p>
+          Because "is this model ID retired?" is a lookup, not a judgement call.
+          A table answers it correctly every time, for free, in a millisecond. A
+          model answers it correctly most of the time, for money, and
+          occasionally invents a retirement date that sounds right. You use the
+          model where there's genuinely no rule to write.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="idea">
+      <h2>The one big idea</h2>
+      <p class="kicker">Workflow vs. agent — the thing they're actually testing</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          There are two ways to build something with an AI model, and picking
+          the right one is most of systems design.
+        </p>
+        <p>
+          A <strong>workflow</strong> is when <em>you</em> decide the steps ahead
+          of time. Step one, then step two, then step three. You wrote the order.
+        </p>
+        <p>
+          An <strong>agent</strong> is when <em>the model</em> decides the next
+          step while it's working. You give it tools and a goal; it chooses what
+          to do next based on what it just found.
+        </p>
+      </div>
+
+      <p>The test for which one you need is a single question:</p>
+
+      <p><strong>Can you write down the list of steps before you start?</strong></p>
+
+      <p>
+        If yes, build a workflow. It's cheaper, faster, and you can actually test
+        it. If no — if which step comes next depends on what you discover — you
+        need a loop.
+      </p>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th></th><th>Workflow</th><th>Agent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Who picks the next step</td><td>You, at design time</td><td>The model, at run time</td></tr>
+            <tr><td>Shape of the work</td><td>Known in advance</td><td>Discovered while working</td></tr>
+            <tr><td>Testing</td><td>Easy — test each step</td><td>Hard — test outcomes, not steps</td></tr>
+            <tr><td>Cost &amp; speed</td><td>Predictable</td><td>Variable, usually worse</td></tr>
+            <tr><td>How it fails</td><td>Wrong order, silently</td><td>Wanders, loops, over-explores</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        This project is deliberately <strong>both</strong>, which is why it works
+        as an interview example — you can point at the same codebase and show
+        the decision going each way:
+      </p>
+
+      <div class="flow">the checks    →  workflow. Parse, compare to a table. Steps are known.
+--llm         →  still a workflow. One call. We already know which
+                 files matter, so we can assemble the whole question
+                 up front. No loop needed.
+--llm-agent   →  a real agent. The reviewer gets search and read
+                 tools and decides what to open next. You cannot
+                 assemble that question in advance, because which
+                 file matters depends on what it just read.</div>
+
+      <div class="ask">
+        <span class="label">If they ask you to design an agentic system</span>
+        <p>
+          Don't start with "I'd use an agent." Start with: "First I'd check
+          whether this is actually agentic — can I name the steps up front? If I
+          can, a workflow is cheaper and testable. If I can't, here's where the
+          loop goes." That answer alone puts you ahead of most candidates.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="vocab">
+      <h2>The vocabulary</h2>
+      <p class="kicker">model.py — the words every other part speaks</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          Before anything else, the project defines its nouns. There are only
+          four that matter: a <strong>Location</strong> (a file and a line
+          number), an <strong>Arg</strong> (one setting in an API call), a
+          <strong>CallSite</strong> (one place the code calls Claude), and a
+          <strong>Finding</strong> (one problem we found).
+        </p>
+        <p>
+          This sounds like bookkeeping. It's the thing that makes the project
+          extendable. Because the checks only ever look at these four shapes,
+          they never touch raw code — which means adding support for a new
+          programming language is <em>one new file</em>, not edits to thirty
+          check functions.
+        </p>
+      </div>
+
+      <p>
+        The severity levels are worth memorising, because the definitions do
+        real work:
+      </p>
+
+      <ul class="sev-list">
+        <li class="critical">
+          <span class="sev-name">Critical</span>
+          The API rejects this. It fails today, every time.
+        </li>
+        <li class="high">
+          <span class="sev-name">High</span>
+          Silently wrong, silently expensive, or silently truncated.
+        </li>
+        <li class="medium">
+          <span class="sev-name">Medium</span>
+          Real money or quality left on the table.
+        </li>
+        <li class="low">
+          <span class="sev-name">Low</span>
+          Cleanup. Dead settings, stale flags.
+        </li>
+      </ul>
+
+      <p>
+        <strong>The High band is the one to talk about.</strong> Everything in
+        it shares one property: <em>no error is raised</em>. That's precisely
+        why a human reviewer misses it and a tool shouldn't. If someone asks
+        what the tool is <em>for</em>, that's the answer — not the loud
+        failures, the quiet ones.
+      </p>
+
+      <figure class="code">
+        <figcaption>doctor/model.py — the core shapes, trimmed</figcaption>
+<pre><code>class Severity(enum.IntEnum):
+    CRITICAL = 4  # The API rejects this. Fails today.
+    HIGH     = 3  # Silently wrong, expensive, or truncated.
+    MEDIUM   = 2  # Real cost or quality left on the table.
+    LOW      = 1  # Cleanup.
+
+@dataclass
+class Arg:
+    """One setting in an API call."""
+    name: str
+    raw: str            # the text as written in the source
+    value: Any = None   # the actual value, if we could work it out
+    resolved: bool = False
+    node: Any = None    # the parsed expression, for deeper checks
+
+@dataclass
+class Finding:
+    id: str             # "MODEL_RETIRED"
+    title: str
+    severity: Severity
+    location: Location
+    detail: str         # what's wrong
+    remedy: str         # what to do about it
+    confidence: float = 1.0</code></pre>
+      </figure>
+
+      <p>
+        One detail worth understanding, because it comes up again and again:
+        <code>resolved</code>. It separates <em>"we know this is wrong"</em> from
+        <em>"we couldn't see it."</em> Checks are required to stay silent about
+        the second. A tool that guesses is worse than a tool that says nothing.
+      </p>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="knowledge">
+      <h2>The facts that rot</h2>
+      <p class="kicker">knowledge.py — everything with an expiry date, in one file</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          The tool needs to know things that change: which models exist, what
+          they cost, when old ones get switched off, which settings now cause an
+          error. All of that is guaranteed to go out of date on someone else's
+          release schedule, not yours.
+        </p>
+        <p>
+          So it all lives in <strong>one file</strong>, with a date stamped at
+          the top that gets printed in every report. Updating the tool is a
+          change to that one file. If those facts were sprinkled across the
+          thirty check functions, the tool would be wrong within a few months
+          and nobody would know which lines to fix.
+        </p>
+      </div>
+
+      <p>
+        There's a second trick here that's worth stealing, and it's the part
+        interviewers like. The checks <strong>never ask "which model is
+        this?"</strong> They ask <strong>"does this model reject that
+        setting?"</strong>
+      </p>
+
+      <figure class="code">
+        <figcaption>doctor/knowledge.py — capabilities as data, not logic</figcaption>
+<pre><code>@dataclass(frozen=True)
+class ModelInfo:
+    id: str
+    input_usd: float
+    cache_min_tokens: int = 1024
+    retires: date | None = None
+    rejects_sampling_params: bool = False   # temperature etc. -&gt; error
+    rejects_budget_tokens: bool = False
+    thinking_on_by_default: bool = False
+
+    def status_on(self, on: date) -&gt; Status:
+        if self.retires and on &gt;= self.retires:
+            return Status.RETIRED
+        return self.status</code></pre>
+      </figure>
+
+      <p>
+        Because behaviour is stored as <strong>data</strong> rather than written
+        into <strong>logic</strong>, a new model release is one new row in a
+        table. Nothing else changes. If instead the checks said
+        <em>"if the version is 4.7 or newer…"</em>, every release would mean
+        hunting through the code for version comparisons.
+      </p>
+
+      <h3>The date is passed in, never looked up</h3>
+
+      <p>
+        Notice <code>status_on(on: date)</code> takes today's date as an
+        argument instead of asking the computer for it. That's deliberate. It
+        means a test can ask "what's the status on July 1st?" and "what about
+        September 1st?" and get different, correct answers — without any
+        clock-freezing trickery.
+      </p>
+
+      <div class="ask">
+        <span class="label">If they ask about testing time-dependent code</span>
+        <p>
+          Don't reach for a mocking library. Pass the time in as a value. It's
+          simpler, it's honest, and the test reads like the thing it's testing.
+        </p>
+      </div>
+
+      <h3>The fact that justifies the whole tool</h3>
+
+      <p>
+        Caching lets you avoid re-paying for the unchanged part of a prompt. But
+        every model has a <strong>minimum size</strong> below which it silently
+        won't cache — no error, the setting is just ignored.
+      </p>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Model</th><th>Minimum</th></tr></thead>
+          <tbody>
+            <tr><td>Claude Opus 5</td><td>512 tokens</td></tr>
+            <tr><td>Claude Opus 4.8</td><td>1,024 tokens</td></tr>
+            <tr><td>Claude Opus 4.7</td><td>2,048 tokens</td></tr>
+            <tr><td>Claude Opus 4.6</td><td>4,096 tokens</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Those numbers <strong>don't go in one direction.</strong> A 750-token
+        prompt caches on Opus 5 and silently stops caching on Opus 4.6. So a
+        team can "upgrade" and start paying ten times more for the same thing,
+        with nothing in the code looking different and no error anywhere.
+      </p>
+
+      <p>
+        That's the single best example to give if someone asks why a tool like
+        this is worth building. No human catches that in code review.
+      </p>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="extract">
+      <h2>Reading the code</h2>
+      <p class="kicker">extract/ — turning source text into facts</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          To check someone's code you first have to understand it. Not run it —
+          just read its structure. Python has a built-in tool for this that
+          turns source text into a tree: which lines are function calls, what
+          arguments they were given, and so on. That tree is called an
+          <strong>AST</strong>, short for abstract syntax tree.
+        </p>
+        <p>
+          This part walks that tree looking for calls to the Claude API, and
+          records what settings each call was given. It's the translation layer
+          between "text in a file" and the tidy shapes from the last section.
+        </p>
+      </div>
+
+      <h3>The bug that taught me the most</h3>
+
+      <p>
+        My first version used Python's built-in "read this literal value"
+        function. It's all-or-nothing: if any single piece of an expression is a
+        variable rather than a fixed value, it gives up on the entire thing.
+      </p>
+
+      <p>Real code looks like this:</p>
+
+      <figure class="code">
+        <figcaption>A completely ordinary API call</figcaption>
+<pre><code>messages=[{"role": "user", "content": ticket}]</code></pre>
+      </figure>
+
+      <p>
+        <code>ticket</code> is a variable — its value isn't known until the
+        program runs. So the all-or-nothing reader threw away the
+        <em>entire list</em>, including <code>"role": "user"</code>, which is
+        right there in plain sight. Every check that looks at message structure
+        went blind on every real call site.
+      </p>
+
+      <p>
+        The fix was to resolve <strong>piece by piece</strong>, marking only the
+        unknown parts as unknown:
+      </p>
+
+      <figure class="code">
+        <figcaption>What the extractor produces now</figcaption>
+<pre><code>[{"role": "user", "content": UNRESOLVED}]
+#                            ^^^^^^^^^^
+#   we can't see this, but everything else is still usable</code></pre>
+      </figure>
+
+      <p>
+        <strong>This is a great story to tell in an interview</strong>, because
+        it's a real bug with a real cause: I picked a tool whose failure mode
+        was invisible. Nothing errored. The tests I had still passed. It only
+        showed up when I ran it against realistic code.
+      </p>
+
+      <h3>The rule about guessing</h3>
+
+      <p>
+        If the same name is given two different values, the extractor resolves
+        it to <strong>neither</strong>:
+      </p>
+
+      <figure class="code">
+        <figcaption>doctor/extract/python.py — refusing to guess</figcaption>
+<pre><code>if target.id in self.consts and self.consts[target.id] != value:
+    self.consts[target.id] = _AMBIGUOUS   # two values — pick neither</code></pre>
+      </figure>
+
+      <p>
+        Guessing would produce a confident, detailed, completely wrong finding
+        about code that doesn't exist. That's the worst thing this tool can do —
+        worse than missing a real problem, because it destroys trust in
+        everything else in the report.
+      </p>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="checks">
+      <h2>The checks</h2>
+      <p class="kicker">checks/ — thirty small functions, no model involved</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          Each check is one small function. It gets handed the facts the
+          extractor found, and it hands back a list of problems. That's the
+          whole shape.
+        </p>
+        <p>
+          They're registered with a <strong>decorator</strong> — a line above
+          the function that says "add me to the list." That means adding a new
+          check is writing one function. There's no central list to update, so
+          two people can add checks without stepping on each other.
+        </p>
+      </div>
+
+      <figure class="code">
+        <figcaption>doctor/checks/ — the entire pattern for adding a check</figcaption>
+<pre><code>@check("MODEL_RETIRED", "models", "Model has been switched off")
+def retired_models(ctx: Context) -&gt; Iterable[Finding]:
+    for model_id, location, in_call in _all_model_uses(ctx):
+        replacement = knowledge.RETIRED.get(model_id)
+        if replacement is None:
+            continue
+        yield Finding(
+            id="MODEL_RETIRED",
+            severity=Severity.CRITICAL,
+            location=location,
+            detail=f"`{model_id}` is switched off — the API returns 404.",
+            remedy=f"Replace with `{replacement}`.",
+        )</code></pre>
+      </figure>
+
+      <h3>The house rule</h3>
+
+      <p>
+        There's one rule the whole folder follows, and it's worth quoting
+        verbatim:
+      </p>
+
+      <p>
+        <strong>Prove it from the facts, or stay silent.</strong>
+      </p>
+
+      <p>
+        Anything needing taste — is this prompt any good? will this tool
+        description actually work? — is <em>not allowed here</em>. It goes to
+        the model instead. A rule-based check that guesses produces confident
+        nonsense, and confident nonsense is worse than no finding at all.
+      </p>
+
+      <h3>The false-positive problem, and a real fix</h3>
+
+      <p>
+        When I ran the tool on itself, it reported <strong>19 problems in its
+        own model catalog</strong> — the file that has to list retired models in
+        order to know they're retired.
+      </p>
+
+      <p>
+        That's the general version of a real issue: some files <em>use</em> a
+        model, others <em>describe</em> one. A price list or a routing table
+        legitimately keeps old entries. Reporting each as a defect buries the
+        real findings.
+      </p>
+
+      <p>
+        The fix: if one file mentions six or more different models, treat it as a
+        catalog and collapse it to a single summary line. Self-audit noise
+        dropped from <strong>51 findings to 29</strong>.
+      </p>
+
+      <div class="ask">
+        <span class="label">If they ask about false positives</span>
+        <p>
+          Say this: a linter that can't be satisfied gets turned off, and then
+          it catches nothing. Suppressing noise isn't cheating — it's what makes
+          the real findings visible. And there's a test fixture that's
+          deliberately clean, asserting the tool stays quiet on good code.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="llm">
+      <h2>The judgement pass</h2>
+      <p class="kicker">llm.py — one call, for what no rule can decide</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          Some questions have no rule. Is this prompt contradicting itself? Will
+          the model actually reach for this tool, or is the description too
+          vague? Is this whole architecture the wrong shape for the job?
+        </p>
+        <p>
+          For those, the tool makes <strong>one</strong> call to Claude with the
+          relevant files. Not a loop — we already know which files matter, so
+          the entire question can be assembled up front and asked once.
+        </p>
+      </div>
+
+      <h3>The most important line in the prompt is a "don't"</h3>
+
+      <figure class="code">
+        <figcaption>doctor/llm.py — from the instructions given to the reviewer</figcaption>
+<pre><code>DO NOT REPORT ANY OF THE ABOVE. Repeating something the rule-based
+checks already found is worse than silence: it makes the report longer
+without making it more useful, and it trains the reader to skim.</code></pre>
+      </figure>
+
+      <p>
+        Without that, you get a worse-worded duplicate of the checks. The prompt
+        also explicitly says an empty answer is fine — because a model asked to
+        review something will always find <em>something</em> unless you give it
+        permission not to.
+      </p>
+
+      <h3>It eats its own cooking</h3>
+
+      <p>
+        The request this file makes deliberately does all the things the checks
+        look for in other people's code: a current model, caching switched on
+        correctly, a structured response format, and a check for refusals before
+        reading the answer.
+      </p>
+
+      <p>
+        There's a comment in the file explaining why the instructions are stored
+        as a fixed value rather than built fresh each time — because building it
+        fresh would break caching, which is the exact bug the tool reports as
+        <code>CACHE_INVALIDATOR</code>. <strong>Being your own first customer is
+        a good line in an interview.</strong>
+      </p>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="loop">
+      <h2>The agent loop</h2>
+      <p class="kicker">agent.py — about forty lines, and worth knowing cold</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          This is the version where the reviewer decides what to read. It gets
+          two tools — search the code, and open a file — and works until it's
+          satisfied.
+        </p>
+        <p>
+          Why bother? Because it can <em>follow a thread</em>. It reads a file,
+          sees it mentions a handler defined somewhere else, and goes and opens
+          that too — to check whether a tool's actual behaviour matches what its
+          description promises. You cannot prepare that question in advance,
+          because which file matters depends on what it just found.
+        </p>
+      </div>
+
+      <p>
+        <strong>Learn this shape.</strong> Every coding agent, including the one
+        that built this project, is this loop going round:
+      </p>
+
+      <figure class="code">
+        <figcaption>The agent loop, complete</figcaption>
+<pre><code>messages = [{"role": "user", "content": the_request}]
+
+while True:
+    response = client.messages.create(
+        model="claude-opus-5",
+        system=SYSTEM_PROMPT,
+        tools=TOOLS,
+        messages=messages,
+    )
+
+    # 1. Record what the model said BEFORE running anything.
+    messages.append({"role": "assistant", "content": response.content})
+
+    # 2. It's done and didn't ask for anything. Stop.
+    if response.stop_reason == "end_turn":
+        break
+
+    # 3. Run every tool it asked for.
+    tool_results = []
+    for block in response.content:
+        if block.type != "tool_use":
+            continue
+        try:
+            output = TOOLS_BY_NAME[block.name](**block.input)
+            is_error = False
+        except Exception as exc:
+            # Hand the error back. The model recovers from a bad
+            # file path better than your retry logic will.
+            output, is_error = f"error: {exc}", True
+
+        tool_results.append({
+            "type": "tool_result",
+            "tool_use_id": block.id,   # must match the request
+            "content": output,
+            "is_error": is_error,
+        })
+
+    # 4. ALL results go back in ONE message.
+    messages.append({"role": "user", "content": tool_results})</code></pre>
+      </figure>
+
+      <h3>Four things that are real bugs if you get them wrong</h3>
+
+      <ol>
+        <li>
+          <strong>Record the model's turn before running tools.</strong> The
+          request to use a tool lives in that message. Send back a result whose
+          request is missing from the history and the API rejects it.
+        </li>
+        <li>
+          <strong>All results go back in one message.</strong> Splitting them
+          across several quietly teaches the model to stop asking for things in
+          parallel — so it gets slower, and nothing tells you why.
+        </li>
+        <li>
+          <strong>Hand tool errors back, don't crash.</strong> Mark it as an
+          error and let the model try something else.
+        </li>
+        <li>
+          <strong>Cap the loop.</strong> Fourteen turns here. An uncapped agent
+          loop is the standard way an AI project becomes a surprise bill.
+        </li>
+      </ol>
+
+      <h3>The security bit</h3>
+
+      <p>
+        The model supplies file paths, so those paths are <strong>untrusted
+        input</strong>. Every one is resolved and checked to be inside the
+        project folder before anything is opened:
+      </p>
+
+      <figure class="code">
+        <figcaption>doctor/agent.py — the sandbox</figcaption>
+<pre><code>def _resolve(self, rel: str) -&gt; Path:
+    candidate = (self.root / rel).resolve()
+    if not candidate.is_relative_to(self.root):
+        raise ValueError(f"path escapes the repository root: {rel!r}")
+    if candidate not in self.allowed:
+        raise ValueError(f"{rel!r} is not a source file in scope.")
+    return candidate</code></pre>
+      </figure>
+
+      <p>
+        Without that, a malicious instruction hidden in a file being reviewed
+        could turn "read a source file" into "read anything on this machine."
+        Tests cover <code>../</code>, absolute paths, and in-project files that
+        aren't in scope.
+      </p>
+
+      <div class="ask">
+        <span class="label">If they ask about prompt injection</span>
+        <p>
+          The general principle: anything the model produces is untrusted input
+          to your code. Validate tool arguments the same way you'd validate a
+          form submitted by a stranger on the internet — because functionally
+          that's what it is.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="retrieval">
+      <h2>Retrieval, and why it isn't used</h2>
+      <p class="kicker">retrieval/ — RAG, and the discipline of not needing it</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          RAG means: <strong>search your documents, paste the results into the
+          question, ask the model.</strong> That's the whole concept. If you've
+          ever pasted a page of a manual into a chat before asking about it,
+          you've done it manually.
+        </p>
+        <p>
+          The only question that matters is: <strong>does the information fit in
+          the question?</strong> If yes, put it there and stop. You don't need a
+          search system.
+        </p>
+      </div>
+
+      <p>
+        In this project, the answer is yes — the model catalog is a few hundred
+        lines. <strong>So the analyser doesn't use retrieval at all</strong>,
+        and says so out loud in the README.
+      </p>
+
+      <p>
+        The folder exists as a worked example, with both approaches behind the
+        same interface: ordinary keyword search, and meaning-based search.
+      </p>
+
+      <h3>The demo that makes the point</h3>
+
+      <p>
+        Keyword search works well when the words in the question match the words
+        in the document — which for technical docs is most of the time. Here it
+        is failing, from a real run:
+      </p>
+
+      <figure class="code">
+        <figcaption>A real result, now pinned as a test</figcaption>
+<pre><code>$ --search "my bill went up after upgrading"
+
+1. [3.82] breaking-changes.md (Beta headers that went GA)  matched: went
+2. [3.71] prompt-caching.md   (The prefix rule)            matched: after</code></pre>
+      </figure>
+
+      <p>
+        The documents <em>contain</em> the answer — it's the cache-minimum trap
+        from earlier. But keyword search latched onto <strong>"went"</strong> and
+        <strong>"after"</strong>, filler words, and returned junk with a
+        confident-looking score.
+      </p>
+
+      <p>
+        <strong>That's the honest case for meaning-based search</strong>, and
+        it's the right way to decide: find real questions where the cheap method
+        fails, then upgrade. Not "we used embeddings because that's what RAG
+        means."
+      </p>
+
+      <h3>The mistake that ruins most RAG systems</h3>
+
+      <p>
+        Chopping documents into equal-sized blocks. It's the fast thing to write
+        and it poisons everything downstream, because a fragment stripped of its
+        context gets returned for questions it has nothing to do with:
+      </p>
+
+      <figure class="code">
+        <figcaption>A chunk that has lost the only thing that made it meaningful</figcaption>
+<pre><code>"The minimum is 4096 tokens."
+
+   ← which model? The heading said. The heading is gone.</code></pre>
+      </figure>
+
+      <p>
+        The fix: split on <strong>headings</strong>, and keep the trail of
+        headings attached to every piece. Now it can't be misread, and the model
+        can say where it came from.
+      </p>
+
+      <h3>"What should k be?"</h3>
+
+      <p>
+        <code>k</code> is just how many search results you take. The trouble is
+        you pick the number <em>before</em> you know how much the question needs
+        — too few and the answer is missing, too many and it drowns in noise.
+      </p>
+
+      <p>
+        The real method: write down about twenty real questions where you know
+        the right answer, try k=3, 5, 10, 20, and pick the smallest number where
+        accuracy stops improving.
+      </p>
+
+      <p>
+        <strong>The better answer is to not have a k.</strong> Either fetch
+        twenty and have a cheap second pass throw out the irrelevant ones, or
+        give the model search as a tool and let it decide when it has enough.
+      </p>
+
+      <div class="ask">
+        <span class="label">If they ask you to design a RAG system</span>
+        <p>
+          "First I'd check whether the information fits in the prompt — if it
+          does, RAG is premature. If not, I'd ask whether one search answers the
+          question or whether it needs several. One search over a fixed set of
+          documents, classic RAG is fine and cheaper. Otherwise I'd give the
+          model search as a tool and let it iterate. And if the data is
+          structured — customers, orders, dates — I'd query it directly rather
+          than embedding it."
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="testing">
+      <h2>How you test it</h2>
+      <p class="kicker">Where most interview answers fall apart</p>
+
+      <div class="plain">
+        <span class="label">In plain words</span>
+        <p>
+          You <strong>cannot</strong> unit-test a loop that picks its own steps.
+          There's no fixed sequence to assert on.
+        </p>
+        <p>
+          So you don't test the model's choices. You test the machinery around
+          them — and you test outcomes against a set of examples you've graded
+          by hand.
+        </p>
+      </div>
+
+      <h3>Testing the agent without the internet</h3>
+
+      <p>
+        The loop tests use a <strong>stub</strong> — a fake stand-in that returns
+        a scripted list of responses instead of calling the real API. They run
+        offline, instantly, and give the same answer every time. What they check:
+      </p>
+
+      <ul>
+        <li>Each tool result is matched to the right request</li>
+        <li>All results come back in one message, not several</li>
+        <li>A bad file path is handed back as an error, not crashed on</li>
+        <li>The sandbox rejects paths outside the project</li>
+        <li>The loop stops at its cap instead of running forever</li>
+      </ul>
+
+      <p>
+        None of that is about whether the model is <em>smart</em>. It's about
+        whether the harness is <em>correct</em>. That distinction is the answer.
+      </p>
+
+      <h3>The two fixtures</h3>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>sick_app.py</code></td>
+              <td>Deliberately broken. Every defect in it is one that ships in real code.</td>
+            </tr>
+            <tr>
+              <td><code>healthy_app.py</code></td>
+              <td>Deliberately clean. The suite asserts the tool stays <em>quiet</em> — because a linter that can't be satisfied gets turned off.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Why "no tests" is a High finding</h3>
+
+      <p>
+        The tool flags a codebase that has no test checking what the model
+        actually returns. It also flags the sneakier case: tests that exist but
+        <strong>fake the model every time</strong>. Those verify you built the
+        request you meant to build. They cannot tell you the answer got worse.
+      </p>
+
+      <p>
+        The wording in the finding says why it's ranked so high:
+        <em>every other recommendation in this report is unverifiable without
+        one.</em> Switch models, lower the effort setting, shorten the prompt —
+        you can't safely do any of it if nothing measures whether quality
+        dropped.
+      </p>
+
+      <div class="ask">
+        <span class="label">If they ask "how would you know it's working?"</span>
+        <p>
+          Twenty to fifty real inputs, graded by hand, asserting on
+          <em>properties</em> rather than exact wording, run automatically. Then
+          say the honest part: without that, every performance or cost
+          improvement you make is a guess.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================ -->
+    <section id="questions">
+      <h2>Likely questions</h2>
+      <p class="kicker">Short answers, in your own words</p>
+
+      <h3>"Walk me through the architecture."</h3>
+      <p>
+        Find the API calls in the code. Turn each into a tidy record of what
+        settings it was given. Run thirty small rule-based checks over those
+        records. Separately, send the relevant files to Claude for the questions
+        no rule can answer. Merge, rank by severity, print a report. The
+        rule-based part needs no model and no network.
+      </p>
+
+      <h3>"Why not use a model for everything?"</h3>
+      <p>
+        Because a lookup is not a judgement call. A table answers "is this
+        retired?" correctly every time, for free. Reserve the model for
+        questions with no right answer written down anywhere.
+      </p>
+
+      <h3>"How do you decide agent vs. workflow?"</h3>
+      <p>
+        Can I write the steps down before starting? If yes, workflow — cheaper
+        and testable. If the next step depends on what I discover, I need a
+        loop. This project has both, on purpose.
+      </p>
+
+      <h3>"What happens when it's wrong?"</h3>
+      <p>
+        Two guards. Checks must prove a problem from the facts or stay silent.
+        And every report ends with a section saying what <em>wasn't</em> checked
+        — how many settings couldn't be read, which languages were only skimmed.
+        A report that hides its blind spots reads as a clean bill of health,
+        which is worse than no report.
+      </p>
+
+      <h3>"How would you scale this to a thousand repositories?"</h3>
+      <p>
+        The rule-based part already scales — it's local and fast, run it in
+        parallel. The model part is the cost. I'd run rules on everything, then
+        only pay for judgement on repos where the rules found something
+        interesting. And I'd cache the fixed instructions so I'm not re-paying
+        for them on every repo.
+      </p>
+
+      <h3>"What would you do next?"</h3>
+      <p>
+        Properly parse JavaScript and TypeScript — right now they're only
+        skimmed, which is the biggest blind spot. Have the auto-fix open a pull
+        request instead of editing files in place. And base the cost estimates
+        on real usage data rather than inferring them from how the request
+        looks.
+      </p>
+
+      <h3>"What's the weakest part?"</h3>
+      <p>
+        Say this one plainly, because it's true and it's the kind of honesty
+        that lands well: the model-powered paths are the least verified. The
+        loop is tested against a stub, so the machinery is sound, but a wrong
+        setting name would only show up on a real call. It's written down as a
+        known limitation in the pull request rather than glossed over.
+      </p>
+
+      <hr />
+
+      <h3>If you remember five things</h3>
+      <ol>
+        <li>
+          <strong>Deterministic where the shape is known, model judgement where
+          it isn't.</strong> That's the whole design.
+        </li>
+        <li>
+          <strong>Workflow if you can name the steps; loop if you can't.</strong>
+        </li>
+        <li>
+          <strong>The silent failures are the point</strong> — the cache minimum
+          that stops working after an upgrade, with no error anywhere.
+        </li>
+        <li>
+          <strong>You test an agent's harness, not its choices</strong>, and you
+          measure outcomes against examples you graded yourself.
+        </li>
+        <li>
+          <strong>Say what you didn't check.</strong> A report that hides its
+          blind spots is worse than no report.
+        </li>
+      </ol>
+    </section>
+
+  </main>
+
+  <footer class="end">
+    Deployment Doctor · study guide · the code lives in
+    <code>deployment-doctor/</code>, with the file-by-file version in
+    <code>docs/walkthrough.md</code> and the agent loop in
+    <code>docs/the-loop.md</code>.
+  </footer>
+
+</div>

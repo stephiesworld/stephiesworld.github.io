@@ -1,0 +1,29 @@
+[project]
+name = "deployment-doctor"
+version = "0.1.0"
+description = "Audit a codebase's Claude API integration and return a prioritised scorecard."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+# The deterministic checks are stdlib-only on purpose — you can point this at a
+# repo with no install step. The SDK is only needed for the judgement pass.
+llm = ["anthropic>=0.116.0"]
+dev = ["pytest>=8.0", "anthropic>=0.116.0"]
+
+[project.scripts]
+deployment-doctor = "doctor.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["doctor*"]
+
+[tool.setuptools.package-data]
+"*" = ["corpus/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

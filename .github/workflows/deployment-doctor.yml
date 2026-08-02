@@ -1,0 +1,50 @@
+name: deployment-doctor
+
+# Scoped to the tool's own directory: the rest of the repo is a static site and
+# has nothing to run.
+on:
+  push:
+    branches: [main]
+    paths: ["deployment-doctor/**", ".github/workflows/deployment-doctor.yml"]
+  pull_request:
+    paths: ["deployment-doctor/**", ".github/workflows/deployment-doctor.yml"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: deployment-doctor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      # The deterministic checks are stdlib-only by design. This guards that:
+      # it runs the CLI with nothing but the standard library importable, so a
+      # stray third-party import in the analysis path fails here rather than on
+      # a customer's machine.
+      - name: Deterministic path has no third-party dependencies
+        run: |
+          python -c "
+          import subprocess, sys, os
+          env = dict(os.environ, PYTHONPATH='.')
+          r = subprocess.run(
+              [sys.executable, '-S', '-m', 'doctor.cli', 'tests/fixtures', '--fail-on', 'never'],
+              capture_output=True, text=True, env=env,
+          )
+          print(r.stdout[-2000:], r.stderr[-2000:])
+          sys.exit(r.returncode)
+          "
+
+      - name: Tests
+        run: pytest -q
+
+      # Dogfood: the tool audits itself. Its own fixtures are deliberately
+      # broken, so this is informational — it must run clean, not score well.
+      - name: Self-audit
+        run: python -m doctor.cli . --fail-on never --format markdown
