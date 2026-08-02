@@ -29,8 +29,8 @@ _SEVERITY_BY_NAME = {s.name.lower(): s for s in Severity}
 # per-run value interpolated in here would invalidate the cache on every call —
 # the exact defect CACHE_INVALIDATOR reports.
 RUBRIC = """\
-You are reviewing a codebase's integration with the Claude API, on behalf of an \
-AI deployment manager preparing findings for the customer who wrote it.
+You are reviewing a codebase's integration with the Claude API. Your findings go \
+to the engineers who own that code.
 
 The caller has already run a deterministic static analyser over this code. It has \
 covered — completely and correctly — everything mechanically checkable: retired and \

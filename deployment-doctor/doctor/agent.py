@@ -33,8 +33,8 @@ MAX_FILE_BYTES = 200_000
 MAX_GREP_HITS = 60
 
 SYSTEM = """\
-You are auditing a codebase's Claude API integration on behalf of an AI \
-deployment manager. A deterministic static analyser has already covered every \
+You are auditing a codebase's Claude API integration for the engineers who own \
+it. A deterministic static analyser has already covered every \
 mechanically checkable defect — retired model IDs, parameters that 400, cache \
 placement, tool version strings, missing evals. Do not repeat any of that.
 

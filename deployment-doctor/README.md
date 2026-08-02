@@ -23,10 +23,16 @@ Deployment Doctor — customer-repo
 
 ## Why
 
-This automates the thing an AI deployment manager does by hand every week: read
-a customer's integration and say what's costing them money and what's costing
-them quality. It is deliberately the shape of a deliverable you'd send a
-customer, not a dashboard nobody opens.
+Most of what goes wrong in a Claude API integration stays invisible until it
+costs you something. A retired model ID 404s the first time it runs in
+production. A `cache_control` breakpoint below the model's minimum is accepted,
+caches nothing, and bills full price. A refusal arrives as HTTP 200 with an
+empty `content` array, so code that reads `content[0]` raises on a *successful*
+response.
+
+None of that fails a test suite. All of it is mechanically checkable. This finds
+it, ranks it, and hands back something you can act on — the shape of a report
+you'd send to whoever owns the code, not a dashboard nobody opens.
 
 ## Quickstart
 
