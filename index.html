@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stephie's World — Stephanie Del Paggio</title>
-  <meta name="description" content="The personal world of Stephanie Del Paggio — writer, builder, and wanderer based in New York.">
+  <meta name="description" content="The personal world of Stephanie Del Paggio — writer, builder, and flâneur between New York, London, Paris, and Shanghai.">
   <meta name="keywords" content="Stephanie Del Paggio, Stephie Del Paggio, writer, New York, tech, literary fiction">
   <meta property="og:title" content="Stephie's World — Stephanie Del Paggio">
-  <meta property="og:description" content="Writer, builder, wanderer. Based in New York.">
+  <meta property="og:description" content="Writer, builder, flâneur.">
   <meta property="og:type" content="website">
   <script type="application/ld+json">
   {
@@ -24,31 +24,399 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=伦敦纽约旧金山上海巴黎马德里世界&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="neon.css">
+  <style>
+    #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
+    #globe:active { cursor: grabbing; }
+
+    /* Globe fades up out of the dark */
+    #globe { opacity: 0; transition: opacity 2.4s ease; }
+    #globe.ready { opacity: 1; }
+
+    /* ─── Corners ─── */
+    .corner { position: fixed; z-index: 10; opacity: 0; animation: appear 1.4s ease forwards; }
+    .tl { top: 2rem; left: 2.4rem; animation-delay: 0.6s; }
+    .tr { top: 2.25rem; right: 2.4rem; animation-delay: 0.8s; }
+    .bl { bottom: 2rem; left: 2.4rem; animation-delay: 1.2s; line-height: 2.1; }
+    .br { bottom: 2rem; right: 2.4rem; animation-delay: 1.4s; text-align: right; line-height: 2.1; }
+
+    .tagline { margin-top: 0.5rem; font-size: 0.55rem; }
+    .nav { display: flex; gap: 1.6rem; }
+
+    .now-dot {
+      display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--neon); box-shadow: 0 0 8px var(--neon), 0 0 16px var(--neon-soft);
+      margin-right: 0.6rem; vertical-align: 1px;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse { 50% { opacity: 0.35; } }
+
+    .hint {
+      position: fixed; z-index: 10; left: 50%; bottom: 2.1rem; transform: translateX(-50%);
+      opacity: 0; animation: appear 1.4s ease 2.4s forwards;
+      transition: opacity 1s ease;
+      white-space: nowrap;
+    }
+    .hint.gone { opacity: 0 !important; animation: none; }
+
+    .quote-line {
+      position: fixed; z-index: 10; left: 50%; bottom: 1.9rem; transform: translateX(-50%);
+      width: min(30em, calc(100vw - 32rem)); text-align: center;
+      font-family: var(--serif); font-style: italic; font-size: 0.92rem; line-height: 1.5; color: var(--cream-faint);
+      opacity: 0; transition: opacity 2s ease; pointer-events: none;
+    }
+    .quote-line.on { opacity: 1; }
+
+    /* ─── City pins (HTML overlays positioned by globe.gl) ─── */
+    .pin { width: 0; height: 0; position: relative; pointer-events: auto; cursor: pointer; transition: opacity 0.5s ease; }
+
+    .pin-dot {
+      position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber); box-shadow: 0 0 6px var(--amber), 0 0 18px var(--amber-soft);
+    }
+    .pin.is-current .pin-dot {
+      background: var(--neon); box-shadow: 0 0 8px var(--neon), 0 0 22px var(--neon-soft);
+    }
+
+    /* generous invisible hit area */
+    .pin::before { content: ''; position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; }
+
+    .pin-label {
+      position: absolute; left: 12px; top: -9px;
+      display: flex; align-items: baseline; gap: 0.45rem;
+      white-space: nowrap;
+      transition: transform 0.35s ease;
+    }
+    .pin-zh { font-family: var(--zh); font-size: 0.8rem; font-weight: 500; color: var(--amber); text-shadow: 0 0 10px var(--amber-soft); }
+    .pin-en { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); }
+    .pin.is-current .pin-zh { color: var(--neon); text-shadow: 0 0 10px var(--neon-soft), 0 0 22px var(--neon-faint); }
+    .pin-here { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--neon); }
+
+    .pin.label-below .pin-label { top: 4px; }
+    .pin.label-above .pin-label { top: -22px; }
+    .pin:hover .pin-label { transform: translateX(3px); }
+    .pin:hover .pin-en { color: var(--cream); }
+
+    /* ─── City panel ─── */
+    .panel {
+      position: fixed; z-index: 20; top: 50%; right: 3rem;
+      width: min(340px, calc(100vw - 2rem));
+      transform: translate(24px, -50%); opacity: 0; pointer-events: none;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      display: grid; grid-template-columns: auto 1fr; gap: 1.4rem;
+      padding: 2rem 1.8rem 1.8rem 1.4rem;
+      background: linear-gradient(160deg, rgba(20, 8, 12, 0.72), rgba(5, 5, 7, 0.82));
+      border: 1px solid var(--line);
+      border-left: 1px solid var(--neon-soft);
+      box-shadow: -8px 0 40px rgba(255, 45, 74, 0.08);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .panel.open { opacity: 1; transform: translate(0, -50%); pointer-events: auto; }
+
+    .panel-zh {
+      writing-mode: vertical-rl;
+      font-family: var(--zh); font-weight: 500; font-size: 2rem; letter-spacing: 0.3em;
+      color: var(--neon); text-shadow: 0 0 14px var(--neon-soft), 0 0 40px var(--neon-faint);
+    }
+    .panel-zh.amber { color: var(--amber); text-shadow: 0 0 14px var(--amber-soft); }
+
+    .panel-name { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2rem; line-height: 1.1; color: var(--cream); }
+    .panel-meta { margin-top: 0.7rem; line-height: 1.9; font-size: 0.55rem; }
+    .panel-copy { margin-top: 1.1rem; font-family: var(--serif); font-size: 1rem; line-height: 1.6; color: var(--cream-dim); }
+    .panel-links { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+    .panel-links a { font-size: 0.6rem; color: var(--cream-dim); transition: color 0.3s ease, letter-spacing 0.3s ease; }
+    .panel-links a:hover { color: var(--cream); letter-spacing: 0.22em; }
+    .panel-links a.primary { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
+    .panel-soon { font-size: 0.55rem; }
+
+    .panel-close {
+      position: absolute; top: 0.9rem; right: 1rem; background: none; border: none; cursor: pointer;
+      font-family: var(--mono); font-size: 0.8rem; color: var(--cream-faint);
+    }
+    .panel-close:hover { color: var(--cream); }
+
+    @media (max-width: 720px) {
+      .tl { top: 1.4rem; left: 1rem; }
+      .tr { top: 1.6rem; right: 1rem; }
+      .nav { gap: 1rem; }
+      .bl { left: 1rem; bottom: 1.2rem; }
+      .br, .hint, .quote-line { display: none; }
+      .panel {
+        top: auto; bottom: 0; right: 0; left: 0; width: 100%;
+        transform: translateY(24px);
+        border-left: 1px solid var(--line); border-top: 1px solid var(--neon-soft);
+        padding: 1.6rem 1.2rem 2rem;
+      }
+      .panel.open { transform: none; }
+      .panel-zh { font-size: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
 
-  <div class="landing" id="landing">
-    <div class="landing-content">
-      <div class="landing-image-container">
-        <img src="photo.png" alt="Stephanie Del Paggio" class="landing-image">
-      </div>
-      <h1 class="sr-only">Stephanie Del Paggio</h1>
-      <p class="landing-welcome">welcome</p>
-      <button class="landing-enter" id="enterBtn" aria-label="Enter site">
-        <span class="enter-text">enter</span>
-      </button>
-    </div>
-  </div>
+  <h1 class="sr-only">Stephanie Del Paggio</h1>
 
+  <div id="globe" aria-label="Globe of the cities in Stephie's world"></div>
+
+  <canvas class="fx fx-rain" id="rain"></canvas>
+  <div class="fx fx-vignette"></div>
+  <div class="fx fx-scan"></div>
+  <div class="fx fx-grain"></div>
+
+  <header class="corner tl">
+    <p class="brand">Stephie's World</p>
+    <p class="hud tagline">writer &middot; builder &middot; fl&acirc;neur</p>
+  </header>
+
+  <nav class="corner tr hud nav">
+    <a href="about.html">about</a>
+    <a href="work.html">work</a>
+    <a href="books.html">reading</a>
+    <a href="https://stephiesuniverse.substack.com" target="_blank" rel="noopener" style="font-family: serif; letter-spacing: 0; font-size: 0.8rem;">مكتوب</a>
+  </nav>
+
+  <div class="corner bl hud" id="status"></div>
+  <div class="corner br hud" id="coords"></div>
+  <p class="hint hud" id="hint">drag to turn &middot; touch a light</p>
+  <p class="quote-line" id="footerQuote"></p>
+
+  <aside class="panel" id="panel" aria-live="polite">
+    <button class="panel-close" id="panelClose" aria-label="Close">&times;</button>
+    <div class="panel-zh" id="pZh"></div>
+    <div>
+      <h2 class="panel-name" id="pName"></h2>
+      <p class="panel-meta hud" id="pMeta"></p>
+      <p class="panel-copy" id="pCopy"></p>
+      <div class="panel-links hud" id="pLinks"></div>
+    </div>
+  </aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <script src="rain.js"></script>
+  <script src="quotes.js"></script>
   <script>
-    document.getElementById('enterBtn').addEventListener('click', function() {
-      document.getElementById('landing').classList.add('landing-exit');
-      setTimeout(function() {
-        window.location.href = 'world.html';
-      }, 800);
+    // ─── Home ───
+    // The red pin marks home base. Deliberately no live location or travel dates:
+    // anything here is readable in the page source.
+    var HOME_CITY = 'newyork';
+
+    var CITIES = {
+      newyork: {
+        name: 'New York', zh: '纽约', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
+        copy: 'Home. The city that rewards you for being exactly who you are, as long as you keep moving.',
+        links: [
+          { href: 'nyc.html#work', label: 'the career, mapped &rarr;', primary: true },
+          { href: 'nyc.html#play', label: 'where I play &rarr;' },
+          { href: 'nyc.html#guide', label: 'city guide &rarr;' }
+        ]
+      },
+      london: {
+        name: 'London', zh: '伦敦', lat: 51.5074, lng: -0.1278, tz: 'Europe/London', label: 'above',
+        copy: '',
+        links: []
+      },
+      paris: {
+        name: 'Paris', zh: '巴黎', lat: 48.8566, lng: 2.3522, tz: 'Europe/Paris',
+        copy: 'Where beauty is treated as a necessity. Every walk is an education in attention.',
+        links: [{ href: 'paris.html', label: 'city guide &rarr;', primary: true }]
+      },
+      shanghai: {
+        name: 'Shanghai', zh: '上海', lat: 31.2304, lng: 121.4737, tz: 'Asia/Shanghai',
+        copy: 'Where I grew up. A city of contradictions &mdash; ancient and electric, intimate and enormous.',
+        links: [],
+        soon: 'guide coming'
+      },
+      madrid: {
+        name: 'Madrid', zh: '马德里', lat: 40.4168, lng: -3.7038, tz: 'Europe/Madrid', label: 'below',
+        copy: 'Where time moves differently. Dinner at ten, sunlight that lasts, conversations that never rush.',
+        links: []
+      },
+      sanfrancisco: {
+        name: 'San Francisco', zh: '旧金山', lat: 37.7749, lng: -122.4194, tz: 'America/Los_Angeles',
+        copy: '',
+        links: []
+      }
+    };
+
+    var HERE = CITIES[HOME_CITY];
+
+    function localTime(tz) {
+      return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit' }).format(new Date());
+    }
+
+
+    function renderStatus() {
+      document.getElementById('status').innerHTML =
+        '<span class="now-dot"></span>home <b>' + HERE.name + '</b> &middot; ' + localTime(HERE.tz);
+    }
+    renderStatus();
+    setInterval(renderStatus, 30000);
+
+    // ─── Globe ───
+    var el = document.getElementById('globe');
+    var mobile = window.innerWidth < 720;
+    var restAltitude = mobile ? 4.3 : 2.1;
+
+    var points = Object.keys(CITIES).map(function (id) {
+      var c = CITIES[id];
+      return { id: id, lat: c.lat, lng: c.lng, city: c, current: c === HERE };
     });
+
+    var world = Globe({ animateIn: false })(el)
+      .width(window.innerWidth)
+      .height(window.innerHeight)
+      .backgroundColor('rgba(0,0,0,0)')
+      .showAtmosphere(true)
+      .atmosphereColor('#ff2d4a')
+      .atmosphereAltitude(0.16)
+      .showGraticules(true)
+      .htmlElementsData(points)
+      .htmlAltitude(0.01)
+      .htmlElement(makePin)
+      .ringsData([HERE])
+      .ringLat('lat').ringLng('lng')
+      .ringColor(function () { return function (t) { return 'rgba(255,45,74,' + (1 - t) * 0.8 + ')'; }; })
+      .ringMaxRadius(3.2)
+      .ringPropagationSpeed(1.2)
+      .ringRepeatPeriod(1600)
+      .onGlobeClick(closePanel);
+
+    if (world.htmlElementVisibilityModifier) {
+      world.htmlElementVisibilityModifier(function (el, visible) {
+        el.style.opacity = visible ? 1 : 0;
+        el.style.pointerEvents = visible ? 'auto' : 'none';
+      });
+    }
+
+    // Ink-dark sphere with a faint red rim
+    var mat = world.globeMaterial();
+    mat.color.set('#070506');
+    mat.emissive && mat.emissive.set('#0c0205');
+    mat.shininess = 8;
+
+    // Countries that hold one of my cities burn a little warmer
+    var MINE = ['United States of America', 'United Kingdom', 'France', 'Spain', 'China'];
+
+    // Land as a field of dim dots, like a city seen from a plane at night
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+      .then(function (r) { return r.json(); })
+      .then(function (topo) {
+        var land = topojson.feature(topo, topo.objects.countries).features
+          .filter(function (f) { return f.properties.name !== 'Antarctica'; });
+        world
+          .hexPolygonsData(land)
+          .hexPolygonResolution(3)
+          .hexPolygonMargin(0.55)
+          .hexPolygonUseDots(true)
+          .hexPolygonAltitude(0.002)
+          .hexPolygonColor(function (f) {
+            return MINE.indexOf(f.properties.name) > -1 ? 'rgba(255,177,92,0.42)' : 'rgba(255,60,85,0.3)';
+          });
+      })
+      .finally(function () { el.classList.add('ready'); });
+
+    world.pointOfView({ lat: HERE.lat - 8, lng: HERE.lng - 25, altitude: restAltitude }, 0);
+
+    var controls = world.controls();
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.28;
+    controls.enableZoom = true;
+    controls.minDistance = 160;
+    controls.maxDistance = 900;
+    controls.enableDamping = true;
+
+    var resumeTimer;
+    function pauseSpin(ms) {
+      controls.autoRotate = false;
+      clearTimeout(resumeTimer);
+      if (ms) resumeTimer = setTimeout(function () { controls.autoRotate = true; }, ms);
+    }
+    el.addEventListener('pointerdown', function () {
+      pauseSpin(8000);
+      document.getElementById('hint').classList.add('gone');
+    });
+
+    // Live coordinates of whatever is facing you
+    var coordsEl = document.getElementById('coords');
+    function fmt(v, pos, neg) { return Math.abs(v).toFixed(2) + '&deg;' + (v >= 0 ? pos : neg); }
+    function renderCoords(pov) {
+      pov = pov || world.pointOfView();
+      var lng = ((pov.lng + 540) % 360) - 180;
+      coordsEl.innerHTML = fmt(pov.lat, 'N', 'S') + ' &nbsp;' + fmt(lng, 'E', 'W');
+    }
+    world.onZoom(renderCoords);
+    renderCoords();
+
+    function makePin(d) {
+      var pin = document.createElement('div');
+      pin.className = 'pin' + (d.current ? ' is-current' : '') + (d.city.label ? ' label-' + d.city.label : '');
+      pin.innerHTML =
+        '<span class="pin-dot"></span>' +
+        '<span class="pin-label"><span class="pin-zh">' + d.city.zh + '</span>' +
+        '<span class="pin-en">' + d.city.name + '</span>' +
+        (d.current ? '<span class="pin-here">&middot; home</span>' : '') + '</span>';
+      // Keep the orbit controls from capturing the pointer, or the click never lands
+      pin.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+      pin.addEventListener('click', function (e) { e.stopPropagation(); openCity(d.id); });
+      return pin;
+    }
+
+    // ─── Panel ───
+    var panel = document.getElementById('panel');
+
+    function openCity(id) {
+      var c = CITIES[id];
+      pauseSpin(0);
+      document.getElementById('hint').classList.add('gone');
+      // Nudge the camera so the city sits left of the panel on desktop
+      world.pointOfView({ lat: c.lat - (mobile ? 12 : 0), lng: c.lng + (mobile ? 0 : 22), altitude: mobile ? 3 : 1.35 }, 1600);
+
+      var status = c === HERE ? '<span class="red">home</span>' : '';
+      document.getElementById('pZh').textContent = c.zh;
+      document.getElementById('pZh').className = 'panel-zh' + (c === HERE ? '' : ' amber');
+      document.getElementById('pName').textContent = c.name;
+      document.getElementById('pMeta').innerHTML =
+        fmt(c.lat, 'N', 'S') + ' ' + fmt(c.lng, 'E', 'W') + '<br>' +
+        'local ' + localTime(c.tz) + (status ? ' &middot; ' + status : '');
+      document.getElementById('pCopy').innerHTML = c.copy;
+      document.getElementById('pCopy').style.display = c.copy ? '' : 'none';
+      document.getElementById('pLinks').innerHTML =
+        c.links.map(function (l) {
+          return '<a href="' + l.href + '"' + (l.primary ? ' class="primary"' : '') + '>' + l.label + '</a>';
+        }).join('') + (c.soon ? '<span class="panel-soon">' + c.soon + '</span>' : '');
+      panel.classList.add('open');
+    }
+
+    function closePanel() {
+      if (!panel.classList.contains('open')) return;
+      panel.classList.remove('open');
+      var pov = world.pointOfView();
+      world.pointOfView({ lat: pov.lat, lng: pov.lng, altitude: restAltitude }, 1400);
+      pauseSpin(1600);
+    }
+
+    document.getElementById('panelClose').addEventListener('click', closePanel);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
+
+    window.addEventListener('resize', function () {
+      world.width(window.innerWidth).height(window.innerHeight);
+    });
+
+    startRain(document.getElementById('rain'), 0.8);
+
+    // The hint gives way to a quote once you've found your footing
+    setRandomQuote();
+    function showQuote() {
+      document.getElementById('hint').classList.add('gone');
+      document.getElementById('footerQuote').classList.add('on');
+    }
+    setTimeout(showQuote, 9000);
+    el.addEventListener('pointerdown', function () { setTimeout(showQuote, 1200); }, { once: true });
   </script>
 
 </body>
