@@ -96,8 +96,6 @@ header h1 {
 
 footer { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; padding: 4rem 2rem 5rem; }
 footer .hud:hover { color: var(--cream); }
-.maktub { font-size: 1.1rem; color: var(--neon); opacity: 0.6; text-shadow: 0 0 12px var(--neon-soft); }
-.maktub:hover { opacity: 1; }
 
 @media (max-width: 760px) {
   .top { padding: 1.2rem 1rem 1rem; }
