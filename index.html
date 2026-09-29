@@ -27,6 +27,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="neon.css">
   <style>
+    :root {
+      --ink: #0e0c1f;
+      --neon: #ff7a9c;
+      --neon-soft: rgba(255, 122, 156, 0.55);
+      --neon-faint: rgba(255, 122, 156, 0.16);
+      --amber: #ffc27a;
+      --amber-soft: rgba(255, 194, 122, 0.55);
+    }
+    body {
+      background:
+        radial-gradient(ellipse 90% 60% at 50% 110%, rgba(255, 140, 120, 0.16), transparent 70%),
+        radial-gradient(ellipse 80% 70% at 50% 0%, #1d1840, transparent 75%),
+        var(--ink);
+    }
+    .fx-vignette { background: radial-gradient(ellipse at center, transparent 55%, rgba(8, 6, 20, 0.55) 100%); }
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
     #globe:active { cursor: grabbing; }
 
@@ -137,7 +152,7 @@
 
     @media (max-width: 720px) {
       .tl { top: 1.4rem; left: 1rem; }
-      .tr { top: 1.6rem; right: 1rem; }
+      .tr { top: 4.1rem; left: 1rem; right: auto; }
       .nav { gap: 1rem; }
       .bl { left: 1rem; bottom: 1.2rem; }
       .br, .hint { display: none; }
@@ -158,9 +173,8 @@
 
   <div id="globe" aria-label="Globe of the cities in Stephie's world"></div>
 
-  <canvas class="fx fx-rain" id="rain"></canvas>
+  <canvas class="fx fx-rain" id="stars"></canvas>
   <div class="fx fx-vignette"></div>
-  <div class="fx fx-scan"></div>
   <div class="fx fx-grain"></div>
 
   <header class="corner tl">
@@ -191,7 +205,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/globe.gl@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
-  <script src="rain.js"></script>
   <script>
     // ─── Home ───
     // The red pin marks home base. Deliberately no live location or travel dates:
@@ -267,15 +280,15 @@
       .height(window.innerHeight)
       .backgroundColor('rgba(0,0,0,0)')
       .showAtmosphere(true)
-      .atmosphereColor('#ff2d4a')
-      .atmosphereAltitude(0.16)
+      .atmosphereColor('#ff9f8f')
+      .atmosphereAltitude(0.2)
       .showGraticules(true)
       .htmlElementsData(points)
       .htmlAltitude(0.01)
       .htmlElement(makePin)
       .ringsData([HERE])
       .ringLat('lat').ringLng('lng')
-      .ringColor(function () { return function (t) { return 'rgba(255,45,74,' + (1 - t) * 0.8 + ')'; }; })
+      .ringColor(function () { return function (t) { return 'rgba(255,122,156,' + (1 - t) * 0.85 + ')'; }; })
       .ringMaxRadius(3.2)
       .ringPropagationSpeed(1.2)
       .ringRepeatPeriod(1600)
@@ -290,8 +303,8 @@
 
     // Ink-dark sphere with a faint red rim
     var mat = world.globeMaterial();
-    mat.color.set('#070506');
-    mat.emissive && mat.emissive.set('#0c0205');
+    mat.color.set('#171433');
+    mat.emissive && mat.emissive.set('#0d0b24');
     mat.shininess = 8;
 
     // Countries that hold one of my cities burn a little warmer
@@ -310,7 +323,7 @@
           .hexPolygonUseDots(true)
           .hexPolygonAltitude(0.002)
           .hexPolygonColor(function (f) {
-            return MINE.indexOf(f.properties.name) > -1 ? 'rgba(255,177,92,0.42)' : 'rgba(255,60,85,0.3)';
+            return MINE.indexOf(f.properties.name) > -1 ? 'rgba(255,208,140,0.75)' : 'rgba(255,170,150,0.38)';
           });
       })
       .finally(function () { el.classList.add('ready'); });
@@ -404,7 +417,31 @@
       world.width(window.innerWidth).height(window.innerHeight);
     });
 
-    startRain(document.getElementById('rain'), 0.8);
+    // A few stars instead of rain
+    (function stars(canvas) {
+      var ctx = canvas.getContext('2d'), list = [], w, h;
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function size() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        list = [];
+        for (var i = 0; i < Math.round(w * h / 7000); i++) {
+          list.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.1 + 0.3, p: Math.random() * 6.28, s: 0.4 + Math.random() * 1.2, warm: Math.random() < 0.25 });
+        }
+      }
+      function draw(t) {
+        ctx.clearRect(0, 0, w, h);
+        for (var i = 0; i < list.length; i++) {
+          var st = list[i], a = still ? 0.5 : 0.25 + 0.45 * (0.5 + 0.5 * Math.sin(t / 1000 * st.s + st.p));
+          ctx.fillStyle = st.warm ? 'rgba(255,208,160,' + a + ')' : 'rgba(239,232,255,' + a + ')';
+          ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.283); ctx.fill();
+        }
+        if (!still) requestAnimationFrame(draw);
+      }
+      window.addEventListener('resize', size);
+      size(); requestAnimationFrame(draw);
+    })(document.getElementById('stars'));
 
     // The hint fades once you've found your footing
     setTimeout(function () { document.getElementById('hint').classList.add('gone'); }, 9000);
