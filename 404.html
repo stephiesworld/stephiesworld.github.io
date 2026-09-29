@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Not found — Stephie's World</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/neon.css">
+  <style>
+    .lost {
+      position: relative; z-index: 3; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.4rem;
+      padding: 2rem 1rem; text-align: center;
+    }
+    .code { font-size: 0.6rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
+    .lost h1 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.4rem; color: var(--cream); }
+    .lost a { font-size: 0.62rem; color: var(--cream-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
+    .lost a:hover { color: var(--cream); text-shadow: 0 0 10px var(--neon-soft); }
+  </style>
+</head>
+<body>
+
+  <canvas class="fx fx-rain" id="rain"></canvas>
+  <div class="fx fx-vignette"></div>
+  <div class="fx fx-scan"></div>
+  <div class="fx fx-grain"></div>
+
+  <main class="lost">
+    <p class="code hud">404</p>
+    <h1>Nothing on this street.</h1>
+    <a class="hud" href="/">&larr; back to the world</a>
+  </main>
+
+  <script src="/rain.js"></script>
+  <script>startRain(document.getElementById('rain'), 0.6);</script>
+
+</body>
+</html>
