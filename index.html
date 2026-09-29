@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stephie's World — Stephanie Del Paggio</title>
-  <meta name="description" content="The personal world of Stephanie Del Paggio, between New York, London, Paris, and Shanghai.">
-  <meta name="keywords" content="Stephanie Del Paggio, Stephie Del Paggio, writer, New York, tech, literary fiction">
-  <meta property="og:title" content="Stephie's World — Stephanie Del Paggio">
+  <title>Stephie's World</title>
+  <meta name="description" content="The personal world of Stephie, between New York, London, Paris, and Shanghai.">
+  <meta name="keywords" content="Stephie, writer, New York, tech, literary fiction">
+  <meta property="og:title" content="Stephie's World">
   <meta property="og:description" content="A personal world.">
   <meta property="og:type" content="website">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Stephanie Del Paggio",
-    "alternateName": "Stephie Del Paggio",
+    "name": "Stephie",
     "url": "https://stephiesworld.com",
     "jobTitle": "Writer & Technologist",
     "address": { "@type": "PostalAddress", "addressLocality": "New York" }
@@ -155,7 +154,7 @@
 </head>
 <body>
 
-  <h1 class="sr-only">Stephanie Del Paggio</h1>
+  <h1 class="sr-only">Stephie</h1>
 
   <div id="globe" aria-label="Globe of the cities in Stephie's world"></div>
 
@@ -202,9 +201,9 @@
     var CITIES = {
       newyork: {
         name: 'New York', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
-        copy: 'Home. The city that reminded me of Shanghai &mdash; so I stayed.',
+        copy: 'Home for the past decade. It&rsquo;s the city that reminded me of Shanghai, my first home.',
         links: [
-          { href: 'nyc.html#work', label: 'the career, mapped &rarr;', primary: true },
+          { href: 'nyc.html#work', label: 'a career is a journey &rarr;', primary: true },
           { href: 'nyc.html#play', label: 'where I play &rarr;' },
           { href: 'nyc.html#guide', label: 'city guide &rarr;' }
         ]
@@ -216,36 +215,25 @@
       },
       paris: {
         name: 'Paris', lat: 48.8566, lng: 2.3522, tz: 'Europe/Paris',
-        tag: 'favorite on earth',
-        copy: 'In my opinion, my favorite city on earth. Beauty is mandatory here.',
+        tag: 'my favorite city for deep work',
+        copy: 'The place I spend the most solo time: tinkering, writing, and researching.',
         links: [{ href: 'paris.html', label: 'city guide &rarr;', primary: true }]
       },
       shanghai: {
         name: 'Shanghai', zh: '上海', lat: 31.2304, lng: 121.4737, tz: 'Asia/Shanghai',
         tag: 'first home',
-        copy: 'My first exposure to the world, really. Learned to explore and adventure surrounded by my loving family.',
+        copy: 'Learned to explore and adventure surrounded by my extended family.',
         links: [],
         soon: 'guide coming'
       },
       madrid: {
         name: 'Madrid', lat: 40.4168, lng: -3.7038, tz: 'Europe/Madrid', label: 'below',
-        tag: 'first love',
-        copy: 'The first city I fell in love with. Dinner at ten, and the best sunlight on earth.',
-        links: []
-      },
-      houston: {
-        name: 'Houston', lat: 29.7604, lng: -95.3698, tz: 'America/Chicago', label: 'below', tag: 'place of birth',
-        copy: 'Where it all started.',
+        copy: 'Dinner at ten and the best sunlight on earth.',
         links: []
       },
       interlaken: {
-        name: 'Interlaken', lat: 46.6863, lng: 7.8632, tz: 'Europe/Zurich', label: 'below', tag: 'the spark',
+        name: 'Interlaken', lat: 46.6863, lng: 7.8632, tz: 'Europe/Zurich', label: 'below',
         copy: 'The birthplace of the concept of my novel, <a href="about.html#projects">29</a>.',
-        links: []
-      },
-      sanfrancisco: {
-        name: 'San Francisco', lat: 37.7749, lng: -122.4194, tz: 'America/Los_Angeles',
-        copy: '',
         links: []
       }
     };
