@@ -2,7 +2,7 @@
 //
 // config: {
 //   tz, bearing, home: { center, zoom, pitch }, bounds,
-//   groups: [{ id, zh, label, big, labels: 'always'|'hover', tagsLabel }],
+//   groups: [{ id, label, big, labels: 'always'|'hover', tagsLabel }],
 //   places: [{ id, group, name, lngLat, address, category, role, years, copy, did: [], tags: [], links: [{ href, label }], route }]
 // }
 // Deep links: page.html#guide opens a tab, page.html#placeid opens a place.
@@ -104,7 +104,7 @@ function cityMap(cfg) {
       var b = document.createElement('button');
       b.className = 'tab hud g-' + g.id;
       b.dataset.group = g.id;
-      b.innerHTML = '<span class="zh">' + g.zh + '</span>' + g.label;
+      b.innerHTML = '<span class="dot"></span>' + g.label;
       b.addEventListener('click', function () { showGroup(g.id); });
       tabsEl.appendChild(b);
     });

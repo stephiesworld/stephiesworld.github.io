@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stephie's World — Stephanie Del Paggio</title>
-  <meta name="description" content="The personal world of Stephanie Del Paggio — writer, builder, and flâneur between New York, London, Paris, and Shanghai.">
+  <meta name="description" content="The personal world of Stephanie Del Paggio, between New York, London, Paris, and Shanghai.">
   <meta name="keywords" content="Stephanie Del Paggio, Stephie Del Paggio, writer, New York, tech, literary fiction">
   <meta property="og:title" content="Stephie's World — Stephanie Del Paggio">
-  <meta property="og:description" content="Writer, builder, flâneur.">
+  <meta property="og:description" content="A personal world.">
   <meta property="og:type" content="website">
   <script type="application/ld+json">
   {
@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=伦敦纽约旧金山上海巴黎马德里休斯顿因特拉肯世界&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="neon.css">
   <style>
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
@@ -62,13 +62,6 @@
     }
     .hint.gone { opacity: 0 !important; animation: none; }
 
-    .quote-line {
-      position: fixed; z-index: 10; left: 50%; bottom: 1.9rem; transform: translateX(-50%);
-      width: min(30em, calc(100vw - 32rem)); text-align: center;
-      font-family: var(--serif); font-style: italic; font-size: 0.92rem; line-height: 1.5; color: var(--cream-faint);
-      opacity: 0; transition: opacity 2s ease; pointer-events: none;
-    }
-    .quote-line.on { opacity: 1; }
 
     /* ─── City pins (HTML overlays positioned by globe.gl) ─── */
     .pin { width: 0; height: 0; position: relative; pointer-events: auto; cursor: pointer; transition: opacity 0.5s ease; }
@@ -92,6 +85,9 @@
     }
     .pin-zh { font-family: var(--zh); font-size: 0.8rem; font-weight: 500; color: var(--amber); text-shadow: 0 0 10px var(--amber-soft); }
     .pin-en { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); }
+    /* Cities without a Chinese name: the English name becomes the lit sign */
+    .pin-label .pin-en:first-child { font-size: 0.62rem; color: var(--amber); text-shadow: 0 0 10px var(--amber-soft); }
+    .pin.is-current .pin-label .pin-en:first-child { color: var(--neon); text-shadow: 0 0 10px var(--neon-soft), 0 0 22px var(--neon-faint); }
     .pin.is-current .pin-zh { color: var(--neon); text-shadow: 0 0 10px var(--neon-soft), 0 0 22px var(--neon-faint); }
     .pin-here { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--neon); }
 
@@ -145,7 +141,7 @@
       .tr { top: 1.6rem; right: 1rem; }
       .nav { gap: 1rem; }
       .bl { left: 1rem; bottom: 1.2rem; }
-      .br, .hint, .quote-line { display: none; }
+      .br, .hint { display: none; }
       .panel {
         top: auto; bottom: 0; right: 0; left: 0; width: 100%;
         transform: translateY(24px);
@@ -170,7 +166,6 @@
 
   <header class="corner tl">
     <p class="brand">Stephie's World</p>
-    <p class="hud tagline">writer &middot; builder &middot; fl&acirc;neur</p>
   </header>
 
   <nav class="corner tr hud nav">
@@ -183,7 +178,6 @@
   <div class="corner bl hud" id="status"></div>
   <div class="corner br hud" id="coords"></div>
   <p class="hint hud" id="hint">drag to turn &middot; touch a light</p>
-  <p class="quote-line" id="footerQuote"></p>
 
   <aside class="panel" id="panel" aria-live="polite">
     <button class="panel-close" id="panelClose" aria-label="Close">&times;</button>
@@ -199,7 +193,6 @@
   <script src="https://cdn.jsdelivr.net/npm/globe.gl@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
   <script src="rain.js"></script>
-  <script src="quotes.js"></script>
   <script>
     // ─── Home ───
     // The red pin marks home base. Deliberately no live location or travel dates:
@@ -208,7 +201,7 @@
 
     var CITIES = {
       newyork: {
-        name: 'New York', zh: '纽约', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
+        name: 'New York', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
         copy: 'Home. The city that reminded me of Shanghai &mdash; so I stayed.',
         links: [
           { href: 'nyc.html#work', label: 'the career, mapped &rarr;', primary: true },
@@ -217,12 +210,12 @@
         ]
       },
       london: {
-        name: 'London', zh: '伦敦', lat: 51.5074, lng: -0.1278, tz: 'Europe/London', label: 'above',
+        name: 'London', lat: 51.5074, lng: -0.1278, tz: 'Europe/London', label: 'above',
         copy: '',
         links: []
       },
       paris: {
-        name: 'Paris', zh: '巴黎', lat: 48.8566, lng: 2.3522, tz: 'Europe/Paris',
+        name: 'Paris', lat: 48.8566, lng: 2.3522, tz: 'Europe/Paris',
         tag: 'favorite on earth',
         copy: 'In my opinion, my favorite city on earth. Beauty is mandatory here.',
         links: [{ href: 'paris.html', label: 'city guide &rarr;', primary: true }]
@@ -235,23 +228,23 @@
         soon: 'guide coming'
       },
       madrid: {
-        name: 'Madrid', zh: '马德里', lat: 40.4168, lng: -3.7038, tz: 'Europe/Madrid', label: 'below',
+        name: 'Madrid', lat: 40.4168, lng: -3.7038, tz: 'Europe/Madrid', label: 'below',
         tag: 'first love',
         copy: 'The first city I fell in love with. Dinner at ten, and the best sunlight on earth.',
         links: []
       },
       houston: {
-        name: 'Houston', zh: '休斯顿', lat: 29.7604, lng: -95.3698, tz: 'America/Chicago', label: 'below', tag: 'place of birth',
+        name: 'Houston', lat: 29.7604, lng: -95.3698, tz: 'America/Chicago', label: 'below', tag: 'place of birth',
         copy: 'Where it all started.',
         links: []
       },
       interlaken: {
-        name: 'Interlaken', zh: '因特拉肯', lat: 46.6863, lng: 7.8632, tz: 'Europe/Zurich', label: 'below', tag: 'the spark',
+        name: 'Interlaken', lat: 46.6863, lng: 7.8632, tz: 'Europe/Zurich', label: 'below', tag: 'the spark',
         copy: 'The birthplace of the concept of my novel, <a href="about.html#projects">29</a>.',
         links: []
       },
       sanfrancisco: {
-        name: 'San Francisco', zh: '旧金山', lat: 37.7749, lng: -122.4194, tz: 'America/Los_Angeles',
+        name: 'San Francisco', lat: 37.7749, lng: -122.4194, tz: 'America/Los_Angeles',
         copy: '',
         links: []
       }
@@ -371,7 +364,7 @@
       pin.className = 'pin' + (d.current ? ' is-current' : '') + (d.city.label ? ' label-' + d.city.label : '');
       pin.innerHTML =
         '<span class="pin-dot"></span>' +
-        '<span class="pin-label"><span class="pin-zh">' + d.city.zh + '</span>' +
+        '<span class="pin-label">' + (d.city.zh ? '<span class="pin-zh">' + d.city.zh + '</span>' : '') +
         '<span class="pin-en">' + d.city.name + '</span>' +
         (d.current ? '<span class="pin-here">&middot; home</span>' : '') + '</span>';
       // Keep the orbit controls from capturing the pointer, or the click never lands
@@ -391,7 +384,9 @@
       world.pointOfView({ lat: c.lat - (mobile ? 12 : 0), lng: c.lng + (mobile ? 0 : 22), altitude: mobile ? 3 : 1.35 }, 1600);
 
       var status = c === HERE ? '<span class="red">home</span>' : (c.tag || '');
-      document.getElementById('pZh').textContent = c.zh;
+      document.getElementById('pZh').textContent = c.zh || '';
+      document.getElementById('pZh').style.display = c.zh ? '' : 'none';
+      panel.style.gridTemplateColumns = c.zh ? '' : '1fr';
       document.getElementById('pZh').className = 'panel-zh' + (c === HERE ? '' : ' amber');
       document.getElementById('pName').textContent = c.name;
       document.getElementById('pMeta').innerHTML =
@@ -423,14 +418,8 @@
 
     startRain(document.getElementById('rain'), 0.8);
 
-    // The hint gives way to a quote once you've found your footing
-    setRandomQuote();
-    function showQuote() {
-      document.getElementById('hint').classList.add('gone');
-      document.getElementById('footerQuote').classList.add('on');
-    }
-    setTimeout(showQuote, 9000);
-    el.addEventListener('pointerdown', function () { setTimeout(showQuote, 1200); }, { once: true });
+    // The hint fades once you've found your footing
+    setTimeout(function () { document.getElementById('hint').classList.add('gone'); }, 9000);
   </script>
 
 </body>

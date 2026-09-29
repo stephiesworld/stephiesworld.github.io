@@ -38,10 +38,10 @@
   display: flex; align-items: baseline; gap: 0.45rem;
   color: var(--cream-faint); transition: color 0.3s ease;
 }
-.tab .zh { font-family: var(--zh); font-size: 0.78rem; letter-spacing: 0; text-transform: none; color: var(--g); opacity: 0.45; transition: opacity 0.3s ease, text-shadow 0.3s ease; }
+.tab .dot { width: 5px; height: 5px; background: var(--g); opacity: 0.45; align-self: center; transition: opacity 0.3s ease, box-shadow 0.3s ease; }
 .tab:hover { color: var(--cream-dim); }
 .tab.active { color: var(--cream); }
-.tab.active .zh { opacity: 1; text-shadow: 0 0 10px var(--g-soft); }
+.tab.active .dot { opacity: 1; box-shadow: 0 0 8px var(--g-soft); }
 
 .list { overflow-y: auto; scrollbar-width: none; flex: 1; min-height: 0; padding-right: 0.5rem; }
 .list::-webkit-scrollbar { display: none; }
