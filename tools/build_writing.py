@@ -37,7 +37,7 @@ REFERENCE = [
     ('harness-cheat-sheet', 'Harness Cheat Sheet', 'the machinery around the model'),
 ]
 
-STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('work.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('books.html', '0.8')]
+STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('work.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('interlaken.html', '0.6'), ('books.html', '0.8')]
 
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
           'September', 'October', 'November', 'December']
