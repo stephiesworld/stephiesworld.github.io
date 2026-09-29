@@ -27,21 +27,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="neon.css">
   <style>
-    :root {
-      --ink: #0e0c1f;
-      --neon: #ff7a9c;
-      --neon-soft: rgba(255, 122, 156, 0.55);
-      --neon-faint: rgba(255, 122, 156, 0.16);
-      --amber: #ffc27a;
-      --amber-soft: rgba(255, 194, 122, 0.55);
-    }
-    body {
-      background:
-        radial-gradient(ellipse 90% 60% at 50% 110%, rgba(255, 140, 120, 0.16), transparent 70%),
-        radial-gradient(ellipse 80% 70% at 50% 0%, #1d1840, transparent 75%),
-        var(--ink);
-    }
-    .fx-vignette { background: radial-gradient(ellipse at center, transparent 55%, rgba(8, 6, 20, 0.55) 100%); }
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
     #globe:active { cursor: grabbing; }
 
@@ -143,6 +128,7 @@
     .panel-links a:hover { color: var(--cream); letter-spacing: 0.22em; }
     .panel-links a.primary { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
     .panel-soon { font-size: 0.55rem; }
+    .panel-meta .tennis { color: var(--amber); }
 
     .panel-close {
       position: absolute; top: 0.9rem; right: 1rem; background: none; border: none; cursor: pointer;
@@ -173,8 +159,9 @@
 
   <div id="globe" aria-label="Globe of the cities in Stephie's world"></div>
 
-  <canvas class="fx fx-rain" id="stars"></canvas>
+  <canvas class="fx fx-rain" id="rain"></canvas>
   <div class="fx fx-vignette"></div>
+  <div class="fx fx-scan"></div>
   <div class="fx fx-grain"></div>
 
   <header class="corner tl">
@@ -205,6 +192,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/globe.gl@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <script src="rain.js"></script>
   <script>
     // ─── Home ───
     // The red pin marks home base. Deliberately no live location or travel dates:
@@ -214,11 +202,12 @@
     var CITIES = {
       newyork: {
         name: 'New York', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
-        copy: 'Home for the past decade. It&rsquo;s the city that reminded me of Shanghai, my first home.',
+        copy: 'Home for the past decade.',
+        tennis: 'US Open',
         links: [
-          { href: 'nyc.html#work', label: 'a career is a journey &rarr;', primary: true },
-          { href: 'nyc.html#play', label: 'where I play &rarr;' },
-          { href: 'nyc.html#guide', label: 'city guide &rarr;' }
+          { href: 'nyc.html#work', label: 'Career &rarr;', primary: true },
+          { href: 'nyc.html#play', label: 'Play &rarr;' },
+          { href: 'nyc.html#guide', label: 'City Guide &rarr;' }
         ]
       },
       london: {
@@ -228,25 +217,39 @@
       },
       paris: {
         name: 'Paris', lat: 48.8566, lng: 2.3522, tz: 'Europe/Paris',
-        tag: 'my favorite city for deep work',
-        copy: 'The place I spend the most solo time: tinkering, writing, and researching.',
-        links: [{ href: 'paris.html', label: 'city guide &rarr;', primary: true }]
+        copy: '',
+        tennis: 'Roland-Garros',
+        links: [{ href: 'paris.html', label: 'City Guide &rarr;', primary: true }]
       },
       shanghai: {
         name: 'Shanghai', zh: '上海', lat: 31.2304, lng: 121.4737, tz: 'Asia/Shanghai',
-        tag: 'first home',
-        copy: 'Learned to explore and adventure surrounded by my extended family.',
+        tag: 'hometown',
+        copy: '',
         links: [],
         soon: 'guide coming'
       },
       madrid: {
         name: 'Madrid', lat: 40.4168, lng: -3.7038, tz: 'Europe/Madrid', label: 'below',
-        copy: 'Dinner at ten and the best sunlight on earth.',
+        copy: '',
+        tennis: 'Madrid Open',
         links: []
       },
       interlaken: {
         name: 'Interlaken', lat: 46.6863, lng: 7.8632, tz: 'Europe/Zurich', label: 'below',
-        copy: 'The birthplace of the concept of my novel, <a href="about.html#projects">29</a>.',
+        copy: '',
+        links: []
+      },
+      // Tennis tournaments I've been to, pinned where they're played
+      indianwells: {
+        name: 'Indian Wells', lat: 33.7239, lng: -116.3053, tz: 'America/Los_Angeles',
+        copy: '',
+        tennis: 'Indian Wells',
+        links: []
+      },
+      miami: {
+        name: 'Miami', lat: 25.7617, lng: -80.1918, tz: 'America/New_York', label: 'below',
+        copy: '',
+        tennis: 'Miami Open',
         links: []
       }
     };
@@ -280,15 +283,15 @@
       .height(window.innerHeight)
       .backgroundColor('rgba(0,0,0,0)')
       .showAtmosphere(true)
-      .atmosphereColor('#ff9f8f')
-      .atmosphereAltitude(0.2)
+      .atmosphereColor('#ff2d4a')
+      .atmosphereAltitude(0.16)
       .showGraticules(true)
       .htmlElementsData(points)
       .htmlAltitude(0.01)
       .htmlElement(makePin)
       .ringsData([HERE])
       .ringLat('lat').ringLng('lng')
-      .ringColor(function () { return function (t) { return 'rgba(255,122,156,' + (1 - t) * 0.85 + ')'; }; })
+      .ringColor(function () { return function (t) { return 'rgba(255,45,74,' + (1 - t) * 0.8 + ')'; }; })
       .ringMaxRadius(3.2)
       .ringPropagationSpeed(1.2)
       .ringRepeatPeriod(1600)
@@ -303,8 +306,8 @@
 
     // Ink-dark sphere with a faint red rim
     var mat = world.globeMaterial();
-    mat.color.set('#171433');
-    mat.emissive && mat.emissive.set('#0d0b24');
+    mat.color.set('#070506');
+    mat.emissive && mat.emissive.set('#0c0205');
     mat.shininess = 8;
 
     // Countries that hold one of my cities burn a little warmer
@@ -323,7 +326,7 @@
           .hexPolygonUseDots(true)
           .hexPolygonAltitude(0.002)
           .hexPolygonColor(function (f) {
-            return MINE.indexOf(f.properties.name) > -1 ? 'rgba(255,208,140,0.75)' : 'rgba(255,170,150,0.38)';
+            return MINE.indexOf(f.properties.name) > -1 ? 'rgba(255,177,92,0.42)' : 'rgba(255,60,85,0.3)';
           });
       })
       .finally(function () { el.classList.add('ready'); });
@@ -392,7 +395,8 @@
       document.getElementById('pName').textContent = c.name;
       document.getElementById('pMeta').innerHTML =
         fmt(c.lat, 'N', 'S') + ' ' + fmt(c.lng, 'E', 'W') + '<br>' +
-        'local ' + localTime(c.tz) + (status ? ' &middot; ' + status : '');
+        'local ' + localTime(c.tz) + (status ? ' &middot; ' + status : '') +
+        (c.tennis ? '<br><span class="tennis">tennis &middot; ' + c.tennis + '</span>' : '');
       document.getElementById('pCopy').innerHTML = c.copy;
       document.getElementById('pCopy').style.display = c.copy ? '' : 'none';
       document.getElementById('pLinks').innerHTML =
@@ -417,31 +421,7 @@
       world.width(window.innerWidth).height(window.innerHeight);
     });
 
-    // A few stars instead of rain
-    (function stars(canvas) {
-      var ctx = canvas.getContext('2d'), list = [], w, h;
-      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function size() {
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
-        w = canvas.clientWidth; h = canvas.clientHeight;
-        canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        list = [];
-        for (var i = 0; i < Math.round(w * h / 7000); i++) {
-          list.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.1 + 0.3, p: Math.random() * 6.28, s: 0.4 + Math.random() * 1.2, warm: Math.random() < 0.25 });
-        }
-      }
-      function draw(t) {
-        ctx.clearRect(0, 0, w, h);
-        for (var i = 0; i < list.length; i++) {
-          var st = list[i], a = still ? 0.5 : 0.25 + 0.45 * (0.5 + 0.5 * Math.sin(t / 1000 * st.s + st.p));
-          ctx.fillStyle = st.warm ? 'rgba(255,208,160,' + a + ')' : 'rgba(239,232,255,' + a + ')';
-          ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.283); ctx.fill();
-        }
-        if (!still) requestAnimationFrame(draw);
-      }
-      window.addEventListener('resize', size);
-      size(); requestAnimationFrame(draw);
-    })(document.getElementById('stars'));
+    startRain(document.getElementById('rain'), 0.8);
 
     // The hint fades once you've found your footing
     setTimeout(function () { document.getElementById('hint').classList.add('gone'); }, 9000);

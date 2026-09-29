@@ -176,8 +176,8 @@ function cityMap(cfg) {
     show($('cCopy'), p.copy);
     show($('cDid'), (p.did || []).map(function (d) { return '<li>' + d + '</li>'; }).join(''));
     var tags = p.tags || [];
-    $('cTagsLabel').style.display = tags.length ? '' : 'none';
-    $('cTagsLabel').textContent = g.tagsLabel || 'for';
+    $('cTagsLabel').style.display = tags.length && g.tagsLabel ? '' : 'none';
+    $('cTagsLabel').textContent = g.tagsLabel || '';
     $('cTags').innerHTML = tags.map(function (t) { return '<span class="tag">' + t + '</span>'; }).join('');
     if ($('cLinks')) show($('cLinks'), (p.links || []).map(function (l) { return '<a href="' + l.href + '">' + l.label + ' &rarr;</a>'; }).join(''));
     card.scrollTop = 0;
