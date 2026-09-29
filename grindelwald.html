@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grindelwald — Stephie's World</title>
+  <meta name="description" content="Stephie's Grindelwald.">
+  <link rel="canonical" href="https://stephiesworld.com/grindelwald.html">
+  <meta property="og:image" content="https://stephiesworld.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="neon.css">
+  <link rel="stylesheet" href="citymap.css">
+</head>
+<body>
+
+  <div id="map" aria-label="Map of Stephie's Grindelwald"></div>
+
+  <canvas class="fx fx-rain" id="rain"></canvas>
+  <div class="fx fx-vignette"></div>
+  <div class="fx fx-scan"></div>
+  <div class="fx fx-grain"></div>
+
+  <div class="top">
+    <a href="index.html" class="hud nav">&larr; world</a>
+    <nav class="hud nav">
+      <a href="about.html">about</a>
+      <a href="work.html">work</a>
+      <a href="books.html">reading</a>
+    </nav>
+  </div>
+
+  <aside class="index">
+    <div class="title"><h1>Grindelwald</h1></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="list" id="list" style="margin-top: 2rem"></div>
+  </aside>
+
+  <p class="foot hud">46.62&deg;N 8.04&deg;E &middot; <span id="clock"></span> grindelwald</p>
+
+  <article class="card" id="card" aria-live="polite">
+    <button class="card-close" id="cardClose" aria-label="Close">&times;</button>
+    <p class="card-kicker hud" id="cKicker"></p>
+    <h2 class="card-name" id="cName"></h2>
+    <p class="card-role hud" id="cRole"></p>
+    <p class="card-addr hud" id="cAddr"></p>
+    <p class="card-copy" id="cCopy"></p>
+    <ul class="card-did" id="cDid"></ul>
+    <p class="card-tags-label hud" id="cTagsLabel"></p>
+    <div class="tags" id="cTags"></div>
+    <div class="card-links hud" id="cLinks"></div>
+  </article>
+
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4/dist/maplibre-gl.js"></script>
+  <script src="rain.js"></script>
+  <script src="citymap.js"></script>
+  <script>
+    cityMap({
+      tz: 'Europe/Zurich',
+      bearing: 0,
+      home: { center: [8.035, 46.645], zoom: 11.8, pitch: 45 },
+      bounds: [[7.6, 46.5], [8.3, 46.85]],
+
+      groups: [
+        { id: 'guide', label: 'guide', labels: 'always', compact: true }
+      ],
+
+      places: [
+        { id: 'bachalpsee', group: 'guide', category: 'hiking', name: 'Bachalpsee', address: 'above Grindelwald &middot; the hike from First', lngLat: [8.0210, 46.6696], zoom: 13.5 }
+      ]
+    });
+
+    startRain(document.getElementById('rain'), 0.6);
+  </script>
+
+</body>
+</html>
