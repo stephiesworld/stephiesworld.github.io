@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madrid — Stephie's World</title>
+  <meta name="description" content="Stephie's Madrid.">
+  <link rel="canonical" href="https://stephiesworld.com/madrid.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="neon.css">
+  <link rel="stylesheet" href="citymap.css">
+</head>
+<body>
+
+  <div id="map" aria-label="Map of Stephie's Madrid"></div>
+
+  <canvas class="fx fx-rain" id="rain"></canvas>
+  <div class="fx fx-vignette"></div>
+  <div class="fx fx-scan"></div>
+  <div class="fx fx-grain"></div>
+
+  <div class="top">
+    <a href="index.html" class="hud nav">&larr; world</a>
+    <nav class="hud nav">
+      <a href="about.html">about</a>
+      <a href="work.html">work</a>
+      <a href="books.html">reading</a>
+    </nav>
+  </div>
+
+  <aside class="index">
+    <div class="title"><h1>Madrid</h1></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="list" id="list" style="margin-top: 2rem"></div>
+  </aside>
+
+  <p class="foot hud">40.42&deg;N 3.70&deg;W &middot; <span id="clock"></span> madrid</p>
+
+  <article class="card" id="card" aria-live="polite">
+    <button class="card-close" id="cardClose" aria-label="Close">&times;</button>
+    <p class="card-kicker hud" id="cKicker"></p>
+    <h2 class="card-name" id="cName"></h2>
+    <p class="card-role hud" id="cRole"></p>
+    <p class="card-addr hud" id="cAddr"></p>
+    <p class="card-copy" id="cCopy"></p>
+    <ul class="card-did" id="cDid"></ul>
+    <p class="card-tags-label hud" id="cTagsLabel"></p>
+    <div class="tags" id="cTags"></div>
+    <div class="card-links hud" id="cLinks"></div>
+  </article>
+
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4/dist/maplibre-gl.js"></script>
+  <script src="rain.js"></script>
+  <script src="citymap.js"></script>
+  <script>
+    cityMap({
+      tz: 'Europe/Madrid',
+      bearing: 0,
+      home: { center: [-3.700, 40.402], zoom: 12.2, pitch: 50 },
+      bounds: [[-3.9, 40.28], [-3.5, 40.55]],
+
+      groups: [
+        { id: 'guide', label: 'guide', labels: 'always', compact: true }
+      ],
+
+      places: [
+        { id: 'madridopen', group: 'guide', category: 'tennis', name: 'Madrid Open', address: 'Caja M&aacute;gica &middot; Manzanares Park', note: 'late April &ndash; early May', lngLat: [-3.6868, 40.3697], zoom: 14.5 }
+      ]
+    });
+
+    startRain(document.getElementById('rain'), 0.6);
+  </script>
+
+</body>
+</html>

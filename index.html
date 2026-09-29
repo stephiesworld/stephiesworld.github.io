@@ -128,7 +128,6 @@
     .panel-links a:hover { color: var(--cream); letter-spacing: 0.22em; }
     .panel-links a.primary { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
     .panel-soon { font-size: 0.55rem; }
-    .panel-meta .tennis { color: var(--amber); }
 
     .panel-close {
       position: absolute; top: 0.9rem; right: 1rem; background: none; border: none; cursor: pointer;
@@ -203,7 +202,6 @@
       newyork: {
         name: 'New York', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
         copy: 'Home for the past decade.',
-        tennis: 'US Open',
         links: [
           { href: 'nyc.html#work', label: 'Career &rarr;', primary: true },
           { href: 'nyc.html#play', label: 'Play &rarr;' },
@@ -218,7 +216,6 @@
       paris: {
         name: 'Paris', lat: 48.8566, lng: 2.3522, tz: 'Europe/Paris',
         copy: '',
-        tennis: 'Roland-Garros',
         links: [{ href: 'paris.html', label: 'City Guide &rarr;', primary: true }]
       },
       shanghai: {
@@ -231,25 +228,11 @@
       madrid: {
         name: 'Madrid', lat: 40.4168, lng: -3.7038, tz: 'Europe/Madrid', label: 'below',
         copy: '',
-        tennis: 'Madrid Open',
-        links: []
+        links: [{ href: 'madrid.html', label: 'Map &rarr;', primary: true }]
       },
       interlaken: {
         name: 'Interlaken', lat: 46.6863, lng: 7.8632, tz: 'Europe/Zurich', label: 'below',
         copy: '',
-        links: []
-      },
-      // Tennis tournaments I've been to, pinned where they're played
-      indianwells: {
-        name: 'Indian Wells', lat: 33.7239, lng: -116.3053, tz: 'America/Los_Angeles',
-        copy: '',
-        tennis: 'Indian Wells',
-        links: []
-      },
-      miami: {
-        name: 'Miami', lat: 25.7617, lng: -80.1918, tz: 'America/New_York', label: 'below',
-        copy: '',
-        tennis: 'Miami Open',
         links: []
       }
     };
@@ -395,8 +378,7 @@
       document.getElementById('pName').textContent = c.name;
       document.getElementById('pMeta').innerHTML =
         fmt(c.lat, 'N', 'S') + ' ' + fmt(c.lng, 'E', 'W') + '<br>' +
-        'local ' + localTime(c.tz) + (status ? ' &middot; ' + status : '') +
-        (c.tennis ? '<br><span class="tennis">tennis &middot; ' + c.tennis + '</span>' : '');
+        'local ' + localTime(c.tz) + (status ? ' &middot; ' + status : '');
       document.getElementById('pCopy').innerHTML = c.copy;
       document.getElementById('pCopy').style.display = c.copy ? '' : 'none';
       document.getElementById('pLinks').innerHTML =
