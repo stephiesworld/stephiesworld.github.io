@@ -9,6 +9,10 @@
   <meta property="og:title" content="About — Stephie's World">
   <meta property="og:description" content="I'm Stephie.">
   <link rel="canonical" href="https://stephiesworld.com/about.html">
+  <meta property="og:image" content="https://stephiesworld.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,6 +64,10 @@
     .prose a { color: var(--cream); border-bottom: 1px solid var(--neon-soft); transition: border-color 0.3s ease, text-shadow 0.3s ease; }
     .prose a:hover { border-color: var(--neon); text-shadow: 0 0 10px var(--neon-faint); }
 
+    .open-label { margin-top: 2.4rem; font-size: 0.55rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
+    .open { list-style: none; margin-top: 0.8rem; display: grid; gap: 0.2rem; }
+    .open li { position: relative; padding-left: 1.3rem; font-family: var(--serif); font-size: 1.15rem; line-height: 1.6; color: var(--cream-dim); }
+    .open li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 4px; height: 4px; background: var(--neon); box-shadow: 0 0 6px var(--neon-soft); }
     .more { display: inline-block; margin-top: 1.4rem; font-size: 0.58rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
     .more:hover { letter-spacing: 0.22em; }
 
@@ -114,7 +122,15 @@
         <div class="sec-head"><h2>About</h2></div>
         <div class="prose">
           <p>I&rsquo;m Stephie. I grew up between Shanghai and Texas, currently live in New York City, and am usually in Claude coding something.</p>
+          <p>The films that stay with me are the ones where someone picks a life that looks strange from the outside and obvious once you know them.</p>
         </div>
+        <p class="open-label hud">open to</p>
+        <ul class="open">
+          <li>conversations about building with agents</li>
+          <li>a hit on the court</li>
+          <li>links to cool companies</li>
+          <li>music recommendations</li>
+        </ul>
         <a class="more hud" href="work.html">index of work &rarr;</a> &nbsp;&nbsp; <a class="more hud" href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
       </section>
 
