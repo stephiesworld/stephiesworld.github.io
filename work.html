@@ -116,17 +116,6 @@
     .book p.d { margin-top: 0.6rem; font-family: var(--serif); font-size: 1.15rem; line-height: 1.6; color: var(--cream-dim); }
 
     /* ─── Experience ─── */
-    .exp { list-style: none; }
-    .exp li { border-top: 1px solid var(--line); }
-    .exp li:last-child { border-bottom: 1px solid var(--line); }
-    .exp a, .exp .static { display: grid; grid-template-columns: 1fr auto 1.4rem; gap: 1rem; align-items: baseline; padding: 0.95rem 0.2rem; transition: padding 0.4s ease, background 0.4s ease; }
-    .exp a:hover { padding-left: 0.8rem; background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); }
-    .exp .n { font-family: var(--serif); font-size: 1.2rem; color: var(--cream); }
-    .exp .r { font-size: 0.52rem; text-align: right; }
-    .exp .ar { font-size: 0.8rem; color: var(--cream-faint); text-align: right; }
-    .exp a:hover .ar { color: var(--neon); }
-    .exp-note { margin-top: 1rem; font-size: 0.52rem; }
-    .exp-note a { color: var(--neon); }
 
     /* ─── Contact ─── */
     .contact { display: flex; flex-wrap: wrap; gap: 2rem; }
@@ -172,7 +161,6 @@
         <li><a href="#writing">writing</a></li>
         <li><a href="#studio">studio felix</a></li>
         <li><a href="#book">book</a></li>
-        <li><a href="#experience">experience</a></li>
         <li><a href="#contact">contact</a></li>
       </ol>
     </aside>
@@ -215,14 +203,16 @@
               <div><dt class="hud">logic</dt><dd>Clusters raw feedback into issues, then ranks by a weighted signal &mdash; severity, then reach, then recency. Your corrections re-rank it.</dd></div>
             </dl></details>
             <p class="foot hud"><a class="url" href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">cherry-topaz.vercel.app</a><span class="kind">anthropic api</span></p>
-          </div>          <div class="build">
+          </div>
+          <div class="build">
             <h3><a href="https://getofframp.vercel.app" target="_blank" rel="noopener">offramp <span>&#8599;</span></a></h3>
             <p class="what">Personal finance, debriefed.</p>
             <details><summary class="hud">how it works</summary><dl>
               <div><dt class="hud">build</dt><dd>Static HTML and JS &mdash; the parser, the stats, and the whole rules engine run in the browser; no server, no account, no dependencies. Optional second opinion through the Anthropic API, on your own key, summary only.</dd></div>
-              </dl></details>
+            </dl></details>
             <p class="foot hud"><a class="url" href="https://getofframp.vercel.app" target="_blank" rel="noopener">getofframp.vercel.app</a><span class="kind">eval loop &middot; client-side</span></p>
-          </div>          <div class="build">
+          </div>
+          <div class="build">
             <h3><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener">Loop <span>&#8599;</span></a></h3>
             <p class="what">The org-wide feedback loop, as a product.</p>
             <details><summary class="hud">how it works</summary><dl>
@@ -230,7 +220,8 @@
               <div><dt class="hud">logic</dt><dd>Nine channels (support, field, early access, in-product) &rarr; one system of record. Seven personalized role views, from support triage to a 90-second exec brief. Praise travels the same pipes as complaints; every closed loop ends in &lsquo;you asked, we shipped.&rsquo; Guided demo story + phased scale plan built in.</dd></div>
             </dl></details>
             <p class="foot hud"><a class="url" href="https://loop-vox.vercel.app" target="_blank" rel="noopener">loop-vox.vercel.app</a><span class="kind">internal tools &middot; prototype</span></p>
-          </div>          <div class="build">
+          </div>
+          <div class="build">
             <h3><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener">Portraits <span>&#8599;</span></a></h3>
             <p class="what">Live data storytelling.</p>
             <details><summary class="hud">how it works</summary><dl>
@@ -238,7 +229,8 @@
               <div><dt class="hud">logic</dt><dd>One page, three portraits at three scales: the world this second, a single human life, a city over a day. Every square is a true number, live &mdash; click one to fall into the story behind it.</dd></div>
             </dl></details>
             <p class="foot hud"><a class="url" href="https://portraits-mu.vercel.app" target="_blank" rel="noopener">portraits-mu.vercel.app</a><span class="kind">live public data</span></p>
-          </div>          <div class="build">
+          </div>
+          <div class="build">
             <h3><a href="https://henry-ten.vercel.app" target="_blank" rel="noopener">Henry <span>&#8599;</span></a></h3>
             <p class="what">Amazon 1P vendor operations.</p>
             <details><summary class="hud">how it works</summary><dl>
@@ -246,7 +238,8 @@
               <div><dt class="hud">logic</dt><dd>True net PPM per ASIN (co-op, freight, chargebacks, returns, ads); classifies chargebacks by root cause and drafts the dispute. Graded by evals.</dd></div>
             </dl></details>
             <p class="foot hud"><a class="url" href="https://henry-ten.vercel.app" target="_blank" rel="noopener">henry-ten.vercel.app</a><span class="kind">anthropic api &middot; keepa</span></p>
-          </div>          <div class="build">
+          </div>
+          <div class="build">
             <h3><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener">Stanley <span>&#8599;</span></a></h3>
             <p class="what">Calendar agent.</p>
             <details><summary class="hud">how it works</summary><dl>
@@ -254,7 +247,8 @@
               <div><dt class="hud">logic</dt><dd>Reads the week&rsquo;s schedule and proposes one-line fixes; never acts without confirmation. Learns preferences as seasonal probabilities.</dd></div>
             </dl></details>
             <p class="foot hud"><a class="url" href="https://stanley-butler.vercel.app" target="_blank" rel="noopener">stanley-butler.vercel.app</a><span class="kind">telegram &middot; voice</span></p>
-          </div>          <div class="build">
+          </div>
+          <div class="build">
             <h3><a href="https://eluna.space" target="_blank" rel="noopener">Eluna <span>&#8599;</span></a></h3>
             <p class="what">Memory architecture.</p>
             <details><summary class="hud">how it works</summary><dl>
@@ -262,7 +256,7 @@
               <div><dt class="hud">logic</dt><dd>Ranks what to keep by importance and recency; a light root persona, values over rules.</dd></div>
             </dl></details>
             <p class="foot hud"><a class="url" href="https://eluna.space" target="_blank" rel="noopener">eluna.space</a><span class="kind">memory layer</span></p>
-          </a>
+          </div>
         </div>
       </section>
 
@@ -272,23 +266,14 @@
           <span class="big flicker">29</span>
           <div>
             <p class="k hud">literary speculative novel &middot; in progress</p>
-            <a class="more hud" href="about.html#projects">about the book &rarr;</div>          </div>
+            <a class="more hud" href="about.html#projects">about the book &rarr;</a>
+          </div>
         </div>
       </section>
 
-      <section id="experience">
-        <div class="sec-head"><span class="num hud">04</span><h2>Experience</h2></div>
-        <ul class="exp">
-          <li><a href="#studio"><span class="n">Studio Felix</span><span class="r hud">prototypes &middot; ai adoption</span><span class="ar">&rarr;</span></a></li>
-          <li><a href="nyc.html#amazon"><span class="n">Amazon</span><span class="r hud">customer success | pricing</span><span class="ar">&rarr;</span></a></li>
-          <li><a href="nyc.html#littlebun"><span class="n">Little Bun Inc.</span><span class="r hud">founder / ceo</span><span class="ar">&rarr;</span></a></li>
-          <li><a href="nyc.html#harrys"><span class="n">Harry&rsquo;s Inc.</span><span class="r hud">global r&amp;d | expansion</span><span class="ar">&rarr;</span></a></li>
-          <li><a href="nyc.html#morganstanley"><span class="n">Morgan Stanley</span><span class="r hud">data &middot; ai</span><span class="ar">&rarr;</span></a></li>
-        </ul>
-      </section>
 
       <section id="contact">
-        <div class="sec-head"><span class="num hud">05</span><h2>Contact</h2></div>
+        <div class="sec-head"><span class="num hud">04</span><h2>Contact</h2></div>
         <div class="contact hud">
           <a href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
           <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
