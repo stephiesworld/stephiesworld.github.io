@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>London — Stephie's World</title>
+  <meta name="description" content="Stephie's London.">
+  <link rel="canonical" href="https://stephiesworld.com/london.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="neon.css">
+  <link rel="stylesheet" href="citymap.css">
+</head>
+<body>
+
+  <div id="map" aria-label="Map of Stephie's London"></div>
+
+  <canvas class="fx fx-rain" id="rain"></canvas>
+  <div class="fx fx-vignette"></div>
+  <div class="fx fx-scan"></div>
+  <div class="fx fx-grain"></div>
+
+  <div class="top">
+    <a href="index.html" class="hud nav">&larr; world</a>
+    <nav class="hud nav">
+      <a href="about.html">about</a>
+      <a href="work.html">work</a>
+      <a href="books.html">reading</a>
+    </nav>
+  </div>
+
+  <aside class="index">
+    <div class="title"><h1>London</h1></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="list" id="list" style="margin-top: 2rem"></div>
+  </aside>
+
+  <p class="foot hud">51.51&deg;N 0.13&deg;W &middot; <span id="clock"></span> london</p>
+
+  <article class="card" id="card" aria-live="polite">
+    <button class="card-close" id="cardClose" aria-label="Close">&times;</button>
+    <p class="card-kicker hud" id="cKicker"></p>
+    <h2 class="card-name" id="cName"></h2>
+    <p class="card-role hud" id="cRole"></p>
+    <p class="card-addr hud" id="cAddr"></p>
+    <p class="card-copy" id="cCopy"></p>
+    <ul class="card-did" id="cDid"></ul>
+    <p class="card-tags-label hud" id="cTagsLabel"></p>
+    <div class="tags" id="cTags"></div>
+    <div class="card-links hud" id="cLinks"></div>
+  </article>
+
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4/dist/maplibre-gl.js"></script>
+  <script src="rain.js"></script>
+  <script src="citymap.js"></script>
+  <script>
+    cityMap({
+      tz: 'Europe/London',
+      bearing: 0,
+      home: { center: [-0.172, 51.515], zoom: 12.6, pitch: 50 },
+      bounds: [[-0.45, 51.35], [0.15, 51.68]],
+
+      groups: [
+        { id: 'guide', label: 'guide', labels: 'always', compact: true }
+      ],
+
+      places: [
+        { id: 'watchhouse', group: 'guide', category: 'coffee', name: 'WatchHouse', address: '32&ndash;34 New Cavendish Street &middot; Marylebone', lngLat: [-0.1503, 51.5187] },
+        { id: 'therug', group: 'guide', category: 'coffee', name: 'The Rug', address: '309&ndash;311 Harrow Road &middot; Maida Hill', lngLat: [-0.1979, 51.5232] },
+        { id: 'daunt', group: 'guide', category: 'bookshops', name: 'Daunt Books', address: '83 Marylebone High Street', lngLat: [-0.1523, 51.5204] },
+        { id: 'marylebone', group: 'guide', category: 'neighbourhoods', name: 'Marylebone', address: 'Marylebone High Street', lngLat: [-0.1512, 51.5226], zoom: 14.8 },
+        { id: 'hydepark', group: 'guide', category: 'running', name: 'Hyde Park', address: 'the Serpentine', lngLat: [-0.1653, 51.5059], zoom: 14, tags: ['running'] }
+      ]
+    });
+
+    startRain(document.getElementById('rain'), 0.6);
+  </script>
+
+</body>
+</html>
