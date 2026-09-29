@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&text=关于现在艺术项目&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&text=关于现在艺术网球项目&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="neon.css">
   <style>
     body { overflow-y: auto; overflow-x: hidden; }
@@ -35,11 +35,6 @@
 
     /* ─── Sticky index ─── */
     .toc { position: sticky; top: 9rem; align-self: start; opacity: 0; animation: appear 1.2s ease 0.3s forwards; }
-    .portrait {
-      width: 76px; height: 76px; border-radius: 50%; overflow: hidden; margin-bottom: 1.6rem;
-      box-shadow: 0 0 0 1px var(--neon-faint), 0 0 30px rgba(255, 45, 74, 0.12);
-    }
-    .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(1) contrast(0.95) brightness(0.8); }
     .toc .brand { font-size: 1.3rem; }
     .toc .tagline { margin-top: 0.5rem; font-size: 0.52rem; }
     .toc ol { list-style: none; margin-top: 2.4rem; }
@@ -80,6 +75,12 @@
     .proj p { grid-column: 1 / -1; font-family: var(--serif); font-size: 1.05rem; line-height: 1.7; color: var(--cream-dim); max-width: 36em; margin-top: 0.3rem; }
 
 
+    .films { margin: 1.4rem 0 1.6rem; font-size: 0.56rem; line-height: 2; color: var(--cream-dim); }
+    .facts { margin-top: 1.6rem; display: grid; gap: 1rem; border-top: 1px solid var(--line); padding-top: 1.2rem; }
+    .facts dt { font-size: 0.52rem; color: var(--neon); }
+    .facts dd { margin-top: 0.35rem; font-size: 0.6rem; line-height: 1.8; color: var(--cream-dim); }
+    footer .contact { font-size: 0.58rem; margin-bottom: 0.4rem; }
+    footer .contact a:hover { color: var(--cream); text-shadow: 0 0 10px var(--neon-soft); }
     footer { position: relative; z-index: 3; text-align: center; padding: 2rem 2rem 5rem; }
     .maktub { display: inline-block; margin-top: 1.4rem; font-size: 1.1rem; color: var(--neon); opacity: 0.6; text-shadow: 0 0 12px var(--neon-soft); transition: opacity 0.3s ease; }
     .maktub:hover { opacity: 1; }
@@ -113,13 +114,13 @@
   <div class="page">
 
     <aside class="toc">
-      <div class="portrait"><img src="photo.png" alt="Stephanie Del Paggio"></div>
       <h1 class="brand">Stephanie Del Paggio</h1>
       <p class="hud tagline">writer &middot; builder &middot; fl&acirc;neur</p>
       <ol class="hud" id="toc">
         <li><a href="#about"><span class="zh">关于</span>about</a></li>
         <li><a href="#now"><span class="zh">现在</span>now</a></li>
-        <li><a href="#art"><span class="zh">艺术</span>art &amp; film</a></li>
+        <li><a href="#art"><span class="zh">艺术</span>art, film &amp; music</a></li>
+        <li><a href="#tennis"><span class="zh">网球</span>tennis</a></li>
         <li><a href="#projects"><span class="zh">项目</span>projects</a></li>
       </ol>
     </aside>
@@ -145,20 +146,35 @@
       </section>
 
       <section id="art">
-        <div class="sec-head"><span class="num hud">03</span><h2>Art &amp; film</h2></div>
+        <div class="sec-head"><span class="num hud">03</span><h2>Art, film &amp; music</h2></div>
         <div class="prose">
-          <p>I&rsquo;m drawn to art that feels like a private world &mdash; quiet, atmospheric, slightly otherworldly. <a href="https://www.perrotin.com/artists/ob/1002" target="_blank" rel="noopener">OB&rsquo;s</a> paintings do this beautifully: solitary figures in dreamy, delicate spaces that feel like memories you can&rsquo;t quite place. Pierre-Auguste Renoir for the way light dissolves everything into softness. And whatever stops me mid-scroll on Instagram from artists I haven&rsquo;t learned the names of yet.</p>
-          <p>The same thing pulls me to film &mdash; I love stories that build entire worlds and then ask you to live inside them. <em>Dune</em>, <em>Gattaca</em>, <em>Interstellar</em>, <em>Call Me by Your Name</em>, <em>The Social Network</em>. A recent favorite was <em>Project Hail Mary</em> &mdash; who knew an astronaut alone in space, befriending an alien rock spider, and then making a beautifully contrarian life decision at the end would be a perfect film? I think the movies I love most are the ones where someone chooses a life that makes no sense on the surface, but makes perfect sense once you know their story.</p>
-          <p>My favorite art museum is the <a href="paris.html#flv">Fondation Louis Vuitton</a> in Paris &mdash; more on why in the Paris guide.</p>
+          <p>I like art that feels like a private world &mdash; quiet, a little dreamy, slightly off from real life. <a href="https://www.perrotin.com/en/artists/ob" target="_blank" rel="noopener">OB</a> paints solitary figures in soft, delicate spaces that feel like memories you can&rsquo;t quite place. <a href="https://en.wikipedia.org/wiki/Pierre-Auguste_Renoir" target="_blank" rel="noopener">Renoir</a> gets me for the opposite reason: the way he lets light blur everything into softness. And a lot of it is just whatever stops me mid-scroll from someone whose name I haven&rsquo;t learned yet. My favorite art museum is the <a href="paris.html#flv">Fondation Louis Vuitton</a> in Paris.</p>
+          <p>Film pulls me the same way &mdash; I love a story that builds a whole world and then lets you live in it for a while. <em>Project Hail Mary</em> got me recently: an astronaut alone in space befriends an alien rock spider and, at the end, makes a choice that shouldn&rsquo;t make sense but completely does. The films that stay with me are the ones where someone picks a life that looks strange from the outside and obvious once you know them.</p>
         </div>
+        <p class="films hud">Dune &nbsp;/&nbsp; Gattaca &nbsp;/&nbsp; Interstellar &nbsp;/&nbsp; Call Me by Your Name &nbsp;/&nbsp; The Social Network &nbsp;/&nbsp; Project Hail Mary</p>
+        <div class="prose">
+          <p>Music is the one that&rsquo;s always on &mdash; a long run with the right album can turn a whole day around. My taste wanders more than anything else I love, so the honest answer to &ldquo;what do you listen to?&rdquo; is just to look.</p>
+        </div>
+        <a class="more hud" href="https://open.spotify.com/user/stephynikky?si=760ef457b0b34d6a" target="_blank" rel="noopener">my spotify &#8599;</a>
+      </section>
+
+      <section id="tennis">
+        <div class="sec-head"><span class="num hud">04</span><h2>Tennis</h2></div>
+        <div class="prose">
+          <p>Tennis found me later in life and became one of the most important teachers I&rsquo;ve had &mdash; the sport is a mirror. Every weakness shows up on the court before it shows up anywhere else. Learning to lose well, to stay present between points, to trust a swing you&rsquo;ve hit ten thousand times &mdash; it&rsquo;s the inner game, and I keep chasing it.</p>
+        </div>
+        <dl class="facts hud">
+          <div><dt>tournaments attended</dt><dd>US Open &middot; Indian Wells &middot; Miami Open &middot; Roland-Garros &middot; Madrid Open</dd></div>
+          <div><dt>in the bag</dt><dd>Yonex EZONE 100 &middot; HEAD Speed MP 2024 &middot; Yonex Poly Tour Pro @ 50</dd></div>
+        </dl>
       </section>
 
       <section id="projects">
-        <div class="sec-head"><span class="num hud">04</span><h2>Projects</h2></div>
+        <div class="sec-head"><span class="num hud">05</span><h2>Projects</h2></div>
         <div class="proj">
           <h3>29</h3><span class="yr hud">2024 &ndash;</span>
           <span class="status hud">literary speculative novel &middot; in progress</span>
-          <p>An alien infiltrates Wall Street and slowly falls in love with the ordinary business of being human &mdash; a book about what makes a life meaningful, how joy requires its opposite, and what it means to think for yourself. The idea arrived on a mountain in Switzerland. The rest comes from everything I&rsquo;ve learned on Earth.</p>
+          <p>An alien infiltrates Wall Street and slowly falls in love with the ordinary business of being human &mdash; a book about what makes a life meaningful, how joy requires its opposite, and what it means to think for yourself. It draws on everything I&rsquo;ve learned on Earth.</p>
         </div>
         <div class="proj">
           <h3>52 Stories</h3><span class="yr hud">2017 &ndash; 2019</span>
@@ -174,6 +190,7 @@
   </div>
 
   <footer>
+    <p class="contact hud"><a href="mailto:stephiesuniverse@gmail.com">say hello &#8599;</a> &nbsp;&middot;&nbsp; <a href="https://stephiesuniverse.substack.com" target="_blank" rel="noopener">curiosities &#8599;</a></p>
     <a href="https://stephiesuniverse.substack.com" target="_blank" rel="noopener" class="maktub">مكتوب</a>
   </footer>
 

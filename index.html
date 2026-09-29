@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=伦敦纽约旧金山上海巴黎马德里世界&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=伦敦纽约旧金山上海巴黎马德里休斯顿因特拉肯世界&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="neon.css">
   <style>
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
@@ -126,6 +126,7 @@
 
     .panel-name { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2rem; line-height: 1.1; color: var(--cream); }
     .panel-meta { margin-top: 0.7rem; line-height: 1.9; font-size: 0.55rem; }
+    .panel-copy a { color: var(--cream); border-bottom: 1px solid var(--neon-soft); }
     .panel-copy { margin-top: 1.1rem; font-family: var(--serif); font-size: 1rem; line-height: 1.6; color: var(--cream-dim); }
     .panel-links { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
     .panel-links a { font-size: 0.6rem; color: var(--cream-dim); transition: color 0.3s ease, letter-spacing 0.3s ease; }
@@ -208,7 +209,7 @@
     var CITIES = {
       newyork: {
         name: 'New York', zh: '纽约', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
-        copy: 'Home. The city that rewards you for being exactly who you are, as long as you keep moving.',
+        copy: 'Home. The city that reminded me of Shanghai &mdash; so I stayed.',
         links: [
           { href: 'nyc.html#work', label: 'the career, mapped &rarr;', primary: true },
           { href: 'nyc.html#play', label: 'where I play &rarr;' },
@@ -222,18 +223,31 @@
       },
       paris: {
         name: 'Paris', zh: '巴黎', lat: 48.8566, lng: 2.3522, tz: 'Europe/Paris',
-        copy: 'Where beauty is treated as a necessity. Every walk is an education in attention.',
+        tag: 'favorite on earth',
+        copy: 'In my opinion, my favorite city on earth. Beauty is mandatory here.',
         links: [{ href: 'paris.html', label: 'city guide &rarr;', primary: true }]
       },
       shanghai: {
         name: 'Shanghai', zh: '上海', lat: 31.2304, lng: 121.4737, tz: 'Asia/Shanghai',
-        copy: 'Where I grew up. A city of contradictions &mdash; ancient and electric, intimate and enormous.',
+        tag: 'first home',
+        copy: 'My first exposure to the world, really. Learned to explore and adventure surrounded by my loving family.',
         links: [],
         soon: 'guide coming'
       },
       madrid: {
         name: 'Madrid', zh: '马德里', lat: 40.4168, lng: -3.7038, tz: 'Europe/Madrid', label: 'below',
-        copy: 'Where time moves differently. Dinner at ten, sunlight that lasts, conversations that never rush.',
+        tag: 'first love',
+        copy: 'The first city I fell in love with. Dinner at ten, and the best sunlight on earth.',
+        links: []
+      },
+      houston: {
+        name: 'Houston', zh: '休斯顿', lat: 29.7604, lng: -95.3698, tz: 'America/Chicago', label: 'below', tag: 'place of birth',
+        copy: 'Where it all started.',
+        links: []
+      },
+      interlaken: {
+        name: 'Interlaken', zh: '因特拉肯', lat: 46.6863, lng: 7.8632, tz: 'Europe/Zurich', label: 'below', tag: 'the spark',
+        copy: 'The birthplace of the concept of my novel, <a href="about.html#projects">29</a>.',
         links: []
       },
       sanfrancisco: {
@@ -300,7 +314,7 @@
     mat.shininess = 8;
 
     // Countries that hold one of my cities burn a little warmer
-    var MINE = ['United States of America', 'United Kingdom', 'France', 'Spain', 'China'];
+    var MINE = ['United States of America', 'United Kingdom', 'France', 'Spain', 'China', 'Switzerland'];
 
     // Land as a field of dim dots, like a city seen from a plane at night
     fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
@@ -376,7 +390,7 @@
       // Nudge the camera so the city sits left of the panel on desktop
       world.pointOfView({ lat: c.lat - (mobile ? 12 : 0), lng: c.lng + (mobile ? 0 : 22), altitude: mobile ? 3 : 1.35 }, 1600);
 
-      var status = c === HERE ? '<span class="red">home</span>' : '';
+      var status = c === HERE ? '<span class="red">home</span>' : (c.tag || '');
       document.getElementById('pZh').textContent = c.zh;
       document.getElementById('pZh').className = 'panel-zh' + (c === HERE ? '' : ' amber');
       document.getElementById('pName').textContent = c.name;

@@ -63,6 +63,8 @@
     .now .t { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--cream); }
     .now .a { font-size: 0.52rem; white-space: nowrap; }
     .now-note { margin-top: 0.9rem; font-family: var(--serif); font-style: italic; font-size: 0.95rem; color: var(--cream-faint); }
+    .now-note a { color: var(--cream-dim); border-bottom: 1px solid var(--neon-soft); }
+    .now-note a:hover { color: var(--cream); }
     .fav-label { position: relative; z-index: 3; text-align: center; margin: 4.5rem 0 0; }
 
     /* Detail */
@@ -119,13 +121,11 @@
   <section class="now">
     <p class="now-label hud"><span class="red">&#9632;</span> &nbsp;currently reading</p>
     <ul>
-      <li><span class="t">Never Let Me Go</span><span class="a hud">Kazuo Ishiguro</span></li>
-      <li><span class="t">The Inner Game of Tennis</span><span class="a hud">W. Timothy Gallwey</span></li>
-      <li><span class="t">You Must Change Your Life</span><span class="a hud">Rachel Corbett</span></li>
-      <li><span class="t">Station Eleven</span><span class="a hud">Emily St. John Mandel</span></li>
-      <li><span class="t">Einstein&rsquo;s Dreams</span><span class="a hud">Alan Lightman</span></li>
+      <li><span class="t">Exhalation</span><span class="a hud">Ted Chiang &middot; sci-fi</span></li>
+      <li><span class="t">Trust</span><span class="a hud">Hernan Diaz &middot; fiction</span></li>
+      <li><span class="t">My Year of Rest and Relaxation</span><span class="a hud">Ottessa Moshfegh &middot; fiction</span></li>
     </ul>
-    <p class="now-note">Always a few at once, and forever open to recommendations.</p>
+    <p class="now-note">I read multiple books at once: one for the mind, one for the heart, one for craft, and one that&rsquo;s just fun. Always taking recommendations &mdash; <a href="mailto:stephiesuniverse@gmail.com?subject=A%20book%20for%20you">send me one</a>.</p>
   </section>
 
   <p class="fav-label hud">favorites</p>
@@ -144,18 +144,19 @@
   <script>
     var books = [
       { title: 'Klara and the Sun', author: 'Kazuo Ishiguro', isbn: '9780571364886',
-        desc: 'One of my favorite books of all time. Ishiguro writes from the perspective of an artificial friend observing the humans around her &mdash; and by the end, you&rsquo;ve thought more deeply about love, sacrifice, and what it means to be a person than you expected.' },
+        desc: 'One of my favorite books of all time. Ishiguro writes from the perspective of an artificial friend observing the humans around her, and by the end, you&rsquo;ve thought more deeply about love, sacrifice, and what it means to be a person than you expected.' },
       { title: 'The Creative Act', author: 'Rick Rubin', isbn: '9780593652886',
         desc: 'A Bible to creative living that I return to again and again. Less about making art and more about how to exist in the world as someone who pays attention.' },
       { title: 'Man&rsquo;s Search for Meaning', author: 'Viktor Frankl', isbn: '9780807014271',
         desc: 'Viktor Frankl&rsquo;s account of surviving the Holocaust and the philosophy of meaning he built from it. The argument is simple: those who have a why can bear almost any how.' },
       { title: 'When Breath Becomes Air', author: 'Paul Kalanithi', isbn: '9780812988406',
-        desc: 'You will laugh, you will cry. A neurosurgeon diagnosed with terminal cancer writes about what makes a life worth living &mdash; from both sides of the operating table. Left a lasting impression ten years later.' },
+        desc: 'You will laugh, you will cry. A neurosurgeon diagnosed with terminal cancer writes about what makes a life worth living, from both sides of the operating table. Left a lasting impression ten years later.' },
       { title: 'The Inner Game of Tennis', author: 'W. Timothy Gallwey', isbn: '9780679778318',
-        desc: 'Trust your body. Quiet the mind. Trust the instinct that has thousands of years of history. That&rsquo;s the summary, and it applies well beyond tennis.' },
+        desc: 'Trust your body. Quiet the mind. Trust the instinct that has thousands of years of history. That&rsquo;s the summary, and it applies to all of it, tennis included.' },
       { title: 'Open', author: 'Andre Agassi', isbn: '9780307388407',
-        desc: 'An incredibly vulnerable and honest account of a top tennis player. Agassi hated tennis for most of his career &mdash; and somehow that makes it one of the most compelling sports memoirs ever written.' },
-      { title: 'Brave New World', author: 'Aldous Huxley', isbn: '9780060850524', desc: '' },
+        desc: 'An incredibly vulnerable and honest account of a top tennis player. Agassi hated tennis for most of his career, and somehow that makes it one of the most compelling sports memoirs ever written.' },
+      { title: 'Brave New World', author: 'Aldous Huxley', isbn: '9780060850524',
+        desc: 'Huxley&rsquo;s comfortable dystopia. I reread it more than anything else here.' },
       { title: 'The Wedding People', author: 'Alison Espach', isbn: '9781250284426',
         desc: 'One of my favorite books of 2025. This one found me in a Parisian bookshop and spoke to me.' }
     ];
