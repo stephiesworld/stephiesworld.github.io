@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Draw og.png, the 1200x630 link-preview card. Needs Pillow and the two fonts passed in."""
+"""Draw og.png, the 1200x630 link-preview card. Needs Pillow; pass Tilt Neon, Doto, and the output path."""
 import math, random, sys
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 serif_path, mono_path, out = sys.argv[1], sys.argv[2], sys.argv[3]
 W, H = 1200, 630
@@ -47,21 +47,44 @@ for _ in range(60):
     x, y, L = random.uniform(0, W), random.uniform(0, H), random.uniform(10, 26)
     rain.line((x, y, x - L * 0.18, y + L), fill=(239, 228, 214, random.randint(10, 32)), width=1)
 
-# Title with a soft neon bloom behind it
-serif = ImageFont.truetype(serif_path, 104)
-mono = ImageFont.truetype(mono_path, 22)
-tx, ty = 84, 232
-bloom = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-ImageDraw.Draw(bloom).text((tx, ty), "Stephie’s World", font=serif, fill=(255, 45, 74, 110))
-img.paste(bloom.filter(ImageFilter.GaussianBlur(18)), (0, 0), bloom.filter(ImageFilter.GaussianBlur(18)))
-t = ImageDraw.Draw(img)
-t.text((tx, ty), "Stephie’s World", font=serif, fill=CREAM)
+# The name as an amber neon tube sign, stacked in two lines, with an LED readout below
+AMBER, CORE = (255, 177, 92), (255, 241, 220)
+sign = ImageFont.truetype(serif_path, 92)
+led = ImageFont.truetype(mono_path, 26)
+try: led.set_variation_by_axes([0, 900])  # Doto: roundness, weight
+except Exception: pass
+
+def spaced(draw, xy, text, font, fill, track):
+    x, y = xy
+    for ch in text:
+        draw.text((x, y), ch, font=font, fill=fill)
+        x += draw.textlength(ch, font=font) + track
+
+lines, tx, ty, lh = ["STEPHIE’S", "WORLD"], 84, 170, 118
+def tubes(fill):
+    layer = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    ld = ImageDraw.Draw(layer)
+    for k, line in enumerate(lines):
+        spaced(ld, (tx, ty + k * lh), line, sign, fill, 16)
+    return layer
+src = Image.new('RGB', (W, H), (0, 0, 0))
+src.paste(tubes(AMBER + (255,)), (0, 0), tubes(AMBER + (255,)))
+for blur, gain in ((50, 1.6), (20, 1.5), (7, 1.2)):  # added light, the way a tube blooms
+    b = src.filter(ImageFilter.GaussianBlur(blur)).point(lambda v, g=gain: min(255, int(v * g)))
+    img = ImageChops.add(img, b)
+core = tubes(CORE + (255,))
+img.paste(core, (0, 0), core)
 
 label = "STEPHIESWORLD.COM"
-x = tx + 4
-for ch in label:
-    t.text((x, ty + 150), ch, font=mono, fill=NEON)
-    x += t.textlength(ch, font=mono) + 5
+ly = ty + 2 * lh + 34
+board = ImageDraw.Draw(img, 'RGBA')
+lw = sum(board.textlength(ch, font=led) + 6 for ch in label) - 6
+board.rounded_rectangle((tx - 14, ly - 12, tx + lw + 14, ly + 42), radius=4, fill=(18, 9, 4, 200), outline=(255, 177, 92, 45))
+glow = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+spaced(ImageDraw.Draw(glow), (tx, ly), label, led, AMBER + (200,), 6)
+g2 = glow.filter(ImageFilter.GaussianBlur(6))
+img.paste(g2, (0, 0), g2)
+spaced(ImageDraw.Draw(img), (tx, ly), label, led, AMBER, 6)
 
 img.save(out, optimize=True)
 print('wrote', out)

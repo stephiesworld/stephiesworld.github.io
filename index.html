@@ -30,7 +30,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&family=Doto:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="neon.css?v=20260930">
+  <link rel="stylesheet" href="neon.css?v=20261001">
   <style>
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
     #globe:active { cursor: grabbing; }
@@ -102,6 +102,9 @@
     .pin.label-below .pin-label { top: 4px; }
     .pin.label-above .pin-label { top: -22px; }
     .pin:hover .pin-label { transform: translateX(3px); }
+    /* Near the right edge of the screen, a name hangs to the left of its dot instead of running off */
+    .pin.flip .pin-label { left: auto; right: 12px; flex-direction: row-reverse; }
+    .pin.flip:hover .pin-label { transform: translateX(-3px); }
     /* In daylight a city's light is turned down */
     .pin.is-day .pin-dot { filter: saturate(0.6) brightness(0.75); box-shadow: 0 0 4px var(--amber-soft); }
     .pin.is-day.is-current .pin-dot { box-shadow: 0 0 5px var(--neon-soft); }
@@ -513,6 +516,17 @@
       pin.addEventListener('click', function (e) { e.stopPropagation(); openCity(d.id); });
       return pin;
     }
+
+    // Flip a city's name to the left of its dot when it would run off the right edge
+    (function keepLabelsOnScreen() {
+      document.querySelectorAll('.pin').forEach(function (pin) {
+        var label = pin.querySelector('.pin-label');
+        if (!label) return;
+        var w = label.offsetWidth, x = pin.getBoundingClientRect().left;
+        pin.classList.toggle('flip', x + 12 + w > window.innerWidth - 10);
+      });
+      setTimeout(function () { requestAnimationFrame(keepLabelsOnScreen); }, 200);
+    })();
 
     // ─── Panel ───
     var panel = document.getElementById('panel');

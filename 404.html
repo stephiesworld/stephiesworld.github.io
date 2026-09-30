@@ -9,17 +9,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/neon.css?v=20260930">
+  <link rel="stylesheet" href="/neon.css?v=20261001">
   <style>
     .lost {
       position: relative; z-index: 3; min-height: 100vh;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.4rem;
       padding: 2rem 1rem; text-align: center;
     }
-    .code { font-size: 0.6rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
-    .lost h1 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.4rem; color: var(--cream); }
-    .lost a { font-size: 0.62rem; color: var(--cream-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
-    .lost a:hover { color: var(--cream); text-shadow: 0 0 10px var(--neon-soft); }
+    .code {
+      font-family: 'Doto', var(--mono); font-weight: 900; font-size: 1.1rem; letter-spacing: 0.1em;
+      color: #ffb15c; text-shadow: 0 0 4px rgba(255, 177, 92, 0.8), 0 0 12px rgba(255, 177, 92, 0.35);
+      padding: 0.4rem 0.9rem; background: rgba(18, 9, 4, 0.72); border: 1px solid rgba(255, 177, 92, 0.16); border-radius: 3px;
+    }
+    .lost h1 { font-size: 1.6rem; line-height: 1.4; }
+    @media (max-width: 760px) { .lost h1 { font-size: 1.15rem; } }
   </style>
 </head>
 <body>
@@ -30,9 +33,9 @@
   <div class="fx fx-grain"></div>
 
   <main class="lost">
-    <p class="code hud">404</p>
-    <h1>Nothing on this street.</h1>
-    <a class="hud" href="/">&larr; back to the world</a>
+    <p class="code">404</p>
+    <h1 class="title-sign pink">Nothing on this street</h1>
+    <a class="home-link" href="/">Stephie&rsquo;s World</a>
   </main>
 
   <script src="/rain.js"></script>
