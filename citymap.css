@@ -165,3 +165,37 @@ body[data-sky="fog"] #map { filter: blur(0.6px) brightness(0.8) saturate(0.8); }
 body[data-sky="fog"] .fx-vignette { background: radial-gradient(ellipse at center, rgba(239, 228, 214, 0.05), rgba(0, 0, 0, 0.7) 100%); }
 body::after { content: ''; position: fixed; inset: 0; z-index: 7; pointer-events: none; background: rgba(230, 225, 255, 0.16); opacity: 0; transition: opacity 0.12s ease; }
 body.flash::after { opacity: 1; transition: none; }
+
+/* ─── Hong Kong street signs (content below stays in the calm serif) ─── */
+
+/* City name: amber block tubes, beside its pink Chinese sign where it has one */
+.title h1 {
+  font-family: 'Tilt Neon', var(--mono); font-style: normal; font-weight: 400;
+  font-size: 1.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #fff1dc; text-shadow: 0 0 2px #fff, 0 0 6px #ffc27a, 0 0 14px #ffb15c, 0 0 30px rgba(255, 177, 92, 0.5);
+  animation: sign-on 2.2s steps(1, end) 0.5s both;
+}
+
+/* Tabs: small tube signs in their group's colour; the open one is lit */
+.tab { font-family: 'Tilt Neon', var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; }
+.tab .dot { display: none; }
+.tab { color: rgba(239, 228, 214, 0.38); }
+.tab:hover { color: rgba(239, 228, 214, 0.7); }
+.tab.active { color: #fff; text-shadow: 0 0 2px #fff, 0 0 6px var(--g), 0 0 14px var(--g), 0 0 26px var(--g-soft); }
+
+/* Place names on the map read like shop signs */
+.mk-label {
+  font-family: 'Tilt Neon', var(--mono); font-size: 0.66rem; letter-spacing: 0.12em;
+  color: #fff4ee; text-shadow: 0 0 2px #fff, 0 0 5px var(--g), 0 0 12px var(--g-soft), 0 0 3px #000;
+}
+.mk:hover .mk-label, .mk.active .mk-label { color: #fff; }
+
+/* Bottom readout: an amber dot-matrix LED board */
+.foot {
+  font-family: 'Doto', var(--mono); font-weight: 900; font-size: 0.8rem; letter-spacing: 0.08em;
+  color: #ffb15c; text-shadow: 0 0 4px rgba(255, 177, 92, 0.8), 0 0 12px rgba(255, 177, 92, 0.35);
+  padding: 0.45rem 0.8rem; background: rgba(18, 9, 4, 0.72);
+  border: 1px solid rgba(255, 177, 92, 0.16); border-radius: 3px; box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.8);
+}
+@media (max-width: 760px) { .title h1 { font-size: 1.25rem; } }
+@media (prefers-reduced-motion: reduce) { .title h1 { animation: none; } }
