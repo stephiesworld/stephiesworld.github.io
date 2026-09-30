@@ -97,6 +97,10 @@
     .pin.label-below .pin-label { top: 4px; }
     .pin.label-above .pin-label { top: -22px; }
     .pin:hover .pin-label { transform: translateX(3px); }
+    /* In daylight a city's light is turned down */
+    .pin.is-day .pin-dot { filter: saturate(0.6) brightness(0.75); box-shadow: 0 0 4px var(--amber-soft); }
+    .pin.is-day.is-current .pin-dot { box-shadow: 0 0 5px var(--neon-soft); }
+    .pin.is-day .pin-label { opacity: 0.7; }
     .pin:hover .pin-en { color: var(--cream); }
 
     /* ─── City panel ─── */
@@ -276,7 +280,7 @@
       .htmlElement(makePin)
       .ringsData([HERE])
       .ringLat('lat').ringLng('lng')
-      .ringColor(function () { return function (t) { return 'rgba(255,45,74,' + (1 - t) * 0.8 + ')'; }; })
+      .ringColor(function (d) { return d.lake ? function (t) { return 'rgba(255,177,92,' + (1 - t) * 0.9 + ')'; } : function (t) { return 'rgba(255,45,74,' + (1 - t) * 0.8 + ')'; }; })
       .ringMaxRadius(3.2)
       .ringPropagationSpeed(1.2)
       .ringRepeatPeriod(1600)
@@ -295,6 +299,46 @@
     mat.emissive && mat.emissive.set('#0c0205');
     mat.shininess = 8;
 
+    // ─── The real sun ───
+    // Where the sun is overhead right now (subsolar point), from a standard low-precision solar model.
+    var RAD = Math.PI / 180;
+    function subsolar(date) {
+      var d = (date.getTime() - Date.UTC(2000, 0, 1, 12)) / 86400000;
+      var g = (357.529 + 0.98560028 * d) * RAD;
+      var q = 280.459 + 0.98564736 * d;
+      var L = (q + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) * RAD;
+      var e = (23.439 - 0.00000036 * d) * RAD;
+      var dec = Math.asin(Math.sin(e) * Math.sin(L));
+      var ra = Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)) / RAD;
+      var gmst = (18.697374558 + 24.06570982441908 * d) % 24;
+      var lng = ((ra - gmst * 15) % 360 + 540) % 360 - 180;
+      return { lat: dec / RAD, lng: lng };
+    }
+    function vec(lat, lng) {
+      return [Math.cos(lat * RAD) * Math.cos(lng * RAD), Math.cos(lat * RAD) * Math.sin(lng * RAD), Math.sin(lat * RAD)];
+    }
+    function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+    var SUN = (function () { var s = subsolar(new Date()); return vec(s.lat, s.lng); })();
+    function isNight(lat, lng) { return dot(SUN, vec(lat, lng)) < 0; }
+
+    // The line where it's dusk or dawn right now: every point 90° from the sun
+    function terminator() {
+      var up = Math.abs(SUN[2]) > 0.9 ? [1, 0, 0] : [0, 0, 1];
+      var u = [SUN[1] * up[2] - SUN[2] * up[1], SUN[2] * up[0] - SUN[0] * up[2], SUN[0] * up[1] - SUN[1] * up[0]];
+      var n = Math.hypot(u[0], u[1], u[2]); u = [u[0] / n, u[1] / n, u[2] / n];
+      var v = [SUN[1] * u[2] - SUN[2] * u[1], SUN[2] * u[0] - SUN[0] * u[2], SUN[0] * u[1] - SUN[1] * u[0]];
+      var paths = [], cur = [], prev = null;
+      for (var i = 0; i <= 360; i += 2) {
+        var t = i * RAD, c = Math.cos(t), sn = Math.sin(t);
+        var p = [c * u[0] + sn * v[0], c * u[1] + sn * v[1], c * u[2] + sn * v[2]];
+        var lat = Math.asin(p[2]) / RAD, lng = Math.atan2(p[1], p[0]) / RAD;
+        if (prev !== null && Math.abs(lng - prev) > 180) { paths.push(cur); cur = []; }
+        cur.push([lat, lng]); prev = lng;
+      }
+      paths.push(cur);
+      return paths.map(function (pts) { return { points: pts }; });
+    }
+
     // Countries that hold one of my cities burn a little warmer
     var MINE = ['United States of America', 'United Kingdom', 'France', 'Spain', 'China', 'Switzerland'];
 
@@ -304,17 +348,56 @@
       .then(function (topo) {
         var land = topojson.feature(topo, topo.objects.countries).features
           .filter(function (f) { return f.properties.name !== 'Antarctica'; });
+        land.forEach(function (f) { f.__v = centre(f); });
         world
           .hexPolygonsData(land)
           .hexPolygonResolution(3)
           .hexPolygonMargin(0.55)
           .hexPolygonUseDots(true)
           .hexPolygonAltitude(0.002)
-          .hexPolygonColor(function (f) {
-            return MINE.indexOf(f.properties.name) > -1 ? 'rgba(255,177,92,0.42)' : 'rgba(255,60,85,0.3)';
-          });
+          .hexPolygonColor(landColor);
+        paintSky();
       })
       .finally(function () { el.classList.add('ready'); });
+
+    // A country's rough middle, as a direction from the globe's centre
+    function centre(f) {
+      var sum = [0, 0, 0];
+      (function walk(c) {
+        if (typeof c[0] === 'number') { var w = vec(c[1], c[0]); sum[0] += w[0]; sum[1] += w[1]; sum[2] += w[2]; }
+        else c.forEach(walk);
+      })(f.geometry.coordinates);
+      var n = Math.hypot(sum[0], sum[1], sum[2]) || 1;
+      return [sum[0] / n, sum[1] / n, sum[2] / n];
+    }
+    function landColor(f) {
+      var night = Math.min(1, Math.max(0, (0.12 - dot(SUN, f.__v)) / 0.24));
+      var mine = MINE.indexOf(f.properties.name) > -1;
+      var a = mine ? 0.3 + 0.35 * night : 0.2 + 0.24 * night;
+      return mine ? 'rgba(255,177,92,' + a.toFixed(3) + ')' : 'rgba(255,60,85,' + a.toFixed(3) + ')';
+    }
+    function paintSky() {
+      var sun = subsolar(new Date());
+      SUN = vec(sun.lat, sun.lng);
+      world.hexPolygonColor(function (f) { return landColor(f); });
+      world.pathsData(terminator());
+      document.querySelectorAll('.pin').forEach(function (pin) {
+        var c = CITIES[pin.dataset.id];
+        if (c) pin.classList.toggle('is-day', !isNight(c.lat, c.lng));
+      });
+    }
+    world
+      .pathPoints('points')
+      .pathPointLat(function (p) { return p[0]; })
+      .pathPointLng(function (p) { return p[1]; })
+      .pathPointAlt(0.004)
+      .pathColor(function () { return 'rgba(255,177,92,0.7)'; })
+      .pathStroke(0.9)
+      .pathDashLength(0.02)
+      .pathDashGap(0.015)
+      .pathTransitionDuration(0);
+    paintSky();
+    setInterval(paintSky, 5 * 60 * 1000);
 
     world.pointOfView({ lat: HERE.lat - 8, lng: HERE.lng - 25, altitude: restAltitude }, 0);
 
@@ -350,7 +433,9 @@
 
     function makePin(d) {
       var pin = document.createElement('div');
-      pin.className = 'pin' + (d.current ? ' is-current' : '') + (d.city.label ? ' label-' + d.city.label : '');
+      pin.className = 'pin' + (d.current ? ' is-current' : '') + (d.city.label ? ' label-' + d.city.label : '') +
+        (isNight(d.lat, d.lng) ? '' : ' is-day');
+      pin.dataset.id = d.id;
       pin.innerHTML =
         '<span class="pin-dot"></span>' +
         '<span class="pin-label">' + (d.city.zh ? '<span class="pin-zh">' + d.city.zh + '</span>' : '') +
@@ -380,7 +465,7 @@
       document.getElementById('pName').textContent = c.name;
       document.getElementById('pMeta').innerHTML =
         fmt(c.lat, 'N', 'S') + ' ' + fmt(c.lng, 'E', 'W') + '<br>' +
-        'local ' + localTime(c.tz) + (status ? ' &middot; ' + status : '');
+        'local ' + localTime(c.tz) + ' &middot; ' + (isNight(c.lat, c.lng) ? 'night' : 'day') + (status ? ' &middot; ' + status : '');
       document.getElementById('pCopy').innerHTML = c.copy;
       document.getElementById('pCopy').style.display = c.copy ? '' : 'none';
       document.getElementById('pLinks').innerHTML =
@@ -401,6 +486,15 @@
     document.getElementById('panelClose').addEventListener('click', closePanel);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
 
+    // The secret (see secret.js): type 29 and the globe turns to where the book began
+    window.__twentyNine = function () {
+      openCity('grindelwald');
+      document.getElementById('pCopy').innerHTML = 'where 29 began';
+      document.getElementById('pCopy').style.display = '';
+      world.ringsData([HERE, { lat: 46.6696, lng: 8.0210, lake: true }]);
+    };
+    if (location.hash === '#29') setTimeout(window.__twentyNine, 2200);
+
     window.addEventListener('resize', function () {
       world.width(window.innerWidth).height(window.innerHeight);
     });
@@ -411,5 +505,6 @@
     setTimeout(function () { document.getElementById('hint').classList.add('gone'); }, 9000);
   </script>
 
+  <script src="secret.js"></script>
 </body>
 </html>

@@ -159,3 +159,9 @@
   .card.open { transform: none; }
   .foot { display: none; }
 }
+
+/* ─── Weather ─── */
+body[data-sky="fog"] #map { filter: blur(0.6px) brightness(0.8) saturate(0.8); }
+body[data-sky="fog"] .fx-vignette { background: radial-gradient(ellipse at center, rgba(239, 228, 214, 0.05), rgba(0, 0, 0, 0.7) 100%); }
+body::after { content: ''; position: fixed; inset: 0; z-index: 7; pointer-events: none; background: rgba(230, 225, 255, 0.16); opacity: 0; transition: opacity 0.12s ease; }
+body.flash::after { opacity: 1; transition: none; }

@@ -218,5 +218,62 @@ function cityMap(cfg) {
     setInterval(tick, 30000);
   }
 
+  // ─── Real weather: the sky over the map matches the city right now ───
+  // Open-Meteo is free and keyless. Until it answers (or if it can't), the page keeps its usual light rain.
+  var SKY = {
+    0: ['clear', 'none', 0], 1: ['mostly clear', 'none', 0], 2: ['partly cloudy', 'none', 0], 3: ['overcast', 'none', 0],
+    45: ['fog', 'fog', 0], 48: ['fog', 'fog', 0],
+    51: ['light drizzle', 'rain', 0.3], 53: ['drizzle', 'rain', 0.5], 55: ['heavy drizzle', 'rain', 0.7],
+    56: ['freezing drizzle', 'rain', 0.5], 57: ['freezing drizzle', 'rain', 0.7],
+    61: ['light rain', 'rain', 0.6], 63: ['rain', 'rain', 1.0], 65: ['heavy rain', 'rain', 1.6],
+    66: ['freezing rain', 'rain', 0.9], 67: ['freezing rain', 'rain', 1.4],
+    71: ['light snow', 'snow', 0.6], 73: ['snow', 'snow', 1.0], 75: ['heavy snow', 'snow', 1.6], 77: ['snow grains', 'snow', 0.6],
+    80: ['showers', 'rain', 0.8], 81: ['heavy showers', 'rain', 1.3], 82: ['downpour', 'rain', 1.9],
+    85: ['snow showers', 'snow', 0.8], 86: ['heavy snow showers', 'snow', 1.4],
+    95: ['thunderstorm', 'storm', 1.6], 96: ['thunderstorm', 'storm', 1.6], 99: ['thunderstorm', 'storm', 1.8]
+  };
+  var fahrenheit = /^America\//.test(cfg.tz);
+  var wxEl = null;
+  if ($('clock')) {
+    wxEl = document.createElement('span');
+    $('clock').parentNode.appendChild(wxEl);
+  }
+  var lightning = null;
+
+  function applySky(code, temp, isDay) {
+    var sky = SKY[code] || ['', 'none', 0];
+    var label = code === 0 && !isDay ? 'clear night' : sky[0];
+    var ctl = window.sky;
+    document.body.dataset.sky = sky[1];
+    if (ctl) {
+      if (sky[1] === 'rain' || sky[1] === 'storm') ctl.set('rain', sky[2]);
+      else if (sky[1] === 'snow') ctl.set('snow', sky[2]);
+      else ctl.set('none', 0);
+    }
+    clearInterval(lightning);
+    if (sky[1] === 'storm' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      lightning = setInterval(function () {
+        if (Math.random() < 0.5) return;
+        document.body.classList.add('flash');
+        setTimeout(function () { document.body.classList.remove('flash'); }, 140);
+      }, 6000);
+    }
+    if (wxEl && label) {
+      var t = Math.round(fahrenheit ? temp * 9 / 5 + 32 : temp);
+      wxEl.innerHTML = ' &middot; ' + label + ' &middot; ' + t + '&deg;';
+    }
+  }
+
+  function loadWeather() {
+    var c = cfg.home.center;
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + c[1].toFixed(3) + '&longitude=' + c[0].toFixed(3) +
+          '&current=temperature_2m,weather_code,is_day')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (d) { applySky(d.current.weather_code, d.current.temperature_2m, d.current.is_day === 1); })
+      .catch(function () { if (window.sky) window.sky.set('rain', 0.6); });
+  }
+  loadWeather();
+  setInterval(loadWeather, 15 * 60 * 1000);
+
   return map;
 }
