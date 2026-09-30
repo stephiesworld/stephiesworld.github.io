@@ -29,6 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="neon.css">
   <style>
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
@@ -47,16 +48,41 @@
 
     .tagline { margin-top: 0.5rem; font-size: 0.55rem; }
     .nav { display: flex; gap: 1.6rem; align-items: center; }
-    /* Work is the lit sign: bigger, red, and set apart */
+    /* Work is a Hong Kong neon sign: pink tube letters in a double amber frame.
+       It stutters on after the globe appears, and its R is a tube that's going. */
     .nav a.lit {
-      margin-left: 0.6rem; padding: 0.5rem 0.9rem;
-      font-size: 0.8rem; letter-spacing: 0.2em; color: var(--neon);
-      border: 1px solid var(--neon-soft);
-      text-shadow: 0 0 8px var(--neon-soft), 0 0 20px var(--neon-faint);
-      box-shadow: 0 0 14px var(--neon-faint), inset 0 0 10px var(--neon-faint);
-      transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+      position: relative; margin-left: 0.8rem; padding: 0.45rem 0.95rem 0.5rem;
+      display: inline-flex; align-items: center; gap: 0.08em;
+      font-family: 'Tilt Neon', var(--mono); font-size: 1.05rem; letter-spacing: 0.14em;
+      color: #ffe3e8;
+      text-shadow: 0 0 2px #fff, 0 0 5px #ff5a78, 0 0 12px #ff2d4a, 0 0 26px #ff2d4a, 0 0 46px rgba(255, 45, 74, 0.55);
+      border: 2px solid #ffd7a0; border-radius: 12px;
+      box-shadow: 0 0 3px #ffb15c, 0 0 10px rgba(255, 177, 92, 0.7), 0 0 24px rgba(255, 177, 92, 0.35),
+                  inset 0 0 6px rgba(255, 177, 92, 0.5), inset 0 0 18px rgba(255, 45, 74, 0.12);
+      animation: sign-on 2.4s steps(1, end) 1.4s both;
+      transition: filter 0.3s ease;
     }
-    .nav a.lit:hover { color: var(--cream); background: rgba(255, 45, 74, 0.1); box-shadow: 0 0 22px var(--neon-soft), inset 0 0 12px var(--neon-faint); }
+    .nav a.lit::before {
+      content: ''; position: absolute; inset: -7px; border-radius: 17px;
+      border: 1px solid rgba(255, 215, 160, 0.55);
+      box-shadow: 0 0 8px rgba(255, 177, 92, 0.35);
+      pointer-events: none;
+    }
+    .nav a.lit .arrow { margin-left: 0.35em; }
+    .nav a.lit .bad { animation: tube 9s steps(1, end) 5s infinite; }
+    .nav a.lit:hover { filter: brightness(1.25) saturate(1.1); }
+
+    @keyframes sign-on {
+      0% { opacity: 0; } 8% { opacity: 1; } 12% { opacity: 0.1; } 20% { opacity: 1; }
+      24% { opacity: 0.2; } 30% { opacity: 0.9; } 34% { opacity: 0.3; } 46% { opacity: 1; } 100% { opacity: 1; }
+    }
+    @keyframes tube {
+      0%, 86%, 100% { opacity: 1; }
+      87% { opacity: 0.15; text-shadow: none; } 89% { opacity: 1; } 90% { opacity: 0.25; text-shadow: none; } 93% { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav a.lit, .nav a.lit .bad { animation: none; }
+    }
 
     .now-dot {
       display: inline-block; width: 5px; height: 5px; border-radius: 50%;
@@ -189,7 +215,7 @@
   <nav class="corner tr hud nav">
     <a href="about.html">about</a>
     <a href="books.html">reading</a>
-    <a href="work.html" class="lit">work &rarr;</a>
+    <a href="work.html" class="lit" aria-label="Work"><span>W</span><span>O</span><span class="bad">R</span><span>K</span><span class="arrow">&rarr;</span></a>
   </nav>
 
   <div class="corner bl hud" id="status"></div>
