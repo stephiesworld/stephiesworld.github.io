@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New York — Stephie's World</title>
-  <meta name="description" content="Stephie's New York: where she worked, where she plays, and a personal guide to the city.">
+  <meta name="description" content="Stephie's New York: where she worked and a personal guide to the city.">
   <link rel="canonical" href="https://stephiesworld.com/nyc.html">
   <meta property="og:image" content="https://stephiesworld.com/og.png">
   <meta property="og:image:width" content="1200">
@@ -70,7 +70,6 @@
 
       groups: [
         { id: 'work', label: 'work', big: true, labels: 'always' },
-        { id: 'play', label: 'play', labels: 'hover' },
         { id: 'guide', label: 'guide', labels: 'hover', compact: true }
       ],
 
@@ -107,15 +106,6 @@
           links: [{ href: 'writing/customer-signal-into-product.html', label: 'read: the sifting is the hard part' }]
         },
 
-        // ─── Play ───
-        { id: 'tennis', group: 'play', name: 'Tennis', address: 'Brooklyn', lngLat: [-73.9565, 40.7185], zoom: 13.6, tags: ['tennis'] },
-        {
-          id: 'westside', group: 'play', name: 'West Side Highway', address: 'Hudson River Greenway', lngLat: [-74.0106, 40.7336], tags: ['running'],
-          route: [[-74.0175, 40.7050], [-74.0160, 40.7120], [-74.0137, 40.7178], [-74.0112, 40.7260], [-74.0104, 40.7335], [-74.0090, 40.7420], [-74.0085, 40.7470], [-74.0052, 40.7568], [-73.9996, 40.7645], [-73.9937, 40.7720]]
-        },
-        { id: 'domino', group: 'play', name: 'Domino Park', address: '15 River Street &middot; Williamsburg', lngLat: [-73.9683, 40.7141],
-          copy: 'Anywhere water meets land &mdash; though I&rsquo;d rather be near it than in it.' },
-
         // ─── Guide ───
         { id: 'watchhouse', group: 'guide', category: 'coffee', name: 'Watchhouse', address: '660 Fifth Avenue &middot; Midtown', lngLat: [-73.9764, 40.7588],
           copy: 'A London import. Good coffee, good pastries, and a calm room in the middle of Midtown.' },
@@ -137,6 +127,14 @@
           copy: 'Pick one wing and take your time. It&rsquo;s too big to see in one visit, so plan to come back.' },
         { id: 'reservoir', group: 'guide', category: 'parks', name: 'Central Park Reservoir', address: 'Central Park &middot; Upper West &amp; East Side', lngLat: [-73.9622, 40.7851],
           copy: 'The running loop is about a mile and a half, flat, with the skyline all the way round.' },
+        { id: 'domino', group: 'guide', category: 'parks', name: 'Domino Park', address: '15 River Street &middot; Williamsburg', lngLat: [-73.9683, 40.7141],
+          copy: 'A waterfront park with the whole Manhattan skyline across the river. Go at sunset.' },
+        {
+          id: 'westside', group: 'guide', category: 'running', name: 'West Side Highway', address: 'Hudson River Greenway', lngLat: [-74.0106, 40.7336],
+          copy: 'Flat, by the water, and it runs most of the length of Manhattan.',
+          route: [[-74.0175, 40.7050], [-74.0160, 40.7120], [-74.0137, 40.7178], [-74.0112, 40.7260], [-74.0104, 40.7335], [-74.0090, 40.7420], [-74.0085, 40.7470], [-74.0052, 40.7568], [-73.9996, 40.7645], [-73.9937, 40.7720]]
+        },
+        { id: 'tennis', group: 'guide', category: 'tennis', name: 'Tennis', address: 'Brooklyn', lngLat: [-73.9565, 40.7185], zoom: 13.6 },
         { id: 'usopen', group: 'guide', category: 'tennis', name: 'US Open', address: 'Flushing Meadows &middot; Queens', note: 'late August &ndash; early September', lngLat: [-73.8458, 40.7497], zoom: 14.5 }
       ]
     });
