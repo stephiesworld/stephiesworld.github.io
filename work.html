@@ -56,6 +56,11 @@
     .sec-head .num { font-size: 0.55rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
     .sec-head h2 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.9rem; color: var(--cream); }
     .sec-head::after { content: ''; flex: 1; height: 1px; background: var(--line); align-self: center; }
+    .intro { padding-bottom: 3.6rem; }
+    .intro p:first-child { font-family: var(--serif); font-size: 1.45rem; line-height: 1.55; color: var(--cream); max-width: 32em; }
+    .intro-links { margin-top: 1.2rem; display: flex; gap: 1.8rem; font-size: 0.6rem; }
+    .intro-links a { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
+    .intro-links a:hover { letter-spacing: 0.22em; }
     .lede { font-family: var(--serif); font-size: 1.08rem; line-height: 1.7; color: var(--cream-dim); max-width: 36em; margin-bottom: 1.8rem; }
 
     /* ─── Essay table ─── */
@@ -170,6 +175,14 @@
     </aside>
 
     <main>
+
+      <section class="intro">
+        <p>I design AI agents and teach teams to work alongside them. Before that: customer success and pricing at Amazon, a food-tech startup I founded, product launches at Harry&rsquo;s, and AI for wealth management at Morgan Stanley.</p>
+        <p class="intro-links hud">
+          <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
+          <a href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
+        </p>
+      </section>
 
       <section id="writing">
         <div class="sec-head"><span class="num hud">01</span><h2>Writing</h2></div>

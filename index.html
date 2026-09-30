@@ -47,6 +47,7 @@
 
     .tagline { margin-top: 0.5rem; font-size: 0.55rem; }
     .nav { display: flex; gap: 1.6rem; }
+    .nav a.lit { color: var(--cream-dim); text-shadow: 0 0 8px var(--neon-faint); }
 
     .now-dot {
       display: inline-block; width: 5px; height: 5px; border-radius: 50%;
@@ -129,6 +130,7 @@
 
     .panel-name { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2rem; line-height: 1.1; color: var(--cream); }
     .panel-meta { margin-top: 0.7rem; line-height: 1.9; font-size: 0.55rem; }
+    .panel-copy .places { display: block; margin-top: 0.7rem; font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-faint); }
     .panel-copy a { color: var(--cream); border-bottom: 1px solid var(--neon-soft); }
     .panel-copy { margin-top: 1.1rem; font-family: var(--serif); font-size: 1rem; line-height: 1.6; color: var(--cream-dim); }
     .panel-links { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
@@ -177,7 +179,7 @@
 
   <nav class="corner tr hud nav">
     <a href="about.html">about</a>
-    <a href="work.html">work</a>
+    <a href="work.html" class="lit">work</a>
     <a href="books.html">reading</a>
   </nav>
 
@@ -208,7 +210,7 @@
     var CITIES = {
       newyork: {
         name: 'New York', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
-        copy: 'Home for the past decade.',
+        copy: 'Home for the past decade.<span class="places">Morgan Stanley &middot; Harry&rsquo;s &middot; Little Bun &middot; Amazon</span>',
         links: [
           { href: 'nyc.html#work', label: 'Career &rarr;', primary: true },
           { href: 'nyc.html#play', label: 'Play &rarr;' },
