@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&family=Neonderthaw&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="neon.css">
   <style>
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
@@ -193,6 +193,15 @@
     @media (min-width: 721px) {
       body.panel-open .blade { opacity: 0 !important; transform: translateX(30px); pointer-events: none; }
     }
+
+    /* The name is the shop sign: pink neon script */
+    .corner.tl .brand {
+      font-family: 'Neonderthaw', cursive; font-style: normal;
+      font-size: 2.5rem; line-height: 1; letter-spacing: 0.01em; color: #ffe3e8;
+      text-shadow: 0 0 2px #fff, 0 0 6px #ff5a78, 0 0 14px #ff2d4a, 0 0 30px #ff2d4a, 0 0 54px rgba(255, 45, 74, 0.5);
+      animation: sign-on 2.2s steps(1, end) 0.4s both;
+    }
+    @media (max-width: 720px) { .corner.tl .brand { font-size: 2rem; } }
   </style>
 </head>
 <body>

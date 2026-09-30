@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&family=Neonderthaw&display=swap');
 
 /* ─── Stephie's World · night theme ───
    Blade Runner x Wong Kar-wai: wet streets, sodium light, one red sign.
@@ -150,8 +150,18 @@ a { color: inherit; text-decoration: none; }
 /* ─── Neon signs ───
    One rule: neon is for signs (where you are, where to go), never for content.
    Every page shares this cluster; the sign for the page you're on is left unlit. */
-.home-link { font-family: var(--serif); font-style: italic; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--cream-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
-.home-link:hover { color: var(--cream); text-shadow: 0 0 10px var(--neon-soft); }
+/* Your name is the shop sign: pink neon script, on every page */
+.home-link {
+  font-family: 'Neonderthaw', cursive; font-size: 1.7rem; line-height: 1; letter-spacing: 0.01em;
+  color: #ffe3e8;
+  text-shadow: 0 0 2px #fff, 0 0 5px #ff5a78, 0 0 12px #ff2d4a, 0 0 24px #ff2d4a, 0 0 42px rgba(255, 45, 74, 0.45);
+  animation: sign-on 2s steps(1, end) 0.3s both;
+  transition: filter 0.3s ease;
+}
+.home-link:hover { filter: brightness(1.25); }
+/* Plain way back (essays → index of work) */
+.back-link { font-family: var(--serif); font-style: italic; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--cream-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
+.back-link:hover { color: var(--cream); text-shadow: 0 0 10px var(--neon-soft); }
 
 .signs { display: flex; align-items: center; gap: 1.3rem; }
 .top { flex-wrap: wrap; row-gap: 0.7rem; }
@@ -188,8 +198,8 @@ span.tube.tube {
   .signs { gap: 0.75rem; }
   .sign { font-size: 0.6rem; letter-spacing: 0.1em; }
   .sign.framed { font-size: 0.68rem; margin-left: 0.1rem; }
-  .home-link { font-size: 0.92rem; }
+  .home-link { font-size: 1.35rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sign, span.tube.tube { animation: none; }
+  .sign, span.tube.tube, .home-link { animation: none; }
 }
