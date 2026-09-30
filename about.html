@@ -42,7 +42,13 @@
 
     /* ─── Sticky index ─── */
     .toc { position: sticky; top: 9rem; align-self: start; opacity: 0; animation: appear 1.2s ease 0.3s forwards; }
-    .toc .brand { font-size: 1.3rem; }
+    /* Your name in the margin, as the same amber tube sign as the top-left */
+    .toc .brand {
+      font-family: 'Tilt Neon', var(--mono); font-style: normal; font-weight: 400;
+      font-size: 1.05rem; letter-spacing: 0.2em; text-transform: uppercase; color: #fff1dc;
+      text-shadow: 0 0 2px #fff, 0 0 5px #ffc27a, 0 0 12px #ffb15c, 0 0 26px rgba(255, 177, 92, 0.55);
+      animation: sign-on 2.2s steps(1, end) 0.8s both;
+    }
     .toc .tagline { margin-top: 0.5rem; font-size: 0.52rem; }
     .toc ol { list-style: none; margin-top: 2.4rem; }
     .toc a {
