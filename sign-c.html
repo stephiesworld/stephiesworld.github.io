@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stephie's World</title>
+  <meta name="robots" content="noindex">
+  <meta name="description" content="The personal world of Stephie, between New York, London, Paris, and Shanghai.">
+  <meta name="keywords" content="Stephie, writer, New York, tech, literary fiction">
+  <meta property="og:title" content="Stephie's World">
+  <meta property="og:description" content="A personal world.">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Stephie",
+    "url": "https://stephiesworld.com",
+    "jobTitle": "Writer & Technologist",
+    "address": { "@type": "PostalAddress", "addressLocality": "New York" }
+  }
+  </script>
+  <link rel="canonical" href="https://stephiesworld.com/">
+  <meta property="og:image" content="https://stephiesworld.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海作品&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="neon.css">
+  <style>
+    #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
+    #globe:active { cursor: grabbing; }
+
+    /* Globe fades up out of the dark */
+    #globe { opacity: 0; transition: opacity 2.4s ease; }
+    #globe.ready { opacity: 1; }
+
+    /* ─── Corners ─── */
+    .corner { position: fixed; z-index: 10; opacity: 0; animation: appear 1.4s ease forwards; }
+    .tl { top: 2rem; left: 2.4rem; animation-delay: 0.6s; }
+    .tr { top: 2.25rem; right: 2.4rem; animation-delay: 0.8s; }
+    .bl { bottom: 2rem; left: 2.4rem; animation-delay: 1.2s; line-height: 2.1; }
+    .br { bottom: 2rem; right: 2.4rem; animation-delay: 1.4s; text-align: right; line-height: 2.1; }
+
+    .tagline { margin-top: 0.5rem; font-size: 0.55rem; }
+    .nav { display: flex; gap: 1.6rem; align-items: center; }
+    /* Work is a Hong Kong neon sign: pink tube letters, the biggest on the street.
+       It stutters on after the globe appears, and its R is a tube that's going. */
+    .nav a.lit {
+      position: relative; margin-left: 0.4rem;
+      display: inline-flex; align-items: center; gap: 0.08em;
+      font-family: 'Tilt Neon', var(--mono); font-size: 1.05rem; letter-spacing: 0.14em;
+      color: #ffe3e8;
+      text-shadow: 0 0 2px #fff, 0 0 5px #ff5a78, 0 0 12px #ff2d4a, 0 0 26px #ff2d4a, 0 0 46px rgba(255, 45, 74, 0.55);
+      animation: sign-on 2.4s steps(1, end) 1.4s both;
+      transition: filter 0.3s ease;
+    }
+    .nav a.lit .arrow { margin-left: 0.35em; }
+
+    /* Smaller signs beside it, each its own colour of tube */
+    .nav a.sign {
+      font-family: 'Tilt Neon', var(--mono); font-size: 0.86rem; letter-spacing: 0.16em; text-transform: uppercase;
+      animation: sign-on 2s steps(1, end) both;
+      transition: filter 0.3s ease;
+    }
+    .nav a.sign.teal {
+      color: #dffff9; animation-delay: 0.9s;
+      text-shadow: 0 0 2px #fff, 0 0 5px #6fcfc0, 0 0 12px #3fb8ac, 0 0 24px rgba(63, 184, 172, 0.6);
+    }
+    .nav a.sign.amber {
+      color: #fff1dc; animation-delay: 1.15s;
+      text-shadow: 0 0 2px #fff, 0 0 5px #ffc27a, 0 0 12px #ffb15c, 0 0 24px rgba(255, 177, 92, 0.55);
+    }
+    .nav a.sign:hover { filter: brightness(1.3); color: #fff; }
+    .nav a.lit .bad { animation: tube 9s steps(1, end) 5s infinite; }
+    .nav a.lit:hover { filter: brightness(1.25) saturate(1.1); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nav a.lit, .nav a.lit .bad, .nav a.sign { animation: none; }
+    }
+
+    .now-dot {
+      display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--neon); box-shadow: 0 0 8px var(--neon), 0 0 16px var(--neon-soft);
+      margin-right: 0.6rem; vertical-align: 1px;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse { 50% { opacity: 0.35; } }
+
+    .hint {
+      position: fixed; z-index: 10; left: 50%; bottom: 2.1rem; transform: translateX(-50%);
+      opacity: 0; animation: appear 1.4s ease 2.4s forwards;
+      transition: opacity 1s ease;
+      white-space: nowrap;
+    }
+    .hint.gone { opacity: 0 !important; animation: none; }
+
+
+    /* ─── City pins (HTML overlays positioned by globe.gl) ─── */
+    .pin { width: 0; height: 0; position: relative; pointer-events: auto; cursor: pointer; transition: opacity 0.5s ease; }
+
+    .pin-dot {
+      position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber); box-shadow: 0 0 6px var(--amber), 0 0 18px var(--amber-soft);
+    }
+    .pin.is-current .pin-dot {
+      background: var(--neon); box-shadow: 0 0 8px var(--neon), 0 0 22px var(--neon-soft);
+    }
+
+    /* generous invisible hit area */
+    .pin::before { content: ''; position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; }
+
+    .pin-label {
+      position: absolute; left: 12px; top: -9px;
+      display: flex; align-items: baseline; gap: 0.45rem;
+      white-space: nowrap;
+      transition: transform 0.35s ease;
+    }
+    .pin-zh { font-family: var(--zh); font-size: 0.8rem; font-weight: 500; color: var(--amber); text-shadow: 0 0 10px var(--amber-soft); }
+    .pin-en { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); }
+    /* Cities without a Chinese name: the English name becomes the lit sign */
+    .pin-label .pin-en:first-child { font-size: 0.62rem; color: var(--amber); text-shadow: 0 0 10px var(--amber-soft); }
+    .pin.is-current .pin-label .pin-en:first-child { color: var(--neon); text-shadow: 0 0 10px var(--neon-soft), 0 0 22px var(--neon-faint); }
+    .pin.is-current .pin-zh { color: var(--neon); text-shadow: 0 0 10px var(--neon-soft), 0 0 22px var(--neon-faint); }
+    .pin-here { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--neon); }
+
+    .pin.label-below .pin-label { top: 4px; }
+    .pin.label-above .pin-label { top: -22px; }
+    .pin:hover .pin-label { transform: translateX(3px); }
+    /* In daylight a city's light is turned down */
+    .pin.is-day .pin-dot { filter: saturate(0.6) brightness(0.75); box-shadow: 0 0 4px var(--amber-soft); }
+    .pin.is-day.is-current .pin-dot { box-shadow: 0 0 5px var(--neon-soft); }
+    .pin.is-day .pin-label { opacity: 0.7; }
+    .pin:hover .pin-en { color: var(--cream); }
+
+    /* ─── City panel ─── */
+    .panel {
+      position: fixed; z-index: 20; top: 50%; right: 3rem;
+      width: min(340px, calc(100vw - 2rem));
+      transform: translate(24px, -50%); opacity: 0; pointer-events: none;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      display: grid; grid-template-columns: auto 1fr; gap: 1.4rem;
+      padding: 2rem 1.8rem 1.8rem 1.4rem;
+      background: linear-gradient(160deg, rgba(20, 8, 12, 0.72), rgba(5, 5, 7, 0.82));
+      border: 1px solid var(--line);
+      border-left: 1px solid var(--neon-soft);
+      box-shadow: -8px 0 40px rgba(255, 45, 74, 0.08);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .panel.open { opacity: 1; transform: translate(0, -50%); pointer-events: auto; }
+
+    .panel-zh {
+      writing-mode: vertical-rl;
+      font-family: var(--zh); font-weight: 500; font-size: 2rem; letter-spacing: 0.3em;
+      color: var(--neon); text-shadow: 0 0 14px var(--neon-soft), 0 0 40px var(--neon-faint);
+    }
+    .panel-zh.amber { color: var(--amber); text-shadow: 0 0 14px var(--amber-soft); }
+
+    .panel-name { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2rem; line-height: 1.1; color: var(--cream); }
+    .panel-meta { margin-top: 0.7rem; line-height: 1.9; font-size: 0.55rem; }
+    .panel-copy .places { display: block; margin-top: 0.7rem; font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-faint); }
+    .panel-copy a { color: var(--cream); border-bottom: 1px solid var(--neon-soft); }
+    .panel-copy { margin-top: 1.1rem; font-family: var(--serif); font-size: 1rem; line-height: 1.6; color: var(--cream-dim); }
+    .panel-links { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+    .panel-links a { font-size: 0.6rem; color: var(--cream-dim); transition: color 0.3s ease, letter-spacing 0.3s ease; }
+    .panel-links a:hover { color: var(--cream); letter-spacing: 0.22em; }
+    .panel-links a.primary { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
+    .panel-soon { font-size: 0.55rem; }
+
+    .panel-close {
+      position: absolute; top: 0.9rem; right: 1rem; background: none; border: none; cursor: pointer;
+      font-family: var(--mono); font-size: 0.8rem; color: var(--cream-faint);
+    }
+    .panel-close:hover { color: var(--cream); }
+
+    @media (max-width: 720px) {
+      .tl { top: 1.4rem; left: 1rem; }
+      .tr { top: 4.1rem; left: 1rem; right: auto; }
+      .nav { gap: 1rem; }
+      .bl { left: 1rem; bottom: 1.2rem; }
+      .br, .hint { display: none; }
+      .panel {
+        top: auto; bottom: 0; right: 0; left: 0; width: 100%;
+        transform: translateY(24px);
+        border-left: 1px solid var(--line); border-top: 1px solid var(--neon-soft);
+        padding: 1.6rem 1.2rem 2rem;
+      }
+      .panel.open { transform: none; }
+      .panel-zh { font-size: 1.5rem; }
+    }
+
+    .nav a.bilingual { flex-direction: column; align-items: center; gap: 0.15rem; }
+    .nav a.bilingual .en { display: inline-flex; gap: 0.08em; }
+    .nav a.bilingual .cn {
+      font-family: var(--zh); font-weight: 500; font-size: 0.95rem; letter-spacing: 0.5em; margin-right: -0.5em;
+      color: #fff1dc; text-shadow: 0 0 2px #fff, 0 0 6px #ffc27a, 0 0 14px #ffb15c, 0 0 28px rgba(255, 177, 92, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="sr-only">Stephie</h1>
+
+  <div id="globe" aria-label="Globe of the cities in Stephie's world"></div>
+
+  <canvas class="fx fx-rain" id="rain"></canvas>
+  <div class="fx fx-vignette"></div>
+  <div class="fx fx-scan"></div>
+  <div class="fx fx-grain"></div>
+
+  <header class="corner tl">
+    <p class="brand">Stephie's World</p>
+  </header>
+
+  <nav class="corner tr hud nav">
+    <a href="about.html" class="sign teal">about</a>
+    <a href="books.html" class="sign amber">reading</a>
+    <a href="work.html" class="lit bilingual" aria-label="Work"><span class="en"><span>W</span><span>O</span><span class="bad">R</span><span>K</span><span class="arrow">&rarr;</span></span><span class="cn">作品</span></a>
+  </nav>
+
+  <div class="corner bl hud" id="status"></div>
+  <div class="corner br hud" id="coords"></div>
+  <p class="hint hud" id="hint">drag to turn &middot; touch a light</p>
+
+  <aside class="panel" id="panel" aria-live="polite">
+    <button class="panel-close" id="panelClose" aria-label="Close">&times;</button>
+    <div class="panel-zh" id="pZh"></div>
+    <div>
+      <h2 class="panel-name" id="pName"></h2>
+      <p class="panel-meta hud" id="pMeta"></p>
+      <p class="panel-copy" id="pCopy"></p>
+      <div class="panel-links hud" id="pLinks"></div>
+    </div>
+  </aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <script src="rain.js"></script>
+  <script>
+    // ─── Home ───
+    // The red pin marks home base. Deliberately no live location or travel dates:
+    // anything here is readable in the page source.
+    var HOME_CITY = 'newyork';
+
+    var CITIES = {
+      newyork: {
+        name: 'New York', lat: 40.7128, lng: -74.006, tz: 'America/New_York',
+        copy: 'Home for the past decade.<span class="places">Morgan Stanley &middot; Harry&rsquo;s &middot; Little Bun &middot; Amazon</span>',
+        links: [
+          { href: 'nyc.html#work', label: 'Career &rarr;', primary: true },
+          { href: 'nyc.html#play', label: 'Play &rarr;' },
+          { href: 'nyc.html#guide', label: 'City Guide &rarr;' }
+        ]
+      },
+      london: {
+        name: 'London', lat: 51.5074, lng: -0.1278, tz: 'Europe/London', label: 'above',
+        copy: '',
+        links: [{ href: 'london.html', label: 'Map &rarr;', primary: true }]
+      },
+      paris: {
+        name: 'Paris', lat: 48.8566, lng: 2.3522, tz: 'Europe/Paris',
+        copy: '',
+        links: [{ href: 'paris.html', label: 'City Guide &rarr;', primary: true }]
+      },
+      shanghai: {
+        name: 'Shanghai', zh: '上海', lat: 31.2304, lng: 121.4737, tz: 'Asia/Shanghai',
+        tag: 'hometown',
+        copy: '',
+        links: [{ href: 'shanghai.html', label: 'Map &rarr;', primary: true }]
+      },
+      madrid: {
+        name: 'Madrid', lat: 40.4168, lng: -3.7038, tz: 'Europe/Madrid', label: 'below',
+        copy: 'Dinner at ten and the best sunlight on earth.',
+        links: [{ href: 'madrid.html', label: 'Map &rarr;', primary: true }]
+      },
+      grindelwald: {
+        name: 'Grindelwald', lat: 46.6242, lng: 8.0414, tz: 'Europe/Zurich', label: 'below',
+        copy: '',
+        links: [{ href: 'grindelwald.html', label: 'Map &rarr;', primary: true }]
+      }
+    };
+
+    var HERE = CITIES[HOME_CITY];
+
+    function localTime(tz) {
+      return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit' }).format(new Date());
+    }
+
+
+    function renderStatus() {
+      document.getElementById('status').innerHTML =
+        '<span class="now-dot"></span>home <b>' + HERE.name + '</b> &middot; ' + localTime(HERE.tz);
+    }
+    renderStatus();
+    setInterval(renderStatus, 30000);
+
+    // ─── Globe ───
+    var el = document.getElementById('globe');
+    var mobile = window.innerWidth < 720;
+    var restAltitude = mobile ? 4.3 : 2.1;
+
+    var points = Object.keys(CITIES).map(function (id) {
+      var c = CITIES[id];
+      return { id: id, lat: c.lat, lng: c.lng, city: c, current: c === HERE };
+    });
+
+    var world = Globe({ animateIn: false })(el)
+      .width(window.innerWidth)
+      .height(window.innerHeight)
+      .backgroundColor('rgba(0,0,0,0)')
+      .showAtmosphere(true)
+      .atmosphereColor('#ff2d4a')
+      .atmosphereAltitude(0.16)
+      .showGraticules(true)
+      .htmlElementsData(points)
+      .htmlAltitude(0.01)
+      .htmlElement(makePin)
+      .ringsData([HERE])
+      .ringLat('lat').ringLng('lng')
+      .ringColor(function (d) { return d.lake ? function (t) { return 'rgba(255,177,92,' + (1 - t) * 0.9 + ')'; } : function (t) { return 'rgba(255,45,74,' + (1 - t) * 0.8 + ')'; }; })
+      .ringMaxRadius(3.2)
+      .ringPropagationSpeed(1.2)
+      .ringRepeatPeriod(1600)
+      .onGlobeClick(closePanel);
+
+    if (world.htmlElementVisibilityModifier) {
+      world.htmlElementVisibilityModifier(function (el, visible) {
+        el.style.opacity = visible ? 1 : 0;
+        el.style.pointerEvents = visible ? 'auto' : 'none';
+      });
+    }
+
+    // Ink-dark sphere with a faint red rim
+    var mat = world.globeMaterial();
+    mat.color.set('#070506');
+    mat.emissive && mat.emissive.set('#0c0205');
+    mat.shininess = 8;
+
+    // ─── The real sun ───
+    // Where the sun is overhead right now (subsolar point), from a standard low-precision solar model.
+    var RAD = Math.PI / 180;
+    function subsolar(date) {
+      var d = (date.getTime() - Date.UTC(2000, 0, 1, 12)) / 86400000;
+      var g = (357.529 + 0.98560028 * d) * RAD;
+      var q = 280.459 + 0.98564736 * d;
+      var L = (q + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) * RAD;
+      var e = (23.439 - 0.00000036 * d) * RAD;
+      var dec = Math.asin(Math.sin(e) * Math.sin(L));
+      var ra = Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)) / RAD;
+      var gmst = (18.697374558 + 24.06570982441908 * d) % 24;
+      var lng = ((ra - gmst * 15) % 360 + 540) % 360 - 180;
+      return { lat: dec / RAD, lng: lng };
+    }
+    function vec(lat, lng) {
+      return [Math.cos(lat * RAD) * Math.cos(lng * RAD), Math.cos(lat * RAD) * Math.sin(lng * RAD), Math.sin(lat * RAD)];
+    }
+    function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+    var SUN = (function () { var s = subsolar(new Date()); return vec(s.lat, s.lng); })();
+    function isNight(lat, lng) { return dot(SUN, vec(lat, lng)) < 0; }
+
+    // The line where it's dusk or dawn right now: every point 90° from the sun
+    function terminator() {
+      var up = Math.abs(SUN[2]) > 0.9 ? [1, 0, 0] : [0, 0, 1];
+      var u = [SUN[1] * up[2] - SUN[2] * up[1], SUN[2] * up[0] - SUN[0] * up[2], SUN[0] * up[1] - SUN[1] * up[0]];
+      var n = Math.hypot(u[0], u[1], u[2]); u = [u[0] / n, u[1] / n, u[2] / n];
+      var v = [SUN[1] * u[2] - SUN[2] * u[1], SUN[2] * u[0] - SUN[0] * u[2], SUN[0] * u[1] - SUN[1] * u[0]];
+      var paths = [], cur = [], prev = null;
+      for (var i = 0; i <= 360; i += 2) {
+        var t = i * RAD, c = Math.cos(t), sn = Math.sin(t);
+        var p = [c * u[0] + sn * v[0], c * u[1] + sn * v[1], c * u[2] + sn * v[2]];
+        var lat = Math.asin(p[2]) / RAD, lng = Math.atan2(p[1], p[0]) / RAD;
+        if (prev !== null && Math.abs(lng - prev) > 180) { paths.push(cur); cur = []; }
+        cur.push([lat, lng]); prev = lng;
+      }
+      paths.push(cur);
+      return paths.map(function (pts) { return { points: pts }; });
+    }
+
+    // Countries that hold one of my cities burn a little warmer
+    var MINE = ['United States of America', 'United Kingdom', 'France', 'Spain', 'China', 'Switzerland'];
+
+    // Land as a field of dim dots, like a city seen from a plane at night
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+      .then(function (r) { return r.json(); })
+      .then(function (topo) {
+        var land = topojson.feature(topo, topo.objects.countries).features
+          .filter(function (f) { return f.properties.name !== 'Antarctica'; });
+        land.forEach(function (f) { f.__v = centre(f); });
+        world
+          .hexPolygonsData(land)
+          .hexPolygonResolution(3)
+          .hexPolygonMargin(0.55)
+          .hexPolygonUseDots(true)
+          .hexPolygonAltitude(0.002)
+          .hexPolygonColor(landColor);
+        paintSky();
+      })
+      .finally(function () { el.classList.add('ready'); });
+
+    // A country's rough middle, as a direction from the globe's centre
+    function centre(f) {
+      var sum = [0, 0, 0];
+      (function walk(c) {
+        if (typeof c[0] === 'number') { var w = vec(c[1], c[0]); sum[0] += w[0]; sum[1] += w[1]; sum[2] += w[2]; }
+        else c.forEach(walk);
+      })(f.geometry.coordinates);
+      var n = Math.hypot(sum[0], sum[1], sum[2]) || 1;
+      return [sum[0] / n, sum[1] / n, sum[2] / n];
+    }
+    function landColor(f) {
+      var night = Math.min(1, Math.max(0, (0.12 - dot(SUN, f.__v)) / 0.24));
+      var mine = MINE.indexOf(f.properties.name) > -1;
+      var a = mine ? 0.3 + 0.35 * night : 0.2 + 0.24 * night;
+      return mine ? 'rgba(255,177,92,' + a.toFixed(3) + ')' : 'rgba(255,60,85,' + a.toFixed(3) + ')';
+    }
+    function paintSky() {
+      var sun = subsolar(new Date());
+      SUN = vec(sun.lat, sun.lng);
+      world.hexPolygonColor(function (f) { return landColor(f); });
+      world.pathsData(terminator());
+      document.querySelectorAll('.pin').forEach(function (pin) {
+        var c = CITIES[pin.dataset.id];
+        if (c) pin.classList.toggle('is-day', !isNight(c.lat, c.lng));
+      });
+    }
+    world
+      .pathPoints('points')
+      .pathPointLat(function (p) { return p[0]; })
+      .pathPointLng(function (p) { return p[1]; })
+      .pathPointAlt(0.004)
+      .pathColor(function () { return 'rgba(255,177,92,0.7)'; })
+      .pathStroke(0.9)
+      .pathDashLength(0.02)
+      .pathDashGap(0.015)
+      .pathTransitionDuration(0);
+    paintSky();
+    setInterval(paintSky, 5 * 60 * 1000);
+
+    world.pointOfView({ lat: HERE.lat - 8, lng: HERE.lng - 25, altitude: restAltitude }, 0);
+
+    var controls = world.controls();
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.28;
+    controls.enableZoom = true;
+    controls.minDistance = 160;
+    controls.maxDistance = 900;
+    controls.enableDamping = true;
+
+    var resumeTimer;
+    function pauseSpin(ms) {
+      controls.autoRotate = false;
+      clearTimeout(resumeTimer);
+      if (ms) resumeTimer = setTimeout(function () { controls.autoRotate = true; }, ms);
+    }
+    el.addEventListener('pointerdown', function () {
+      pauseSpin(8000);
+      document.getElementById('hint').classList.add('gone');
+    });
+
+    // Live coordinates of whatever is facing you
+    var coordsEl = document.getElementById('coords');
+    function fmt(v, pos, neg) { return Math.abs(v).toFixed(2) + '&deg;' + (v >= 0 ? pos : neg); }
+    function renderCoords(pov) {
+      pov = pov || world.pointOfView();
+      var lng = ((pov.lng + 540) % 360) - 180;
+      coordsEl.innerHTML = fmt(pov.lat, 'N', 'S') + ' &nbsp;' + fmt(lng, 'E', 'W');
+    }
+    world.onZoom(renderCoords);
+    renderCoords();
+
+    function makePin(d) {
+      var pin = document.createElement('div');
+      pin.className = 'pin' + (d.current ? ' is-current' : '') + (d.city.label ? ' label-' + d.city.label : '') +
+        (isNight(d.lat, d.lng) ? '' : ' is-day');
+      pin.dataset.id = d.id;
+      pin.innerHTML =
+        '<span class="pin-dot"></span>' +
+        '<span class="pin-label">' + (d.city.zh ? '<span class="pin-zh">' + d.city.zh + '</span>' : '') +
+        '<span class="pin-en">' + d.city.name + '</span>' +
+        (d.current ? '<span class="pin-here">&middot; home</span>' : '') + '</span>';
+      // Keep the orbit controls from capturing the pointer, or the click never lands
+      pin.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+      pin.addEventListener('click', function (e) { e.stopPropagation(); openCity(d.id); });
+      return pin;
+    }
+
+    // ─── Panel ───
+    var panel = document.getElementById('panel');
+
+    function openCity(id) {
+      var c = CITIES[id];
+      pauseSpin(0);
+      document.getElementById('hint').classList.add('gone');
+      // Nudge the camera so the city sits left of the panel on desktop
+      world.pointOfView({ lat: c.lat - (mobile ? 12 : 0), lng: c.lng + (mobile ? 0 : 22), altitude: mobile ? 3 : 1.35 }, 1600);
+
+      var status = c === HERE ? '<span class="red">home</span>' : (c.tag || '');
+      document.getElementById('pZh').textContent = c.zh || '';
+      document.getElementById('pZh').style.display = c.zh ? '' : 'none';
+      panel.style.gridTemplateColumns = c.zh ? '' : '1fr';
+      document.getElementById('pZh').className = 'panel-zh' + (c === HERE ? '' : ' amber');
+      document.getElementById('pName').textContent = c.name;
+      document.getElementById('pMeta').innerHTML =
+        fmt(c.lat, 'N', 'S') + ' ' + fmt(c.lng, 'E', 'W') + '<br>' +
+        'local ' + localTime(c.tz) + ' &middot; ' + (isNight(c.lat, c.lng) ? 'night' : 'day') + (status ? ' &middot; ' + status : '');
+      document.getElementById('pCopy').innerHTML = c.copy;
+      document.getElementById('pCopy').style.display = c.copy ? '' : 'none';
+      document.getElementById('pLinks').innerHTML =
+        c.links.map(function (l) {
+          return '<a href="' + l.href + '"' + (l.primary ? ' class="primary"' : '') + '>' + l.label + '</a>';
+        }).join('') + (c.soon ? '<span class="panel-soon">' + c.soon + '</span>' : '');
+      panel.classList.add('open');
+    }
+
+    function closePanel() {
+      if (!panel.classList.contains('open')) return;
+      panel.classList.remove('open');
+      var pov = world.pointOfView();
+      world.pointOfView({ lat: pov.lat, lng: pov.lng, altitude: restAltitude }, 1400);
+      pauseSpin(1600);
+    }
+
+    document.getElementById('panelClose').addEventListener('click', closePanel);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
+
+    // The secret (see secret.js): type 29 and the globe turns to where the book began
+    window.__twentyNine = function () {
+      openCity('grindelwald');
+      document.getElementById('pCopy').innerHTML = 'where 29 began';
+      document.getElementById('pCopy').style.display = '';
+      world.ringsData([HERE, { lat: 46.6696, lng: 8.0210, lake: true }]);
+    };
+    if (location.hash === '#29') setTimeout(window.__twentyNine, 2200);
+
+    window.addEventListener('resize', function () {
+      world.width(window.innerWidth).height(window.innerHeight);
+    });
+
+    startRain(document.getElementById('rain'), 0.8);
+
+    // The hint fades once you've found your footing
+    setTimeout(function () { document.getElementById('hint').classList.add('gone'); }, 9000);
+  </script>
+
+  <script src="secret.js"></script>
+</body>
+</html>
