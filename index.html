@@ -27,9 +27,9 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&family=Tilt+Neon&family=Doto:wght@900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&family=Doto:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json" as="fetch" crossorigin>
   <link rel="stylesheet" href="neon.css?v=20261001">
   <style>
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
@@ -267,8 +267,8 @@
     </div>
   </aside>
 
-  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0"></script>
   <script src="rain.js"></script>
   <script>
     // ─── Home ───
@@ -413,7 +413,7 @@
     var MINE = ['United States of America', 'United Kingdom', 'France', 'Spain', 'China', 'Switzerland'];
 
     // Land as a field of dim dots, like a city seen from a plane at night
-    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json')
       .then(function (r) { return r.json(); })
       .then(function (topo) {
         var land = topojson.feature(topo, topo.objects.countries).features
