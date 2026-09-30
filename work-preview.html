@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index of Work — Stephie</title>
+  <meta name="description" content="Stephie designs AI agents and teaches teams to work alongside them. Builds, essays on evals and agent reliability, and a career across Amazon, Harry&rsquo;s, Morgan Stanley, and a startup of her own.">
+  <meta name="robots" content="noindex">
+  <meta property="og:title" content="Index of Work — Stephie">
+  <meta property="og:description" content="Builds, essays, and a career in AI and products.">
+  <link rel="canonical" href="https://stephiesworld.com/work.html">
+  <meta property="og:image" content="https://stephiesworld.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="neon.css">
+  <style>
+    body { overflow-y: auto; overflow-x: hidden; }
+
+    .top {
+      position: fixed; z-index: 10; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.8rem 2.4rem 1.2rem;
+      background: linear-gradient(to bottom, rgba(5, 5, 7, 0.95), transparent);
+    }
+    .top .nav { display: flex; gap: 1.6rem; }
+
+    .page {
+      position: relative; z-index: 3;
+      max-width: 1060px; margin: 0 auto; padding: 9rem 2.4rem 4rem;
+      display: grid; grid-template-columns: 200px 1fr; gap: 4rem;
+    }
+
+    /* ─── Sticky index ─── */
+    .toc { position: sticky; top: 9rem; align-self: start; opacity: 0; animation: appear 1.2s ease 0.3s forwards; }
+    .toc .title { display: flex; align-items: baseline; gap: 0.6rem; }
+    .toc h1 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.9rem; line-height: 1.05; color: var(--cream); }
+    .toc .sub { margin-top: 0.8rem; font-size: 0.52rem; line-height: 1.9; }
+    .toc ol { list-style: none; margin-top: 2.4rem; }
+    .toc a {
+      display: flex; gap: 0.8rem; align-items: baseline; padding: 0.35rem 0;
+      font-size: 0.58rem; color: var(--cream-faint); transition: color 0.3s ease;
+    }
+    .toc a:hover, .toc a.on { color: var(--cream); }
+
+    /* ─── Sections ─── */
+    section { padding-bottom: 5rem; scroll-margin-top: 8rem; opacity: 0; animation: appear 1.2s ease forwards; }
+    section:nth-of-type(1) { animation-delay: 0.5s; }
+    section:nth-of-type(n+2) { animation-delay: 0.7s; }
+
+    .sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.6rem; }
+    .sec-head .num { font-size: 0.55rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
+    .sec-head h2 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.9rem; color: var(--cream); }
+    .sec-head::after { content: ''; flex: 1; height: 1px; background: var(--line); align-self: center; }
+    .intro { padding-bottom: 3.6rem; }
+    .intro p:first-child { font-family: var(--serif); font-size: 1.45rem; line-height: 1.55; color: var(--cream); max-width: 32em; }
+    .intro-links { margin-top: 1.2rem; display: flex; gap: 1.8rem; font-size: 0.6rem; }
+    .intro-links a { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
+    .intro-links a:hover { letter-spacing: 0.22em; }
+    .lede { font-family: var(--serif); font-size: 1.08rem; line-height: 1.7; color: var(--cream-dim); max-width: 36em; margin-bottom: 1.8rem; }
+
+    /* ─── Essay table ─── */
+    .rows { list-style: none; border-bottom: 1px solid var(--line); }
+    .row-cat { padding: 1.8rem 0 0.7rem; font-size: 0.56rem; color: var(--neon); border-bottom: 1px solid var(--line); }
+    .rows li:first-child.row-cat { padding-top: 0; }
+    .row {
+      display: grid; grid-template-columns: 2.6rem 1fr auto 1.4rem; align-items: baseline; gap: 1rem;
+      padding: 0.95rem 0.2rem; border-bottom: 1px solid var(--line);
+      position: relative; transition: background 0.4s ease, padding 0.4s ease;
+    }
+    .rows li:last-child .row { border-bottom: none; }
+    .row::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+      background: var(--neon); box-shadow: 0 0 8px var(--neon); opacity: 0; transition: opacity 0.3s ease;
+    }
+    .row:hover { background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); padding-left: 0.8rem; }
+    .row:hover::before { opacity: 1; }
+    .row .no { font-size: 0.58rem; color: var(--cream-faint); }
+    .row:hover .no { color: var(--neon); }
+    .row .rt { font-family: var(--serif); font-size: 1.2rem; line-height: 1.35; color: var(--cream-dim); transition: color 0.3s ease; }
+    .row:hover .rt { color: var(--cream); }
+    .row .rs { color: var(--cream-faint); }
+    .row .rd { font-size: 0.52rem; white-space: nowrap; }
+    .row .ar { font-size: 0.8rem; color: var(--cream-faint); text-align: right; transition: color 0.3s ease, transform 0.3s ease; }
+    .row:hover .ar { color: var(--neon); transform: translate(2px, -2px); }
+
+    /* ─── Builds ─── */
+    .builds-label { font-size: 0.55rem; color: var(--neon); margin-bottom: 0.8rem; }
+    .builds { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .build { display: flex; flex-direction: column; padding: 1.6rem 1.5rem 1.4rem; background: var(--ink); transition: background 0.4s ease; position: relative; }
+    .build:hover { background: #0d070a; }
+    .build::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--neon); box-shadow: 0 0 10px var(--neon); opacity: 0; transition: opacity 0.4s ease; }
+    .build:hover::after { opacity: 1; }
+    .build h3 { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.6rem; color: var(--cream); }
+    .build h3 a { display: flex; justify-content: space-between; align-items: baseline; width: 100%; color: inherit; }
+    .build h3 a:hover { text-shadow: 0 0 12px var(--neon-soft); }
+    .build details { margin-top: 1rem; }
+    .build summary { list-style: none; cursor: pointer; font-size: 0.5rem; color: var(--cream-faint); transition: color 0.3s ease; }
+    .build summary::-webkit-details-marker { display: none; }
+    .build summary::before { content: '+ '; color: var(--neon); }
+    .build details[open] summary::before { content: '\2212  '; }
+    .build summary:hover { color: var(--cream); }
+    .build details dl { margin-top: 0.9rem; }
+    .build .foot .url:hover { color: var(--cream); }
+    .build h3 span { font-family: var(--mono); font-style: normal; font-size: 0.8rem; color: var(--cream-faint); transition: color 0.3s ease; }
+    .build:hover h3 span { color: var(--neon); }
+    .build .what { margin-top: 0.2rem; font-family: var(--serif); font-size: 1.05rem; color: var(--cream-dim); }
+    .build dl { margin-top: 1.1rem; display: grid; gap: 0.8rem; }
+    .build dt { font-size: 0.5rem; color: var(--neon); }
+    .build dd { margin-top: 0.25rem; font-size: 0.66rem; line-height: 1.75; color: var(--cream-faint); letter-spacing: 0.01em; }
+    .build .foot { margin-top: auto; padding-top: 1.2rem; display: flex; justify-content: space-between; gap: 1rem; font-size: 0.5rem; }
+    .build .foot .url { color: var(--cream-dim); text-transform: none; letter-spacing: 0.06em; }
+    .build .foot .kind { color: var(--amber); text-align: right; }
+
+    /* ─── Book ─── */
+    .book { display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; padding: 2rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .book .big { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 5rem; line-height: 0.9; color: var(--neon); text-shadow: 0 0 20px var(--neon-soft), 0 0 60px var(--neon-faint); }
+    .book .k { font-size: 0.52rem; }
+    .book .more { display: inline-block; margin-top: 0.8rem; font-size: 0.56rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
+    .book .more:hover { letter-spacing: 0.22em; }
+    .book p.d { margin-top: 0.6rem; font-family: var(--serif); font-size: 1.15rem; line-height: 1.6; color: var(--cream-dim); }
+
+    /* ─── Experience ─── */
+
+    /* ─── Contact ─── */
+    .contact { display: flex; flex-wrap: wrap; gap: 2rem; }
+    .contact a { font-size: 0.62rem; color: var(--cream-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
+    .contact a:hover { color: var(--cream); text-shadow: 0 0 10px var(--neon-soft); }
+
+    @media (max-width: 760px) {
+      .top { padding: 1.2rem 1rem 1rem; }
+      .top .nav { gap: 1rem; }
+      .page { grid-template-columns: 1fr; gap: 0; padding: 6rem 1rem 2rem; }
+      .toc { position: static; margin-bottom: 3rem; }
+      .toc ol { display: none; }
+      .sec-head h2 { font-size: 1.6rem; }
+      .row { grid-template-columns: 2rem 1fr 1rem; }
+      .row .rd { display: none; }
+      .row .rt { font-size: 1.08rem; }
+      .builds { grid-template-columns: 1fr; }
+      .book { grid-template-columns: 1fr; gap: 1rem; }
+    }
+  
+    main, .fcard, .fbody, .mb > div { min-width: 0; }
+    .shot img, .mb img { max-width: 100%; }
+
+    /* ─── Featured builds ─── */
+    .feature { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    .fcard { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--ink); transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease; }
+    .fcard:hover { border-color: var(--neon-soft); box-shadow: 0 0 30px rgba(255, 45, 74, 0.12); transform: translateY(-2px); }
+    .shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); position: relative; }
+    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: saturate(0.85) brightness(0.85); transition: filter 0.4s ease, transform 0.6s ease; }
+    .fcard:hover .shot img { filter: none; transform: scale(1.03); }
+    .fbody { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.2rem 1.2rem 1.1rem; flex: 1; }
+    .fbody h3 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.55rem; line-height: 1; color: var(--cream); }
+    .fbody .what { font-family: var(--serif); font-size: 1.02rem; color: var(--cream-dim); }
+    .fbody .how { font-size: 0.64rem; line-height: 1.75; color: var(--cream-faint); letter-spacing: 0.01em; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .chip { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: lowercase; color: var(--amber); border: 1px solid rgba(255, 177, 92, 0.25); padding: 0.25rem 0.5rem; }
+    .flinks { margin-top: auto; padding-top: 0.6rem; display: flex; gap: 1.2rem; font-size: 0.56rem; }
+    .flinks a { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
+    .flinks a:hover { letter-spacing: 0.2em; }
+
+    .more-builds { list-style: none; margin-top: 1.6rem; border-top: 1px solid var(--line); }
+    .mb { display: grid; grid-template-columns: 96px 1fr auto; gap: 1.1rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+    .mb img { width: 96px; height: auto; display: block; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border: 1px solid var(--line); filter: saturate(0.8) brightness(0.8); transition: filter 0.3s ease; }
+    .mb:hover img { filter: none; }
+    .mb .t { font-family: var(--serif); font-size: 1.15rem; color: var(--cream); }
+    .mb .d { margin-top: 0.15rem; font-family: var(--serif); font-size: 0.98rem; color: var(--cream-faint); }
+    .mb .l { display: flex; gap: 1rem; font-size: 0.52rem; white-space: nowrap; }
+    .mb .l a { color: var(--neon); }
+
+    /* ─── Start here ─── */
+    .picks { list-style: none; border-top: 1px solid var(--line); }
+    .pick { display: grid; grid-template-columns: 1fr 1.4rem; gap: 1rem; align-items: baseline; padding: 1.1rem 0.2rem; border-bottom: 1px solid var(--line); transition: padding 0.4s ease, background 0.4s ease; }
+    .pick:hover { padding-left: 0.8rem; background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); }
+    .pick .t { font-family: var(--serif); font-size: 1.3rem; color: var(--cream); }
+    .pick .why { display: block; margin-top: 0.25rem; font-size: 0.62rem; color: var(--cream-faint); letter-spacing: 0.02em; }
+    .pick .ar { color: var(--cream-faint); }
+    .pick:hover .ar { color: var(--neon); }
+    .all { display: inline-block; margin-top: 1rem; font-size: 0.56rem; color: var(--cream-dim); }
+    .all:hover { color: var(--cream); }
+
+    /* ─── Toolkit ─── */
+    .kit { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .kit span { font-size: 0.6rem; letter-spacing: 0.08em; color: var(--cream-dim); border: 1px solid var(--line); padding: 0.45rem 0.7rem; }
+
+    /* ─── Before ─── */
+    .before { list-style: none; border-top: 1px solid var(--line); }
+    .before a { display: grid; grid-template-columns: 6.5rem 1fr auto; gap: 1rem; align-items: baseline; padding: 0.9rem 0.2rem; border-bottom: 1px solid var(--line); transition: padding 0.4s ease, background 0.4s ease; }
+    .before a:hover { padding-left: 0.8rem; background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); }
+    .before .yr { font-size: 0.56rem; color: var(--neon); font-variant-numeric: tabular-nums; }
+    .before .co { font-family: var(--serif); font-size: 1.2rem; color: var(--cream); }
+    .before .role { display: block; margin-top: 0.15rem; font-size: 0.58rem; color: var(--cream-faint); letter-spacing: 0.04em; }
+    .before .ar { font-size: 0.52rem; color: var(--cream-faint); }
+    .before a:hover .ar { color: var(--neon); }
+
+    @media (max-width: 960px) {
+      .feature { grid-template-columns: 1fr; }
+      .shot { aspect-ratio: 16 / 9; }
+    }
+    @media (max-width: 760px) {
+      .mb { grid-template-columns: 72px 1fr; }
+      .mb img { width: 72px; height: auto; }
+      .mb .l { grid-column: 2; }
+      .before a { grid-template-columns: 1fr auto; }
+      .before .yr { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas class="fx fx-rain" id="rain"></canvas>
+  <div class="fx fx-vignette"></div>
+  <div class="fx fx-scan"></div>
+  <div class="fx fx-grain"></div>
+
+  <div class="top">
+    <a href="index.html" class="hud nav">&larr; world</a>
+    <nav class="hud nav">
+      <a href="about.html">about</a>
+      <a href="nyc.html#work">new york</a>
+    </nav>
+  </div>
+
+  <div class="page">
+
+    <aside class="toc">
+      <div class="title"><h1>Index of Work</h1></div>
+      <p class="hud sub">products, systems, and writing<br>rev. 2026.09</p>
+      <ol class="hud" id="toc">
+        <li><a href="#builds">builds</a></li>
+        <li><a href="#start">start here</a></li>
+        <li><a href="#toolkit">toolkit</a></li>
+        <li><a href="#before">before</a></li>
+        <li><a href="#writing">all writing</a></li>
+        <li><a href="#book">book</a></li>
+      </ol>
+    </aside>
+
+    <main>
+
+      <section class="intro">
+        <p>I design AI agents and teach teams to work alongside them. Before that: customer success and pricing at Amazon, a food-tech startup I founded, product launches at Harry&rsquo;s, and AI for wealth management at Morgan Stanley.</p>
+        <p class="intro-links hud">
+          <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
+          <a href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
+          <a href="https://github.com/stephiesworld" target="_blank" rel="noopener">github &#8599;</a>
+        </p>
+      </section>
+
+      <section id="builds">
+        <div class="sec-head"><span class="num hud">01</span><h2>Selected builds</h2></div>
+        <p class="lede">Prototypes I design under Studio Felix: projects for AI adoption, each one made to train teams to work with agents.</p>
+        <div class="feature">
+          <article class="fcard">
+            <a class="shot" href="https://henry-ten.vercel.app" target="_blank" rel="noopener"><img src="images/builds/henry.jpg" alt="Henry, live" loading="lazy" width="960" height="600"></a>
+            <div class="fbody">
+              <h3>Henry</h3>
+              <p class="what">Amazon 1P vendor operations.</p>
+              <p class="how">Agentic tool-calling with web search for research; deterministic code for the financial math. Classifies chargebacks by root cause and drafts the dispute. Graded by evals.</p>
+              <div class="chips"><span class="chip">tool use</span><span class="chip">evals</span><span class="chip">deterministic math</span></div>
+              <p class="flinks hud"><a href="https://henry-ten.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/henry" target="_blank" rel="noopener">code &#8599;</a></p>
+            </div>
+          </article>
+          <article class="fcard">
+            <a class="shot" href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener"><img src="images/builds/cherry.jpg" alt="Cherry, live" loading="lazy" width="960" height="600"></a>
+            <div class="fbody">
+              <h3>Cherry</h3>
+              <p class="what">Voice-of-customer triage.</p>
+              <p class="how">Searches the open web for feedback, clusters it into issues, and ranks them by severity, then reach, then recency. Your corrections re-rank it.</p>
+              <div class="chips"><span class="chip">clustering</span><span class="chip">ranking</span><span class="chip">human-in-the-loop</span></div>
+              <p class="flinks hud"><a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/cherry" target="_blank" rel="noopener">code &#8599;</a></p>
+            </div>
+          </article>
+          <article class="fcard">
+            <a class="shot" href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><img src="images/builds/stanley.jpg" alt="Stanley, live" loading="lazy" width="960" height="600"></a>
+            <div class="fbody">
+              <h3>Stanley</h3>
+              <p class="what">Calendar agent.</p>
+              <p class="how">Reads the week&rsquo;s schedule and proposes one-line fixes over Telegram, by voice. The write to the calendar is gated in code, so it never acts without confirmation.</p>
+              <div class="chips"><span class="chip">agent</span><span class="chip">voice</span><span class="chip">gated writes</span></div>
+              <p class="flinks hud"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/stanley" target="_blank" rel="noopener">code &#8599;</a></p>
+            </div>
+          </article>
+        </div>
+        <ul class="more-builds">
+          <li class="mb"><a href="https://getofframp.vercel.app" target="_blank" rel="noopener"><img src="images/builds/offramp.jpg" alt="offramp" loading="lazy" width="960" height="600"></a>
+            <div><p class="t">offramp</p><p class="d">Personal finance, debriefed. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;eval loop &middot; client-side</span></p></div>
+            <p class="l hud"><a href="https://getofframp.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p></li>
+          <li class="mb"><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener"><img src="images/builds/loop.jpg" alt="Loop" loading="lazy" width="960" height="600"></a>
+            <div><p class="t">Loop</p><p class="d">The org-wide feedback loop, as a product. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;internal tools &middot; prototype</span></p></div>
+            <p class="l hud"><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p></li>
+          <li class="mb"><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener"><img src="images/builds/portraits.jpg" alt="Portraits" loading="lazy" width="960" height="600"></a>
+            <div><p class="t">Portraits</p><p class="d">Live data storytelling. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;live public data</span></p></div>
+            <p class="l hud"><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/portraits" target="_blank" rel="noopener">code &#8599;</a></p></li>
+          <li class="mb"><a href="https://eluna.space" target="_blank" rel="noopener"><img src="images/builds/eluna.jpg" alt="Eluna" loading="lazy" width="960" height="600"></a>
+            <div><p class="t">Eluna</p><p class="d">Memory architecture. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;memory layer</span></p></div>
+            <p class="l hud"><a href="https://eluna.space" target="_blank" rel="noopener">live &#8599;</a></p></li>
+        </ul>
+      </section>
+
+      <section id="start">
+        <div class="sec-head"><span class="num hud">02</span><h2>Start here</h2></div>
+        <ul class="picks">
+          <li><a class="pick" href="writing/investigations-not-just-code.html"><span><span class="t">Agent workflows aren&rsquo;t just for engineers</span><span class="why">An agent investigation built end to end: taxonomy, tools, evals, and autonomy earned one step at a time.</span></span><span class="ar">&#8599;</span></a></li>
+          <li><a class="pick" href="writing/agent-as-factory.html"><span><span class="t">Your AI agent is a factory</span><span class="why">Agent reliability, run as a quality system.</span></span><span class="ar">&#8599;</span></a></li>
+          <li><a class="pick" href="writing/why-the-human-stays-in-the-loop.html"><span><span class="t">An opinion with edit access</span><span class="why">Why a correction only counts once you measure it.</span></span><span class="ar">&#8599;</span></a></li>
+        </ul>
+        <a class="all hud" href="#writing">all writing &darr;</a>
+      </section>
+
+      <section id="toolkit">
+        <div class="sec-head"><span class="num hud">03</span><h2>Toolkit</h2></div>
+        <div class="kit hud">
+          <span>Anthropic &amp; OpenAI APIs</span><span>Claude Code</span><span>Cursor</span><span>Codex</span>
+          <span>function calling</span><span>structured outputs</span><span>evals</span>
+          <span>agentic &amp; human-in-the-loop systems</span>
+          <span>TypeScript</span><span>Next.js</span><span>SQL</span><span>Supabase / Postgres</span><span>Vercel</span>
+        </div>
+      </section>
+
+      <section id="before">
+        <div class="sec-head"><span class="num hud">04</span><h2>Before</h2></div>
+        <ul class="before">
+          <li><a href="nyc.html#amazon"><span class="yr hud">2024 &ndash; 2026</span><span><span class="co">Amazon</span><span class="role hud">Senior Customer Success Manager &middot; Pricing SME</span></span><span class="ar hud">on the map &rarr;</span></a></li>
+          <li><a href="nyc.html#littlebun"><span class="yr hud">2022 &ndash; 2024</span><span><span class="co">Little Bun</span><span class="role hud">Founder &amp; CEO</span></span><span class="ar hud">on the map &rarr;</span></a></li>
+          <li><a href="nyc.html#harrys"><span class="yr hud">2019 &ndash; 2021</span><span><span class="co">Harry&rsquo;s</span><span class="role hud">Senior Associate Program Manager &middot; Global R&amp;D</span></span><span class="ar hud">on the map &rarr;</span></a></li>
+          <li><a href="nyc.html#morganstanley"><span class="yr hud">2018 &ndash; 2019</span><span><span class="co">Morgan Stanley</span><span class="role hud">Senior Data Science Analyst &middot; AI for Wealth Management</span></span><span class="ar hud">on the map &rarr;</span></a></li>
+        </ul>
+      </section>
+
+      <section id="writing">
+        <div class="sec-head"><span class="num hud">05</span><h2>All writing</h2></div>
+        <ul class="rows">
+        <!-- essays:start -->
+        <li class="row-cat hud">&mdash; Customer feedback, at scale</li>
+        <li><a class="row" href="writing/who-is-feedback-for.html"><span class="no hud">01</span><span class="rt">Who is feedback for?</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li><a class="row" href="writing/the-first-pass-by-the-numbers.html"><span class="no hud">02</span><span class="rt">The first pass, by the numbers</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li><a class="row" href="writing/why-the-human-stays-in-the-loop.html"><span class="no hud">03</span><span class="rt">An opinion with edit access</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li class="row-cat hud">&mdash; Building with AI</li>
+        <li><a class="row" href="writing/your-data-is-already-a-graph.html"><span class="no hud">04</span><span class="rt">Your data is already a graph</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li><a class="row" href="writing/building-without-a-spec.html"><span class="no hud">05</span><span class="rt">Building without a finished spec</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li><a class="row" href="writing/memory-architecture.html"><span class="no hud">06</span><span class="rt">The thread that replied in poetry</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li class="row-cat hud">&mdash; AI &amp; the enterprise</li>
+        <li><a class="row" href="writing/customer-signal-into-product.html"><span class="no hud">07</span><span class="rt">The sifting is the hard part</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li><a class="row" href="writing/investigations-not-just-code.html"><span class="no hud">08</span><span class="rt">Agent workflows aren&#x27;t just for engineers</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li><a class="row" href="writing/the-dumpling-was-the-stress-test.html"><span class="no hud">09</span><span class="rt">The dumpling was the stress test</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li><a class="row" href="writing/agent-as-factory.html"><span class="no hud">10</span><span class="rt">Your AI agent is a factory</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
+        <li class="row-cat hud">&mdash; Reference</li>
+        <li><a class="row" href="writing/eval-cheat-sheet.html"><span class="no hud">11</span><span class="rt">Eval Cheat Sheet <span class="rs">&mdash; an easy way to understand what an eval is</span></span><span class="rd hud">cheat sheet</span><span class="ar">&#8599;</span></a></li>
+        <li><a class="row" href="writing/harness-cheat-sheet.html"><span class="no hud">12</span><span class="rt">Harness Cheat Sheet <span class="rs">&mdash; the machinery around the model</span></span><span class="rd hud">cheat sheet</span><span class="ar">&#8599;</span></a></li>
+        <!-- essays:end -->
+        </ul>
+      </section>
+
+      <section id="book">
+        <div class="sec-head"><span class="num hud">06</span><h2>Book</h2></div>
+        <div class="book">
+          <span class="big flicker">29</span>
+          <div>
+            <p class="k hud">literary speculative novel &middot; in progress</p>
+            <p class="d">An alien infiltrates Wall Street and slowly falls in love with the ordinary business of being human.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="rain.js"></script>
+  <script>
+    startRain(document.getElementById('rain'), 0.4);
+
+    var links = document.querySelectorAll('#toc a');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
+  </script>
+
+  <script src="secret.js"></script>
+</body>
+</html>

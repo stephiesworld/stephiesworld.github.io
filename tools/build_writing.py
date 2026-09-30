@@ -146,11 +146,14 @@ def main():
         rows.append(
             f'        <li><a class="row" href="writing/{slug}.html"><span class="no hud">{n:02d}</span>'
             f'<span class="rt">{name} <span class="rs">&mdash; {sub}</span></span><span class="rd hud">cheat sheet</span><span class="ar">&#8599;</span></a></li>')
-    work = ROOT / 'work.html'
-    src = work.read_text(encoding='utf-8')
-    src = re.sub(r'(<!-- essays:start -->\n).*?(\s*<!-- essays:end -->)',
-                 lambda m: m.group(1) + '\n'.join(rows) + m.group(2), src, flags=re.S)
-    work.write_text(src, encoding='utf-8')
+    for name in ('work.html', 'work-preview.html'):
+        work = ROOT / name
+        if not work.exists():
+            continue
+        src = work.read_text(encoding='utf-8')
+        src = re.sub(r'(<!-- essays:start -->\n).*?(\s*<!-- essays:end -->)',
+                     lambda m: m.group(1) + '\n'.join(rows) + m.group(2), src, flags=re.S)
+        work.write_text(src, encoding='utf-8')
 
     # ─── Sitemap ───
     today = datetime.date.today().isoformat()
