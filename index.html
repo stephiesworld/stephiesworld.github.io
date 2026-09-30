@@ -69,6 +69,22 @@
       pointer-events: none;
     }
     .nav a.lit .arrow { margin-left: 0.35em; }
+
+    /* Smaller signs beside it, each its own colour of tube */
+    .nav a.sign {
+      font-family: 'Tilt Neon', var(--mono); font-size: 0.86rem; letter-spacing: 0.16em; text-transform: uppercase;
+      animation: sign-on 2s steps(1, end) both;
+      transition: filter 0.3s ease;
+    }
+    .nav a.sign.teal {
+      color: #dffff9; animation-delay: 0.9s;
+      text-shadow: 0 0 2px #fff, 0 0 5px #6fcfc0, 0 0 12px #3fb8ac, 0 0 24px rgba(63, 184, 172, 0.6);
+    }
+    .nav a.sign.amber {
+      color: #fff1dc; animation-delay: 1.15s;
+      text-shadow: 0 0 2px #fff, 0 0 5px #ffc27a, 0 0 12px #ffb15c, 0 0 24px rgba(255, 177, 92, 0.55);
+    }
+    .nav a.sign:hover { filter: brightness(1.3); color: #fff; }
     .nav a.lit .bad { animation: tube 9s steps(1, end) 5s infinite; }
     .nav a.lit:hover { filter: brightness(1.25) saturate(1.1); }
 
@@ -81,7 +97,7 @@
       87% { opacity: 0.15; text-shadow: none; } 89% { opacity: 1; } 90% { opacity: 0.25; text-shadow: none; } 93% { opacity: 1; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .nav a.lit, .nav a.lit .bad { animation: none; }
+      .nav a.lit, .nav a.lit .bad, .nav a.sign { animation: none; }
     }
 
     .now-dot {
@@ -213,8 +229,8 @@
   </header>
 
   <nav class="corner tr hud nav">
-    <a href="about.html">about</a>
-    <a href="books.html">reading</a>
+    <a href="about.html" class="sign teal">about</a>
+    <a href="books.html" class="sign amber">reading</a>
     <a href="work.html" class="lit" aria-label="Work"><span>W</span><span>O</span><span class="bad">R</span><span>K</span><span class="arrow">&rarr;</span></a>
   </nav>
 
