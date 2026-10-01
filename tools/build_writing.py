@@ -77,6 +77,8 @@ def render(body):
     out = markdown.markdown(body, extensions=['tables', 'fenced_code', 'sane_lists'])
     for i, svg in enumerate(svgs):
         out = out.replace(f'<p>SVGPLATE{i}</p>', f'<figure class="plate">{svg}</figure>')
+    # Diagrams kept as image files get the same plate
+    out = re.sub(r'<p>(<img [^>]*>)</p>', r'<figure class="plate">\1</figure>', out)
 
     # Links written for the old site
     out = re.sub(r'href="/writing/([\w-]+)"', r'href="\1.html"', out)
