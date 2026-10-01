@@ -30,7 +30,7 @@
 .title { display: flex; align-items: baseline; gap: 0.8rem; }
 .title h1 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.3rem; line-height: 1; color: var(--cream); }
 .title .zh { font-family: var(--zh); font-size: 1.2rem; color: var(--neon); text-shadow: 0 0 12px var(--neon-soft), 0 0 30px var(--neon-faint); }
-.subtitle { margin-top: 0.7rem; font-size: 0.55rem; }
+.subtitle { margin-top: 0.7rem; font-size: 0.64rem; }
 
 .tabs { display: flex; gap: 1.3rem; margin: 2rem 0 1.1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--line); }
 .tab {
@@ -45,18 +45,18 @@
 
 .list { overflow-y: auto; scrollbar-width: none; flex: 1; min-height: 0; padding-right: 0.5rem; }
 .list::-webkit-scrollbar { display: none; }
-.list-cat { margin: 1.1rem 0 0.35rem; font-size: 0.5rem; color: var(--g); opacity: 0.7; }
+.list-cat { margin: 1.1rem 0 0.35rem; font-size: 0.64rem; color: var(--g); opacity: 0.7; }
 .list-cat:first-child { margin-top: 0; }
 
 .item {
   display: flex; gap: 0.9rem; align-items: baseline; width: 100%;
   background: none; border: none; cursor: pointer; text-align: left;
   padding: 0.4rem 0; color: var(--cream-dim);
-  font-family: var(--serif); font-size: 1.05rem; font-weight: 300; line-height: 1.3;
+  font-family: var(--read); font-size: 1.05rem; font-weight: 400; line-height: 1.3;
   transition: color 0.3s ease, transform 0.3s ease;
 }
-.item .n { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; color: var(--cream-faint); width: 1.2rem; flex: none; }
-.item .yr { margin-left: auto; font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; color: var(--cream-faint); }
+.item .n { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; color: var(--cream-faint); width: 1.2rem; flex: none; }
+.item .yr { margin-left: auto; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.08em; color: var(--cream-faint); }
 .item:hover, .item.active { color: var(--cream); transform: translateX(4px); }
 .item.active .n { color: var(--g); text-shadow: 0 0 8px var(--g-soft); }
 .item.compact { font-size: 0.98rem; padding: 0.28rem 0; }
@@ -77,7 +77,7 @@
 }
 .mk-label {
   position: absolute; left: 12px; top: -8px; white-space: nowrap;
-  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--cream-dim); text-shadow: 0 0 6px #000, 0 0 12px #000;
   opacity: 0; transition: opacity 0.3s ease, color 0.3s ease;
   pointer-events: none;
@@ -110,22 +110,22 @@
 .card::-webkit-scrollbar { display: none; }
 .card.open { opacity: 1; transform: translate(0, -50%); pointer-events: auto; }
 
-.card-kicker { font-size: 0.55rem; }
+.card-kicker { font-size: 0.64rem; }
 .card-kicker i { font-style: normal; color: var(--g); }
 .card-name { margin-top: 0.6rem; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.1rem; line-height: 1.05; color: var(--cream); }
-.card-role { margin-top: 0.55rem; font-size: 0.58rem; color: var(--g); line-height: 1.8; }
-.card-addr { margin-top: 0.8rem; font-size: 0.55rem; line-height: 1.9; }
-.card-copy { margin-top: 1.2rem; font-family: var(--serif); font-size: 1.04rem; line-height: 1.6; color: var(--cream-dim); }
+.card-role { margin-top: 0.55rem; font-size: 0.64rem; color: var(--g); line-height: 1.8; }
+.card-addr { margin-top: 0.8rem; font-size: 0.64rem; line-height: 1.9; }
+.card-copy { margin-top: 1.2rem; font-family: var(--read); font-size: 1.04rem; line-height: 1.6; color: var(--cream-dim); }
 .card-copy a { color: var(--cream); border-bottom: 1px solid var(--g-soft); }
 .card-did { margin-top: 1.1rem; padding-left: 0.9rem; border-left: 1px solid var(--g-faint); list-style: none; }
-.card-did li { font-size: 0.66rem; line-height: 1.75; color: var(--cream-faint); letter-spacing: 0.02em; }
+.card-did li { font-size: 0.7rem; line-height: 1.75; color: var(--cream-faint); letter-spacing: 0.02em; }
 .card-did li + li { margin-top: 0.45rem; }
-.card-tags-label { margin: 1.5rem 0 0.7rem; font-size: 0.52rem; }
+.card-tags-label { margin: 1.5rem 0 0.7rem; font-size: 0.64rem; }
 .card .tag { border-color: var(--g-faint); }
 .card .tag:hover { border-color: var(--g-soft); }
 
 .card-links { margin-top: 1.6rem; display: flex; flex-direction: column; gap: 0.6rem; }
-.card-links a { font-size: 0.56rem; color: var(--g); text-shadow: 0 0 8px var(--g-soft); transition: letter-spacing 0.3s ease; }
+.card-links a { font-size: 0.64rem; color: var(--g); text-shadow: 0 0 8px var(--g-soft); transition: letter-spacing 0.3s ease; }
 .card-links a:hover { letter-spacing: 0.22em; }
 
 .card-close {
@@ -177,7 +177,7 @@ body.flash::after { opacity: 1; transition: none; }
 }
 
 /* Tabs: small tube signs in their group's colour; the open one is lit */
-.tab { font-family: 'Tilt Neon', var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; }
+.tab { font-family: 'Tilt Neon', var(--mono); font-size: 0.76rem; letter-spacing: 0.16em; }
 .tab .dot { display: none; }
 .tab { color: rgba(239, 228, 214, 0.38); }
 .tab:hover { color: rgba(239, 228, 214, 0.7); }
@@ -185,7 +185,7 @@ body.flash::after { opacity: 1; transition: none; }
 
 /* Place names on the map read like shop signs */
 .mk-label {
-  font-family: 'Tilt Neon', var(--mono); font-size: 0.66rem; letter-spacing: 0.12em;
+  font-family: 'Tilt Neon', var(--mono); font-size: 0.7rem; letter-spacing: 0.12em;
   color: #fff4ee; text-shadow: 0 0 2px #fff, 0 0 5px var(--g), 0 0 12px var(--g-soft), 0 0 3px #000;
 }
 .mk:hover .mk-label, .mk.active .mk-label { color: #fff; }
@@ -199,3 +199,6 @@ body.flash::after { opacity: 1; transition: none; }
 }
 @media (max-width: 760px) { .title h1 { font-size: 1.25rem; } }
 @media (prefers-reduced-motion: reduce) { .title h1 { animation: none; } }
+
+/* Reading text: a sturdier serif at a normal weight, so it holds up on a phone */
+body { font-weight: 400; }
