@@ -249,7 +249,7 @@
     .sat-wing { position: absolute; top: -0.5px; width: 7px; height: 1px; background: var(--c-soft); }
     .sat-wing.l { left: -12px; } .sat-wing.r { left: 5px; }
     .sat-label {
-      position: absolute; left: 16px; top: -8px; white-space: nowrap;
+      position: absolute; left: 16px; top: -10px; white-space: nowrap;
       display: flex; align-items: baseline; gap: 0.5rem;
       transition: transform 0.35s ease;
     }
@@ -257,27 +257,29 @@
       font-family: 'Tilt Neon', var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase;
       color: #fff; text-shadow: 0 0 2px #fff, 0 0 5px var(--c), 0 0 12px var(--c), 0 0 22px var(--c-soft);
     }
-    .sat-tag { font-family: 'Doto', var(--mono); font-weight: 900; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); opacity: 0.75; }
     .sat:hover .sat-label { transform: translateX(3px); }
     .sat.flip .sat-label { left: auto; right: 16px; flex-direction: row-reverse; }
     .sat.flip:hover .sat-label { transform: translateX(-3px); }
     .sat.henry   { --c: #7fb2ff; --c-soft: rgba(127, 178, 255, 0.5); }
     .sat.cherry  { --c: #ff5a78; --c-soft: rgba(255, 90, 120, 0.5); }
     .sat.stanley { --c: #6fcfc0; --c-soft: rgba(111, 207, 192, 0.5); }
-    /* Delphi hasn't launched: an unlit outline, a dashed orbit, a countdown */
-    .sat.ghost { --c: #c9b6ff; --c-soft: rgba(201, 182, 255, 0.35); }
-    .sat.ghost .sat-body { background: transparent; border: 1px solid var(--c-soft); box-shadow: none; animation: standby 3.2s ease-in-out infinite; }
-    .sat.ghost .sat-wing { opacity: 0.4; }
-    .sat.ghost .sat-name { color: rgba(239, 228, 214, 0.5); text-shadow: 0 0 6px var(--c-soft); }
-    @keyframes standby { 50% { opacity: 0.3; } }
-    .sat.ghost .sat-body.on { animation: none; }
+    .sat.delphi  { --c: #8dffa0; --c-soft: rgba(141, 255, 160, 0.45); }
+    /* Each build's symbol, drawn as a little neon tube */
+    .sat-icon {
+      width: 18px; height: 18px; align-self: center; flex: none;
+      fill: none; stroke: var(--c); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+      filter: drop-shadow(0 0 2px var(--c)) drop-shadow(0 0 6px var(--c-soft));
+    }
+    .sat-icon .fill { fill: var(--c); stroke: none; }
 
     .panel-meta .sat-c { color: var(--sat-c, var(--cream)); text-shadow: 0 0 8px var(--sat-c, transparent); }
 
+    /* On a phone the names would crowd the cities, so only the symbol rides along */
     @media (max-width: 720px) {
-      .sat-label { display: none; }
+      .sat-name { display: none; }
+      .sat-label { left: 12px; top: -10px; }
+      .sat.flip .sat-label { right: 12px; }
     }
-    @media (prefers-reduced-motion: reduce) { .sat.ghost .sat-body { animation: none; } }
   </style>
 </head>
 <body>
@@ -475,10 +477,18 @@
       { id: 'stanley', name: 'Stanley', rgb: '111,207,192', incl: 112, node: 150, alt: 0.46, period: 230, phase: 280,
         meta: 'Calendar agent', copy: 'Reads the week and proposes one-line fixes over Telegram, by voice. Never writes to the calendar without a yes.',
         links: [{ href: 'https://stanley-butler.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
-      { id: 'delphi', name: 'Delphi', rgb: '201,182,255', incl: 40, node: 230, alt: 0.55, period: 420, phase: 100, ghost: true,
-        meta: 'Pre-launch', copy: 'The 100 most popular stocks on Robinhood, explained the way a CEO would explain them.',
-        links: [], soon: 'launching soon' }
+      { id: 'delphi', name: 'Delphi', rgb: '141,255,160', incl: 40, node: 230, alt: 0.55, period: 270, phase: 100,
+        meta: 'Stock stories', copy: 'The 100 most popular stocks on Robinhood, explained the way a CEO would explain them.',
+        links: [{ href: 'https://delphi-stocks.vercel.app', label: 'Live &#8599;', primary: true, ext: true }] }
     ];
+
+    // 24×24 line drawings: a cherry, Henry's toolbox, Stanley the bear, Delphi's candlesticks
+    var ICONS = {
+      henry: '<rect x="3" y="9" width="18" height="11" rx="1.5"/><path d="M9 9V6.5h6V9M3 13.5h18M11 12.5v2.5h2v-2.5"/>',
+      cherry: '<circle cx="7" cy="17" r="3.6"/><circle cx="16.5" cy="18" r="3.6"/><path d="M7 13.4C8 9 10.5 5.5 14 3.5M16.5 14.4C16 10 15 6.5 14 3.5M14 3.5c2.5-1 5.5-.4 6.5 1.6-2.6.9-5 .4-6.5-1.6z"/>',
+      stanley: '<circle cx="6" cy="6.5" r="2.6"/><circle cx="18" cy="6.5" r="2.6"/><circle cx="12" cy="13" r="7.5"/><ellipse cx="12" cy="16" rx="3" ry="2.2"/><circle class="fill" cx="9.2" cy="11.4" r="1"/><circle class="fill" cx="14.8" cy="11.4" r="1"/><circle class="fill" cx="12" cy="15.2" r="0.9"/>',
+      delphi: '<path d="M5 4v16M12 2.5v19M19 6v13"/><rect x="3.5" y="10" width="3" height="6" rx=".5"/><rect x="10.5" y="5.5" width="3" height="9" rx=".5"/><rect x="17.5" y="8" width="3" height="7" rx=".5"/>'
+    };
 
     function orbitPoint(s, deg) {
       var i = s.incl * RAD, o = s.node * RAD, t = deg * RAD;
@@ -490,9 +500,7 @@
     var ORBIT_PATHS = SATS.map(function (s) {
       var pts = [];
       for (var d = 0; d <= 360; d += 3) { var q = orbitPoint(s, d); pts.push([q[0], q[1], s.alt]); }
-      return s.ghost
-        ? { points: pts, color: 'rgba(' + s.rgb + ',0.4)', stroke: 0.5, dash: 0.006, gap: 0.014 }
-        : { points: pts, color: 'rgba(' + s.rgb + ',0.28)', stroke: 0.5, dash: 1, gap: 0 };
+      return { points: pts, color: 'rgba(' + s.rgb + ',0.42)', stroke: 0.6, dash: 1, gap: 0 };
     });
 
     // Countries that hold one of my cities burn a little warmer
@@ -660,12 +668,12 @@
     var stillMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     SATS.forEach(function (s) {
       var n = document.createElement('div');
-      n.className = 'sat ' + s.id + (s.ghost ? ' ghost' : '');
+      n.className = 'sat ' + s.id;
       n.setAttribute('role', 'button');
       n.setAttribute('aria-label', s.name);
       n.innerHTML = '<span class="sat-wing l"></span><span class="sat-body"></span><span class="sat-wing r"></span>' +
-        '<span class="sat-label"><span class="sat-name">' + s.name + '</span>' +
-        (s.ghost ? '<span class="sat-tag">T&minus;soon</span>' : '') + '</span>';
+        '<span class="sat-label"><svg class="sat-icon" viewBox="0 0 24 24" aria-hidden="true">' + ICONS[s.id] + '</svg>' +
+        '<span class="sat-name">' + s.name + '</span></span>';
       n.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
       n.addEventListener('click', function (e) { e.stopPropagation(); openSat(s); });
       satLayer.appendChild(n);
@@ -707,14 +715,14 @@
       document.getElementById('pName').textContent = s.name;
       var meta = document.getElementById('pMeta');
       meta.style.setProperty('--sat-c', 'rgb(' + s.rgb + ')');
-      meta.innerHTML = '<span class="sat-c">' + (s.ghost ? 'pre-launch' : 'in orbit') + '</span> &middot; alt ' +
+      meta.innerHTML = '<span class="sat-c">' + 'in orbit' + '</span> &middot; alt ' +
         Math.round(s.alt * 6371).toLocaleString('en-US') + ' km<br>' + s.meta;
       document.getElementById('pCopy').innerHTML = s.copy;
       document.getElementById('pCopy').style.display = '';
       document.getElementById('pLinks').innerHTML =
         s.links.map(function (l) {
           return '<a href="' + l.href + '"' + (l.primary ? ' class="primary"' : '') + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + l.label + '</a>';
-        }).join('') + (s.soon ? '<span class="panel-soon">' + s.soon + '</span>' : '');
+        }).join('');
       panel.classList.add('open');
       document.body.classList.add('panel-open');
     }
