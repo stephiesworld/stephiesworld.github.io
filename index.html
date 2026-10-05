@@ -229,6 +229,55 @@
     #status b, #coords b { font-weight: 900; color: #ffd08a; }
     #status .now-dot { background: #ff5a3c; box-shadow: 0 0 6px #ff5a3c; }
     #hint { font-size: 0.72rem; }
+
+    /* ─── Satellites: the builds, in orbit ─── */
+    #sats { position: fixed; inset: 0; z-index: 5; pointer-events: none; }
+    .sat {
+      position: absolute; left: 0; top: 0; width: 0; height: 0;
+      pointer-events: auto; cursor: pointer; opacity: 0;
+      transition: opacity 0.6s ease;
+      --c: #fff; --c-soft: rgba(255, 255, 255, 0.5);
+    }
+    .sat.up { opacity: 1; }
+    .sat.down { pointer-events: none; }
+    .sat::before { content: ''; position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; }
+    /* body: a small lit diamond with two thin solar-panel wings */
+    .sat-body {
+      position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; transform: rotate(45deg);
+      background: var(--c); box-shadow: 0 0 6px var(--c), 0 0 16px var(--c-soft);
+    }
+    .sat-wing { position: absolute; top: -0.5px; width: 7px; height: 1px; background: var(--c-soft); }
+    .sat-wing.l { left: -12px; } .sat-wing.r { left: 5px; }
+    .sat-label {
+      position: absolute; left: 16px; top: -8px; white-space: nowrap;
+      display: flex; align-items: baseline; gap: 0.5rem;
+      transition: transform 0.35s ease;
+    }
+    .sat-name {
+      font-family: 'Tilt Neon', var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #fff; text-shadow: 0 0 2px #fff, 0 0 5px var(--c), 0 0 12px var(--c), 0 0 22px var(--c-soft);
+    }
+    .sat-tag { font-family: 'Doto', var(--mono); font-weight: 900; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); opacity: 0.75; }
+    .sat:hover .sat-label { transform: translateX(3px); }
+    .sat.flip .sat-label { left: auto; right: 16px; flex-direction: row-reverse; }
+    .sat.flip:hover .sat-label { transform: translateX(-3px); }
+    .sat.henry   { --c: #7fb2ff; --c-soft: rgba(127, 178, 255, 0.5); }
+    .sat.cherry  { --c: #ff5a78; --c-soft: rgba(255, 90, 120, 0.5); }
+    .sat.stanley { --c: #6fcfc0; --c-soft: rgba(111, 207, 192, 0.5); }
+    /* Delphi hasn't launched: an unlit outline, a dashed orbit, a countdown */
+    .sat.ghost { --c: #c9b6ff; --c-soft: rgba(201, 182, 255, 0.35); }
+    .sat.ghost .sat-body { background: transparent; border: 1px solid var(--c-soft); box-shadow: none; animation: standby 3.2s ease-in-out infinite; }
+    .sat.ghost .sat-wing { opacity: 0.4; }
+    .sat.ghost .sat-name { color: rgba(239, 228, 214, 0.5); text-shadow: 0 0 6px var(--c-soft); }
+    @keyframes standby { 50% { opacity: 0.3; } }
+    .sat.ghost .sat-body.on { animation: none; }
+
+    .panel-meta .sat-c { color: var(--sat-c, var(--cream)); text-shadow: 0 0 8px var(--sat-c, transparent); }
+
+    @media (max-width: 720px) {
+      .sat-label { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { .sat.ghost .sat-body { animation: none; } }
   </style>
 </head>
 <body>
@@ -236,6 +285,8 @@
   <h1 class="sr-only">Stephie</h1>
 
   <div id="globe" aria-label="Globe of the cities in Stephie's world"></div>
+
+  <div id="sats" aria-label="Builds in orbit"></div>
 
   <canvas class="fx fx-rain" id="rain"></canvas>
   <div class="fx fx-vignette"></div>
@@ -410,6 +461,40 @@
       return paths.map(function (pts) { return { points: pts }; });
     }
 
+
+    // ─── Builds in orbit ───
+    // Cities are where I've been; satellites are what I've launched from here.
+    // Each orbit is a tilted circle (inclination, node) at its own height; period in seconds.
+    var SATS = [
+      { id: 'henry', name: 'Henry', rgb: '127,178,255', incl: 24, node: 10, alt: 0.3, period: 150, phase: 40,
+        meta: 'Amazon 1P vendor ops', copy: 'Classifies chargebacks by root cause and drafts the dispute. Graded by evals.',
+        links: [{ href: 'https://henry-ten.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
+      { id: 'cherry', name: 'Cherry', rgb: '255,90,120', incl: 58, node: 75, alt: 0.38, period: 190, phase: 160,
+        meta: 'Voice-of-customer triage', copy: 'Finds feedback across the open web, clusters it into issues, and ranks them. Your corrections re-rank it.',
+        links: [{ href: 'https://cherry-topaz.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
+      { id: 'stanley', name: 'Stanley', rgb: '111,207,192', incl: 112, node: 150, alt: 0.46, period: 230, phase: 280,
+        meta: 'Calendar agent', copy: 'Reads the week and proposes one-line fixes over Telegram, by voice. Never writes to the calendar without a yes.',
+        links: [{ href: 'https://stanley-butler.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
+      { id: 'delphi', name: 'Delphi', rgb: '201,182,255', incl: 40, node: 230, alt: 0.55, period: 420, phase: 100, ghost: true,
+        meta: 'Pre-launch', copy: 'The 100 most popular stocks on Robinhood, explained the way a CEO would explain them.',
+        links: [], soon: 'launching soon' }
+    ];
+
+    function orbitPoint(s, deg) {
+      var i = s.incl * RAD, o = s.node * RAD, t = deg * RAD;
+      var u = [Math.cos(o), Math.sin(o), 0];
+      var v = [-Math.sin(o) * Math.cos(i), Math.cos(o) * Math.cos(i), Math.sin(i)];
+      var p = [Math.cos(t) * u[0] + Math.sin(t) * v[0], Math.cos(t) * u[1] + Math.sin(t) * v[1], Math.cos(t) * u[2] + Math.sin(t) * v[2]];
+      return [Math.asin(p[2]) / RAD, Math.atan2(p[1], p[0]) / RAD];
+    }
+    var ORBIT_PATHS = SATS.map(function (s) {
+      var pts = [];
+      for (var d = 0; d <= 360; d += 3) { var q = orbitPoint(s, d); pts.push([q[0], q[1], s.alt]); }
+      return s.ghost
+        ? { points: pts, color: 'rgba(' + s.rgb + ',0.4)', stroke: 0.5, dash: 0.006, gap: 0.014 }
+        : { points: pts, color: 'rgba(' + s.rgb + ',0.28)', stroke: 0.5, dash: 1, gap: 0 };
+    });
+
     // Countries that hold one of my cities burn a little warmer
     var MINE = ['United States of America', 'United Kingdom', 'France', 'Spain', 'China', 'Switzerland'];
 
@@ -451,7 +536,7 @@
       var sun = subsolar(new Date());
       SUN = vec(sun.lat, sun.lng);
       world.hexPolygonColor(function (f) { return landColor(f); });
-      world.pathsData(terminator());
+      world.pathsData(terminator().concat(ORBIT_PATHS));
       document.querySelectorAll('.pin').forEach(function (pin) {
         var c = CITIES[pin.dataset.id];
         if (c) pin.classList.toggle('is-day', !isNight(c.lat, c.lng));
@@ -461,11 +546,11 @@
       .pathPoints('points')
       .pathPointLat(function (p) { return p[0]; })
       .pathPointLng(function (p) { return p[1]; })
-      .pathPointAlt(0.004)
-      .pathColor(function () { return 'rgba(255,177,92,0.7)'; })
-      .pathStroke(0.9)
-      .pathDashLength(0.02)
-      .pathDashGap(0.015)
+      .pathPointAlt(function (p) { return p[2] != null ? p[2] : 0.004; })
+      .pathColor(function (d) { return d.color || 'rgba(255,177,92,0.7)'; })
+      .pathStroke(function (d) { return d.stroke || 0.9; })
+      .pathDashLength(function (d) { return d.dash != null ? d.dash : 0.02; })
+      .pathDashGap(function (d) { return d.gap != null ? d.gap : 0.015; })
       .pathTransitionDuration(0);
     paintSky();
     setInterval(paintSky, 5 * 60 * 1000);
@@ -561,10 +646,77 @@
     function closePanel() {
       if (!panel.classList.contains('open')) return;
       panel.classList.remove('open');
+      satsHeld = false;
       document.body.classList.remove('panel-open');
       var pov = world.pointOfView();
       world.pointOfView({ lat: pov.lat, lng: pov.lng, altitude: restAltitude }, 1400);
       pauseSpin(1600);
+    }
+
+
+    // ─── Satellites ───
+    // Plain DOM signs placed each frame at their orbit's screen position, hidden when the globe is in the way.
+    var satLayer = document.getElementById('sats');
+    var stillMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    SATS.forEach(function (s) {
+      var n = document.createElement('div');
+      n.className = 'sat ' + s.id + (s.ghost ? ' ghost' : '');
+      n.setAttribute('role', 'button');
+      n.setAttribute('aria-label', s.name);
+      n.innerHTML = '<span class="sat-wing l"></span><span class="sat-body"></span><span class="sat-wing r"></span>' +
+        '<span class="sat-label"><span class="sat-name">' + s.name + '</span>' +
+        (s.ghost ? '<span class="sat-tag">T&minus;soon</span>' : '') + '</span>';
+      n.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+      n.addEventListener('click', function (e) { e.stopPropagation(); openSat(s); });
+      satLayer.appendChild(n);
+      s.el = n;
+      s.angle = s.phase;
+    });
+
+    var satsHeld = false, lastT = performance.now();
+    (function flySats(t) {
+      var dt = Math.min(0.1, (t - lastT) / 1000); lastT = t;
+      var cam = world.camera().position, R = world.getGlobeRadius();
+      SATS.forEach(function (s) {
+        if (!satsHeld && !stillMotion) s.angle = (s.angle + dt * 360 / s.period) % 360;
+        var q = orbitPoint(s, s.angle);
+        var p = world.getCoords(q[0], q[1], s.alt);
+        // Is the globe between the camera and the satellite?
+        var d = [p.x - cam.x, p.y - cam.y, p.z - cam.z];
+        var k = -(cam.x * d[0] + cam.y * d[1] + cam.z * d[2]) / (d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+        var hidden = false;
+        if (k > 0 && k < 1) {
+          var c = [cam.x + k * d[0], cam.y + k * d[1], cam.z + k * d[2]];
+          hidden = Math.hypot(c[0], c[1], c[2]) < R;
+        }
+        var sc = world.getScreenCoords(q[0], q[1], s.alt);
+        s.el.style.transform = 'translate(' + sc.x.toFixed(1) + 'px,' + sc.y.toFixed(1) + 'px)';
+        s.el.classList.toggle('up', !hidden);
+        s.el.classList.toggle('down', hidden);
+        s.el.classList.toggle('flip', sc.x + 120 > window.innerWidth);
+      });
+      requestAnimationFrame(flySats);
+    })(lastT);
+
+    function openSat(s) {
+      pauseSpin(0);
+      satsHeld = true;
+      document.getElementById('hint').classList.add('gone');
+      document.getElementById('pZh').style.display = 'none';
+      panel.style.gridTemplateColumns = '1fr';
+      document.getElementById('pName').textContent = s.name;
+      var meta = document.getElementById('pMeta');
+      meta.style.setProperty('--sat-c', 'rgb(' + s.rgb + ')');
+      meta.innerHTML = '<span class="sat-c">' + (s.ghost ? 'pre-launch' : 'in orbit') + '</span> &middot; alt ' +
+        Math.round(s.alt * 6371).toLocaleString('en-US') + ' km<br>' + s.meta;
+      document.getElementById('pCopy').innerHTML = s.copy;
+      document.getElementById('pCopy').style.display = '';
+      document.getElementById('pLinks').innerHTML =
+        s.links.map(function (l) {
+          return '<a href="' + l.href + '"' + (l.primary ? ' class="primary"' : '') + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + l.label + '</a>';
+        }).join('') + (s.soon ? '<span class="panel-soon">' + s.soon + '</span>' : '');
+      panel.classList.add('open');
+      document.body.classList.add('panel-open');
     }
 
     document.getElementById('panelClose').addEventListener('click', closePanel);
