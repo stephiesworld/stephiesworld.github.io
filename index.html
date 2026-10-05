@@ -272,6 +272,7 @@
     }
     .sat-icon .fill { fill: var(--c); stroke: none; }
 
+    .panel-copy .origin { display: block; margin-top: 0.8rem; font-style: italic; font-size: 0.92rem; color: var(--cream-faint); }
     .panel-meta .sat-c { color: var(--sat-c, var(--cream)); text-shadow: 0 0 8px var(--sat-c, transparent); }
 
     /* On a phone the names would crowd the cities, so only the symbol rides along */
@@ -479,6 +480,7 @@
         links: [{ href: 'https://stanley-butler.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
       { id: 'delphi', name: 'Delphi', rgb: '141,255,160', incl: 40, node: 230, alt: 0.55, period: 270, phase: 100,
         meta: 'Stock stories', copy: 'The 100 most popular stocks on Robinhood, explained the way a CEO would explain them.',
+        origin: 'Inspired by six years of listening to hedge fund analysts explain the market.',
         links: [{ href: 'https://delphi-stocks.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] }
     ];
 
@@ -717,7 +719,7 @@
       meta.style.setProperty('--sat-c', 'rgb(' + s.rgb + ')');
       meta.innerHTML = '<span class="sat-c">' + 'in orbit' + '</span> &middot; alt ' +
         Math.round(s.alt * 6371).toLocaleString('en-US') + ' km<br>' + s.meta;
-      document.getElementById('pCopy').innerHTML = s.copy;
+      document.getElementById('pCopy').innerHTML = s.copy + (s.origin ? '<span class="origin">' + s.origin + '</span>' : '');
       document.getElementById('pCopy').style.display = '';
       document.getElementById('pLinks').innerHTML =
         s.links.map(function (l) {
