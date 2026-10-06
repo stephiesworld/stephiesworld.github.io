@@ -168,7 +168,7 @@
     .outro a:hover .hud:last-child { color: var(--neon); }
 
     /* ─── Featured builds ─── */
-    .feature { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+    .feature { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
     .fcard { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--ink); transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease; }
     .fcard:hover { border-color: var(--neon-soft); box-shadow: 0 0 30px rgba(255, 45, 74, 0.12); transform: translateY(-2px); }
     .shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); position: relative; }
@@ -184,7 +184,11 @@
     .flinks a { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
     .flinks a:hover { letter-spacing: 0.2em; }
 
-    .more-builds { list-style: none; margin-top: 1.6rem; border-top: 1px solid var(--line); }
+    .grave { margin-top: 3rem; }
+    .grave-h { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.35rem; color: var(--cream-dim); }
+    .grave-note { margin-top: 0.5rem; max-width: 36em; font-family: var(--read); font-size: 0.98rem; line-height: 1.55; color: var(--cream-faint); }
+    .grave .mb img { filter: grayscale(0.7) brightness(0.65); }
+    .more-builds { list-style: none; margin-top: 1.2rem; border-top: 1px solid var(--line); }
     .mb { display: grid; grid-template-columns: 96px 1fr auto; gap: 1.1rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
     .mb img { width: 96px; height: auto; display: block; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border: 1px solid var(--line); filter: saturate(0.8) brightness(0.8); transition: filter 0.3s ease; }
     .mb:hover img { filter: none; }
@@ -265,7 +269,7 @@
     <main>
 
       <section class="intro">
-        <p>I build with AI agents and help teams learn to work alongside them. Before that: customer success and pricing at Amazon, a food-tech startup I founded, product launches at Harry&rsquo;s, and AI for wealth management at Morgan Stanley.</p>
+        <p>These days I build with AI agents, and help teams get comfortable working alongside them.</p>
         <p class="intro-links hud">
           <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
           <a href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
@@ -308,18 +312,14 @@
               <p class="flinks hud"><a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/cherry" target="_blank" rel="noopener">code &#8599;</a></p>
             </div>
           </article>
-          <article class="fcard">
-            <a class="shot" href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><img src="images/builds/stanley.jpg" alt="Stanley, live" loading="lazy" width="960" height="600"></a>
-            <div class="fbody">
-              <h3>Stanley</h3>
-              <p class="what">Calendar agent.</p>
-              <p class="how">Reads the week&rsquo;s schedule and proposes one-line fixes over Telegram, by voice. The write to the calendar is gated in code, so it never acts without confirmation.</p>
-              <div class="chips"><span class="chip">agent</span><span class="chip">voice</span><span class="chip">gated writes</span></div>
-              <p class="flinks hud"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/stanley" target="_blank" rel="noopener">code &#8599;</a></p>
-            </div>
-          </article>
         </div>
+        <div class="grave" id="graveyard">
+          <h3 class="grave-h">Graveyard orbit</h3>
+          <p class="grave-note">Experiments I launched and stopped tending. They&rsquo;re rough, so please don&rsquo;t judge them as finished work. They&rsquo;re here as proof I went and looked into each idea.</p>
         <ul class="more-builds">
+          <li class="mb"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><img src="images/builds/stanley.jpg" alt="Stanley" loading="lazy" width="960" height="600"></a>
+            <div><p class="t">Stanley</p><p class="d">A calendar agent you talk to over Telegram. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;voice &middot; gated writes</span></p></div>
+            <p class="l hud"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/stanley" target="_blank" rel="noopener">code &#8599;</a></p></li>
           <li class="mb"><a href="https://getofframp.vercel.app" target="_blank" rel="noopener"><img src="images/builds/offramp.jpg" alt="offramp" loading="lazy" width="960" height="600"></a>
             <div><p class="t">offramp</p><p class="d">Personal finance, debriefed. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;eval loop &middot; client-side</span></p></div>
             <p class="l hud"><a href="https://getofframp.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p></li>
@@ -333,6 +333,7 @@
             <div><p class="t">Eluna</p><p class="d">Memory architecture. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;memory layer</span></p></div>
             <p class="l hud"><a href="https://eluna.space" target="_blank" rel="noopener">live &#8599;</a></p></li>
         </ul>
+        </div>
       </section>
 
       <section id="start">

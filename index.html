@@ -275,12 +275,16 @@
     .panel-copy .origin { display: block; margin-top: 0.8rem; font-style: italic; font-size: 0.92rem; color: var(--cream-faint); }
     .panel-meta .sat-c { color: var(--sat-c, var(--cream)); text-shadow: 0 0 8px var(--sat-c, transparent); }
 
-    /* On a phone the names would crowd the cities, so only the symbol rides along */
+    /* On a phone the names shrink a little so they stay quieter than the cities */
     @media (max-width: 720px) {
-      .sat-name { display: none; }
-      .sat-label { left: 12px; top: -10px; }
+      .sat-name { font-size: 0.56rem; letter-spacing: 0.12em; }
+      .sat-icon { width: 15px; height: 15px; }
+      .sat-label { left: 12px; top: -8px; gap: 0.35rem; }
       .sat.flip .sat-label { right: 12px; }
     }
+    /* Stanley is parked in the graveyard orbit: powered down, still circling */
+    .sat.retired.up { opacity: 0.45; }
+    .sat.retired .sat-body { box-shadow: none; }
   </style>
 </head>
 <body>
@@ -304,6 +308,7 @@
     <a href="about.html" class="sign teal">about</a>
     <a href="books.html" class="sign amber">reading</a>
     <a href="https://github.com/stephiesworld" class="sign pink" target="_blank" rel="noopener">github</a>
+    <a href="https://www.linkedin.com/in/sdelpaggio" class="sign teal" target="_blank" rel="noopener">linkedin</a>
   </nav>
 
   <div class="corner bl hud" id="status"></div>
@@ -476,9 +481,10 @@
       { id: 'cherry', name: 'Cherry', rgb: '255,90,120', incl: 58, node: 75, alt: 0.38, period: 190, phase: 160,
         meta: 'Voice-of-customer triage', copy: 'Finds feedback across the open web, clusters it into issues, and ranks them. Your corrections re-rank it.',
         links: [{ href: 'https://cherry-topaz.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
-      { id: 'stanley', name: 'Stanley', rgb: '111,207,192', incl: 112, node: 150, alt: 0.46, period: 230, phase: 280,
+      { id: 'stanley', name: 'Stanley', rgb: '111,207,192', incl: 112, node: 150, alt: 0.46, period: 460, phase: 280, retired: true,
         meta: 'Calendar agent', copy: 'Reads the week and proposes one-line fixes over Telegram, by voice. Never writes to the calendar without a yes.',
-        links: [{ href: 'https://stanley-butler.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
+        origin: 'Parked in the graveyard orbit: an early experiment I stopped tending.',
+        links: [{ href: 'https://stanley-butler.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#graveyard', label: 'On the work page &rarr;' }] },
       { id: 'delphi', name: 'Delphi', rgb: '141,255,160', incl: 40, node: 230, alt: 0.55, period: 270, phase: 100,
         meta: 'Stock stories', copy: 'The 100 most popular stocks on Robinhood, explained the way a CEO would explain them.',
         origin: 'Inspired by six years of listening to hedge fund analysts explain the market.',
@@ -503,7 +509,9 @@
     var ORBIT_PATHS = SATS.map(function (s) {
       var pts = [];
       for (var d = 0; d <= 360; d += 3) { var q = orbitPoint(s, d); pts.push([q[0], q[1], s.alt]); }
-      return { points: pts, color: 'rgba(' + s.rgb + ',0.42)', stroke: 0.6, dash: 1, gap: 0 };
+      return s.retired
+        ? { points: pts, color: 'rgba(' + s.rgb + ',0.22)', stroke: 0.5, dash: 0.006, gap: 0.014 }
+        : { points: pts, color: 'rgba(' + s.rgb + ',0.42)', stroke: 0.6, dash: 1, gap: 0 };
     });
 
     // Countries that hold one of my cities burn a little warmer
@@ -671,7 +679,7 @@
     var stillMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     SATS.forEach(function (s) {
       var n = document.createElement('div');
-      n.className = 'sat ' + s.id;
+      n.className = 'sat ' + s.id + (s.retired ? ' retired' : '');
       n.setAttribute('role', 'button');
       n.setAttribute('aria-label', s.name);
       n.innerHTML = '<span class="sat-wing l"></span><span class="sat-body"></span><span class="sat-wing r"></span>' +
@@ -718,7 +726,7 @@
       document.getElementById('pName').textContent = s.name;
       var meta = document.getElementById('pMeta');
       meta.style.setProperty('--sat-c', 'rgb(' + s.rgb + ')');
-      meta.innerHTML = '<span class="sat-c">' + 'in orbit' + '</span> &middot; alt ' +
+      meta.innerHTML = '<span class="sat-c">' + (s.retired ? 'graveyard orbit' : 'in orbit') + '</span> &middot; alt ' +
         Math.round(s.alt * 6371).toLocaleString('en-US') + ' km<br>' + s.meta;
       document.getElementById('pCopy').innerHTML = s.copy + (s.origin ? '<span class="origin">' + s.origin + '</span>' : '');
       document.getElementById('pCopy').style.display = '';
