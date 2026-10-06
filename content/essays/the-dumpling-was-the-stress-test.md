@@ -1,5 +1,5 @@
 ---
-title: "The dumpling was the stress test"
+title: "What a dumpling taught me about AI agents"
 date: "2026-07-22"
 order: 9
 category: "Notes"
