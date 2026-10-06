@@ -31,7 +31,10 @@ SITE = 'https://stephiesworld.com'
 # Section order on the work index; anything uncategorized lands in "Essays" at the end.
 CATEGORY_ORDER = ['Customer feedback, at scale', 'Building with AI', 'AI & the enterprise', 'Essays']
 
-# Reference papers live in writing/ as standalone pages and continue the numbering.
+# Pinned to the top of the writing column on work.html, in this order.
+START_HERE = ['investigations-not-just-code', 'agent-as-factory', 'why-the-human-stays-in-the-loop']
+
+# Reference papers live in writing/ as standalone pages and close out the writing column.
 REFERENCE = [
     ('eval-cheat-sheet', 'Eval Cheat Sheet', 'an easy way to understand what an eval is'),
     ('harness-cheat-sheet', 'Harness Cheat Sheet', 'the machinery around the model'),
@@ -120,6 +123,8 @@ def main():
             nav += '<span></span>'
         if next_e:
             nav += f'<a class="pn next" href="{next_e["slug"]}.html"><span class="hud">next &rarr;</span><span class="pt">{html.escape(next_e["title"])}</span></a>'
+        e['minutes'] = max(1, math.ceil(words / 230))
+        e['dek'] = description(body)
         (OUT / f'{e["slug"]}.html').write_text(page.substitute(
             title=html.escape(e['title']),
             description=html.escape(description(body)),
@@ -132,22 +137,22 @@ def main():
             nav=nav,
         ), encoding='utf-8')
 
-    # ─── Essay list on work.html ───
-    rows, last_cat, n = [], None, 0
-    for e in essays:
-        if e['category'] != last_cat:
-            last_cat = e['category']
-            rows.append(f'        <li class="row-cat hud">&mdash; {html.escape(e["category"])}</li>')
-        n += 1
+    # ─── Writing tiles on work.html: start-here picks pinned, then newest first, then the cheat sheets ───
+    by_slug = {e['slug']: e for e in essays}
+    pinned = [by_slug[s] for s in START_HERE if s in by_slug]
+    rest = sorted([e for e in essays if e['slug'] not in START_HERE],
+                  key=lambda e: (e['raw_date'], e['order'] or 0), reverse=True)
+    rows = []
+    for e in pinned + rest:
+        kicker = ('<span class="pin">start here</span> &middot; ' if e in pinned else '') + html.escape(e['category'])
         rows.append(
-            f'        <li><a class="row" href="writing/{e["slug"]}.html"><span class="no hud">{n:02d}</span>'
-            f'<span class="rt">{html.escape(e["title"])}</span><span class="rd hud">{e["date"]}</span><span class="ar">&#8599;</span></a></li>')
-    rows.append('        <li class="row-cat hud">&mdash; Reference</li>')
+            f'        <li class="tile"><a href="writing/{e["slug"]}.html"><span class="cat hud">{kicker}</span>'
+            f'<span class="tt">{html.escape(e["title"])}</span><span class="dk">{html.escape(e["dek"])}</span>'
+            f'<span class="meta hud">{e["date"]} &middot; {e["minutes"]} min read</span></a></li>')
     for slug, name, sub in REFERENCE:
-        n += 1
         rows.append(
-            f'        <li><a class="row" href="writing/{slug}.html"><span class="no hud">{n:02d}</span>'
-            f'<span class="rt">{name} <span class="rs">&mdash; {sub}</span></span><span class="rd hud">cheat sheet</span><span class="ar">&#8599;</span></a></li>')
+            f'        <li class="tile ref"><a href="writing/{slug}.html"><span class="cat hud">cheat sheet</span>'
+            f'<span class="tt">{name}</span><span class="dk">{sub[0].upper() + sub[1:]}.</span></a></li>')
     for name in ('work.html', 'work-preview.html'):
         work = ROOT / name
         if not work.exists():
