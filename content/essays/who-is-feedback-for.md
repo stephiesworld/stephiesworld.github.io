@@ -2,12 +2,13 @@
 title: "Who is feedback for?"
 date: "2026-07-10"
 order: 1
-category: "Customer feedback, at scale"
+category: "Field guides"
+dek: "A feedback system succeeds or fails on the exit side: who reads the signal, what they need it for, and how it should be shaped for them."
 ---
 
-Every feedback system I've seen obsesses over intake. More channels, more forms, more listening. Intake matters, but whether the system is useful gets decided on the exit side, by **who reads the mail**.
+Every feedback system I've seen obsesses over intake: more channels, more forms, more listening. Intake matters, but whether the system is useful gets decided on the exit side, by **who reads the mail**.
 
-I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, around two questions for every team that consumes customer signal: *what is their goal?* And: *how should the same signal be presented to them?* Once I drew the whole thing, most of the design decisions fell out of the picture on their own.
+I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, around two questions for every team that uses customer signal: *what is their goal?* and *how should the same signal be presented to them?* Once I drew the whole system, most of the design decisions fell out of the picture on their own.
 
 <svg viewBox="0 0 700 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Feedback flows from five sources into a triage core that screens, classifies, and weighs it, then out to five teams, each with its own goal and presentation; users feed the sources and receive closure; capability signals cross a permission gate into model development, whose improvements change the product and generate new signal." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -23,7 +24,7 @@ I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, a
     .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
   </style>
   <!-- SOURCES -->
-  <text x="340" y="16" text-anchor="middle" class="band">SIGNAL IN — every window has a tint</text>
+  <text x="340" y="16" text-anchor="middle" class="band">SIGNAL IN · every window has a tint</text>
   <g>
     <rect x="8"   y="28" width="124" height="46" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
     <text x="70" y="46" text-anchor="middle" class="smb">FIELD &amp; SALES CALLS</text>
@@ -48,16 +49,16 @@ I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, a
   <line x1="612" y1="74" x2="436" y2="128" stroke="#000" stroke-width="1.2" marker-end="url(#a)"/>
   <!-- TRIAGE CORE -->
   <rect x="120" y="134" width="440" height="150" fill="#fff" stroke="#000" stroke-width="2"/>
-  <text x="340" y="154" text-anchor="middle" class="band">THE TRIAGE CORE — one system of record</text>
+  <text x="340" y="154" text-anchor="middle" class="band">THE TRIAGE CORE · one system of record</text>
   <rect x="136" y="166" width="408" height="30" fill="#f3f3f3" stroke="#000" stroke-width="1"/>
   <text x="146" y="185" class="smb">SCREEN</text>
-  <text x="215" y="185" class="sm">real people? representative? — bots, astroturf, venting bias</text>
+  <text x="215" y="185" class="sm">real people? representative? · bots, astroturf, venting bias</text>
   <rect x="136" y="202" width="408" height="30" fill="#f3f3f3" stroke="#000" stroke-width="1"/>
   <text x="146" y="221" class="smb">CLASSIFY</text>
   <text x="215" y="221" class="sm">bug or tradeoff? one-off ticket or capability gap? use case?</text>
   <rect x="136" y="238" width="408" height="30" fill="#f3f3f3" stroke="#000" stroke-width="1"/>
   <text x="146" y="257" class="smb">WEIGH</text>
-  <text x="215" y="257" class="sm">severity · reach · recency · $ at stake — no mystery number</text>
+  <text x="215" y="257" class="sm">severity · reach · recency · $ at stake · no mystery number</text>
   <line x1="200" y1="284" x2="78"  y2="348" stroke="#000" stroke-width="1.2" marker-end="url(#a)"/>
   <line x1="270" y1="284" x2="212" y2="348" stroke="#000" stroke-width="1.2" marker-end="url(#a)"/>
   <line x1="340" y1="284" x2="340" y2="348" stroke="#000" stroke-width="1.2" marker-end="url(#a)"/>
@@ -75,12 +76,12 @@ I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, a
     <text x="206" y="372" text-anchor="middle" class="lbl">RESEARCH / MODEL</text>
     <text x="206" y="390" text-anchor="middle" class="sm">goal: capability gaps</text>
     <text x="206" y="404" text-anchor="middle" class="smb">cut: systemic, authentic</text>
-    <text x="206" y="416" text-anchor="middle" class="smb">patterns — not tickets</text>
+    <text x="206" y="416" text-anchor="middle" class="smb">patterns · not tickets</text>
     <rect x="280" y="354" width="124" height="92" fill="#fff" stroke="#000" stroke-width="1.5"/>
     <text x="342" y="372" text-anchor="middle" class="lbl">GTM &amp; SALES</text>
     <text x="342" y="390" text-anchor="middle" class="sm">goal: renew &amp; expand</text>
     <text x="342" y="404" text-anchor="middle" class="smb">cut: breadth, recency,</text>
-    <text x="342" y="416" text-anchor="middle" class="smb">$ at stake — get ahead</text>
+    <text x="342" y="416" text-anchor="middle" class="smb">$ at stake · get ahead</text>
     <rect x="416" y="354" width="124" height="92" fill="#fff" stroke="#000" stroke-width="1.5"/>
     <text x="478" y="372" text-anchor="middle" class="lbl">SUPPORT</text>
     <text x="478" y="390" text-anchor="middle" class="sm">goal: respond now</text>
@@ -95,7 +96,7 @@ I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, a
   <!-- MODEL DEVELOPMENT -->
   <line x1="206" y1="446" x2="206" y2="500" stroke="#B01E36" stroke-width="1.6" marker-end="url(#ac)"/>
   <rect x="192" y="470" width="14" height="14" fill="#fff" stroke="#B01E36" stroke-width="1.2"/>
-  <text x="216" y="481" class="sm" fill="#B01E36">permission gate — default-deny</text>
+  <text x="216" y="481" class="sm" fill="#B01E36">permission gate · default-deny</text>
   <rect x="96" y="506" width="220" height="58" fill="#B01E36"/>
   <text x="206" y="530" text-anchor="middle" style="font:700 10.5px 'IBM Plex Mono',monospace;fill:#fff;">MODEL DEVELOPMENT</text>
   <text x="206" y="548" text-anchor="middle" style="font:400 8.5px 'IBM Plex Mono',monospace;fill:#fff;">capability signals → training priorities</text>
@@ -118,36 +119,44 @@ I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, a
   <text x="694" y="300" class="sm" transform="rotate(90 694 300)">…which generates new signal</text>
   <!-- loop health -->
   <line x1="8" y1="650" x2="672" y2="650" stroke="#000" stroke-width="1"/>
-  <text x="8" y="672" class="smb">LOOP HEALTH — how you know it's alive:</text>
+  <text x="8" y="672" class="smb">LOOP HEALTH · how you know it's alive:</text>
   <text x="8" y="690" class="sm">time-to-triage (median and p90) · correction rate falling · roadmap citations at decision time · repeat submitters</text>
-  <text x="8" y="716" class="sm">A funnel moves signal one way and goes quiet. A loop returns something at every edge — closure to users, priorities to builders,</text>
+  <text x="8" y="716" class="sm">A funnel moves signal one way and goes quiet. A loop returns something at every edge · closure to users, priorities to builders,</text>
   <text x="8" y="730" class="sm">new signal to the top. If any return arrow goes dark, the loop is dying and the metrics above will say so before people do.</text>
 </svg>
 
-## The sources, and their tints
+## Every source has a tint
 
-No source is neutral. Support tickets over-represent what's broken; nobody files a ticket about a feature they love. Community and social are the loudest room, and the loudest room is self-selected — a complaint that dominates one review site but appears nowhere else may be concentrated in one segment. Telemetry tells you what users *do* but never *why*. Early-access cohorts are the one source you get to design — you choose who's in the room and what you ask them, which makes them the closest thing to a controlled experiment the loop has.
+No source is neutral. Support tickets over-represent what's broken, because nobody files a ticket about a feature they love. Community and social channels are the loudest room, and the loudest room is self-selected: a complaint that dominates one review site and appears nowhere else may belong to one segment. Telemetry tells you what users *do* but never *why*. Early-access groups are the one source you get to design, since you choose who's in the room and what you ask them. That makes them the closest thing the loop has to a controlled experiment.
 
-In practice, I never let one window decide what the weather is. Diversity of sources is the only real defense against mistaking a tint for the truth.
+So I never let one window decide what the weather is. A mix of sources is the only real defense against mistaking a tint for the truth.
 
 ## What the middle does
 
-A system that just forwards feedback is a mail sorter; the pile stays a pile, it just arrives sorted. The middle box has three real jobs. **Screen:** is this from real people, and is it representative? Public reviews get gamed; bots write templated outrage. **Classify:** is this a bug someone should fix, or a deliberate tradeoff customers hate — those route to completely different owners. And is it a one-off ticket, or a pattern that says what the product is fundamentally not good at yet? **Weigh:** severity, reach, recency, and revenue at stake as separate, visible dials. If the score is one opaque number, nobody trusts the ranking and everyone rebuilds their own spreadsheet.
+A system that only forwards feedback is a mail sorter. The pile is still a pile; it just arrives sorted. The middle has three real jobs.
+
+**Screen.** Is this from real people, and is it representative? Public reviews get gamed, and bots write templated outrage.
+
+**Classify.** Is this a bug someone should fix, or a deliberate tradeoff customers dislike? Those go to completely different owners. And is it a one-off, or a pattern that shows what the product isn't good at yet?
+
+**Weigh.** Severity, reach, recency, and revenue at stake, kept as separate, visible dials. If the score is one opaque number, nobody trusts the ranking and everyone rebuilds it in their own spreadsheet.
 
 ## The exits
 
 What reorganized the whole design was realizing that feedback goes to five teams doing five different jobs, and the same issue looks different to each of them.
 
-Each team's goal and cut are in the drawing. Leadership is the one worth spelling out, because it needs a category the other four would misroute: deliberate choices like pricing people hate or friction that's profitable, where the decision is strategic and "just fix it" is the wrong instruction.
+Each team's goal and view are in the drawing. Leadership is worth spelling out, because it needs a category the other four would misroute: deliberate choices, like pricing people dislike or friction that's profitable, where the decision is strategic and "just fix it" is the wrong instruction.
 
-In Cherry, this became the persona views: one triage, re-weighted per audience, with the weights visible. Whether something counts as high-signal depends on who's reading it.
+In Cherry, this became the persona views: one triage, re-weighted for each audience, with the weights visible. Whether something counts as high-signal depends on who's reading.
 
 ## The red arrow
 
-For an AI product, one exit deserves its own color. Some feedback is bigger than a ticket: evidence that the model itself falls short on a whole use case. That kind of signal should inform what the model is trained to get better at. It's the highest-leverage arrow in the diagram, and it also needs a gate, because customer data comes with contracts and not all of it may cross into training. The gate is default-deny: if a record's permissions are unknown, it doesn't cross. When it fails, it should fail by being overly careful.
+For an AI product, one exit gets its own color. Some feedback is bigger than a ticket: it's evidence that the model itself falls short on a whole use case. That signal should shape what the model is trained to get better at. It's the highest-leverage arrow in the diagram, and it needs a gate, because customer data comes with contracts and not all of it can be used for training. The gate is default-deny. If a record's permissions are unknown, it doesn't cross. When this gate fails, it should fail by being too careful.
 
 ## Closing the loop
 
-The difference between a feedback funnel and a feedback loop is the return arrows. Users who hear "you said, we did" keep talking, and users who get silence back eventually stop. The model that improves changes the product, which changes what people say about it, which is new signal for the outer loop. The dashed circle next to Users matters as much as the solid one: the segments with no voice in your evidence are simply unmeasured, and their silence is a gap in coverage.
+The difference between a feedback funnel and a feedback loop is the return arrows. Users who hear "you said, we did" keep talking. Users who hear nothing eventually stop. The model that improves changes the product, which changes what people say about it, which becomes new signal.
 
-If you're building anything like this, I'd start where I did, at the exit side with the two questions, and build the plumbing after.
+The dashed circle next to Users matters as much as the solid one. The segments with no voice in your evidence aren't satisfied; they're unmeasured, and their silence is a gap in coverage.
+
+If you're building anything like this, start where I did: at the exit side, with the two questions. Build the plumbing after.
