@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Index of Work — Stephie</title>
-  <meta name="description" content="Stephie builds with AI agents and helps teams learn to work alongside them. Builds, essays on evals and agent reliability, and a career across Amazon, Harry&rsquo;s, Morgan Stanley, and a startup of her own.">
+  <meta name="description" content="Stephie is curious about AI, markets, and stories. Builds, essays on evals and agent reliability, and a career across Amazon, Harry&rsquo;s, Morgan Stanley, and a startup of her own.">
   <meta property="og:title" content="Index of Work — Stephie">
   <meta property="og:description" content="Builds, essays, and a career in AI and products.">
   <link rel="canonical" href="https://stephiesworld.com/work.html">
@@ -15,7 +15,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&family=Doto:wght@900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="neon.css?v=20261001b">
   <style>
     body { font-weight: 400; }
@@ -26,6 +26,8 @@
       --cream-dim: rgba(239, 228, 214, 0.82);
       --cream-faint: rgba(239, 228, 214, 0.62);
       --line: rgba(239, 228, 214, 0.14);
+      /* One serif on this page: anything that asked for the display serif gets the reading one */
+      --serif: var(--read);
     }
     .fx-scan { opacity: 0.12; }
     .fx-grain { opacity: 0.05; }
@@ -42,21 +44,13 @@
 
     .page {
       position: relative; z-index: 3;
-      max-width: 1060px; margin: 0 auto; padding: 9rem 2.4rem 4rem;
-      display: grid; grid-template-columns: 200px 1fr; gap: 4rem;
+      max-width: 1240px; margin: 0 auto; padding: 8.5rem 2.4rem 4rem;
     }
 
-    /* ─── Sticky index ─── */
-    .toc { position: sticky; top: 9rem; align-self: start; opacity: 0; animation: appear 1.2s ease 0.3s forwards; }
-    .toc .title { display: flex; align-items: baseline; gap: 0.6rem; }
-    .toc h1 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.9rem; line-height: 1.05; color: var(--cream); }
-    .toc .sub { margin-top: 0.8rem; font-size: 0.64rem; line-height: 1.9; }
-    .toc ol { list-style: none; margin-top: 2.4rem; }
-    .toc a {
-      display: flex; gap: 0.8rem; align-items: baseline; padding: 0.35rem 0;
-      font-size: 0.7rem; color: var(--cream-faint); transition: color 0.3s ease;
-    }
-    .toc a:hover, .toc a.on { color: var(--cream); }
+    /* Builds and writing side by side, so neither is buried below the other */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 3.2rem; align-items: start; }
+    .split > section { min-width: 0; }
+
 
     /* ─── Sections ─── */
     section { padding-bottom: 5rem; scroll-margin-top: 8rem; opacity: 0; animation: appear 1.2s ease forwards; }
@@ -65,39 +59,42 @@
 
     .sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.6rem; }
     .sec-head .num { font-size: 0.64rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
-    .sec-head h2 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.9rem; color: var(--cream); }
+    .sec-head h2 { font-family: var(--read); font-weight: 500; font-size: 1.35rem; color: var(--cream); }
     .sec-head::after { content: ''; flex: 1; height: 1px; background: var(--line); align-self: center; }
-    .intro { padding-bottom: 3.6rem; }
-    .intro p:first-child { font-family: var(--read); font-size: 1.45rem; line-height: 1.55; color: var(--cream); max-width: 32em; }
+    .intro { padding-bottom: 4rem; opacity: 0; animation: appear 1.2s ease 0.3s forwards; }
+    .intro .idx { font-size: 1.1rem; }
+    .intro .bio { margin-top: 1.4rem; max-width: 40em; }
+    .intro .bio p { font-family: var(--read); font-size: 1.12rem; line-height: 1.7; color: var(--cream-dim); }
+    .intro .bio p + p { margin-top: 0.9rem; }
     .intro-links { margin-top: 1.2rem; display: flex; gap: 1.8rem; font-size: 0.7rem; }
     .intro-links a { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
     .intro-links a:hover { letter-spacing: 0.22em; }
-    .lede { font-family: var(--read); font-size: 1.08rem; line-height: 1.7; color: var(--cream-dim); max-width: 36em; margin-bottom: 1.8rem; }
+    .intro-links .jump { display: none; }
+    .intro-links { flex-wrap: wrap; row-gap: 0.6rem; }
+    .intro-links a { white-space: nowrap; }
 
-    /* ─── Essay table ─── */
-    .rows { list-style: none; border-bottom: 1px solid var(--line); }
-    .row-cat { padding: 1.8rem 0 0.7rem; font-size: 0.7rem; color: var(--neon); border-bottom: 1px solid var(--line); }
-    .rows li:first-child.row-cat { padding-top: 0; }
-    .row {
-      display: grid; grid-template-columns: 2.6rem 1fr auto 1.4rem; align-items: baseline; gap: 1rem;
-      padding: 0.95rem 0.2rem; border-bottom: 1px solid var(--line);
-      position: relative; transition: background 0.4s ease, padding 0.4s ease;
+    /* ─── Writing tiles ─── */
+    .tiles { list-style: none; border-top: 1px solid var(--line); }
+    .tile a {
+      display: flex; flex-direction: column; gap: 0.4rem; padding: 1.15rem 0.2rem 1.1rem;
+      border-bottom: 1px solid var(--line);
+      transition: padding 0.4s ease, background 0.4s ease;
     }
-    .rows li:last-child .row { border-bottom: none; }
-    .row::before {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
-      background: var(--neon); box-shadow: 0 0 8px var(--neon); opacity: 0; transition: opacity 0.3s ease;
+    .tile a:hover { padding-left: 0.8rem; background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); }
+    .tile .cat { font-size: 0.6rem; color: var(--cream-faint); }
+    .tile .pin { color: var(--amber); }
+    .tile .tt { font-family: var(--read); font-weight: 500; font-size: 1.2rem; line-height: 1.3; color: var(--cream); }
+    .tile .dk {
+      font-family: var(--read); font-size: 0.98rem; line-height: 1.55; color: var(--cream-faint);
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
     }
-    .row:hover { background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); padding-left: 0.8rem; }
-    .row:hover::before { opacity: 1; }
-    .row .no { font-size: 0.7rem; color: var(--cream-faint); }
-    .row:hover .no { color: var(--neon); }
-    .row .rt { font-family: var(--read); font-size: 1.2rem; line-height: 1.35; color: var(--cream-dim); transition: color 0.3s ease; }
-    .row:hover .rt { color: var(--cream); }
-    .row .rs { color: var(--cream-faint); }
-    .row .rd { font-size: 0.7rem; white-space: nowrap; }
-    .row .ar { font-size: 0.8rem; color: var(--cream-faint); text-align: right; transition: color 0.3s ease, transform 0.3s ease; }
-    .row:hover .ar { color: var(--neon); transform: translate(2px, -2px); }
+    .tile .meta { margin-top: 0.2rem; font-size: 0.6rem; color: var(--cream-faint); }
+    .tile.ref .tt { font-size: 1.1rem; }
+    .lede { font-family: var(--read); font-size: 1.02rem; line-height: 1.65; color: var(--cream-dim); max-width: 36em; margin-bottom: 1.1rem; }
+    .patterns { display: grid; gap: 0.75rem; margin-bottom: 2rem; padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .patterns dt { font-size: 0.62rem; color: var(--neon); }
+    .patterns dd { margin-top: 0.15rem; font-family: var(--read); font-size: 0.98rem; line-height: 1.5; color: var(--cream-faint); }
+
 
     /* ─── Builds ─── */
     .builds-label { font-size: 0.64rem; color: var(--neon); margin-bottom: 0.8rem; }
@@ -145,13 +142,10 @@
     @media (max-width: 760px) {
       .top { padding: 1.2rem 1rem 1rem; }
       .top .nav { gap: 1rem; }
-      .page { grid-template-columns: 1fr; gap: 0; padding: 6rem 1rem 2rem; }
-      .toc { position: static; margin-bottom: 3rem; }
-      .toc ol { display: none; }
+      .page { padding: 6rem 1rem 2rem; }
+      .intro .bio p { font-size: 1.05rem; }
+      .intro-links { gap: 1.2rem; }
       .sec-head h2 { font-size: 1.6rem; }
-      .row { grid-template-columns: 2rem 1fr 1rem; }
-      .row .rd { display: none; }
-      .row .rt { font-size: 1.08rem; }
       .builds { grid-template-columns: 1fr; }
       .book { grid-template-columns: 1fr; gap: 1rem; }
     }
@@ -162,29 +156,33 @@
     /* ─── Ways home ─── */
     .outro { position: relative; z-index: 3; padding: 2rem 1rem 6rem; text-align: center; }
     .outro a { display: inline-flex; flex-direction: column; align-items: center; gap: 0.6rem; padding: 2rem 3rem; border-top: 1px solid var(--line); }
-    .outro .w { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.4rem; color: var(--cream); transition: text-shadow 0.4s ease; }
+    .outro .w { font-family: var(--read); font-weight: 400; font-size: 1.8rem; color: var(--cream); transition: text-shadow 0.4s ease; }
     .outro .hud { font-size: 0.7rem; }
     .outro a:hover .w { text-shadow: 0 0 18px var(--neon-soft), 0 0 40px var(--neon-faint); }
     .outro a:hover .hud:last-child { color: var(--neon); }
 
     /* ─── Featured builds ─── */
-    .feature { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+    .feature { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
     .fcard { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--ink); transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease; }
     .fcard:hover { border-color: var(--neon-soft); box-shadow: 0 0 30px rgba(255, 45, 74, 0.12); transform: translateY(-2px); }
     .shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); position: relative; }
     .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: saturate(0.85) brightness(0.85); transition: filter 0.4s ease, transform 0.6s ease; }
     .fcard:hover .shot img { filter: none; transform: scale(1.03); }
     .fbody { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.2rem 1.2rem 1.1rem; flex: 1; }
-    .fbody h3 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.55rem; line-height: 1; color: var(--cream); }
+    .fbody h3 { font-family: var(--read); font-weight: 500; font-size: 1.3rem; line-height: 1.2; color: var(--cream); }
     .fbody .what { font-family: var(--read); font-size: 1.02rem; color: var(--cream-dim); }
-    .fbody .how { font-size: 0.76rem; line-height: 1.75; color: var(--cream-faint); letter-spacing: 0.01em; }
+    .fbody .how { font-family: var(--read); font-size: 0.98rem; line-height: 1.6; color: var(--cream-faint); }
     .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .chip { font-size: 0.64rem; letter-spacing: 0.1em; text-transform: lowercase; color: var(--amber); border: 1px solid rgba(255, 177, 92, 0.25); padding: 0.25rem 0.5rem; }
+    .chip { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: lowercase; color: var(--cream-faint); border: 1px solid var(--line); padding: 0.2rem 0.45rem; }
     .flinks { margin-top: auto; padding-top: 0.6rem; display: flex; gap: 1.2rem; font-size: 0.7rem; }
     .flinks a { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
     .flinks a:hover { letter-spacing: 0.2em; }
 
-    .more-builds { list-style: none; margin-top: 1.6rem; border-top: 1px solid var(--line); }
+    .grave { margin-top: 3rem; }
+    .grave-h { font-family: var(--read); font-weight: 500; font-size: 1.1rem; color: var(--cream-dim); }
+    .grave-note { margin-top: 0.5rem; max-width: 36em; font-family: var(--read); font-size: 0.98rem; line-height: 1.55; color: var(--cream-faint); }
+    .grave .mb img { filter: grayscale(0.7) brightness(0.65); }
+    .more-builds { list-style: none; margin-top: 1.2rem; border-top: 1px solid var(--line); }
     .mb { display: grid; grid-template-columns: 96px 1fr auto; gap: 1.1rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
     .mb img { width: 96px; height: auto; display: block; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border: 1px solid var(--line); filter: saturate(0.8) brightness(0.8); transition: filter 0.3s ease; }
     .mb:hover img { filter: none; }
@@ -192,21 +190,9 @@
     .mb .d { margin-top: 0.15rem; font-family: var(--read); font-size: 0.98rem; color: var(--cream-faint); }
     .mb .l { display: flex; gap: 1rem; font-size: 0.7rem; white-space: nowrap; }
     .mb .l a { color: var(--neon); }
+    .mb .tag { font-size: 0.55rem; color: var(--cream-faint); }
 
-    /* ─── Start here ─── */
-    .picks { list-style: none; border-top: 1px solid var(--line); }
-    .pick { display: grid; grid-template-columns: 1fr 1.4rem; gap: 1rem; align-items: baseline; padding: 1.1rem 0.2rem; border-bottom: 1px solid var(--line); transition: padding 0.4s ease, background 0.4s ease; }
-    .pick:hover { padding-left: 0.8rem; background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); }
-    .pick .t { font-family: var(--read); font-size: 1.3rem; color: var(--cream); }
-    .pick .why { display: block; margin-top: 0.3rem; font-size: 0.76rem; color: var(--cream-faint); letter-spacing: 0.02em; }
-    .pick .ar { color: var(--cream-faint); }
-    .pick:hover .ar { color: var(--neon); }
-    .all { display: inline-block; margin-top: 1rem; font-size: 0.64rem; color: var(--cream-dim); }
-    .all:hover { color: var(--cream); }
 
-    /* ─── Toolkit ─── */
-    .kit { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .kit span { font-size: 0.7rem; letter-spacing: 0.08em; color: var(--cream-dim); border: 1px solid var(--line); padding: 0.45rem 0.7rem; }
 
     /* ─── Before ─── */
     .before { list-style: none; border-top: 1px solid var(--line); }
@@ -219,8 +205,8 @@
     .before a:hover .ar { color: var(--neon); }
 
     @media (max-width: 960px) {
-      .feature { grid-template-columns: 1fr; }
-      .shot { aspect-ratio: 16 / 9; }
+      .split { grid-template-columns: 1fr; gap: 0; }
+      .intro-links .jump { display: inline; }
     }
     @media (max-width: 760px) {
       .mb { grid-template-columns: 72px 1fr; }
@@ -249,40 +235,38 @@
 
   <div class="page">
 
-    <aside class="toc">
-      <div class="title"><h1 class="title-sign pink" style="font-size: 1.3rem; line-height: 1.4;">Index of Work</h1></div>
-      <p class="hud sub">products, systems, and writing<br>rev. 2026.09</p>
-      <ol class="hud" id="toc">
-        <li><a href="#builds">builds</a></li>
-        <li><a href="#start">start here</a></li>
-        <li><a href="#toolkit">toolkit</a></li>
-        <li><a href="#before">before</a></li>
-        <li><a href="#writing">all writing</a></li>
-        <li><a href="#book">book</a></li>
-      </ol>
-    </aside>
+    <header class="intro">
+      <h1 class="title-sign pink idx">Index of Work</h1>
+      <div class="bio">
+        <p>I&rsquo;ve spent over a decade learning how systems work inside highly regulated environments, and where the tipping point sits between moving fast and launching correctly. I&rsquo;ve worked with teams across Asia, North America, and Europe.</p>
+        <p>I grew up between Shanghai and the United States, in a family with Italian and Chinese roots, and I&rsquo;m endlessly curious about the world. AI has collapsed the time it takes to make things and opened up what&rsquo;s possible to build, and that&rsquo;s what excites me most right now. I love solving problems with technology and behavior change, alongside people who are competent, motivated, and optimistic. Based in New York.</p>
+      </div>
+      <p class="intro-links hud">
+        <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
+        <a href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
+        <a href="https://github.com/stephiesworld" target="_blank" rel="noopener">github &#8599;</a>
+        <a class="jump" href="#writing">writing &darr;</a>
+      </p>
+    </header>
 
-    <main>
-
-      <section class="intro">
-        <p>I build with AI agents and help teams learn to work alongside them. Before that: customer success and pricing at Amazon, a food-tech startup I founded, product launches at Harry&rsquo;s, and AI for wealth management at Morgan Stanley.</p>
-        <p class="intro-links hud">
-          <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
-          <a href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
-          <a href="https://github.com/stephiesworld" target="_blank" rel="noopener">github &#8599;</a>
-        </p>
-      </section>
-
+    <div class="split">
       <section id="builds">
         <div class="sec-head"><span class="num hud">01</span><h2>Selected builds</h2></div>
-        <p class="lede">Prototypes I design under Studio Felix: projects for AI adoption, each one made to train teams to work with agents.</p>
+        <p class="lede">Each build is a working answer to a problem teams hit when they deploy AI agents. A few patterns run through them, and they carry over to any workflow where a wrong answer is expensive:</p>
+        <dl class="patterns">
+          <div><dt class="hud">Split the work</dt><dd>The model handles language and judgment; deterministic code handles math, rules, and facts.</dd></div>
+          <div><dt class="hud">Constrain the output</dt><dd>Forced function calls and validated schemas, so every answer arrives in a shape software can check.</dd></div>
+          <div><dt class="hud">Ground every claim</dt><dd>Answers cite their sources, and data is prepared ahead of time rather than fetched live.</dd></div>
+          <div><dt class="hud">Measure, don&rsquo;t eyeball</dt><dd>Labeled eval sets and LLM-as-judge checks, plus model benchmarks on quality, latency, and cost.</dd></div>
+          <div><dt class="hud">Keep a human in the loop</dt><dd>Reviewer corrections are captured and fed back, so the system improves where it was wrong.</dd></div>
+        </dl>
         <div class="feature">
           <article class="fcard">
             <a class="shot" href="https://henry-ten.vercel.app" target="_blank" rel="noopener"><img src="images/builds/henry.jpg" alt="Henry, live" loading="lazy" width="960" height="600"></a>
             <div class="fbody">
               <h3>Henry</h3>
               <p class="what">Amazon 1P vendor operations.</p>
-              <p class="how">Agentic tool-calling with web search for research; deterministic code for the financial math. Classifies chargebacks by root cause and drafts the dispute. Graded by evals.</p>
+              <p class="how">What I imagine the perfect 1P vendor portal would be, shaped by hundreds of hours of conversations with some of the largest US businesses selling on Amazon. It classifies chargebacks by root cause and drafts the dispute.</p>
               <div class="chips"><span class="chip">tool use</span><span class="chip">evals</span><span class="chip">deterministic math</span></div>
               <p class="flinks hud"><a href="https://henry-ten.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/henry" target="_blank" rel="noopener">code &#8599;</a></p>
             </div>
@@ -292,8 +276,8 @@
             <div class="fbody">
               <h3>Delphi</h3>
               <p class="what">Stock stories.</p>
-              <p class="how">The 100 most popular stocks on Robinhood, explained the way a CEO would explain them: what the company is betting on, why it wins against its rivals, and what the latest earnings changed. Every story is sourced, and refreshes daily after the close.</p>
-              <p class="how">Inspired by six years of listening to hedge fund analysts explain the market.</p>
+              <p class="how">I built Delphi to give readers a pulse on the 100 most popular stocks on Robinhood. Markets and the world move each other, so knowing what the market is doing tells you a lot about what&rsquo;s going on everywhere else.</p>
+              <p class="how">Each company gets curated writing on its profile, context, competitive landscape, and what its latest earnings showed. Every story is sourced, and the site refreshes daily after the close.</p>
               <div class="chips"><span class="chip">story template</span><span class="chip">writing bar</span><span class="chip">sourced claims</span><span class="chip">daily data</span></div>
               <p class="flinks hud"><a href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p>
             </div>
@@ -308,52 +292,63 @@
               <p class="flinks hud"><a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/cherry" target="_blank" rel="noopener">code &#8599;</a></p>
             </div>
           </article>
-          <article class="fcard">
-            <a class="shot" href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><img src="images/builds/stanley.jpg" alt="Stanley, live" loading="lazy" width="960" height="600"></a>
-            <div class="fbody">
-              <h3>Stanley</h3>
-              <p class="what">Calendar agent.</p>
-              <p class="how">Reads the week&rsquo;s schedule and proposes one-line fixes over Telegram, by voice. The write to the calendar is gated in code, so it never acts without confirmation.</p>
-              <div class="chips"><span class="chip">agent</span><span class="chip">voice</span><span class="chip">gated writes</span></div>
-              <p class="flinks hud"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/stanley" target="_blank" rel="noopener">code &#8599;</a></p>
-            </div>
-          </article>
         </div>
+        <div class="grave" id="graveyard">
+          <h3 class="grave-h">Graveyard orbit</h3>
+          <p class="grave-note">Bits and pieces from research into memory architecture and back-end infrastructure.</p>
         <ul class="more-builds">
+          <li class="mb"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><img src="images/builds/stanley.jpg" alt="Stanley" loading="lazy" width="960" height="600"></a>
+            <div><p class="t">Stanley</p><p class="d">A calendar agent you talk to over Telegram. <span class="hud tag">&nbsp;voice &middot; gated writes</span></p></div>
+            <p class="l hud"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/stanley" target="_blank" rel="noopener">code &#8599;</a></p></li>
           <li class="mb"><a href="https://getofframp.vercel.app" target="_blank" rel="noopener"><img src="images/builds/offramp.jpg" alt="offramp" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">offramp</p><p class="d">Personal finance, debriefed. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;eval loop &middot; client-side</span></p></div>
+            <div><p class="t">offramp</p><p class="d">Personal finance, debriefed. <span class="hud tag">&nbsp;eval loop &middot; client-side</span></p></div>
             <p class="l hud"><a href="https://getofframp.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p></li>
           <li class="mb"><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener"><img src="images/builds/loop.jpg" alt="Loop" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">Loop</p><p class="d">The org-wide feedback loop, as a product. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;internal tools &middot; prototype</span></p></div>
+            <div><p class="t">Loop</p><p class="d">The org-wide feedback loop, as a product. <span class="hud tag">&nbsp;internal tools &middot; prototype</span></p></div>
             <p class="l hud"><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p></li>
           <li class="mb"><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener"><img src="images/builds/portraits.jpg" alt="Portraits" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">Portraits</p><p class="d">Live data storytelling. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;live public data</span></p></div>
+            <div><p class="t">Portraits</p><p class="d">Live data storytelling. <span class="hud tag">&nbsp;live public data</span></p></div>
             <p class="l hud"><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/portraits" target="_blank" rel="noopener">code &#8599;</a></p></li>
           <li class="mb"><a href="https://eluna.space" target="_blank" rel="noopener"><img src="images/builds/eluna.jpg" alt="Eluna" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">Eluna</p><p class="d">Memory architecture. <span class="hud" style="color: var(--amber); font-size: 0.5rem">&nbsp;memory layer</span></p></div>
+            <div><p class="t">Eluna</p><p class="d">Memory architecture. <span class="hud tag">&nbsp;memory layer</span></p></div>
             <p class="l hud"><a href="https://eluna.space" target="_blank" rel="noopener">live &#8599;</a></p></li>
         </ul>
-      </section>
-
-      <section id="start">
-        <div class="sec-head"><span class="num hud">02</span><h2>Start here</h2></div>
-        <ul class="picks">
-          <li><a class="pick" href="writing/investigations-not-just-code.html"><span><span class="t">Agent workflows aren&rsquo;t just for engineers</span><span class="why">An agent investigation built end to end: taxonomy, tools, evals, and autonomy earned one step at a time.</span></span><span class="ar">&#8599;</span></a></li>
-          <li><a class="pick" href="writing/agent-as-factory.html"><span><span class="t">Your AI agent is a factory</span><span class="why">Agent reliability, run as a quality system.</span></span><span class="ar">&#8599;</span></a></li>
-          <li><a class="pick" href="writing/why-the-human-stays-in-the-loop.html"><span><span class="t">An opinion with edit access</span><span class="why">Why a correction only counts once you measure it.</span></span><span class="ar">&#8599;</span></a></li>
-        </ul>
-        <a class="all hud" href="#writing">all writing &darr;</a>
-      </section>
-
-      <section id="toolkit">
-        <div class="sec-head"><span class="num hud">03</span><h2>Toolkit</h2></div>
-        <div class="kit hud">
-          <span>Anthropic &amp; OpenAI APIs</span><span>Claude Code</span><span>Cursor</span><span>Codex</span>
-          <span>function calling</span><span>structured outputs</span><span>evals</span>
-          <span>agentic &amp; human-in-the-loop systems</span>
-          <span>TypeScript</span><span>Next.js</span><span>SQL</span><span>Supabase / Postgres</span><span>Vercel</span>
         </div>
       </section>
+
+      <section id="writing">
+        <div class="sec-head"><span class="num hud">02</span><h2>Writing</h2></div>
+        <ul class="tiles">
+        <!-- essays:start -->
+        <li class="tile"><a href="writing/investigations-not-just-code.html"><span class="cat hud"><span class="pin">start here</span> &middot; AI &amp; the enterprise</span><span class="tt">Agent workflows aren&#x27;t just for engineers</span><span class="dk">An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent.</span><span class="meta hud">July 2026 &middot; 10 min read</span></a></li>
+        <li class="tile"><a href="writing/agent-as-factory.html"><span class="cat hud"><span class="pin">start here</span> &middot; AI &amp; the enterprise</span><span class="tt">Your AI agent is a factory</span><span class="dk">The most useful way to think about agent reliability may come from the factory floor.</span><span class="meta hud">July 2026 &middot; 12 min read</span></a></li>
+        <li class="tile"><a href="writing/why-the-human-stays-in-the-loop.html"><span class="cat hud"><span class="pin">start here</span> &middot; Customer feedback, at scale</span><span class="tt">An opinion with edit access</span><span class="dk">If the model is good enough to triage feedback, why should a person still review it? It&#x27;s a fair question. The whole point of automating a first pass is…</span><span class="meta hud">July 2026 &middot; 4 min read</span></a></li>
+        <li class="tile"><a href="writing/million-decisions.html"><span class="cat hud">AI &amp; the enterprise</span><span class="tt">The cheap, fast way to make a million decisions</span><span class="dk">Most of the AI work inside a company is small decisions made over and over: which team gets this ticket, is this invoice a duplicate, is this lead worth a…</span><span class="meta hud">October 2026 &middot; 4 min read</span></a></li>
+        <li class="tile"><a href="writing/the-dumpling-was-the-stress-test.html"><span class="cat hud">AI &amp; the enterprise</span><span class="tt">The dumpling was the stress test</span><span class="dk">When people picture automated manufacturing they think of cars. I think about dumplings, and the reason is economic.</span><span class="meta hud">July 2026 &middot; 8 min read</span></a></li>
+        <li class="tile"><a href="writing/your-data-is-already-a-graph.html"><span class="cat hud">Building with AI</span><span class="tt">Your data is already a graph</span><span class="dk">An explanation of graph engineering, using the pile of data I think about anyway: customer feedback.</span><span class="meta hud">July 2026 &middot; 6 min read</span></a></li>
+        <li class="tile"><a href="writing/building-without-a-spec.html"><span class="cat hud">Building with AI</span><span class="tt">Building without a finished spec</span><span class="dk">I didn&#x27;t build Cherry from a product requirements document or a finished spec. I had a problem I couldn&#x27;t stop thinking about — companies drown in…</span><span class="meta hud">July 2026 &middot; 3 min read</span></a></li>
+        <li class="tile"><a href="writing/the-first-pass-by-the-numbers.html"><span class="cat hud">Customer feedback, at scale</span><span class="tt">The first pass, by the numbers</span><span class="dk">When people hear &quot;AI triages customer feedback,&quot; they tend to imagine one of two things: a toy that writes summaries nobody reads, or a machine that…</span><span class="meta hud">July 2026 &middot; 3 min read</span></a></li>
+        <li class="tile"><a href="writing/who-is-feedback-for.html"><span class="cat hud">Customer feedback, at scale</span><span class="tt">Who is feedback for?</span><span class="dk">Every feedback system I&#x27;ve seen obsesses over intake. More channels, more forms, more listening. Intake matters, but whether the system is useful gets…</span><span class="meta hud">July 2026 &middot; 3 min read</span></a></li>
+        <li class="tile"><a href="writing/customer-signal-into-product.html"><span class="cat hud">AI &amp; the enterprise</span><span class="tt">The sifting is the hard part</span><span class="dk">Two and a half years ago, I took a role I&#x27;d never tried before: something on the external-facing, customer side. Up until then, I&#x27;d always been on the…</span><span class="meta hud">July 2026 &middot; 4 min read</span></a></li>
+        <li class="tile"><a href="writing/memory-architecture.html"><span class="cat hud">Building with AI</span><span class="tt">The thread that replied in poetry</span><span class="dk">In March, a long-running Claude thread developed a distinctive conversational style. As the thread grew, it became increasingly difficult to reopen and…</span><span class="meta hud">July 2026 &middot; 3 min read</span></a></li>
+        <li class="tile ref"><a href="writing/eval-cheat-sheet.html"><span class="cat hud">cheat sheet</span><span class="tt">Eval Cheat Sheet</span><span class="dk">An easy way to understand what an eval is.</span></a></li>
+        <li class="tile ref"><a href="writing/harness-cheat-sheet.html"><span class="cat hud">cheat sheet</span><span class="tt">Harness Cheat Sheet</span><span class="dk">The machinery around the model.</span></a></li>
+        <!-- essays:end -->
+        </ul>
+      </section>
+    </div>
+
+      <section id="book">
+        <div class="sec-head"><span class="num hud">03</span><h2>Book</h2></div>
+        <div class="book">
+          <span class="big tube">29</span>
+          <div>
+            <p class="k hud">literary speculative novel &middot; in progress</p>
+            <p class="d">An alien infiltrates Wall Street and slowly falls in love with the ordinary business of being human.</p>
+          </div>
+        </div>
+      </section>
+
 
       <section id="before">
         <div class="sec-head"><span class="num hud">04</span><h2>Before</h2></div>
@@ -365,43 +360,6 @@
         </ul>
       </section>
 
-      <section id="writing">
-        <div class="sec-head"><span class="num hud">05</span><h2>All writing</h2></div>
-        <ul class="rows">
-        <!-- essays:start -->
-        <li class="row-cat hud">&mdash; Customer feedback, at scale</li>
-        <li><a class="row" href="writing/who-is-feedback-for.html"><span class="no hud">01</span><span class="rt">Who is feedback for?</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/the-first-pass-by-the-numbers.html"><span class="no hud">02</span><span class="rt">The first pass, by the numbers</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/why-the-human-stays-in-the-loop.html"><span class="no hud">03</span><span class="rt">An opinion with edit access</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li class="row-cat hud">&mdash; Building with AI</li>
-        <li><a class="row" href="writing/your-data-is-already-a-graph.html"><span class="no hud">04</span><span class="rt">Your data is already a graph</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/building-without-a-spec.html"><span class="no hud">05</span><span class="rt">Building without a finished spec</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/memory-architecture.html"><span class="no hud">06</span><span class="rt">The thread that replied in poetry</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li class="row-cat hud">&mdash; AI &amp; the enterprise</li>
-        <li><a class="row" href="writing/customer-signal-into-product.html"><span class="no hud">07</span><span class="rt">The sifting is the hard part</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/investigations-not-just-code.html"><span class="no hud">08</span><span class="rt">Agent workflows aren&#x27;t just for engineers</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/the-dumpling-was-the-stress-test.html"><span class="no hud">09</span><span class="rt">The dumpling was the stress test</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/agent-as-factory.html"><span class="no hud">10</span><span class="rt">Your AI agent is a factory</span><span class="rd hud">July 2026</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/million-decisions.html"><span class="no hud">11</span><span class="rt">The cheap, fast way to make a million decisions</span><span class="rd hud">October 2026</span><span class="ar">&#8599;</span></a></li>
-        <li class="row-cat hud">&mdash; Reference</li>
-        <li><a class="row" href="writing/eval-cheat-sheet.html"><span class="no hud">12</span><span class="rt">Eval Cheat Sheet <span class="rs">&mdash; an easy way to understand what an eval is</span></span><span class="rd hud">cheat sheet</span><span class="ar">&#8599;</span></a></li>
-        <li><a class="row" href="writing/harness-cheat-sheet.html"><span class="no hud">13</span><span class="rt">Harness Cheat Sheet <span class="rs">&mdash; the machinery around the model</span></span><span class="rd hud">cheat sheet</span><span class="ar">&#8599;</span></a></li>
-        <!-- essays:end -->
-        </ul>
-      </section>
-
-      <section id="book">
-        <div class="sec-head"><span class="num hud">06</span><h2>Book</h2></div>
-        <div class="book">
-          <span class="big tube">29</span>
-          <div>
-            <p class="k hud">literary speculative novel &middot; in progress</p>
-            <p class="d">An alien infiltrates Wall Street and slowly falls in love with the ordinary business of being human.</p>
-          </div>
-        </div>
-      </section>
-
-    </main>
   </div>
 
   <footer class="outro">
@@ -416,14 +374,6 @@
   <script>
     startRain(document.getElementById('rain'), 0.25);
 
-    var links = document.querySelectorAll('#toc a');
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
   </script>
 
   <script src="secret.js"></script>
