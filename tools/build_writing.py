@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the essays.
 
-Reads content/essays/*.md (front matter: title, date, category, optional order) and writes:
+Reads content/essays/*.md (front matter: title, date, category, dek, optional order) and writes:
   - writing/<slug>.html         one page per essay
   - the essay list in work.html  (between <!-- essays:start --> and <!-- essays:end -->)
   - sitemap.xml
@@ -28,11 +28,11 @@ SRC = ROOT / 'content' / 'essays'
 OUT = ROOT / 'writing'
 SITE = 'https://stephiesworld.com'
 
-# Section order on the work index; anything uncategorized lands in "Essays" at the end.
-CATEGORY_ORDER = ['Customer feedback, at scale', 'Building with AI', 'AI & the enterprise', 'Essays']
+# Shelves on the work index, in this order. Field guides are how to deploy agents; notes are how I think.
+CATEGORY_ORDER = ['Field guides', 'Notes']
 
 # Pinned to the top of the writing column on work.html, in this order.
-START_HERE = ['investigations-not-just-code', 'agent-as-factory', 'why-the-human-stays-in-the-loop']
+START_HERE = ['investigations-not-just-code', 'agent-as-factory', 'the-dumpling-was-the-stress-test']
 
 # Reference papers live in writing/ as standalone pages and close out the writing column.
 REFERENCE = [
@@ -62,7 +62,8 @@ def parse(path):
         'title': meta.get('title', path.stem),
         'raw_date': date,
         'date': f'{MONTHS[int(dm.group(2)) - 1]} {dm.group(1)}' if dm else date,
-        'category': meta.get('category', 'Essays'),
+        'category': meta.get('category', 'Notes'),
+        'dek': meta.get('dek', ''),
         'order': int(meta['order']) if meta.get('order', '').isdigit() else None,
         'body': body,
     }
@@ -124,10 +125,10 @@ def main():
         if next_e:
             nav += f'<a class="pn next" href="{next_e["slug"]}.html"><span class="hud">next &rarr;</span><span class="pt">{html.escape(next_e["title"])}</span></a>'
         e['minutes'] = max(1, math.ceil(words / 230))
-        e['dek'] = description(body)
+        e['dek'] = e['dek'] or description(body)
         (OUT / f'{e["slug"]}.html').write_text(page.substitute(
             title=html.escape(e['title']),
-            description=html.escape(description(body)),
+            description=html.escape(e['dek']),
             slug=e['slug'],
             num=f'{i + 1:02d}',
             category=html.escape(e['category']),
@@ -137,21 +138,28 @@ def main():
             nav=nav,
         ), encoding='utf-8')
 
-    # ─── Writing tiles on work.html: start-here picks pinned, then newest first, then the cheat sheets ───
+    # ─── Writing list on work.html: start here, then each shelf newest first, then the cheat sheets ───
     by_slug = {e['slug']: e for e in essays}
     pinned = [by_slug[s] for s in START_HERE if s in by_slug]
-    rest = sorted([e for e in essays if e['slug'] not in START_HERE],
-                  key=lambda e: (e['raw_date'], e['order'] or 0), reverse=True)
-    rows = []
-    for e in pinned + rest:
-        kicker = ('<span class="pin">start here</span> &middot; ' if e in pinned else '') + html.escape(e['category'])
-        rows.append(
-            f'        <li class="tile"><a href="writing/{e["slug"]}.html"><span class="cat hud">{kicker}</span>'
-            f'<span class="tt">{html.escape(e["title"])}</span><span class="dk">{html.escape(e["dek"])}</span>'
-            f'<span class="meta hud">{e["date"]} &middot; {e["minutes"]} min read</span></a></li>')
+
+    def tile(e, kicker=''):
+        cat = f'<span class="cat hud">{kicker}</span>' if kicker else ''
+        return (f'        <li class="tile"><a href="writing/{e["slug"]}.html">{cat}'
+                f'<span class="tt">{html.escape(e["title"])}</span><span class="dk">{html.escape(e["dek"])}</span>'
+                f'<span class="meta hud">{e["date"]} &middot; {e["minutes"]} min read</span></a></li>')
+
+    rows = ['        <li class="shelf hud">Start here</li>']
+    rows += [tile(e, html.escape(e['category'])) for e in pinned]
+    for cat in CATEGORY_ORDER + sorted({e['category'] for e in essays} - set(CATEGORY_ORDER)):
+        shelf = sorted([e for e in essays if e['category'] == cat and e not in pinned],
+                       key=lambda e: (e['raw_date'], e['order'] or 0), reverse=True)
+        if shelf:
+            rows.append(f'        <li class="shelf hud">{html.escape(cat)}</li>')
+            rows += [tile(e) for e in shelf]
+    rows.append('        <li class="shelf hud">Cheat sheets</li>')
     for slug, name, sub in REFERENCE:
         rows.append(
-            f'        <li class="tile ref"><a href="writing/{slug}.html"><span class="cat hud">cheat sheet</span>'
+            f'        <li class="tile ref"><a href="writing/{slug}.html">'
             f'<span class="tt">{name}</span><span class="dk">{sub[0].upper() + sub[1:]}.</span></a></li>')
     for name in ('work.html', 'work-preview.html'):
         work = ROOT / name

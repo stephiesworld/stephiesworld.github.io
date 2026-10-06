@@ -74,7 +74,7 @@
     .intro-links a { white-space: nowrap; }
 
     /* ─── Writing tiles ─── */
-    .tiles { list-style: none; border-top: 1px solid var(--line); }
+    .tiles { list-style: none; }
     .tile a {
       display: flex; flex-direction: column; gap: 0.4rem; padding: 1.15rem 0.2rem 1.1rem;
       border-bottom: 1px solid var(--line);
@@ -82,7 +82,8 @@
     }
     .tile a:hover { padding-left: 0.8rem; background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); }
     .tile .cat { font-size: 0.6rem; color: var(--cream-faint); }
-    .tile .pin { color: var(--amber); }
+    .shelf { padding: 1.6rem 0 0.6rem; font-size: 0.62rem; color: var(--neon); border-bottom: 1px solid var(--line); }
+    .tiles .shelf:first-child { padding-top: 0; }
     .tile .tt { font-family: var(--read); font-weight: 500; font-size: 1.2rem; line-height: 1.3; color: var(--cream); }
     .tile .dk {
       font-family: var(--read); font-size: 0.98rem; line-height: 1.55; color: var(--cream-faint);
@@ -239,7 +240,7 @@
       <h1 class="title-sign pink idx">Index of Work</h1>
       <div class="bio">
         <p>I&rsquo;ve spent over a decade learning how systems work inside highly regulated environments, and where the tipping point sits between moving fast and launching correctly. I&rsquo;ve worked with teams across Asia, North America, and Europe.</p>
-        <p>I grew up between Shanghai and the United States, in a family with Italian and Chinese roots, and I&rsquo;m endlessly curious about the world. AI has collapsed the time it takes to make things and opened up what&rsquo;s possible to build, and that&rsquo;s what excites me most right now. I love solving problems with technology and behavior change, alongside people who are competent, motivated, and optimistic. Based in New York.</p>
+        <p>I grew up between Shanghai and the United States, in a family with Italian and Chinese roots, and I&rsquo;m endlessly curious about the world. AI has collapsed the time it takes to make things and opened up what&rsquo;s possible to build, and that&rsquo;s what excites me most right now. I love solving problems with technology and behavior change, alongside people who are sharp, driven, and optimistic. Based in New York.</p>
       </div>
       <p class="intro-links hud">
         <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
