@@ -2,20 +2,21 @@
 title: "Your AI agent is a factory"
 date: "2026-07-22"
 order: 10
-category: "AI & the enterprise"
+category: "Field guides"
+dek: "Agent reliability, run the way a factory runs quality: inspect the process, gate the defects, and price every output that gets accepted."
 ---
 
 *The most useful way to think about agent reliability may come from the factory floor.*
 
-I spent a stretch of my career in global R&D at Harry's, where the things we designed had to survive being manufactured at scale, and I have spent the last year building AI workflows. I keep seeing the same shape.
+I spent part of my career in global R&D at Harry's, where everything we designed had to survive being manufactured at scale. For the last year I've been building AI workflows, and I keep seeing the same shape.
 
-A customer request enters. A process transforms it. Tools and materials affect what happens along the way. An output comes out the other side. Sometimes it is excellent and sometimes it is subtly wrong. If the operation matters, you need a better quality strategy than "it usually works."
+A request comes in. A process transforms it. Tools and materials affect what happens along the way. An output comes out the other side, sometimes excellent and sometimes subtly wrong. If the work matters, "it usually works" isn't a quality strategy.
 
-I think of every agent run as five connected things: a task, an environment, a trajectory, an output, and a set of [verifiers](/eval-cheat-sheet.html) that judge the work. The same verifier can grade live production, test proposed changes offline, compare models and prompts, or stop a bad output before delivery.
+I think of every agent run as five connected things: a task, an environment, a trajectory, an output, and a set of [verifiers](/eval-cheat-sheet.html) that judge the work. The same verifier can grade live production, test a proposed change offline, compare models and prompts, or stop a bad output before it's delivered.
 
 ## The run is the product
 
-The first shift is to treat the model, prompt, tools, skills, and orchestration as production equipment, and the individual run as the unit being produced. A strategic account brief, a resolved support ticket, a screened candidate, or an updated CRM record is what actually leaves the factory.
+The first shift is to treat the model, prompt, tools, and orchestration as production equipment, and each individual run as the unit being produced. The account brief, the resolved ticket, the screened candidate, the updated CRM record: that's what actually leaves the factory.
 
 Drawn as a line, one run looks like this.
 
@@ -30,7 +31,7 @@ Drawn as a line, one run looks like this.
     .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
     .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
   </style>
-  <text x="350" y="14" text-anchor="middle" class="band">ONE RUN — from work order to accepted unit</text>
+  <text x="350" y="14" text-anchor="middle" class="band">ONE RUN · from work order to accepted unit</text>
   <rect x="30"  y="26" width="210" height="48" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
   <text x="135" y="45" text-anchor="middle" class="smb">TASK</text>
   <text x="135" y="60" text-anchor="middle" class="sm">the work order</text>
@@ -44,24 +45,24 @@ Drawn as a line, one run looks like this.
   <line x1="359" y1="74" x2="250" y2="100" stroke="#000" stroke-width="1.2" marker-end="url(#fa)"/>
   <line x1="585" y1="74" x2="400" y2="100" stroke="#000" stroke-width="1.2" marker-end="url(#fa)"/>
   <rect x="30" y="100" width="440" height="122" fill="#fff" stroke="#000" stroke-width="2"/>
-  <text x="250" y="120" text-anchor="middle" class="band">THE RUN — process steps, in order</text>
+  <text x="250" y="120" text-anchor="middle" class="band">THE RUN · process steps, in order</text>
   <rect x="46" y="130" width="408" height="26" fill="#f3f3f3" stroke="#000" stroke-width="1"/>
   <text x="56" y="147" class="smb">READ</text>
   <text x="120" y="147" class="sm">opens only what it is allowed to open</text>
   <rect x="46" y="160" width="408" height="26" fill="#f3f3f3" stroke="#000" stroke-width="1"/>
   <text x="56" y="177" class="smb">REASON</text>
-  <text x="120" y="177" class="sm">interprets, clusters, judges — the contestable part</text>
+  <text x="120" y="177" class="sm">interprets, clusters, judges · the contestable part</text>
   <rect x="46" y="190" width="408" height="26" fill="#f3f3f3" stroke="#000" stroke-width="1"/>
   <text x="56" y="207" class="smb">ACT</text>
   <text x="120" y="207" class="sm">writes something to the world</text>
   <line x1="250" y1="222" x2="250" y2="236" stroke="#000" stroke-width="1.2" marker-end="url(#fa)"/>
   <rect x="30" y="236" width="440" height="42" fill="#fff" stroke="#000" stroke-width="1.5"/>
   <text x="42" y="255" class="smb">TRAJECTORY</text>
-  <text x="42" y="269" class="sm">the batch record — what it read, called, got back, changed</text>
+  <text x="42" y="269" class="sm">the batch record · what it read, called, got back, changed</text>
   <line x1="250" y1="278" x2="250" y2="294" stroke="#000" stroke-width="1.2" marker-end="url(#fa)"/>
   <rect x="30" y="294" width="440" height="44" fill="#fff" stroke="#000" stroke-width="1.5"/>
   <text x="42" y="313" class="lbl">OUTPUT</text>
-  <text x="42" y="329" class="sm">the finished unit — the brief, the ticket, the decision</text>
+  <text x="42" y="329" class="sm">the finished unit · the brief, the ticket, the decision</text>
   <rect x="30" y="346" width="440" height="44" fill="#fff" stroke="#000" stroke-width="1.5"/>
   <text x="42" y="365" class="lbl">STATE CHANGE</text>
   <text x="42" y="381" class="sm">what it wrote to the system of record</text>
@@ -79,14 +80,14 @@ Drawn as a line, one run looks like this.
   <line x1="486" y1="368" x2="472" y2="368" stroke="#000" stroke-width="1.2" marker-end="url(#fa)"/>
   <line x1="250" y1="390" x2="250" y2="414" stroke="#000" stroke-width="1.2" marker-end="url(#fa)"/>
   <rect x="30" y="414" width="440" height="54" fill="#fff" stroke="#000" stroke-width="2"/>
-  <text x="250" y="435" text-anchor="middle" class="band">BLOCKING GATE — the andon cord</text>
+  <text x="250" y="435" text-anchor="middle" class="band">BLOCKING GATE · the andon cord</text>
   <text x="250" y="452" text-anchor="middle" class="sm">critical defect stops the line · minor defect ships</text>
   <line x1="470" y1="441" x2="486" y2="441" stroke="#000" stroke-width="1.2" marker-end="url(#fa)"/>
   <rect x="486" y="414" width="180" height="54" fill="#fff" stroke="#000" stroke-width="1.5"/>
   <text x="576" y="438" text-anchor="middle" class="lbl">DELIVERED</text>
   <text x="576" y="454" text-anchor="middle" class="sm">an accepted unit</text>
   <path d="M 30 441 C 8 441, 8 168, 30 168" fill="none" stroke="#000" stroke-width="1.2" marker-end="url(#fa)"/>
-  <text x="17" y="305" class="sm" transform="rotate(-90 17 305)">rework — with a reason attached</text>
+  <text x="17" y="305" class="sm" transform="rotate(-90 17 305)">rework · with a reason attached</text>
   <line x1="250" y1="468" x2="250" y2="496" stroke="#B01E36" stroke-width="1.6" marker-end="url(#fc)"/>
   <rect x="30" y="496" width="440" height="54" fill="#B01E36"/>
   <text x="250" y="520" text-anchor="middle" style="font:700 10.5px 'IBM Plex Mono',monospace;fill:#fff;">FAILED RUN → THE EVAL SUITE</text>
@@ -95,83 +96,71 @@ Drawn as a line, one run looks like this.
   <text x="686" y="300" class="sm" fill="#B01E36" transform="rotate(90 686 300)">change the process, not the unit</text>
   <line x1="30" y1="576" x2="692" y2="576" stroke="#000" stroke-width="1"/>
   <text x="30" y="596" class="smb">WHAT MAKES IT A SYSTEM:</text>
-  <text x="30" y="612" class="sm">Every arrow that returns. Rework goes back with a reason. Failures go back as tests. Neither is optional —</text>
+  <text x="30" y="612" class="sm">Every arrow that returns. Rework goes back with a reason. Failures go back as tests. Neither is optional:</text>
   <text x="30" y="626" class="sm">a line with no return path is a conveyor belt pointed at your customers.</text>
 </svg>
 
-This changes where you look for reliability. If a finished component is out of tolerance, a good manufacturing team asks whether the material was in spec, the work instruction was clear, the machine was calibrated, the process was stable, and the inspection method could reliably detect the defect, before anyone tells the operator to "be more careful."
+This changes where you look for reliability. When a part comes off the line out of tolerance, a good manufacturing team checks the material, the work instruction, the machine calibration, the process stability, and the inspection method before anyone tells the operator to be more careful.
 
-Agent failures deserve the same treatment. A hallucinated number might come from a weak model, or just as easily from stale source data, an ambiguous task, a failed retrieval, a tool returning the wrong field, a prompt that rewarded fluency over uncertainty, or a verifier that mistook confidence for correctness. "The model got it wrong" is often as shallow a diagnosis as "the factory made a bad part."
+Agent failures deserve the same treatment. A hallucinated number might come from a weak model. It might just as easily come from stale source data, an ambiguous task, a failed retrieval, a tool returning the wrong field, a prompt that rewarded fluency over uncertainty, or a verifier that mistook confidence for correctness. "The model got it wrong" is usually as shallow a diagnosis as "the factory made a bad part."
 
-## A trajectory is a digital production record
+## The trajectory is the production record
 
-The eval systems I trust inspect the full trajectory as well as the final output: what the agent read, which tools it called, what those tools returned, and what it changed.
+The eval systems I trust inspect the whole trajectory, not just the final output: what the agent read, which tools it called, what those tools returned, and what it changed.
 
-Manufacturers learned long ago that final inspection is not enough. The FDA's process-validation guidance puts it more strongly than my analogy strictly needs: quality, safety, and efficacy are designed or built into the product, and quality "cannot be adequately assured merely by in-process and finished-product inspection or testing." A polished final artifact can hide a broken one.
+Manufacturers learned long ago that final inspection isn't enough. The FDA's process-validation guidance says quality "cannot be adequately assured merely by in-process and finished-product inspection or testing." It has to be built into the process.
 
-Say an agent produces a flawless-looking due-diligence report. A final-output grader may approve its structure, prose, and completeness. But the trajectory could reveal that the agent never opened two required documents, used a source outside the approved data room, or copied a number from an outdated filing. The report passed dimensional inspection while the wrong alloy went into the part.
+Say an agent produces a flawless-looking due-diligence report. A grader that only reads the output approves the structure, the prose, and the completeness. The trajectory shows the agent never opened two required documents and pulled a number from an outdated filing. The part passed dimensional inspection with the wrong alloy inside it.
 
-Process checks and output checks answer different questions.
+Three kinds of checks answer three different questions:
 
-- Output verifiers ask: *Did the thing meet specification?*
-- Trajectory verifiers ask: *Was it made through an acceptable process?*
-- State verifiers ask: *Did the system change the outside world correctly?*
+- **Output verifiers:** did the thing meet the specification?
+- **Trajectory verifiers:** was it made through an acceptable process?
+- **State verifiers:** did the system change the outside world correctly?
 
-For low-stakes work, the first is enough. For a candidate decision, a financial recommendation, or an agent that writes to a system of record, provenance and process become part of the product.
+For low-stakes work, the first is enough. For a hiring decision, a financial recommendation, or an agent that writes to a system of record, how the output was made is part of the product.
 
 ## Runtime gates are the andon cord
 
-Some verifiers have to block: they stop delivery, hand the agent an explanation, and require a revision before the work reaches anyone.
+Some verifiers have to block. They stop delivery, tell the agent what's wrong, and require a revision before the work reaches anyone.
 
-The manufacturing parallel is *jidoka*, one of the pillars of the Toyota Production System. Toyota describes it as automation with a human touch: when an abnormality appears, the machine or operator can stop production so defects are not passed downstream.
+Toyota calls this *jidoka*: when something abnormal happens, the machine or the operator stops the line so the defect isn't passed downstream. A runtime gate does the same thing at the point of work, before a customer finds out the deck has no citations or the agent updated the wrong record.
 
-A runtime gate detects an abnormal condition at the point of work, before a customer discovers that a deck lacks required citations or that an agent advanced the wrong record. It stops the line and routes the unit for rework or human review.
+The important word is **blocking**. A dashboard that reports bad outputs after delivery is a returns report. It's useful for learning and too late to stop anything.
 
-The important word is **blocking**. A dashboard that reports bad outputs after delivery is a returns report, useful for learning and too late to stop anything.
+Not every defect should stop the line. Manufacturing separates critical, major, and minor defects, and agents need the same logic. An awkward sentence can ship. An unsupported legal conclusion can't. Be careful with weighted averages here, because five strong scores can mathematically cancel one catastrophic failure. Critical attributes need hard thresholds.
 
-Not every defect should stop the line. Manufacturing teams distinguish critical, major, and minor defects, and agent systems need the same risk logic. An awkward sentence can ship, but an unsupported legal conclusion should not. A weighted average alone can obscure this: five strong scores can mathematically cancel one catastrophic failure. Critical attributes need hard thresholds.
+## Verifiers are gauges, and gauges can be wrong
 
-## The verifier is a measurement system, and measurement systems can be bad
+Once a verifier is a gauge, someone has to check the gauge.
 
-Once you see a verifier as a gauge, you have to ask who verifies the verifier.
+Manufacturing tests measurement systems for repeatability (does the same gauge give the same result under the same conditions?) and reproducibility (does it hold across operators, instruments, and time?). Model judges need the same discipline.
 
-A measurement system has to be accurate enough for the tolerance it is judging. Teams test whether the same gauge produces consistent results under the same conditions — repeatability — and whether results remain consistent across operators, instruments, locations, or time — reproducibility. NIST treats both as properties of the measurement process. Model judges need the same discipline.
+If a verifier scores the same output 0.9 on Monday and 0.6 on Tuesday, the process may not have changed at all; the gauge is noisy. If a generic judge keeps approving shallow work that experts reject, the gauge is consistent and wrong. And if the agent and the verifier share a blind spot, which is likely when they're the same model family, the system can agree with itself and still be wrong.
 
-If a verifier gives the same artifact a 0.9 on Monday and a 0.6 on Tuesday, the production process may not have changed; the gauge may be noisy. If a generic judge consistently approves shallow market maps that domain experts reject, the gauge may be precise but wrong. If the agent and verifier share the same blind spot — especially when they use the same model family — the system can agree with itself and still be wrong.
+So calibrate verifiers against expert judgment, and use deterministic checks wherever you can. "The file exists in the required folder" should be a line of code. In [Henry](https://henry-ten.vercel.app), the margin math runs in ordinary code, never in the model. "The recommendation is commercially useful" may need a model judge, and that judge should be tested against people who actually do the work.
 
-So verifiers need calibrating against expert judgment, with deterministic checks wherever they are possible. "The file exists in the required folder" should be a line of code. (In [Henry](https://henry-ten.vercel.app), a vendor-operations agent I built, the margin math runs in ordinary deterministic code.) "The recommendation is commercially useful" may require a model judge, but that judge should be tested against people who actually do the work.
+Before optimizing an agent against a verifier, I want to know:
 
-Before optimizing an agent against a verifier, I would want to know:
-
-- Does the verifier agree with itself across repeated judgments?
-- Does it agree with qualified humans, especially near the pass/fail boundary?
+- Does it agree with itself across repeated judgments?
+- Does it agree with qualified people, especially near the pass/fail line?
 - What are its false-accept and false-reject rates?
 - Can it be fooled by length, confidence, formatting, or copied rubric language?
-- Does its performance hold on unfamiliar cases?
+- Does it hold up on cases it hasn't seen?
 
-In an optimization loop, a bad gauge teaches the machine to manufacture the wrong thing more efficiently.
+In an optimization loop, a bad gauge teaches the machine to make the wrong thing more efficiently.
 
 ## An eval suite is a control plan
 
-In manufacturing, a line has to perform across the real variation of raw materials, operators, equipment conditions, and customer requirements. A task suite full of clean prompts and complete data is qualifying a line on perfect material and calling it production-ready.
+A production line has to work across the real variation in materials, operators, and equipment. A test suite full of clean prompts and complete data is qualifying the line on perfect material and calling it production-ready.
 
-Real enterprise work arrives with missing context, stale documents, ambiguous requests, permissions failures, conflicting sources, and tools that time out. Eval teams call this coverage of the task distribution. A manufacturing engineer might call it understanding the operating range of the process.
+Real enterprise work arrives with missing context, stale documents, ambiguous requests, permission failures, conflicting sources, and tools that time out. Design the suite around that: which failures are most severe, which are hardest to detect, where each can be caught earliest, and which checks can be code instead of judgment.
 
-So design the suite like a control plan:
+## Don't jump from the lab bench to full production
 
-- What are the critical-to-quality attributes for each kind of work?
-- Which failure modes are most severe, most likely, and hardest to detect?
-- Where in the process can each failure be caught earliest?
-- Which checks can be deterministic, and which require judgment?
-- What production evidence should trigger tighter inspection or a new test?
+Manufacturers scale up in stages: a lab bench, a pilot batch, then a trial on the real line with real operators, materials, and speeds. The point of the line trial is to learn whether the process can make good units *repeatedly, under production conditions*.
 
-## Do not jump from the lab bench to full production
-
-Before a manufacturer commits to full-scale production, it usually learns in stages. A formulation may begin on a lab bench, move to a pilot batch, then run through the actual line using commercial equipment, trained operators, real materials, target speeds, and an approved control plan. The point of a line trial is to learn whether the process can make good units *repeatedly under production conditions*.
-
-An offline eval is a pilot batch. Mock tools are cleaner than production tools, test documents are usually complete, permissions behave, and no one changes a record halfway through the run.
-
-A sensible scale-up sequence, with the amount of real production conditions rising at every step:
+An offline eval is a pilot batch. The mock tools are cleaner than production, the test documents are complete, permissions behave, and nobody edits a record halfway through the run. Each stage below adds more of the real world.
 
 <svg viewBox="0 0 700 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A six-stage scale-up sequence shown as rows: bench test, pilot batch, line trial, controlled release, scale-up, and continued verification. Each row states the question that stage answers and what it adds, alongside a bar showing how much real production condition is present, rising from a small fraction at bench test to full at continued verification." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <style>
@@ -181,7 +170,7 @@ A sensible scale-up sequence, with the amount of real production conditions risi
     .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
     .num{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#aaa;}
   </style>
-  <text x="350" y="14" text-anchor="middle" class="band">SCALE-UP — a demo is stage one of six</text>
+  <text x="350" y="14" text-anchor="middle" class="band">SCALE-UP · a demo is stage one of six</text>
   <text x="8" y="36" class="smb">STAGE</text>
   <text x="180" y="36" class="smb">THE QUESTION IT ANSWERS · WHAT IT ADDS</text>
   <text x="520" y="36" class="smb">PRODUCTION REALITY</text>
@@ -239,23 +228,21 @@ A sensible scale-up sequence, with the amount of real production conditions risi
   <text x="8" y="420" class="sm">where the tools are real, the volume is real, and nobody has checked whether the review queue can absorb the output.</text>
 </svg>
 
-Scale exposes failures that small tests conceal. An agent that saves one analyst time may create an impossible review queue at enterprise volume. A fast model may become slow once retries and verifier calls are included.
+Scale exposes what small tests hide. An agent that saves one analyst time can create an impossible review queue at enterprise volume. A fast model gets slow once retries and verifier calls are counted.
 
-The same reasoning applies after launch. Swapping the model, editing the system prompt, adding a tool, or changing a verifier is a process change, and the larger the change, the more of the line should be requalified before rollout. "It passed last quarter" says little about a materially different production process.
+The same logic applies after launch. Swapping the model, editing the system prompt, adding a tool, or changing a verifier is a process change. The bigger the change, the more of the line needs requalifying. "It passed last quarter" says little about a different process.
 
-## The real unit economics are cost per accepted output
+## The real unit cost is cost per accepted output
 
-Manufacturing teams care about yield, scrap, rework, inspection, downtime, throughput, and failures discovered after shipment, along with the cost of starting a unit. A cheaper input that creates more defective product ends up costing more.
+Most teams measure cost per run: tokens, tool calls, compute. I care more about **cost per accepted output**:
 
-Most teams reach for cost per run first (model tokens, tool calls, and compute). I care more about **cost per accepted output**:
+> (agent execution + tool usage + verification + retries + human review + expected cost of failures) ÷ accepted outputs
 
-> (agent execution + tool usage + verification + retries + human review + expected failure cost) ÷ accepted outputs
+This flips decisions that look obvious. A small model can cost half as much per attempt, then need more retries, trigger more escalations, and eat more reviewer time. A larger model can be cheaper overall because more of its work is accepted the first time. And an expensive model shouldn't sit at every station just because it wins on the hardest cases.
 
-The distinction reverses model decisions that look obvious. A small model can cost half as much on the first attempt, then require more retries, trigger more escalations, and eat more reviewer time. A larger model can be cheaper at the system level because more of its work is accepted the first time. Conversely, an expensive model should not be installed at every station merely because it performs best on the hardest cases.
+The number I watch most is **first-pass yield**: the share of runs that clear every required gate without revision or human rework. An agent with a 95% eventual pass rate can still be operationally poor if only half its runs pass the first time. Retries are a rework loop. They use capacity, stretch cycle time, and hide instability behind a respectable final number.
 
-First-pass yield, the percentage of runs that clear every required quality gate without revision or human rework, is especially revealing. An agent with a 95% eventual pass rate can still be operationally poor if only 50% pass the first time. The retries are the digital equivalent of a rework loop: they consume capacity, lengthen cycle time, and hide instability behind a respectable final number.
-
-Manufacturing has a name for the whole picture: cost of quality. Spending falls into four buckets, and they are not equally priced.
+Manufacturing calls the full picture the cost of quality, and it sorts spending into four buckets that are priced very differently.
 
 <svg viewBox="0 0 700 362" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cost of quality across four buckets, with the cost of a single defect rising in steps from left to right: prevention (design it out), appraisal (look for it), internal failure (caught before release), and external failure (caught by the customer), which is marked in red as the most expensive. An arrow underneath points leftward, noting that every dollar moved left buys more than the one before it." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -267,7 +254,7 @@ Manufacturing has a name for the whole picture: cost of quality. Spending falls 
     .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
     .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
   </style>
-  <text x="350" y="14" text-anchor="middle" class="band">COST OF QUALITY — the later you catch it, the more it costs</text>
+  <text x="350" y="14" text-anchor="middle" class="band">COST OF QUALITY · the later you catch it, the more it costs</text>
   <text x="8" y="34" class="sm">cost of one defect, caught here ↓</text>
   <path d="M 8 104 H 178 V 86 H 348 V 62 H 518 V 34 H 688" fill="none" stroke="#000" stroke-width="1.6"/>
   <rect x="8" y="120" width="170" height="152" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
@@ -308,21 +295,19 @@ Manufacturing has a name for the whole picture: cost of quality. Spending falls 
   <text x="8" y="348" class="sm">between an internal failure and an external one.</text>
 </svg>
 
-Appraisal is worth paying for, but running every possible verifier on every possible task is its own form of waste. Verifiers should have activation conditions: apply the right inspection at the station where the relevant failure can occur.
+Inspection is worth paying for, but running every verifier on every task is its own waste. Verifiers should have activation conditions, so the right check runs at the station where that failure can actually happen.
 
-The dashboard I would want shows first-pass yield, rework rate, cost per accepted output, cycle time, human minutes per unit, escape rate, and the cost and latency of each verifier — the view needed to find the least expensive process that reliably meets the specification.
+The dashboard I'd want shows first-pass yield, rework rate, cost per accepted output, cycle time, human minutes per unit, escape rate, and the cost and latency of each verifier. That's the view you need to find the cheapest process that reliably meets the spec.
 
 ## Put the human at the point of no return
 
-I have argued [elsewhere](/writing/why-the-human-stays-in-the-loop) that the human belongs in the loop. The harder question is where to stand them.
+I've argued [elsewhere](/writing/why-the-human-stays-in-the-loop) that the human belongs in the loop. The harder question is where.
 
-Manufacturing concentrates inspection at the moments where a mistake would cost the entire run instead of one unit. You approve a first article before the run starts. You sign off a sample before the tooling is cut, because a mistake found after the steel is cut for a mold is a capital loss.
+Manufacturing concentrates inspection where a mistake would cost the whole run instead of one unit. You approve a first article before the run starts. You sign off on a sample before the mold is cut. A defect caught on the first article costs one part and an afternoon. The same defect caught after a full run has shipped to a large retailer costs the run, the freight, the write-off, the retailer's chargebacks, and a claims process that shows up in no unit-cost model.
 
-The economics on either side of those moments are not close. A defect caught on the first article costs one part and an afternoon. Imagine the same defect caught after a full production run has shipped to a large retailer: it costs the run, the freight, the rework or the write-off, the retailer's chargebacks, and a claims process — slow in a way that appears in no unit-cost model.
+Agents have the same asymmetry. Two questions decide where the human stands: **how expensive is being wrong**, and **can you take it back?**
 
-Agents have the same asymmetry, and two questions decide where the human stands: **how expensive is being wrong**, and **can you take it back?**
-
-The second matters more than teams expect, and it's a separate question from the first: a wrong draft can be expensive and still free to fix, while a wrong email can be cheap and permanently sent. Reversibility is what separates a rework loop from a remediation project.
+The second one matters more than teams expect. A wrong draft can be expensive and still free to fix. A wrong email can be cheap and permanently sent.
 
 <svg viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A two-by-two grid placing human review by cost of being wrong against reversibility. Low cost and reversible: let it run, no gate. Low cost but irreversible: confirm anyway, one click. High cost but reversible: verify then release, with a blocking verifier and sampled human audit. High cost and irreversible, marked in red: a named human signs every time, covering money, customer commitments, writes other systems read, deletion and publication. A closing note explains that scale moves work toward the top-right corner, because the prompt is the tooling and approving a policy is the irreversible step." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -352,14 +337,14 @@ The second matters more than teams expect, and it's a separate question from the
   <text x="392" y="112" style="font:600 8.5px 'IBM Plex Mono',monospace;fill:#fff;">money, or a promise to a customer</text>
   <text x="392" y="128" style="font:600 8.5px 'IBM Plex Mono',monospace;fill:#fff;">a write other systems read as fact</text>
   <text x="392" y="144" style="font:600 8.5px 'IBM Plex Mono',monospace;fill:#fff;">deletion, publication, a sent email</text>
-  <text x="392" y="170" style="font:400 8.5px 'IBM Plex Mono',monospace;fill:#f2c9d1;">every time — no sampling, no exceptions</text>
+  <text x="392" y="170" style="font:400 8.5px 'IBM Plex Mono',monospace;fill:#f2c9d1;">every time · no sampling, no exceptions</text>
   <rect x="100" y="190" width="280" height="140" fill="#fff" stroke="#000" stroke-width="1.3"/>
   <text x="112" y="212" class="lbl">LET IT RUN</text>
   <text x="112" y="228" class="sm">cheap · and trivially fixable</text>
   <text x="112" y="252" class="smb">internal summaries and notes</text>
   <text x="112" y="268" class="smb">drafts nobody has acted on yet</text>
   <text x="112" y="284" class="smb">a ranked list a human reads next</text>
-  <text x="112" y="310" class="sm">no gate — sample it for drift</text>
+  <text x="112" y="310" class="sm">no gate · sample it for drift</text>
   <rect x="380" y="190" width="280" height="140" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
   <text x="392" y="212" class="lbl">CONFIRM ANYWAY</text>
   <text x="392" y="228" class="sm">cheap · but you cannot unsend it</text>
@@ -369,48 +354,42 @@ The second matters more than teams expect, and it's a separate question from the
   <text x="392" y="310" class="sm">one click, not a full review</text>
   <line x1="8" y1="390" x2="692" y2="390" stroke="#000" stroke-width="1"/>
   <text x="8" y="410" class="smb">SCALE MOVES WORK TOWARD THE TOP-RIGHT CORNER:</text>
-  <text x="8" y="426" class="sm">One record is a unit. The same decision applied to forty thousand records overnight is a production run — and the prompt</text>
+  <text x="8" y="426" class="sm">One record is a unit. The same decision applied to forty thousand records overnight is a production run · and the prompt</text>
   <text x="8" y="440" class="sm">that made it is the tooling. Approving the policy is the irreversible step; the units are only what the tooling stamps.</text>
 </svg>
 
-The irreversible actions are a short and knowable list: anything that moves money, sends a message, publishes, deletes, promises something to a customer, or writes to a record other systems will read as fact. Before that line, an agent can iterate freely and cheaply, because retries are just rework; after it, there's nothing left to rework.
+The irreversible actions are a short, knowable list: anything that moves money, sends a message, publishes, deletes, makes a promise to a customer, or writes to a record other systems treat as fact. Before that line, an agent can iterate freely, because a retry is just rework. After it, there's nothing left to rework.
 
-So put the human at the last reversible moment. Reviewing every step burns the review capacity you need at the step that matters, and reviewing after delivery is just a returns report.
+So put the human at the last reversible moment. Reviewing every step burns the attention you need at the step that matters, and reviewing after delivery is a returns report.
 
-Teams most often forget that while the run is the unit, the prompt, the policy, and the rubric are the tooling. Sampling the output while nobody signs off on the policy change is inspecting parts while the mold goes uninspected.
+One more thing teams forget: the run is the unit, but the prompt, the policy, and the rubric are the tooling. Sampling outputs while nobody signs off on a policy change is inspecting parts while the mold goes unchecked.
 
-## Production failures should become corrective action
+## Failures become corrective action
 
-The part of this framework I find most useful is the loop from production back into development.
+The part of this I find most useful is the loop from production back into development.
 
-When a non-blocking verifier catches a failure in a live run, that run becomes a new offline evaluation, so the failure is reproducible. The team changes the prompt, skill, harness, tool, or other part of the system. The candidate runs against the suite. If quality improves without unacceptable cost or latency, the change can move forward.
+When a verifier catches a failure in a live run, that run becomes a new offline test, so the failure is reproducible. The team changes the prompt, tool, or harness. The candidate runs against the suite. If quality improves without unacceptable cost or latency, the change moves forward.
 
-This is corrective and preventive action, the same six steps a quality system would run:
+A quality system calls this corrective and preventive action, and it runs the same six steps:
 
 1. Contain the immediate issue.
-2. Record the nonconformance.
-3. Investigate the root cause.
-4. Change the process, not just the affected unit.
-5. Verify that the change worked.
-6. Monitor for recurrence.
+2. Record what went wrong.
+3. Find the root cause.
+4. Change the process, not just the bad unit.
+5. Verify the change worked.
+6. Watch for it coming back.
 
-The distinction between correction and corrective action matters. Asking an agent to redo one weak brief is correction. Changing the system so that the failure becomes less likely — and adding a test so it cannot quietly return — is corrective action.
+Asking an agent to redo one weak brief is a correction. Changing the system so that failure gets less likely, and adding a test so it can't quietly return, is corrective action.
 
-## Where the manufacturing analogy breaks
+## Where the analogy breaks
 
-The parallel is useful but incomplete. First, most enterprise agents run something closer to a high-mix, make-to-order operation than a line of identical widgets: every request is different, incoming information varies wildly, and the quality standard sometimes depends on context. There may be no single tolerance band for "good strategy."
+It breaks in a few honest places. Most agents run something closer to a make-to-order shop than a line of identical parts, so there may be no single tolerance for "good strategy." Agent behavior is probabilistic, so one passing run proves very little. Many specifications are contestable: a hole is 5.00 millimeters or it isn't, but whether a brief found the *right* commercial risk is a judgment call. And once verifier scores are used for optimization, the agent starts adapting to the gauge. Parts can't study the inspection rubric. Agents effectively can.
 
-Second, agent behavior is probabilistic. The same task, environment, and configuration can produce a different trajectory on the next run. Variation is part of the process itself, so a single passing run proves very little.
-
-Third, many important specifications are contestable. A hole is 5.00 millimeters or it isn't, but whether an account brief identifies the *right* commercial risk is a judgment call. Sometimes expert disagreement is a sign that the quality standard itself is underspecified.
-
-Fourth, the act of measuring can change the system. Once verifier feedback is used for optimization, the agent begins adapting to the gauge. This is Goodhart's law in factory clothing: when a measure becomes the target, it can stop being a good measure. Agents, unlike physical parts, can effectively study the inspection rubric.
-
-Finally, digital work makes 100% inspection economically possible in a way physical manufacturing often cannot. But total inspection is only as good as the verifier doing it, and checking every unit with a weak one mostly scales your confidence.
+Digital work does make 100% inspection affordable in a way physical manufacturing rarely can. But total inspection is only as good as the verifier doing it, and checking every unit with a weak one mostly scales your confidence.
 
 ## The factory is the product
 
-The biggest mistake in enterprise AI is grading the intelligence of the model while ignoring the reliability of the system around it. The useful questions are operational: What is the specification? Where should each failure be detected? Which defects stop delivery? What happens to a failure after it is found? The model matters, but durable advantage comes from defining quality, measuring it credibly, and feeding what you learn back into the process.
+The biggest mistake in enterprise AI is grading the intelligence of the model while ignoring the reliability of the system around it. The useful questions are operational. What's the specification? Where should each failure be caught? Which defects stop delivery? What happens to a failure after it's found? The model matters, but the lasting advantage comes from defining quality, measuring it credibly, and feeding what you learn back into the process.
 
 ---
 
