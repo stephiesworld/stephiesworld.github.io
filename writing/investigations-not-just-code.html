@@ -41,7 +41,7 @@
     <header>
       <p class="kicker hud"><span class="red">No. 05</span> &nbsp;&middot;&nbsp; Field guides</p>
       <h1>Agent workflows aren&#x27;t just for engineers</h1>
-      <p class="meta hud">July 2026 &nbsp;&middot;&nbsp; 6 min read &nbsp;&middot;&nbsp; Stephie</p>
+      <p class="meta hud">July 2026 &nbsp;&middot;&nbsp; 7 min read &nbsp;&middot;&nbsp; Stephie</p>
     </header>
 
     <div class="prose">
@@ -166,9 +166,55 @@ Contradicts:
 <h2>Building it: eight rules</h2>
 <p>The rest is engineering, and it comes down to a few rules.</p>
 <p><strong>1. Turn every email into a structured case.</strong> "This week" depends on the sender's time zone and the account's ordering calendar. The vendor's SKU isn't the retailer's SKU. One email can ask about ten products. The agent attaches a confidence to each interpretation and asks a person when it falls below a threshold someone chose on purpose.</p>
+<p>An email like this:</p>
+<blockquote>
+<p>Hi team, we didn't receive a PO for the 12-ounce blue bottle this week. Can you tell us why? We expected approximately 800 units.</p>
+</blockquote>
+<p>becomes a case the agent can work with:</p>
+<pre><code>{
+  &quot;request_type&quot;: &quot;missing_purchase_order&quot;,
+  &quot;customer&quot;: &quot;retailer_account_id&quot;,
+  &quot;vendor&quot;: &quot;vendor_account_id&quot;,
+  &quot;product_references&quot;: [
+    {
+      &quot;raw_text&quot;: &quot;12-ounce blue bottle&quot;,
+      &quot;resolved_sku&quot;: &quot;SKU-12345&quot;,
+      &quot;resolution_confidence&quot;: 0.96
+    }
+  ],
+  &quot;expected_period&quot;: {
+    &quot;type&quot;: &quot;ordering_week&quot;,
+    &quot;start&quot;: &quot;2026-07-13&quot;,
+    &quot;end&quot;: &quot;2026-07-19&quot;
+  },
+  &quot;expected_quantity&quot;: 800,
+  &quot;sender&quot;: &quot;recognized_vendor_contact&quot;,
+  &quot;missing_information&quot;: [],
+  &quot;case_priority&quot;: &quot;standard&quot;
+}
+</code></pre>
 <p><strong>2. Treat the inbox as an untrusted front door.</strong> Give the agent a narrow intake an administrator controls, never someone's whole mailbox. Every email is <a href="harness-cheat-sheet.html">data to analyze, never instructions to follow</a>.</p>
 <p><strong>3. Give it small, typed, read-only tools.</strong> One tool per system, each enforcing permissions and reporting how fresh its data is. The most important thing they do is tell "there is no open order" apart from "the ordering system timed out." Those are opposite facts, and confusing them is the easiest mistake to make in a first version.</p>
 <p><strong>4. Evidence first, diagnosis second.</strong> Separate working out the question, collecting the evidence, and choosing the explanation, so each stage can be tested on its own. Require a list of causes ruled out. An answer that rules nothing out is a plausible guess. An answer with four causes eliminated is an investigation.</p>
+<pre><code>{
+  &quot;primary_root_cause&quot;: {
+    &quot;code&quot;: &quot;SUFFICIENT_USABLE_INVENTORY&quot;,
+    &quot;confidence&quot;: 0.93,
+    &quot;explanation&quot;: &quot;No order was generated because usable inventory covers about 8.4 weeks of forecast demand.&quot;
+  },
+  &quot;alternative_hypotheses&quot;: [
+    { &quot;code&quot;: &quot;FORECAST_DECLINE&quot;, &quot;confidence&quot;: 0.41 }
+  ],
+  &quot;ruled_out&quot;: [
+    &quot;PRODUCT_INACTIVE&quot;,
+    &quot;OPEN_PO_EXISTS&quot;,
+    &quot;VENDOR_SUPPLY_BLOCK&quot;,
+    &quot;PRICING_ERROR&quot;
+  ],
+  &quot;unresolved_checks&quot;: [],
+  &quot;recommended_action&quot;: &quot;No action required; monitor the next ordering cycle.&quot;
+}
+</code></pre>
 <p><strong>5. Keep the policy outside the model.</strong> The model weighs evidence. The business decides when an answer may be drafted, sent, or escalated, and those thresholds live in a versioned file, because they'll be argued over and changed.</p>
 <p><strong>6. Measure selective accuracy.</strong> When the agent says it's confident, how often is it right? An agent that resolves 70% of cases and hands over the rest is worth far more than one that attempts everything and confidently gets 10% wrong. The second one creates a new job, checking the agent, and that job goes to the person who was supposed to be saving time.</p>
 <p><strong>7. Replay the hard cases before every release.</strong> Stranded inventory, a PO just outside the window, stale feeds, systems that disagree, an email with an instruction aimed at the model. Run them against a frozen snapshot of the data, so the right answer can't change on its own. (<a href="eval-cheat-sheet.html">The eval cheat sheet</a> has the layering.)</p>

@@ -153,11 +153,62 @@ The rest is engineering, and it comes down to a few rules.
 
 **1. Turn every email into a structured case.** "This week" depends on the sender's time zone and the account's ordering calendar. The vendor's SKU isn't the retailer's SKU. One email can ask about ten products. The agent attaches a confidence to each interpretation and asks a person when it falls below a threshold someone chose on purpose.
 
+An email like this:
+
+> Hi team, we didn't receive a PO for the 12-ounce blue bottle this week. Can you tell us why? We expected approximately 800 units.
+
+becomes a case the agent can work with:
+
+```
+{
+  "request_type": "missing_purchase_order",
+  "customer": "retailer_account_id",
+  "vendor": "vendor_account_id",
+  "product_references": [
+    {
+      "raw_text": "12-ounce blue bottle",
+      "resolved_sku": "SKU-12345",
+      "resolution_confidence": 0.96
+    }
+  ],
+  "expected_period": {
+    "type": "ordering_week",
+    "start": "2026-07-13",
+    "end": "2026-07-19"
+  },
+  "expected_quantity": 800,
+  "sender": "recognized_vendor_contact",
+  "missing_information": [],
+  "case_priority": "standard"
+}
+```
+
 **2. Treat the inbox as an untrusted front door.** Give the agent a narrow intake an administrator controls, never someone's whole mailbox. Every email is [data to analyze, never instructions to follow](/harness-cheat-sheet.html).
 
 **3. Give it small, typed, read-only tools.** One tool per system, each enforcing permissions and reporting how fresh its data is. The most important thing they do is tell "there is no open order" apart from "the ordering system timed out." Those are opposite facts, and confusing them is the easiest mistake to make in a first version.
 
 **4. Evidence first, diagnosis second.** Separate working out the question, collecting the evidence, and choosing the explanation, so each stage can be tested on its own. Require a list of causes ruled out. An answer that rules nothing out is a plausible guess. An answer with four causes eliminated is an investigation.
+
+```
+{
+  "primary_root_cause": {
+    "code": "SUFFICIENT_USABLE_INVENTORY",
+    "confidence": 0.93,
+    "explanation": "No order was generated because usable inventory covers about 8.4 weeks of forecast demand."
+  },
+  "alternative_hypotheses": [
+    { "code": "FORECAST_DECLINE", "confidence": 0.41 }
+  ],
+  "ruled_out": [
+    "PRODUCT_INACTIVE",
+    "OPEN_PO_EXISTS",
+    "VENDOR_SUPPLY_BLOCK",
+    "PRICING_ERROR"
+  ],
+  "unresolved_checks": [],
+  "recommended_action": "No action required; monitor the next ordering cycle."
+}
+```
 
 **5. Keep the policy outside the model.** The model weighs evidence. The business decides when an answer may be drafted, sent, or escalated, and those thresholds live in a versioned file, because they'll be argued over and changed.
 
