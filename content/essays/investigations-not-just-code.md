@@ -3,7 +3,7 @@ title: "Agent workflows aren't just for engineers"
 date: "2026-07-22"
 order: 8
 category: "Field guides"
-dek: "An investigation I ran by hand for two and a half years, and a step-by-step plan for handing it to an agent: taxonomy, tools, evals, and autonomy earned one rung at a time."
+dek: "An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent: the real workflow, the taxonomy, and autonomy earned one rung at a time."
 ---
 
 *An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent.*
@@ -20,7 +20,7 @@ The answer was one of a few dozen reasons, spread across about as many systems, 
 
 None of those steps was why anyone hired me. What I was actually good for was knowing the account, recognizing when a situation was genuinely unusual, and deciding what should happen next. The investigation was necessary. Me opening a dozen systems and copying identifiers between them wasn't.
 
-That gap is where I think the most valuable non-engineering agent workflows are hiding. Since leaving, I've built the adjacent version on public data only: [Henry](https://henry-ten.vercel.app) finds the root cause of vendor chargebacks and drafts the dispute, graded by evals. Most of what follows is what building it taught me about the shape of the problem.
+That gap is where I think the most valuable non-engineering agent workflows are hiding. Since leaving, I've built the adjacent version on public data only: [Henry](https://henry-ten.vercel.app) finds the root cause of vendor chargebacks and drafts the dispute, graded by evals. Most of what follows is what building it taught me.
 
 ## From elimination to fan-out
 
@@ -119,19 +119,13 @@ The second effect matters more, and I didn't expect it: running every check remo
 
 The first step is finding out how the work is really done.
 
-Sit with a representative group and have them walk through real cases: maybe a hundred people in a large organization, ten or twenty on a smaller team. You want enough people to surface regional differences, the shortcuts experts take without noticing, and the rare cases that break everything.
-
-Don't ask "what's your process?" You'll get the official one. People describe the documented procedure and then do something else, because the documented procedure doesn't survive a stranded-inventory edge case. Hand them a real email instead and ask them to investigate it out loud.
-
-For each case, write down every system they opened and in what order, what evidence they treated as decisive, what they ignored, the final cause, and what they sent.
+Don't ask people "what's your process?" You'll get the official one. People describe the documented procedure and then do something else, because the documented procedure doesn't survive a stranded-inventory edge case. Hand them a real email instead and ask them to investigate it out loud. Write down every system they open, what evidence they treat as decisive, what they ignore, and what they send.
 
 Then go looking for the investigations that went wrong. Cases where the first diagnosis was confidently incorrect are worth more than the clean ones, because they're the only place the real failure modes are written down.
 
 ## The taxonomy is the product
 
-At first the workflows look inconsistent. People use different words and check things in different orders. Underneath, the same handful of root-cause families keep coming back. For a replenishment question, they might be product eligibility, inventory position, demand and forecasting, vendor supply, order execution, and commercial constraints like pricing or compliance.
-
-Yours will look different. What matters is that someone writes the categories down. Almost nobody has, which is why this knowledge usually lives in the head of whoever has been there longest.
+Underneath the different words and orders people use, the same handful of root-cause families keep coming back. For a replenishment question, they might be product eligibility, inventory position, demand and forecasting, vendor supply, order execution, and commercial constraints like pricing or compliance. Almost nobody has written theirs down, which is why this knowledge usually lives in the head of whoever has been there longest.
 
 What makes the agent work is that every cause carries both the evidence that supports it *and* the evidence that would rule it out.
 
@@ -151,135 +145,27 @@ Contradicts:
 - demand rose sharply after the last forecast run
 ```
 
-Without the contradicting half, the agent finds a story that fits and stops. That's the same mistake the person makes at step three, rebuilt in software and running faster.
+Without the contradicting half, the agent finds a story that fits and stops. That's the same mistake the person makes at step three, rebuilt in software and running faster. The taxonomy is also the start of your evaluation set, which is why it's worth writing down before anyone touches a prompt.
 
-The taxonomy is also the start of the evaluation set, which is why it's worth writing down properly before anyone touches a prompt.
+## Building it: eight rules
 
-## Define the case before you automate it
+The rest is engineering, and it comes down to a few rules.
 
-The agent needs one consistent way to represent a request. An email says:
+**1. Turn every email into a structured case.** "This week" depends on the sender's time zone and the account's ordering calendar. The vendor's SKU isn't the retailer's SKU. One email can ask about ten products. The agent attaches a confidence to each interpretation and asks a person when it falls below a threshold someone chose on purpose.
 
-> Hi team, we didn't receive a PO for the 12-ounce blue bottle this week. Can you tell us why? We expected approximately 800 units.
+**2. Treat the inbox as an untrusted front door.** Give the agent a narrow intake an administrator controls, never someone's whole mailbox. Every email is [data to analyze, never instructions to follow](/harness-cheat-sheet.html).
 
-That becomes a structured case:
+**3. Give it small, typed, read-only tools.** One tool per system, each enforcing permissions and reporting how fresh its data is. The most important thing they do is tell "there is no open order" apart from "the ordering system timed out." Those are opposite facts, and confusing them is the easiest mistake to make in a first version.
 
-```
-{
-  "request_type": "missing_purchase_order",
-  "customer": "retailer_account_id",
-  "vendor": "vendor_account_id",
-  "product_references": [
-    {
-      "raw_text": "12-ounce blue bottle",
-      "resolved_sku": "SKU-12345",
-      "resolution_confidence": 0.96
-    }
-  ],
-  "expected_period": {
-    "type": "ordering_week",
-    "start": "2026-07-13",
-    "end": "2026-07-19"
-  },
-  "expected_quantity": 800,
-  "sender": "recognized_vendor_contact",
-  "missing_information": [],
-  "case_priority": "standard"
-}
-```
+**4. Evidence first, diagnosis second.** Separate working out the question, collecting the evidence, and choosing the explanation, so each stage can be tested on its own. Require a list of causes ruled out. An answer that rules nothing out is a plausible guess. An answer with four causes eliminated is an investigation.
 
-The schema matters because email is ambiguous in ways you don't see until they bite. "This week" depends on the sender's time zone and the account's ordering calendar, which often aren't the same week. A product name can match three package sizes. The vendor's SKU usually isn't the retailer's SKU. One email often asks about ten products with ten different answers.
+**5. Keep the policy outside the model.** The model weighs evidence. The business decides when an answer may be drafted, sent, or escalated, and those thresholds live in a versioned file, because they'll be argued over and changed.
 
-The rule I'd hold to: the agent never quietly resolves an ambiguity that matters. It attaches a confidence to every interpretation and asks when that confidence falls below a threshold someone chose on purpose.
+**6. Measure selective accuracy.** When the agent says it's confident, how often is it right? An agent that resolves 70% of cases and hands over the rest is worth far more than one that attempts everything and confidently gets 10% wrong. The second one creates a new job, checking the agent, and that job goes to the person who was supposed to be saving time.
 
-## The inbox is an untrusted front door
+**7. Replay the hard cases before every release.** Stranded inventory, a PO just outside the window, stale feeds, systems that disagree, an email with an instruction aimed at the model. Run them against a frozen snapshot of the data, so the right answer can't change on its own. ([The eval cheat sheet](/eval-cheat-sheet.html) has the layering.)
 
-Email is the right place to start, because it's where the work already arrives. It's also the least trustworthy input in the building.
-
-Don't point an agent at someone's whole mailbox. Give it a narrow intake that an administrator controls: a dedicated address, a shared mailbox, a labeled folder, a case queue, something like `po-investigations@company.com`. The intake service strips signatures and quoted history, assigns a case ID, checks whether the email belongs to an existing case, and passes a clean version to a classifier.
-
-The classifier's job is narrower than it looks. "Why was no order placed," "when is the next order coming," and "why was the quantity lower than expected" are three different investigations, and "thanks!" is none of them. Anything low-confidence goes to a person.
-
-And every email is [untrusted data](/harness-cheat-sheet.html): something to analyze, never something to obey. That boundary is enforced by permissions and tool definitions, not by asking the model nicely.
-
-## Small tools, sharply typed
-
-Give the agent narrow tools with validated inputs and predictable outputs.
-
-```
-get_order_history(account_id, sku, start_date, end_date)
-get_inventory_position(account_id, sku)
-get_demand_forecast(account_id, sku, horizon)
-get_catalog_status(account_id, sku)
-get_supply_status(vendor_id, sku)
-get_open_purchase_orders(account_id, sku)
-get_pricing_status(account_id, sku)
-get_compliance_issues(account_id, sku)
-get_product_relationships(sku)
-get_data_freshness(system_name)
-```
-
-Each one enforces account-level permissions, returns only the fields needed, reports how fresh its data is, and is logged for audit.
-
-The most important thing these tools do is tell "there is no open order" apart from "the ordering system timed out." Those are opposite facts. If a tool returns an empty result for both, the agent will confidently tell a vendor no order exists when the truth is that nobody knows right now. It's the easiest mistake to make in a first version.
-
-Version one should be read-only. If the investigation finds a catalog field that needs fixing, the agent recommends the fix and prepares the change. Write access comes later, one narrowly defined action at a time.
-
-## Evidence first, diagnosis second
-
-Don't let the agent go from email to answer in one step. Use three separate stages: work out what's being asked, collect what the systems report, then decide which explanation fits. Keeping them apart is what makes the system testable, because you can grade each stage on its own and find out which one is broken.
-
-The diagnosis stage should produce a ranked set of explanations:
-
-```
-{
-  "primary_root_cause": {
-    "code": "SUFFICIENT_USABLE_INVENTORY",
-    "confidence": 0.93,
-    "explanation": "No order was generated because usable inventory covers about 8.4 weeks of forecast demand."
-  },
-  "alternative_hypotheses": [
-    { "code": "FORECAST_DECLINE", "confidence": 0.41 }
-  ],
-  "ruled_out": [
-    "PRODUCT_INACTIVE",
-    "OPEN_PO_EXISTS",
-    "VENDOR_SUPPLY_BLOCK",
-    "PRICING_ERROR"
-  ],
-  "unresolved_checks": [],
-  "recommended_action": "No action required; monitor the next ordering cycle."
-}
-```
-
-Requiring the ruled-out list is the cheapest quality check in the whole system. An answer that rules nothing out is a plausible guess. An answer with four causes eliminated, and the evidence for each, is an investigation.
-
-## The policy lives outside the model
-
-A model can weigh evidence. The business decides when an answer is allowed to go out, and that decision belongs in a versioned policy layer.
-
-Draft automatically when the sender and account are verified, the product match is above 95%, every required system returned fresh data, one cause is above 90% confidence, and nothing contradicts it. Send automatically only for an approved, low-risk category of cause, in approved language, promising nothing. Escalate when several causes are still plausible, a required source is stale or down, the product won't resolve, the customer is disputing an earlier answer, many products are affected, or the reply could create a contractual commitment.
-
-Those thresholds will be argued over and changed. That's exactly why they belong in a file with a version number.
-
-## Measure in layers, then measure abstention
-
-One accuracy number won't tell you anything useful. Grade each stage separately: what it extracted, which systems it called, whether it found the right cause, whether the reply promised anything nobody approved, and what it cost.
-
-The metric I'd run the whole program on is **selective accuracy**: when the agent says it's confident enough to answer, how often is it right?
-
-An agent that resolves 70% of cases and hands over the rest is far more valuable than one that attempts every case and confidently gets 10% wrong. The first changes the shape of the workday. The second creates a new job, checking the agent, and that job goes to the person who was supposed to be saving time.
-
-## The test suite gates every release
-
-Replay every case against a frozen snapshot of the data whenever anyone changes the model, the instructions, the taxonomy, a tool, a mapping, a threshold, or the orchestration. The snapshot matters: if the test reads live inventory, the right answer changes on its own and the suite quietly stops meaning anything.
-
-Code can check that the right SKU was selected and that the draft never claimed an order existed. Tone may need a model judge. Factual correctness shouldn't rest on one. ([The eval cheat sheet](/eval-cheat-sheet.html) has the layering.)
-
-Build the suite from the hard cases: inventory that exists but can't be used, a PO sent just outside the requested window, stale feeds, systems that disagree, an email about several products with different causes, and an email with an instruction aimed at the model. If a new prompt reads better but escalates the wrong cases, it doesn't ship.
-
-## Earn autonomy one rung at a time
-
-The first production version runs in [shadow mode](/harness-cheat-sheet.html) next to the person, answering no one. You compare the two: same cause or not, checks skipped, stale data trusted, more certainty than the evidence supports.
+**8. Earn autonomy one rung at a time.** The first version runs in [shadow mode](/harness-cheat-sheet.html) next to the person, answering no one. Then it drafts, and you track how often drafts go out untouched. Only once that holds steady does anything send on its own.
 
 <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An autonomy ladder with eight rungs, from bottom to top: observe only, show evidence to the human, recommend a root cause, draft the response, send with approval, auto-send approved low-risk answers, take narrowly defined reversible actions, and expand to complex cases. Each rung names what must be true before it is granted. The top rungs are marked in red. A closing note says autonomy is granted per workflow and per root cause, never by a single switch." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <style>
@@ -328,16 +214,10 @@ The first production version runs in [shadow mode](/harness-cheat-sheet.html) ne
   <text x="8" y="438" class="sm">There is no single switch that makes an agent autonomous.</text>
 </svg>
 
-In draft mode, track how many drafts are approved untouched, lightly edited, materially corrected, or rejected. Only once that holds steady should anything send on its own.
-
-Every edit is feedback, but don't feed edits back in as truth. People make mistakes, have style preferences, and take shortcuts. Review the feedback and turn it into explicit behavior, like a new taxonomy entry, a changed threshold, or a new test, before it changes anything.
-
 ## The shape generalizes
 
-The missing purchase order is one example of something common. A recruiter works out why a candidate is stuck. A finance analyst explains a variance. An account manager prepares for a renewal. A support specialist diagnoses a billing discrepancy. A procurement manager chases a late shipment. A compliance specialist assembles evidence for a review.
+The missing purchase order is one example of something common. A recruiter works out why a candidate is stuck. A finance analyst explains a variance. A support specialist diagnoses a billing discrepancy. Each one has the same shape: an unstructured request arrives, a person turns it into a known investigation, gathers evidence from several systems, applies a framework they mostly carry in their head, and reports a conclusion. That's an agent workflow whether or not anyone calls it one.
 
-Each one has the same shape. An unstructured request arrives. A person translates it into a known investigation, gathers evidence from several systems, applies a decision framework they mostly carry in their head, and communicates a conclusion. That's an agent workflow whether or not anyone calls it one.
-
-Not every tedious minute should be automated. Some repetitive steps have judgment hidden inside them, and some decisions need a person who's accountable for them. But be suspicious of any workflow where skilled people spend most of the day as connective tissue between an inbox, six dashboards, and a spreadsheet.
+Not every tedious minute should be automated. But be suspicious of any workflow where skilled people spend most of the day as connective tissue between an inbox, six dashboards, and a spreadsheet.
 
 Once the investigation is written down and tested, "why didn't this product get ordered?" has usually been answered before anyone opens the email. A person only has to decide whether the answer is right, which was the part worth my time all along.
