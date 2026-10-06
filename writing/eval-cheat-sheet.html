@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Eval Cheat Sheet — an easy way to understand what an eval is</title>
+<title>Eval Cheat Sheet: an easy way to understand what an eval is</title>
 <meta name="description" content="What an eval is, the eval pyramid, contract vs accuracy, metrics that survive gaming, and the vocabulary in plain English." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -149,65 +149,65 @@
       <text x="14" y="170" text-anchor="middle" fill="#999" font-size="9.5" font-family="IBM Plex Mono,monospace" transform="rotate(-90 14 170)">VOLUME OF CHECKS →</text>
     </svg>
     <div class="legend">
-      <div class="lg"><i style="background:#000"></i><div><b>HUMAN-GRADED — defines quality</b><span>Seeds the labels, adjudicates contested calls, audits ~1% of outputs. Periodically: re-grade a sample, confirm the judge agrees ~90%. Humans stay in the loop, but their share of the grading drops from 100% to ~1%.</span></div></div>
-      <div class="lg"><i style="background:#4a4a4a"></i><div><b>MODEL-GRADED — scales judgment</b><span>An LLM judge scores rubric questions with no single right answer ("is this synthesis good?"). Failure modes: leniency and verbosity bias, which is why the top layer exists.</span></div></div>
-      <div class="lg"><i style="background:#c9c9c4"></i><div><b>CODE-GRADED — the trustworthy base</b><span>Plain rules: schema valid, evidence present, ranking monotonic, classification exact-match. Runs on every change, costs nothing, and a === comparison can't be sycophantic.</span></div></div>
+      <div class="lg"><i style="background:#000"></i><div><b>HUMAN-GRADED: defines quality</b><span>Seeds the labels, adjudicates contested calls, audits ~1% of outputs. Periodically: re-grade a sample, confirm the judge agrees ~90%. Humans stay in the loop, but their share of the grading drops from 100% to ~1%.</span></div></div>
+      <div class="lg"><i style="background:#4a4a4a"></i><div><b>MODEL-GRADED: scales judgment</b><span>An LLM judge scores rubric questions with no single right answer ("is this synthesis good?"). Failure modes: leniency and verbosity bias, which is why the top layer exists.</span></div></div>
+      <div class="lg"><i style="background:#c9c9c4"></i><div><b>CODE-GRADED: the trustworthy base</b><span>Plain rules: schema valid, evidence present, ranking monotonic, classification exact-match. Runs on every change, costs nothing, and a === comparison can't be sycophantic.</span></div></div>
       <div class="rhythm"><b>The rhythm:</b> humans label a seed set once → machines check every change forever (CI) → production corrections flow back as new labeled cases → periodic human audit keeps the machine graders honest.</div>
     </div>
   </div>
-  <p class="note">An eval answers one of two questions: did anything that used to work get worse (<b>regression</b>), or can it do the new thing at all (<b>capability</b>)? Separately, there are two kinds, and you need both. The <b>contract</b> eval asks whether the output is well-formed. The <b>accuracy</b> eval asks whether it's correct against human labels. A wrong-but-well-formed answer sails through the first and fails the second — like a beautifully filled-out form with the wrong diagnosis on it.</p>
+  <p class="note">An eval answers one of two questions: did anything that used to work get worse (<b>regression</b>), or can it do the new thing at all (<b>capability</b>)? Separately, there are two kinds, and you need both. The <b>contract</b> eval asks whether the output is well-formed. The <b>accuracy</b> eval asks whether it's correct against human labels. A wrong-but-well-formed answer sails through the first and fails the second: like a beautifully filled-out form with the wrong diagnosis on it.</p>
 
   <div class="sechead"><h2>Metrics, Defined Operationally</h2><span class="tag">clock starts · clock stops · gaming guard</span></div>
-  <p class="note" style="margin:-6px 0 16px">The example domain here is an AI-powered customer-feedback pipeline, but the pattern — an operational definition, a failure to watch, a gaming guard — transfers to any AI system you have to measure.</p>
+  <p class="note" style="margin:-6px 0 16px">The example domain here is an AI-powered customer-feedback pipeline, but the pattern (an operational definition, a failure to watch, a gaming guard) transfers to any AI system you have to measure.</p>
   <div class="mgrid">
     <div class="mc"><h3>Time-to-triage <span class="u">speed</span></h3>
       <p>Median <em>and p90</em> hours from <span class="k2">record created</span> to <span class="k2">classified + owner assigned</span>. Write down where the clock starts and stops, or every team measures it differently.</p>
-      <p class="g"><b>Watch</b> — the p90 tail: "I submitted three weeks ago and heard nothing" is where trust dies, and the median hides it.</p></div>
+      <p class="g"><b>Watch</b>: the p90 tail. "I submitted three weeks ago and heard nothing" is where trust dies, and the median hides it.</p></div>
     <div class="mc"><h3>Signal quality <span class="u">accuracy</span></h3>
-      <p>Two proxies: <em>correction rate</em> — % of AI classifications a human overrides, falling over time — and <em>receiver usefulness</em> — % of routed items the receiving owner one-taps as actionable.</p>
-      <p class="g"><b>Watch</b> — one measures the machine, the other the whole pipeline. You need both to localize a problem.</p></div>
+      <p>Two proxies: <em>correction rate</em> (% of AI classifications a human overrides, falling over time) and <em>receiver usefulness</em> (% of routed items the receiving owner one-taps as actionable).</p>
+      <p class="g"><b>Watch</b>: one measures the machine, the other the whole pipeline. You need both to localize a problem.</p></div>
     <div class="mc"><h3>Roadmap influence <span class="u">the hard one</span></h3>
       <p>% of shipped roadmap items whose spec cited a feedback-cluster ID <em>at decision time</em>. Companion pull metric: specs citing the system unprompted, per quarter.</p>
-      <p class="g"><b>Why hard</b> — attribution (decisions have many parents), counterfactual (would've built it anyway), lag (quarters), gaming (post-hoc tagging — killed by the decision-time clause).</p></div>
+      <p class="g"><b>Why hard</b> (attribution (decisions have many parents), counterfactual (would've built it anyway), lag (quarters), gaming (post-hoc tagging) killed by the decision-time clause).</p></div>
     <div class="mc"><h3>Submitter trust <span class="u">retention</span></h3>
-      <p><em>Repeat-submitter rate</em> — % who submit again within 90 days — plus a 2-question pulse ("did you find out what happened?" / "would you submit again?").</p>
-      <p class="g"><b>Watch</b> — behavioral beats survey: people don't keep feeding a system that eats their input.</p></div>
+      <p><em>Repeat-submitter rate</em> (% who submit again within 90 days) plus a 2-question pulse ("did you find out what happened?" / "would you submit again?").</p>
+      <p class="g"><b>Watch</b>: behavioral beats survey, because people don't keep feeding a system that eats their input.</p></div>
     <div class="mc"><h3>Cost per outcome <span class="u">budget</span></h3>
       <p><span class="k2">users × runs/day × tokens × price</span> is the bill; <em>cost per triaged issue vs. the human-hour it replaces</em> is the comparison that matters.</p>
-      <p class="g"><b>Levers</b> — prompt &amp; result caching, model right-sizing, context trimming. Guards: per-user limits, alerts at 50/80/100%.</p></div>
+      <p class="g"><b>Levers</b>: prompt &amp; result caching, model right-sizing, context trimming. Guards: per-user limits, alerts at 50/80/100%.</p></div>
     <div class="mc"><h3>Eval health <span class="u">meta</span></h3>
       <p>Per-field classification accuracy with <em>confusion pairs</em> (which boundary blurs tells you which definition to sharpen), and judge–human agreement ≥ ~90%.</p>
-      <p class="g"><b>Watch</b> — an uncalibrated judge is a broken ruler: you optimize toward it anyway.</p></div>
+      <p class="g"><b>Watch</b>: an uncalibrated judge is a broken ruler, and you optimize toward it anyway.</p></div>
   </div>
 
   <div class="sechead"><h2>Vocabulary, Said Plainly</h2><span class="tag">term → meaning → say it like</span></div>
   <div class="tbl-scroll"><table>
     <tr><th>Term</th><th>What it is</th><th>Say it like</th></tr>
-    <tr><td class="term">regression eval</td><td>A fixed test panel re-run after <em>every</em> change (prompt edit, model upgrade). "Regression" means going backwards — the software sense, not statistics. Catching one here is the crash test at the factory, before it turns into a recall.</td><td class="say">"Did anything that used to be good get worse?"</td></tr>
-    <tr><td class="term">CI</td><td>Continuous integration — the robot that runs your checks on every change, before merge. The badge is the live inspection certificate.</td><td class="say">"The exam is administered automatically; no one has to remember."</td></tr>
-    <tr><td class="term">golden set</td><td>Curated inputs with known-good outputs. Stack it with cases that burned you; every production miss becomes a candidate case.</td><td class="say">"Standardized patients — actors with scripted, known conditions."</td></tr>
+    <tr><td class="term">regression eval</td><td>A fixed test panel re-run after <em>every</em> change (prompt edit, model upgrade). "Regression" means going backwards: the software sense, not statistics. Catching one here is the crash test at the factory, before it turns into a recall.</td><td class="say">"Did anything that used to be good get worse?"</td></tr>
+    <tr><td class="term">CI</td><td>Continuous integration: the robot that runs your checks on every change, before merge. The badge is the live inspection certificate.</td><td class="say">"The exam is administered automatically; no one has to remember."</td></tr>
+    <tr><td class="term">golden set</td><td>Curated inputs with known-good outputs. Stack it with cases that burned you; every production miss becomes a candidate case.</td><td class="say">"Standardized patients: actors with scripted, known conditions."</td></tr>
     <tr><td class="term">contract vs. accuracy</td><td>Contract: is the output well-formed (grounded, ranked, fields valid)? Accuracy: is it <em>correct</em> against human labels?</td><td class="say">"Wrong-but-well-formed passes contract, fails accuracy."</td></tr>
-    <tr><td class="term">LLM judge</td><td>A second model grading with a rubric, for judgment calls with no single right answer. Calibrate against human labels or it drifts lenient.</td><td class="say">"Useful — and itself a model system with failure modes."</td></tr>
+    <tr><td class="term">LLM judge</td><td>A second model grading with a rubric, for judgment calls with no single right answer. Calibrate against human labels or it drifts lenient.</td><td class="say">"Useful: and itself a model system with failure modes."</td></tr>
     <tr><td class="term">inter-rater reliability</td><td>The eval for the humans: two labelers grade the same sample independently; low agreement means the task definition is ambiguous, so fix the guidelines first.</td><td class="say">"If trained humans agree 70% of the time, the taxonomy is the bug."</td></tr>
     <tr><td class="term">harness</td><td>Everything around the model: tool definitions, retries, schema enforcement, state, permissions, logging. Where agent quality mostly lives.</td><td class="say">"Same model, better harness, dramatically better agent."</td></tr>
     <tr><td class="term">staged rollout</td><td>Shadow → 5% → 25% → 100%, gated on metrics. Prompts as versioned config, so rollback is a pointer flip.</td><td class="say">"A/B infrastructure, applied to prompts."</td></tr>
-    <tr><td class="term">drift</td><td>Inputs shift under you, or the model gets swapped (upgrade). There is no permanent "qualified" state.</td><td class="say">"Every model upgrade is a new machine on the line — requalify."</td></tr>
+    <tr><td class="term">drift</td><td>Inputs shift under you, or the model gets swapped (upgrade). There is no permanent "qualified" state.</td><td class="say">"Every model upgrade is a new machine on the line: requalify."</td></tr>
   </table></div>
 
   <div class="sechead"><h2>The Autonomy Ladder</h2><span class="tag">one axis at a time</span></div>
   <ol class="ladder">
     <li><b>SHADOW.</b> System runs, humans decide, outputs only compared. <span class="axis">Blast radius: zero.</span></li>
-    <li><b>PROPOSE, HUMAN DISPOSES.</b> Full capability, gated authority — the system drafts everything, a human fires anything external.</li>
+    <li><b>PROPOSE, HUMAN DISPOSES.</b> Full capability, gated authority: the system drafts everything, a human fires anything external.</li>
     <li><b>SCALE WIDE, AUTONOMY FROZEN.</b> More users and intake with the gate still on, so scale's edge cases surface while someone is watching.</li>
-    <li><b>AUTONOMY BY REVERSIBILITY.</b> Unhook humans from <em>reversible</em> actions first (tag, cluster, draft); sending, closing, paying stay gated — each gate earns its own removal from review data.</li>
-    <li><b>NEVER FULLY UNATTENDED.</b> Sampled audits, drift alarms, kill switch — forever.</li>
+    <li><b>AUTONOMY BY REVERSIBILITY.</b> Unhook humans from <em>reversible</em> actions first (tag, cluster, draft); sending, closing, paying stay gated: each gate earns its own removal from review data.</li>
+    <li><b>NEVER FULLY UNATTENDED.</b> Sampled audits, drift alarms, kill switch: forever.</li>
   </ol>
 
   <div class="sechead"><h2>Principles</h2></div>
   <div class="lines">
     <div class="ln">"Autonomy changes <b>where</b> human judgment is applied."<small>who prompts the prompter</small></div>
     <div class="ln">"Scale the agent's <b>work</b>, not the agent's <b>authority</b>."<small>hundreds of users ≠ hundreds of autonomous agents</small></div>
-    <div class="ln">"Never increase scale and autonomy in the same step — an unattributable failure forces a total rollback."<small>the one-variable rule</small></div>
+    <div class="ln">"Never increase scale and autonomy in the same step: an unattributable failure forces a total rollback."<small>the one-variable rule</small></div>
     <div class="ln">"Trust is a <b>monitoring system you keep believing in</b>."<small>where the manufacturing analogy breaks</small></div>
     <div class="ln">"Humans define quality; machines enforce it at scale."<small>yes, you still need humans, at about 1%</small></div>
   </div>
