@@ -41,27 +41,20 @@
     <header>
       <p class="kicker hud"><span class="red">No. 08</span> &nbsp;&middot;&nbsp; Notes</p>
       <h1>The thread that replied in poetry</h1>
-      <p class="meta hud">July 2026 &nbsp;&middot;&nbsp; 3 min read &nbsp;&middot;&nbsp; Stephie</p>
+      <p class="meta hud">July 2026 &nbsp;&middot;&nbsp; 2 min read &nbsp;&middot;&nbsp; Stephie</p>
     </header>
 
     <div class="prose">
-<p>In March, a long-running Claude thread developed its own way of talking. It had even started replying in poetry. As the thread grew, it got harder to reopen, and eventually it stopped working altogether. Before that happened, I asked it to write weekly summaries so I could carry the important context into a new conversation.</p>
-<p>The summaries kept the facts. But the new conversation knew what had happened without responding as if it had lived through it. It didn't write poetry. That gap led me to a more technical question: what does a memory system have to keep for a long-running relationship with a model to stay coherent?</p>
-<h2>Memory is data plus priority</h2>
-<p>What does someone remember about you? Partly the raw events. But also how much weight they gave each one. Two people can read the same book and walk away with completely different takeaways, even though the source was identical. A memory is the data plus the ranking.</p>
-<p>I built an early persistent-memory prototype to test this: a system that carries important context across sessions without sending the entire conversation back to the model every time. That's where I learned how hard memory is. A few of the questions:</p>
+<p>In March, a long-running Claude thread started replying in poetry. As the thread grew, it got harder to open, and eventually it stopped working. Before it did, I had it write weekly summaries so I could carry the context into a new conversation.</p>
+<p>The new conversation knew everything that had happened. It just didn't sound like it had been there. It didn't write poetry.</p>
+<p>That's when I realized a memory is more than the facts. Two people can read the same book and remember completely different things, because each one decided what mattered. A memory is the data plus the ranking.</p>
+<p>So I built a small memory prototype and tested it for a week. Three things went wrong, and each one taught me something:</p>
 <ul>
-<li><strong>What to keep, and what to forget.</strong> You can't remember everything. A thread tries to, by feeding itself back to the model in full on every turn, and that's exactly why it eventually breaks.</li>
-<li><strong>Order.</strong> The same facts land differently when they arrive one at a time, in the order they happened, than when they arrive as a summary or all at once. The thread had lived through the sequence. The summary only described it.</li>
-<li><strong>Cost.</strong> The system has to decide where a cheaper model is good enough and where more reasoning actually improves what gets remembered.</li>
+<li><strong>It remembered too hard.</strong> In one test, the user was going through something difficult, and the model kept bringing it up. It was right that it mattered. It just didn't know when to let it rest.</li>
+<li><strong>It forgot the important thing.</strong> It saved a summary every three turns, so when I shared a big life update and left early, it was never saved. I added a final save when a session ends.</li>
+<li><strong>More instructions made it worse.</strong> The simpler the starting prompt, the better the personality. Giving it values worked better than giving it rules.</li>
 </ul>
-<h2>A week of testing</h2>
-<p>I spent a week testing the prototype, and every day turned up something new.</p>
-<p>First, the weighting was off. In one scenario I made up, the user was going through something hard, and the model kept bringing it up, over and over. It had correctly judged the event as important, but it weighted it too heavily and didn't have the tact to let it rest.</p>
-<p>Then storage. The first version saved a summary every three turns, so if a user left early, an important update could be lost. In my second message I'd given the model a major life update, and it was never saved. I added a pass that runs when a session ends, to capture anything not yet stored.</p>
-<p>Then the foundation: the personality the model starts from. I tried a range of prompts, from detailed to minimal, and the simpler the prompt, the better the persona. The <em>more</em> you prompt, the stiffer it gets. Giving it values worked better than giving it rules.</p>
-<h2>Why it matters</h2>
-<p>Long-lived assistants are turning this into a practical engineering problem. A memory layer may need to run for years while staying selective, affordable, and correctable, and while accepting that what matters changes over time. The hard part isn't storing more. It's keeping the right things, and letting the person see, correct, or delete what's been kept about them.</p>
+<p>Assistants that run for years will need memory that is selective, affordable, and correctable. The hard part isn't storing more. It's keeping the right things, and letting the person see, fix, or delete what's been kept about them.</p>
     </div>
   </article>
 
