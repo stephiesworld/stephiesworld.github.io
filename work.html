@@ -94,6 +94,7 @@
     .lede { font-family: var(--read); font-size: 1.02rem; line-height: 1.65; color: var(--cream-dim); max-width: 36em; margin-bottom: 1.1rem; }
     .patterns { display: grid; gap: 0.75rem; margin-bottom: 2rem; padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .patterns dt { font-size: 0.62rem; color: var(--neon); }
+    .patterns dt .in { margin-left: 0.5rem; color: var(--cream-faint); }
     .patterns dd { margin-top: 0.15rem; font-family: var(--read); font-size: 0.98rem; line-height: 1.5; color: var(--cream-faint); }
 
 
@@ -253,13 +254,13 @@
     <div class="split">
       <section id="builds">
         <div class="sec-head"><span class="num hud">01</span><h2>Selected builds</h2></div>
-        <p class="lede">Henry, Delphi, and Cherry are built on the same five patterns. Each one applies to any AI agent doing work where a mistake is expensive:</p>
+        <p class="lede">The three builds solve different problems, but they draw on a shared set of patterns. Each one applies to any AI agent doing work where a mistake is expensive:</p>
         <dl class="patterns">
-          <div><dt class="hud">Split the work</dt><dd>The model handles language and judgment; deterministic code handles math, rules, and facts.</dd></div>
-          <div><dt class="hud">Constrain the output</dt><dd>Forced function calls and validated schemas, so every answer arrives in a shape software can check.</dd></div>
-          <div><dt class="hud">Ground every claim</dt><dd>Answers cite their sources, and data is prepared ahead of time rather than fetched live.</dd></div>
-          <div><dt class="hud">Measure, don&rsquo;t eyeball</dt><dd>Labeled eval sets and LLM-as-judge checks, plus model benchmarks on quality, latency, and cost.</dd></div>
-          <div><dt class="hud">Keep a human in the loop</dt><dd>Reviewer corrections are captured and fed back, so the system improves where it was wrong.</dd></div>
+          <div><dt class="hud">Split the work <span class="in">Henry</span></dt><dd>The model handles language and judgment; deterministic code handles math, rules, and facts.</dd></div>
+          <div><dt class="hud">Constrain the output <span class="in">Henry</span></dt><dd>Forced function calls and validated schemas, so every answer arrives in a shape software can check.</dd></div>
+          <div><dt class="hud">Ground every claim <span class="in">Delphi</span></dt><dd>Answers cite their sources, and data is prepared ahead of time rather than fetched live.</dd></div>
+          <div><dt class="hud">Measure, don&rsquo;t eyeball <span class="in">Henry &middot; Cherry</span></dt><dd>Labeled eval sets and LLM-as-judge checks, plus model benchmarks on quality, latency, and cost.</dd></div>
+          <div><dt class="hud">Keep a human in the loop <span class="in">Cherry</span></dt><dd>Reviewer corrections are captured and fed back, so the system improves where it was wrong.</dd></div>
         </dl>
         <div class="feature">
           <article class="fcard">
