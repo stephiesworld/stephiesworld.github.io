@@ -1,35 +1,90 @@
 ---
-title: "The dumpling was the stress test"
+title: "What a dumpling taught me about AI agents"
 date: "2026-07-22"
 order: 9
-category: "AI & the enterprise"
+category: "Notes"
+dek: "Trying to automate a good dumpling at Little Bun taught me three things. They turned out to be the three hardest problems in deploying AI agents."
 ---
 
-*When people picture automated manufacturing they think of cars. I think about dumplings, and the reason is economic.*
+At Little Bun, I spent a long time on a question that sounds trivial and isn't: what would it take to automate a genuinely good dumpling?
 
-For years I've circled a question that sounds trivial and isn't: what would it take to automate the production of a genuinely good dumpling? It became the center of my work at Little Bun. It's also the clearest way I know to explain why enterprise AI agents are hard.
+We worked with automated manufacturing partners to bring the cost down, and I spent a lot of time with their R&D teams. Honestly, the teams we worked with in the East were stronger than the ones in the West.
 
-## A dumpling is a bundle of micro-decisions
+It taught me three things, and years later, building AI agents, I keep running into the same three problems.
 
-A dumpling looks simple on the plate. Small, familiar, cheap, gone in three bites.
+## 1. The judgment is invisible
 
-The wrapper isn't simple. The flour-to-water ratio shifts with humidity, temperature, and how long the dough rested. Knead it enough to develop structure, not so much that it fights you. Roll it thin enough to feel delicate and thick enough to survive filling, folding, cooking, freezing, and a truck.
+A dumpling looks simple. The work isn't. The dough changes with humidity and how long it rested. The filling changes with the fat and water in that day's meat. Someone folding by hand adjusts for all of it without thinking: a little less filling because it's wet today, a little more pressure on this pleat because of the last one. One dumpling is a dozen small decisions. A machine has to treat each one as a separate problem in sensing, timing, and force.
 
-The filling isn't simple either. Meat varies in fat content, moisture, and temperature. Vegetables release water. Salt restructures protein. Mix too little and it's uneven; mix too hard and it goes rubbery.
+Office work hides the same thing. Take a customer asking for a refund after the return window has closed.
 
-A person making dumplings by hand answers all of this without narrating any of it. They feel that today's filling is wetter and put in slightly less. They rotate the dumpling in one hand while pinching with the other, and each pleat's angle and pressure is a reaction to the pleat before it. The pleat does structural work, closing a curved surface around a soft, irregular payload while redistributing the excess material.
+The rule says no. The experienced person on that queue checks whether the delay was the customer's fault or a shipping failure on our side. They notice the account has never returned anything. They know the "no exceptions" policy has an unwritten exception for delivery problems. They know which of two systems to trust when they disagree about the delivery date. They see the customer mentioned it was a gift, which changes how they word the reply. Then they approve it.
 
-Count the judgments inside one dumpling. Is the wrapper centered? How much filling will this particular wrapper hold? How much pressure closes the seam without extruding it? The maker does it in one fluid motion; a machine has to treat it as a dozen separate problems in sensing, timing, force, and control.
+<svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One refund request outside the return window, broken into the seven judgments an experienced person makes before approving it, each labelled with where that knowledge lives. Three live in a record: the shipping log, the account history, and the customer's own message. Four, shown in red, live nowhere at all: the unwritten exception to the no-exceptions policy, the regional difference in how the damaged-goods rule is enforced, the knowledge of which of two disagreeing systems to trust on a given field, and the advice to log the reason in the structured field because nobody reads free text." style="width:100%;height:auto;display:block;margin:2rem 0;">
+  <defs>
+    <marker id="rf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker>
+  </defs>
+  <style>
+    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
+    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#666;}
+    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
+    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
+    .no{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#aaa;}
+    .none{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#B01E36;}
+  </style>
+  <text x="350" y="14" text-anchor="middle" class="band">ONE REFUND REQUEST, AT DUMPLING RESOLUTION</text>
+  <rect x="130" y="26" width="440" height="30" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
+  <text x="350" y="45" text-anchor="middle" class="smb">A REFUND REQUESTED OUTSIDE THE RETURN WINDOW</text>
+  <line x1="350" y1="56" x2="350" y2="68" stroke="#000" stroke-width="1.2" marker-end="url(#rf)"/>
+  <text x="350" y="82" text-anchor="middle" class="lbl">THE RULE SAYS NO.</text>
+  <text x="44" y="106" class="smb">WHAT THE EXPERIENCED PERSON CHECKS ANYWAY</text>
+  <text x="486" y="106" class="smb">WHERE THAT LIVES</text>
+  <line x1="20" y1="112" x2="692" y2="112" stroke="#000" stroke-width="1.5"/>
+  <text x="24" y="136" class="no">1</text>
+  <text x="44" y="136" class="sm">Was the delay ours, or the customer's?</text>
+  <text x="486" y="136" class="smb">the shipping record</text>
+  <line x1="20" y1="146" x2="692" y2="146" stroke="#ececec" stroke-width="1"/>
+  <text x="24" y="170" class="no">2</text>
+  <text x="44" y="170" class="sm">Third order from an account that has never returned anything</text>
+  <text x="486" y="170" class="smb">the account history</text>
+  <line x1="20" y1="180" x2="692" y2="180" stroke="#ececec" stroke-width="1"/>
+  <text x="24" y="204" class="no">3</text>
+  <text x="44" y="204" class="sm">"No exceptions" has an exception for a documented delivery failure</text>
+  <text x="486" y="204" class="none">nowhere · unwritten</text>
+  <line x1="20" y1="214" x2="692" y2="214" stroke="#ececec" stroke-width="1"/>
+  <text x="24" y="238" class="no">4</text>
+  <text x="44" y="238" class="sm">The damaged-goods rule is loose in one region, strict in another</text>
+  <text x="486" y="238" class="none">nowhere · local practice</text>
+  <line x1="20" y1="248" x2="692" y2="248" stroke="#ececec" stroke-width="1"/>
+  <text x="24" y="272" class="no">5</text>
+  <text x="44" y="272" class="sm">Two systems disagree on the date; one is right about that field</text>
+  <text x="486" y="272" class="none">nowhere · system lore</text>
+  <line x1="20" y1="282" x2="692" y2="282" stroke="#ececec" stroke-width="1"/>
+  <text x="24" y="306" class="no">6</text>
+  <text x="44" y="306" class="sm">They mentioned it was a gift · changes nothing, changes the reply</text>
+  <text x="486" y="306" class="smb">the message itself</text>
+  <line x1="20" y1="316" x2="692" y2="316" stroke="#ececec" stroke-width="1"/>
+  <text x="24" y="340" class="no">7</text>
+  <text x="44" y="340" class="sm">Log the reason in the structured field; nobody reads free text</text>
+  <text x="486" y="340" class="none">nowhere · a colleague, once</text>
+  <line x1="20" y1="350" x2="692" y2="350" stroke="#000" stroke-width="1.5"/>
+  <rect x="130" y="364" width="440" height="30" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
+  <text x="350" y="383" text-anchor="middle" class="smb">APPROVED · in under a minute</text>
+  <line x1="20" y1="414" x2="692" y2="414" stroke="#000" stroke-width="1"/>
+  <text x="20" y="434" class="none">Four of the seven are written down nowhere at all.</text>
+  <text x="20" y="450" class="sm">That is the filling. A system that automates this either gets told those four, or it reads the policy, applies the rule,</text>
+  <text x="20" y="464" class="sm">and says no · correctly, by the only standard it was given.</text>
+</svg>
 
-## "But dumplings are already mass-produced"
+Seven judgments, four of them written down nowhere, made in under a minute by someone who would describe the job as "processing returns."
 
-They are. Frozen dumplings come off industrial lines by the million, and this is the first objection anyone informed is going to raise.
+When work looks easy, it's usually because a skilled person has absorbed the complexity. Trying to teach it to a machine, or an agent, is what makes that hidden judgment visible again.
 
-So look at how those lines got there. They got rid of the pleat, replacing hand-folding with a stamped or crimped seal a machine can execute identically forever. They standardized the filling's moisture and fat content until the material stopped surprising the equipment. The product was reshaped until the process could be made rigid.
+## 2. You can fold the pleat, or stamp the seal
 
-That's the oldest and best move in automation, and it works. The cost shows up on the plate, in the texture of the wrapper, the way it holds, whether it tastes like something a person made.
+Frozen dumplings are mass-produced by the million. The way those lines got there is instructive: they got rid of the pleat. A machine stamps or crimps a seal that it can repeat forever, and the filling is standardized until it stops surprising the equipment. They changed the product until the process could be rigid.
 
-That tradeoff recurs everywhere. Redesigning the work until the variation is gone is dramatically cheaper than building a system that handles it, and it's what most organizations actually do, including with AI. Every time a company flattens a nuanced process into a rigid form so software can run it, they've stamped the seal instead of folding the pleat. Sometimes that's exactly right. It's worth knowing which one you chose, and what you gave up.
+That works, and it's usually the right call. The cost shows up on the plate, in the texture and in whether it tastes like someone made it.
 
 <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two ways to automate a process that resists automation. Folding the pleat means building a system that absorbs the variation: in the kitchen, reading the dough and adjusting every unit; in software, an agent that reads context and adapts. You keep the quality that made the work worth doing, and you pay for sensing, judgment and checking on every unit forever. Stamping the seal, shown in red, means redesigning the work until the variation is gone: crimping instead of pleating and specifying the filling; a rigid form or required field in software. You keep the throughput and the margin, and you pay with the thing you were trying to make." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -83,114 +138,20 @@ That tradeoff recurs everywhere. Redesigning the work until the variation is gon
   <text x="8" y="422" class="sm">product no longer does the thing that made it worth building, and finding no note anywhere about when that was traded away.</text>
 </svg>
 
-## The price is the constraint
+Companies make the same choice with AI. You can build an agent that handles the variation in real work, or you can flatten the process into a rigid form that simple software can run. Stamping the seal is far cheaper, and often correct. Just know which one you chose, and what you gave up.
 
-If a robot performed a similarly delicate operation on something worth thousands of dollars, the economics would forgive a lot: expensive sensors, slow cycle times, a technician on call, the occasional manual intervention.
+## 3. The price decides
 
-A dumpling forgives nothing. It has to be fast, because the volume is enormous; precise, because small defects compound across thousands of units; gentle, because the materials are soft; hygienic, because it's food; and low-waste, because the margins are thin. It also has to be cheap enough that automating it doesn't make an everyday food cost more than anyone is willing to pay.
+The dumpling I most wanted to make was a better-for-you one. Better ingredients cost more per unit. But the market set the price of a dumpling a long time ago, by every other bag in the freezer aisle, none of which is trying to be good for you. I could make the product. I couldn't make it at the price a dumpling is allowed to cost.
 
-The machine has to make a *good* dumpling, repeatedly, at a price that still makes sense for something people eat casually.
+Agents have the same arithmetic. You can always make one better: a larger model, more retrieval, a second model checking the first, a person reviewing every output. Each improves the result, and each raises the cost of every run. The frontier model is the expensive ingredient.
 
-That makes the dumpling close to a worst case for automation, and if you solve it you've solved a class of problems that reaches well past food.
+And the work most worth automating can afford it least. A task is worth automating because it happens a million times, and nobody ever paid much per instance for something that happens a million times. If a person clears a case in ninety seconds, an agent that costs more than ninety seconds of their time doesn't work as a product, however good it is.
 
-This is also where Little Bun hit a wall that had nothing to do with engineering. The dumpling I most wanted to make was a better-for-you one. Better for you means better ingredients, and better ingredients cost more per unit. But a dumpling has a price the market decided on a long time ago, set by every other bag in the freezer aisle — none of which is trying to be good for you. I could make the product, but I couldn't make the arithmetic work at the price a dumpling is permitted to cost.
+There's a harder version. The quality that matters most in an agent is invisible when it works. Nobody notices the run where the agent declined to answer because its data was stale, because nothing happened. A demo shows fluency, not judgment. That was my dumpling problem too: I was trying to sell a quality you couldn't see on the plate.
 
-That failure taught me more than the folding did, because it moved the constraint. The real question was whether it could be made well at the price the category allows.
+## What the dumpling taught me
 
-## A dumpling is a workflow you can eat
+A cheap product can demand very sophisticated technology. Judgment is harder to automate than motion. And a system should be judged by what it does repeatedly, at a price that makes sense, when the inputs are imperfect.
 
-Enterprise workflows also look simple from outside. We say a claim was processed or an invoice approved, the way we name dumpling-making — fill, fold, cook — and the name hides the work.
-
-So take one at dumpling resolution. A customer asks for a refund outside the return window.
-
-The rule says no, but the experienced person on that queue doesn't stop there. They check whether the delay was the customer's or a shipping failure on our end. They notice this is the third order from an account that has never returned anything. They know the "no exceptions" policy has an unwritten exception for a documented delivery problem, and that the *written* exception for damaged goods is enforced loosely in one region and strictly in another. They see that the order system and the fulfillment system disagree about the delivery date, and they know which one is usually right about that particular field, and why. They notice the customer mentioned in passing that it was a gift — which doesn't change the procedure but does change how they word the reply. They approve it, and they log the reason in the structured field rather than the free-text one, because a colleague told them once that nobody ever reads free text.
-
-<svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One refund request outside the return window, broken into the seven judgments an experienced person makes before approving it, each labelled with where that knowledge lives. Three live in a record: the shipping log, the account history, and the customer's own message. Four, shown in red, live nowhere at all: the unwritten exception to the no-exceptions policy, the regional difference in how the damaged-goods rule is enforced, the knowledge of which of two disagreeing systems to trust on a given field, and the advice to log the reason in the structured field because nobody reads free text." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <defs>
-    <marker id="rf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker>
-  </defs>
-  <style>
-    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
-    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#666;}
-    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
-    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
-    .no{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#aaa;}
-    .none{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#B01E36;}
-  </style>
-  <text x="350" y="14" text-anchor="middle" class="band">ONE REFUND REQUEST, AT DUMPLING RESOLUTION</text>
-  <rect x="130" y="26" width="440" height="30" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
-  <text x="350" y="45" text-anchor="middle" class="smb">A REFUND REQUESTED OUTSIDE THE RETURN WINDOW</text>
-  <line x1="350" y1="56" x2="350" y2="68" stroke="#000" stroke-width="1.2" marker-end="url(#rf)"/>
-  <text x="350" y="82" text-anchor="middle" class="lbl">THE RULE SAYS NO.</text>
-  <text x="44" y="106" class="smb">WHAT THE EXPERIENCED PERSON CHECKS ANYWAY</text>
-  <text x="486" y="106" class="smb">WHERE THAT LIVES</text>
-  <line x1="20" y1="112" x2="692" y2="112" stroke="#000" stroke-width="1.5"/>
-  <text x="24" y="136" class="no">1</text>
-  <text x="44" y="136" class="sm">Was the delay ours, or the customer's?</text>
-  <text x="486" y="136" class="smb">the shipping record</text>
-  <line x1="20" y1="146" x2="692" y2="146" stroke="#ececec" stroke-width="1"/>
-  <text x="24" y="170" class="no">2</text>
-  <text x="44" y="170" class="sm">Third order from an account that has never returned anything</text>
-  <text x="486" y="170" class="smb">the account history</text>
-  <line x1="20" y1="180" x2="692" y2="180" stroke="#ececec" stroke-width="1"/>
-  <text x="24" y="204" class="no">3</text>
-  <text x="44" y="204" class="sm">"No exceptions" has an exception for a documented delivery failure</text>
-  <text x="486" y="204" class="none">nowhere — unwritten</text>
-  <line x1="20" y1="214" x2="692" y2="214" stroke="#ececec" stroke-width="1"/>
-  <text x="24" y="238" class="no">4</text>
-  <text x="44" y="238" class="sm">The damaged-goods rule is loose in one region, strict in another</text>
-  <text x="486" y="238" class="none">nowhere — local practice</text>
-  <line x1="20" y1="248" x2="692" y2="248" stroke="#ececec" stroke-width="1"/>
-  <text x="24" y="272" class="no">5</text>
-  <text x="44" y="272" class="sm">Two systems disagree on the date; one is right about that field</text>
-  <text x="486" y="272" class="none">nowhere — system lore</text>
-  <line x1="20" y1="282" x2="692" y2="282" stroke="#ececec" stroke-width="1"/>
-  <text x="24" y="306" class="no">6</text>
-  <text x="44" y="306" class="sm">They mentioned it was a gift — changes nothing, changes the reply</text>
-  <text x="486" y="306" class="smb">the message itself</text>
-  <line x1="20" y1="316" x2="692" y2="316" stroke="#ececec" stroke-width="1"/>
-  <text x="24" y="340" class="no">7</text>
-  <text x="44" y="340" class="sm">Log the reason in the structured field; nobody reads free text</text>
-  <text x="486" y="340" class="none">nowhere — a colleague, once</text>
-  <line x1="20" y1="350" x2="692" y2="350" stroke="#000" stroke-width="1.5"/>
-  <rect x="130" y="364" width="440" height="30" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
-  <text x="350" y="383" text-anchor="middle" class="smb">APPROVED — in under a minute</text>
-  <line x1="20" y1="414" x2="692" y2="414" stroke="#000" stroke-width="1"/>
-  <text x="20" y="434" class="none">Four of the seven are written down nowhere at all.</text>
-  <text x="20" y="450" class="sm">That is the filling. A system that automates this either gets told those four, or it reads the policy, applies the rule,</text>
-  <text x="20" y="464" class="sm">and says no — correctly, by the only standard it was given.</text>
-</svg>
-
-Seven judgments, four of them written down nowhere, all made in under a minute by someone who would describe their job as "processing returns."
-
-A dumpling hides the same kind of thing, small decisions that turn loose inputs into something that holds together downstream. Skip one and it comes apart later, in the pot or in the quarter.
-
-## Judgment is harder to automate than motion
-
-Traditional automation thrives when the environment can be made rigid: same part, same place, same angle, ten thousand times. Plenty of valuable human processes only work because a person absorbs context, makes small adjustments, catches exceptions, and recovers when reality deviates from the plan.
-
-A dumpling maker is running a loop: observe the material, act, notice the result, adjust the next action.
-
-An agent that's genuinely useful inside an organization needs that same loop: work out what kind of situation this is, gather the context that bears on it, choose a next step, check whether it worked, adapt when it didn't. A script stops when an expected field is empty, while an agent has to decide whether the absence is an error, an exception, or information.
-
-Most of that intelligence lives in [the harness](/harness-cheat-sheet.html), much as it did on the dumpling line.
-
-## Reliability is the product
-
-Someone eating a dumpling cares that the wrapper has the right texture and the thing doesn't fall apart. Someone using an enterprise agent cares that it found the right record, applied the right policy, and didn't create more work.
-
-The ingredient problem comes back here almost unchanged. You can always make an agent better. A larger model, more retrieval, an extra verification pass, a second model checking the first, a person reviewing every output — each of those improves the result, and each of them raises the cost of a single run. The frontier model is the expensive ingredient. You can taste the difference, and you often can't charge for it.
-
-Which is awkward, because the work most worth automating is the work least able to afford it. A task is worth automating because it happens a million times, and a task that happens a million times is one nobody was ever paying much for per instance. If a person clears a case in ninety seconds, an agent costing more than ninety seconds of loaded labor per run doesn't make sense as a product, however good its answers are. That's the freezer aisle again. At that volume, dependable has to be cheap enough to survive being done a million times.
-
-There's a worse version of this, and it's the one I'd watch for. The qualities that matter most in an agent are invisible when it's working. Fluency is obvious in a demo; calibration mostly isn't. Nobody notices the run where the agent declined to answer because a data feed was stale — that's the run where nothing happened. So buyers pay for what they can perceive, and the property that makes a system trustworthy is precisely the one that never shows up in a demo. That was my dumpling problem too. I was trying to sell a quality you couldn't see on the plate.
-
-*How you actually measure any of that — what counts as a defect, who inspects it, and what stops a bad unit from shipping — is [its own essay](/writing/agent-as-factory).*
-
-## What automation reveals
-
-When a process looks easy, we assume it's easy to automate, but usually it looks easy because a skilled person has absorbed the complexity. A practiced maker doesn't calculate the force distribution across a pleat. An operations employee doesn't build a decision tree to resolve an exception. The knowledge went embodied and stopped being visible.
-
-Trying to teach it to a machine is what makes it visible again — the unwritten policies, the sensory cues, the recovery moves, the quiet coordination that kept the thing running. That's the part I didn't expect to find so valuable, and it's the part I'd defend hardest. The goal is to understand that work well enough to build something that keeps it.
-
-The dumpling taught me that a cheap product can demand extremely sophisticated technology, that judgment is harder to automate than motion, and that a system should be measured by what it does repeatedly when the inputs are imperfect.
+*How to actually measure that reliability is [its own essay](/writing/agent-as-factory).*

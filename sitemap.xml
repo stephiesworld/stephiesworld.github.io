@@ -2,117 +2,97 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://stephiesworld.com/</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/about.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/work.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/nyc.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/paris.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/madrid.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/london.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/shanghai.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/grindelwald.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/books.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://stephiesworld.com/writing/who-is-feedback-for.html</loc>
-    <lastmod>2026-10-01</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://stephiesworld.com/writing/the-first-pass-by-the-numbers.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/writing/why-the-human-stays-in-the-loop.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/writing/your-data-is-already-a-graph.html</loc>
-    <lastmod>2026-10-01</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/building-without-a-spec.html</loc>
-    <lastmod>2026-10-01</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/memory-architecture.html</loc>
-    <lastmod>2026-10-01</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/customer-signal-into-product.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/writing/investigations-not-just-code.html</loc>
-    <lastmod>2026-10-01</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/the-dumpling-was-the-stress-test.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/writing/agent-as-factory.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://stephiesworld.com/writing/million-decisions.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <loc>https://stephiesworld.com/writing/memory-architecture.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stephiesworld.com/writing/the-dumpling-was-the-stress-test.html</loc>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/writing/eval-cheat-sheet.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://stephiesworld.com/writing/harness-cheat-sheet.html</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>

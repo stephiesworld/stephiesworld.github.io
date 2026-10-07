@@ -2,20 +2,17 @@
 title: "Your data is already a graph"
 date: "2026-07-22"
 order: 4
-category: "Building with AI"
+category: "Field guides"
+dek: "Graph engineering explained with customer feedback: store the relationships, not just the rows, so the expensive judgments outlive the query."
 ---
 
-*An explanation of graph engineering, using the pile of data I think about anyway: customer feedback.*
+Here's a question most feedback systems handle badly: **are the enterprise accounts complaining about setup in their reviews the same ones filing support tickets about it?**
 
-Take a question most feedback systems handle badly: **are the enterprise accounts complaining about setup in their reviews the same ones filing support tickets about it?**
+You can answer it with a query. Then come the follow-ups: which of them renew soon? Who owns that part of the product? Each one is another query, and none of the answers build on each other. Six months later you have a folder of one-off SQL and still no picture of the problem.
 
-You can answer that. Someone writes a query, joins four tables, and hands back a number by the end of the day. Then the next question arrives — okay, which of those accounts renew in the next ninety days? Another query. And who owns that part of the product? Another query. Every question is a small engineering project, and none of the answers accumulate. Six months later you have a folder of one-off SQL and still no working picture of the thing everyone is describing in meetings.
+The data was stored in a shape that throws away what matters most: what's connected to what.
 
-The underlying problem is that the data got stored in a shape that discards the most valuable information in it, which is what's connected to what.
-
-## A row is a graph with the edges thrown away
-
-Look at a single piece of feedback as it actually arrives.
+## A row hides the connections
 
 <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One row of customer feedback broken into the five things hiding inside it: the customer Acme Corp, the segment Enterprise, the evidence Review 812, the product area SSO setup, and the issue slow time-to-value. The row names all five and connects none of them." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -29,7 +26,7 @@ Look at a single piece of feedback as it actually arrives.
     .gr-acc{font:700 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#B01E36;}
     .gr-edge{font:600 8px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
   </style>
-  <text x="350" y="14" text-anchor="middle" class="gr-band">ONE ROW — and the five things hiding inside it</text>
+  <text x="350" y="14" text-anchor="middle" class="gr-band">ONE ROW · and the five things hiding inside it</text>
   <rect x="30" y="26" width="640" height="56" fill="#f3f3f3" stroke="#000" stroke-width="1.3"/>
   <line x1="190" y1="26" x2="190" y2="82" stroke="#000" stroke-width="1"/>
   <line x1="350" y1="26" x2="350" y2="82" stroke="#000" stroke-width="1"/>
@@ -68,37 +65,22 @@ Look at a single piece of feedback as it actually arrives.
   <text x="350" y="240" text-anchor="middle" class="gr-acc">The connections are the part worth keeping.</text>
 </svg>
 
-Ten thousand rows like that contain a few thousand customers, a few dozen product areas, and some unknown number of real issues. But the table only holds text that happens to mention them. Every time you want to reason about a customer or an issue, you reconstruct it from scratch, and then you throw the reconstruction away.
+Ten thousand rows like this contain thousands of customers and dozens of real issues, but the table only stores text that mentions them. Every analysis rebuilds the connections from scratch, then throws them away.
 
-## Nodes, edges, and one real idea
+A graph stores them. **Nodes** are things: a customer, an issue, a review. **Edges** are relationships: *Acme* wrote *Review #812*, which is about *setup friction*. "These two complaints are the same problem" stops being a conclusion someone reaches and discards. It becomes an edge, written down once, dated, and correctable.
 
-Graph engineering is a small vocabulary plus one idea.
+## The hard parts are judgment calls
 
-The vocabulary: a **node** is a thing — a customer, an issue, a review, a product area, a person. An **edge** is a relationship between two things — *Acme* **wrote** *Review #812*; *Review #812* **is about** *setup friction*. Both carry properties. A customer node holds a plan tier and a renewal date. An edge holds a confidence score, a date, and a note about who decided it.
+Picking a database is easy. The engineering is in four decisions:
 
-The idea is to **store the relationship itself.** In a table, "these two complaints describe the same underlying problem" is a conclusion someone reaches at query time and then discards. In a graph, it's an edge, written down once, visible, dated, attributable, and correctable, so the expensive judgment outlives the query that produced it.
-
-From there, questions become walks across the graph. A new question usually needs no new schema, because the connections it depends on are already sitting there. And because every edge is a stored object, a human can look at one and say *that's wrong*, which you can't really do with a SQL result.
-
-## Where the engineering actually lives
-
-Choosing a database is straightforward. Neo4j exists; so do half a dozen alternatives, and a graph runs perfectly well on top of Postgres for a long time. The engineering is in a series of judgment calls.
-
-**Deciding what gets to be a node.** The test I use: if you'd ever want to point at it, count it, own it, or attach a decision to it, it's a node. If it only ever describes something else, it's a property. Make "issue" a text label on a review and you can never ask which issues span two product areas, or who owns one, or whether this quarter's version is the same as last quarter's. Promote it to a node and all three come free. Getting this wrong is the expensive mistake, because the fix is a migration of everything.
-
-**Resolving entities.** "Acme Corp," "ACME," "acme.com," and "Acme Corporation (EMEA)" are one customer or four, and the graph has to decide. This is the least glamorous work in the entire discipline and it determines whether anyone trusts the output. A graph with four Acmes is worse than a spreadsheet, because it looks authoritative while quietly lying about counts.
-
-**Making each edge mean exactly one thing.** MENTIONS, IS_ABOUT, and CAUSES are different edges. A review can mention billing while being about onboarding. If a single edge type carries all three meanings, every traversal returns a superset of the truth, and you've rebuilt keyword search with extra steps and more confidence.
-
-**Recording who drew the edge.** Model-proposed, human-confirmed, or rule-derived — plus a confidence and a date. Provenance is what makes correction possible, and correction is the only way the graph gets better over time. It's the same principle as [keeping the human in the loop](/writing/why-the-human-stays-in-the-loop): the system's job is to make judgments inspectable.
-
-**Deciding what *not* to connect.** A graph where everything touches everything is fog, so leaving connections out is part of the design.
+- **What gets to be a node.** If you'd ever want to count it, own it, or attach a decision to it, it's a node. Make "issue" a node and you can ask who owns it and whether it spans two products.
+- **Which records are the same thing.** "Acme Corp," "ACME," and "acme.com" are one customer. A graph with three Acmes looks authoritative while getting every count wrong.
+- **One meaning per edge.** A review can *mention* billing while being *about* onboarding. Blur those and every answer is too broad.
+- **Who drew each edge.** Model-proposed or human-confirmed, with a confidence and a date, so a person can fix a wrong one.
 
 ## The question, answered
 
-The opening question, as a graph.
-
-<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A graph traversal: two enterprise customers, Acme Corp and Globex, connect by WROTE and FILED edges to three pieces of evidence — two reviews and a support ticket. All three connect by IS_ABOUT edges, highlighted in red, to a single issue node: setup friction. That issue connects by an OWNED_BY edge to the onboarding area and the platform team. The answer is a three-hop walk that carries revenue along with it." style="width:100%;height:auto;display:block;margin:2rem 0;">
+<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A graph traversal: two enterprise customers, Acme Corp and Globex, connect by WROTE and FILED edges to three pieces of evidence · two reviews and a support ticket. All three connect by IS_ABOUT edges, highlighted in red, to a single issue node: setup friction. That issue connects by an OWNED_BY edge to the onboarding area and the platform team. The answer is a three-hop walk that carries revenue along with it." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
     <marker id="g2-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker>
     <marker id="g2-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B01E36"/></marker>
@@ -112,7 +94,7 @@ The opening question, as a graph.
     .g2-edge{font:600 8px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
     .g2-edgec{font:600 8px "IBM Plex Mono",ui-monospace,monospace;fill:#B01E36;}
   </style>
-  <text x="350" y="16" text-anchor="middle" class="g2-band">THE QUESTION — is it the same thing, in two different channels?</text>
+  <text x="350" y="16" text-anchor="middle" class="g2-band">THE QUESTION · is it the same thing, in two different channels?</text>
   <text x="350" y="33" text-anchor="middle" class="g2-sm">two accounts · three pieces of evidence · one issue · one owner</text>
 
   <rect x="16" y="70" width="150" height="58" fill="#fff" stroke="#000" stroke-width="1.3"/>
@@ -175,24 +157,10 @@ The opening question, as a graph.
   <text x="32" y="477" class="g2-sm">customer → evidence → issue → owner. Three hops, no new schema, and the revenue rides along.</text>
 </svg>
 
-Nobody had to write a bespoke join. The question "which enterprise accounts hit this in more than one channel, and who owns the fix" is a path through nodes that were already connected. The next question — *does this issue predate the March release?* — is one more hop, because the evidence nodes have dates. So the structure answers questions it wasn't designed for, and that compounding return is the main justification for the cost.
+No custom query. The answer is a path through things that were already connected, and the next question is usually just one more step.
 
-## Why this got useful again
+## Why now, and when not to
 
-Graphs aren't new, but two things changed recently that made them worth revisiting.
+Graphs used to die because tagging documents by hand was too slow. Now a model proposes the nodes and edges, and a person checks them in seconds. And good AI retrieval needs structure: text that *sounds* similar isn't always *related*.
 
-**Extraction got cheap.** Building a knowledge graph used to mean humans tagging documents, which is why most attempts died in year two. A model now reads unstructured text and proposes the nodes and edges directly. The bottleneck moved from extraction to verification — and verification is a much better bottleneck, because a person can check a proposed edge in seconds and correcting one improves everything downstream of it.
-
-**Retrieval needs structure.** Vector search finds text that *sounds* similar to your question, which is genuinely useful, but similar text isn't always *related*. Answering "What's Acme's exposure this quarter" means walking the connections. The strongest retrieval I've seen uses both: embeddings to surface candidates, the graph to establish what actually connects to what, and counts computed by walking the graph instead of generated by the model.
-
-## When not to build one
-
-Graphs cost. Entity resolution is never finished, edge definitions drift as the business changes, and a graph nobody queries is an expensive diagram. If your entities arrive clean with stable IDs, if your questions are one hop deep, if nobody asks second questions — use a table. You'll be happier.
-
-Reach for a graph when the relationships are the product, when questions arrive faster than schemas can, and when someone needs to correct a judgment rather than just re-run a query. And you rarely have to choose. A graph layer alongside the relational store, fed by it, is usually the right call, with the relational store holding the facts and the graph holding the connections.
-
-## The part that isn't technical
-
-Deciding that "issue" is a first-class thing with an owner, a lifecycle, and evidence attached is a product decision wearing an engineering hat. It's a claim about how the company should work: that problems are things you can point at, count, assign, and close. The graph just makes you write it down.
-
-*The related question — how much of this a machine should decide before a human sees it — is [its own essay](/writing/the-first-pass-by-the-numbers).*
+But graphs cost real effort. If your data is clean and nobody asks follow-up questions, use a table. Reach for a graph when the relationships are the point, and when someone needs to correct a judgment instead of re-running a query.

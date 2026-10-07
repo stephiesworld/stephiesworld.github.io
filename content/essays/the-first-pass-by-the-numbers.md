@@ -2,30 +2,27 @@
 title: "The first pass, by the numbers"
 date: "2026-07-11"
 order: 2
-category: "Customer feedback, at scale"
+category: "Field guides"
+dek: "What an AI first pass does to 10,000 pieces of customer feedback, what the model should and shouldn't touch, and the job that's left for people."
 ---
 
-When people hear "AI triages customer feedback," they tend to imagine one of two things: a toy that writes summaries nobody reads, or a machine that replaces the operations team. In practice it's a compression story, and that's easiest to see with numbers.
+"AI triages customer feedback" sounds like either a toy that writes summaries nobody reads or a machine that replaces the operations team. It's neither. It's compression, and the numbers show it best.
 
-Suppose a company receives 10,000 pieces of feedback in a week — support tickets, sales-call transcripts, Slack threads, community posts, early-access notes, telemetry flags. The job of a first pass is turning that pile of records into a small, structured, evidence-attached set of issues that humans can judge. [Cherry](https://cherry-topaz.vercel.app), my triage tool, is built around this; the eight-stage pipeline on its homepage is this essay in diagram form.
+Say a company gets 10,000 pieces of feedback in a week. The job of a first pass is to turn that pile into a short list of issues, each with its evidence attached, that people can judge. That's what [Cherry](https://cherry-topaz.vercel.app), my triage tool, does.
 
-## What the machine should and shouldn't touch
+## The model never invents what a database knows
 
-A useful first pass divides labor strictly. Ordinary software retrieves and calculates: ticket counts, customer counts, revenue on the affected accounts, dates, plan tiers, existing ticket IDs, who owns which product area. The model interprets: what the customer was trying to do, what actually went wrong, whether two complaints share a mechanism, which evidence is representative, who should own the fix. My rule is that the model should never invent what a database can answer. When a cluster says "47 reports across 29 independent accounts," those numbers came from joins; the model's contribution is the claim that those 47 reports describe the same underlying thing.
+Ordinary software handles the facts: counts, accounts, revenue, dates, ticket IDs, owners. The model handles interpretation: what the customer was trying to do and whether two complaints are the same problem. When Cherry says "47 reports across 29 accounts," the numbers come from a query. The model's only claim is that those 47 reports describe one thing.
 
-That claim is where the interesting failures live, and there are two of them, pulling in opposite directions.
+That claim fails in two directions. **Missed duplicates:** five different phrasings of one issue. **False duplicates,** which are worse: five complaints that all say the product "forgets," with five different causes and five different owners, merged into one useless cluster. Tidy output can still be wrong, which is why the first pass needs evals and human review.
 
-**Missed duplicates** are the obvious one: "loses track of instructions in long sessions," "my configuration rules disappear," "it stops following our conventions halfway through" — five phrasings, one issue. Semantic clustering catches most of this.
+It also has to check what already exists. Is there a ticket? Did leadership already call this an intentional tradeoff? Skip that, and the first pass just makes more noise.
 
-**False duplication** is harder to spot. Take five complaints that all mention the product "forgetting": one is a user expecting memory that was never saved, one is an admin whose configured policy isn't applying, one is a context-length limitation, one is a genuine bug, one is a product-education gap. Bad synthesis merges them into a giant cluster called "the product forgets things" — which sounds organized and is useless, because it has five different mechanisms, five different owners, and no single fix. Good synthesis separates them by mechanism and use case. This is why the first pass needs evals and human correction, since tidy-sounding output can still be clustered wrong.
+## The numbers
 
-Before anything gets created, the first pass also has to **check what already exists.** Does this issue have a ticket? Did leadership already rule it an intentional tradeoff in March? Is engineering mid-investigation? A first pass that skips this step becomes a ticket-duplication machine, producing more of the noise it was built to reduce.
+Of those 10,000 records, perhaps 1,500 have nothing actionable and 3,000 are near-duplicates. The rest condense into a couple hundred clusters. Most match known issues, a few dozen are new, and only a small set needs a person to read closely.
 
-## The economics
-
-Run the funnel on those 10,000 records: perhaps 1,500 contain no actionable feedback, 3,000 are near-duplicates, and the remaining substance condenses into a couple hundred candidate clusters — most merging into known issues, a few dozen genuinely new, a small number routed with high confidence, an ambiguous handful sent to human review, and a few escalated immediately. The humans deeply read the escalations, the ambiguous clusters, samples from the high-volume ones, and every low-confidence call, and they audit everything else.
-
-<svg viewBox="0 0 680 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A funnel: 10,000 raw records shrink to 8,500 with substance, 5,500 after deduplication, about 180 candidate clusters, about 40 new issues, and roughly 18 items a human deeply reads — 15 ambiguous clusters plus 3 escalations." style="width:100%;height:auto;display:block;margin:2rem 0;">
+<svg viewBox="0 0 680 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A funnel: 10,000 raw records shrink to 8,500 with substance, 5,500 after deduplication, about 180 candidate clusters, about 40 new issues, and roughly 18 items a human deeply reads · 15 ambiguous clusters plus 3 escalations." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <style>
     .fn-n{font:700 13px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
     .fn-nw{font:700 13px "IBM Plex Mono",ui-monospace,monospace;fill:#fff;}
@@ -34,7 +31,7 @@ Run the funnel on those 10,000 records: perhaps 1,500 contain no actionable feed
   </style>
   <rect x="20" y="16" width="640" height="50" rx="5" fill="#f3f3f3" stroke="#000" stroke-width="1.2"/>
   <text x="340" y="38" text-anchor="middle" class="fn-n">10,000</text>
-  <text x="340" y="54" text-anchor="middle" class="fn-l">raw records — one week, every channel</text>
+  <text x="340" y="54" text-anchor="middle" class="fn-l">raw records · one week, every channel</text>
   <line x1="340" y1="66" x2="340" y2="82" stroke="#000" stroke-width="1.1"/>
   <text x="354" y="78" class="fn-s">− 1,500 with nothing actionable</text>
   <rect x="70" y="82" width="540" height="50" rx="5" fill="#eceae6" stroke="#000" stroke-width="1.2"/>
@@ -61,14 +58,12 @@ Run the funnel on those 10,000 records: perhaps 1,500 contain no actionable feed
   <text x="340" y="376" text-anchor="middle" class="fn-nw">~18</text>
   <text x="400" y="368" class="fn-n" fill="#B01E36">deeply read by humans</text>
   <text x="400" y="384" class="fn-l">15 ambiguous clusters + 3 escalations</text>
-  <text x="20" y="426" class="fn-s">Bar widths are compressed — drawn to true scale, the bottom rows would be invisible, which is the point.</text>
+  <text x="20" y="426" class="fn-s">Bar widths are compressed · drawn to true scale, the bottom rows would be invisible, which is the point.</text>
   <text x="20" y="440" class="fn-s">Everything outside the red band gets sampled and audited rather than read.</text>
 </svg>
 
-That's the trade. Human attention goes to the places where judgment changes the outcome. The team goes from reading every submission to auditing samples and hard cases, and spends its time deciding what counts as signal. The first pass compresses the analyst layer, and the judgment stays with people.
+That's the trade. People stop reading every submission and start reviewing the hard cases and samples of the rest. The model compresses the reading. The judgment stays with people.
 
-What happens to the humans' corrections after that — how they're measured and folded back in — is its own essay: [an opinion with edit access](/writing/why-the-human-stays-in-the-loop).
+## The job that's left
 
-## The job that remains
-
-So does the first pass replace the operations function? It automates the portion dominated by reading, tagging, and copying between systems. It also creates a harder and more interesting job: defining what quality means, building the evals that keep the machine honest, and tracking whether any of this changes what gets built. A system can do analyst-scale first-pass work all day, but someone still has to be responsible for whether it's doing it *well*, and for what happens next.
+The first pass automates the reading, tagging, and copying. It creates a harder job: defining what good looks like, building the evals that keep the system honest, and checking whether any of it changes what gets built. How those human corrections get measured is [its own essay](/writing/why-the-human-stays-in-the-loop).
