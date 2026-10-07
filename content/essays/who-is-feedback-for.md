@@ -6,9 +6,9 @@ category: "Field guides"
 dek: "A feedback system succeeds or fails on the exit side: who reads the signal, what they need it for, and how it should be shaped for them."
 ---
 
-Every feedback system I've seen obsesses over intake: more channels, more forms, more listening. Intake matters, but whether the system is useful gets decided on the exit side, by **who reads the mail**.
+Every feedback system I've seen obsesses over intake: more channels, more forms, more listening. But whether the system is useful gets decided on the other end, by **who reads it**.
 
-I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, around two questions for every team that uses customer signal: *what is their goal?* and *how should the same signal be presented to them?* Once I drew the whole system, most of the design decisions fell out of the picture on their own.
+So I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, around two questions for every team that uses customer feedback: *what is their goal?* and *what should the feedback look like for them?* Once I drew the whole system, most of the design decisions made themselves.
 
 <svg viewBox="0 0 700 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Feedback flows from five sources into a triage core that screens, classifies, and weighs it, then out to five teams, each with its own goal and presentation; users feed the sources and receive closure; capability signals cross a permission gate into model development, whose improvements change the product and generate new signal." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -125,38 +125,22 @@ I designed [Cherry](https://cherry-topaz.vercel.app), my feedback-triage tool, a
   <text x="8" y="730" class="sm">new signal to the top. If any return arrow goes dark, the loop is dying and the metrics above will say so before people do.</text>
 </svg>
 
-## Every source has a tint
+## Every source is biased
 
-No source is neutral. Support tickets over-represent what's broken, because nobody files a ticket about a feature they love. Community and social channels are the loudest room, and the loudest room is self-selected: a complaint that dominates one review site and appears nowhere else may belong to one segment. Telemetry tells you what users *do* but never *why*. Early-access groups are the one source you get to design, since you choose who's in the room and what you ask them. That makes them the closest thing the loop has to a controlled experiment.
+Support tickets over-represent what's broken; nobody files a ticket about a feature they love. Social media is the loudest room, and the loudest room is self-selected. Usage data shows what people *do* but never *why*. No single source tells the truth, so you need several.
 
-So I never let one window decide what the weather is. A mix of sources is the only real defense against mistaking a tint for the truth.
+## The middle has three jobs
 
-## What the middle does
+Forwarding feedback just gives you a sorted pile. The middle has to **screen** it (is this from real, representative people?), **classify** it (a bug to fix, or a deliberate tradeoff people dislike?), and **weigh** it, with severity, reach, recency, and revenue kept as separate, visible dials. If the score is one mystery number, nobody trusts it.
 
-A system that only forwards feedback is a mail sorter. The pile is still a pile; it just arrives sorted. The middle has three real jobs.
+## Each team needs a different view
 
-**Screen.** Is this from real people, and is it representative? Public reviews get gamed, and bots write templated outrage.
+Feedback goes to five teams doing five jobs, and the same issue means something different to each. Leadership needs its own category for deliberate choices, like pricing people dislike, where "just fix it" is the wrong instruction. In Cherry, that became one triage with a separate view for each audience.
 
-**Classify.** Is this a bug someone should fix, or a deliberate tradeoff customers dislike? Those go to completely different owners. And is it a one-off, or a pattern that shows what the product isn't good at yet?
+For an AI product, one more exit matters most: feedback showing the model itself falls short should shape what it gets trained on next. That path needs a gate, because not all customer data can be used for training. If a record's permissions are unknown, it doesn't cross.
 
-**Weigh.** Severity, reach, recency, and revenue at stake, kept as separate, visible dials. If the score is one opaque number, nobody trusts the ranking and everyone rebuilds it in their own spreadsheet.
+## Close the loop
 
-## The exits
+A funnel becomes a loop when people hear back. Users who hear "you said, we did" keep talking. Users who hear nothing stop. And the customers who never speak up aren't happy; they're just unmeasured.
 
-What reorganized the whole design was realizing that feedback goes to five teams doing five different jobs, and the same issue looks different to each of them.
-
-Each team's goal and view are in the drawing. Leadership is worth spelling out, because it needs a category the other four would misroute: deliberate choices, like pricing people dislike or friction that's profitable, where the decision is strategic and "just fix it" is the wrong instruction.
-
-In Cherry, this became the persona views: one triage, re-weighted for each audience, with the weights visible. Whether something counts as high-signal depends on who's reading.
-
-## The red arrow
-
-For an AI product, one exit gets its own color. Some feedback is bigger than a ticket: it's evidence that the model itself falls short on a whole use case. That signal should shape what the model is trained to get better at. It's the highest-leverage arrow in the diagram, and it needs a gate, because customer data comes with contracts and not all of it can be used for training. The gate is default-deny. If a record's permissions are unknown, it doesn't cross. When this gate fails, it should fail by being too careful.
-
-## Closing the loop
-
-The difference between a feedback funnel and a feedback loop is the return arrows. Users who hear "you said, we did" keep talking. Users who hear nothing eventually stop. The model that improves changes the product, which changes what people say about it, which becomes new signal.
-
-The dashed circle next to Users matters as much as the solid one. The segments with no voice in your evidence aren't satisfied; they're unmeasured, and their silence is a gap in coverage.
-
-If you're building anything like this, start where I did: at the exit side, with the two questions. Build the plumbing after.
+If you're building one of these, start at the exit side with the two questions. Build the plumbing after.

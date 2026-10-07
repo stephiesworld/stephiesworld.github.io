@@ -41,12 +41,12 @@
     <header>
       <p class="kicker hud"><span class="red">No. 01</span> &nbsp;&middot;&nbsp; Field guides</p>
       <h1>Who is feedback for?</h1>
-      <p class="meta hud">July 2026 &nbsp;&middot;&nbsp; 3 min read &nbsp;&middot;&nbsp; Stephie</p>
+      <p class="meta hud">July 2026 &nbsp;&middot;&nbsp; 2 min read &nbsp;&middot;&nbsp; Stephie</p>
     </header>
 
     <div class="prose">
-<p>Every feedback system I've seen obsesses over intake: more channels, more forms, more listening. Intake matters, but whether the system is useful gets decided on the exit side, by <strong>who reads the mail</strong>.</p>
-<p>I designed <a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">Cherry</a>, my feedback-triage tool, around two questions for every team that uses customer signal: <em>what is their goal?</em> and <em>how should the same signal be presented to them?</em> Once I drew the whole system, most of the design decisions fell out of the picture on their own.</p>
+<p>Every feedback system I've seen obsesses over intake: more channels, more forms, more listening. But whether the system is useful gets decided on the other end, by <strong>who reads it</strong>.</p>
+<p>So I designed <a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">Cherry</a>, my feedback-triage tool, around two questions for every team that uses customer feedback: <em>what is their goal?</em> and <em>what should the feedback look like for them?</em> Once I drew the whole system, most of the design decisions made themselves.</p>
 <figure class="plate"><svg viewBox="0 0 700 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Feedback flows from five sources into a triage core that screens, classifies, and weighs it, then out to five teams, each with its own goal and presentation; users feed the sources and receive closure; capability signals cross a permission gate into model development, whose improvements change the product and generate new signal." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker>
@@ -161,24 +161,16 @@
   <text x="8" y="716" class="sm">A funnel moves signal one way and goes quiet. A loop returns something at every edge · closure to users, priorities to builders,</text>
   <text x="8" y="730" class="sm">new signal to the top. If any return arrow goes dark, the loop is dying and the metrics above will say so before people do.</text>
 </svg></figure>
-<h2>Every source has a tint</h2>
-<p>No source is neutral. Support tickets over-represent what's broken, because nobody files a ticket about a feature they love. Community and social channels are the loudest room, and the loudest room is self-selected: a complaint that dominates one review site and appears nowhere else may belong to one segment. Telemetry tells you what users <em>do</em> but never <em>why</em>. Early-access groups are the one source you get to design, since you choose who's in the room and what you ask them. That makes them the closest thing the loop has to a controlled experiment.</p>
-<p>So I never let one window decide what the weather is. A mix of sources is the only real defense against mistaking a tint for the truth.</p>
-<h2>What the middle does</h2>
-<p>A system that only forwards feedback is a mail sorter. The pile is still a pile; it just arrives sorted. The middle has three real jobs.</p>
-<p><strong>Screen.</strong> Is this from real people, and is it representative? Public reviews get gamed, and bots write templated outrage.</p>
-<p><strong>Classify.</strong> Is this a bug someone should fix, or a deliberate tradeoff customers dislike? Those go to completely different owners. And is it a one-off, or a pattern that shows what the product isn't good at yet?</p>
-<p><strong>Weigh.</strong> Severity, reach, recency, and revenue at stake, kept as separate, visible dials. If the score is one opaque number, nobody trusts the ranking and everyone rebuilds it in their own spreadsheet.</p>
-<h2>The exits</h2>
-<p>What reorganized the whole design was realizing that feedback goes to five teams doing five different jobs, and the same issue looks different to each of them.</p>
-<p>Each team's goal and view are in the drawing. Leadership is worth spelling out, because it needs a category the other four would misroute: deliberate choices, like pricing people dislike or friction that's profitable, where the decision is strategic and "just fix it" is the wrong instruction.</p>
-<p>In Cherry, this became the persona views: one triage, re-weighted for each audience, with the weights visible. Whether something counts as high-signal depends on who's reading.</p>
-<h2>The red arrow</h2>
-<p>For an AI product, one exit gets its own color. Some feedback is bigger than a ticket: it's evidence that the model itself falls short on a whole use case. That signal should shape what the model is trained to get better at. It's the highest-leverage arrow in the diagram, and it needs a gate, because customer data comes with contracts and not all of it can be used for training. The gate is default-deny. If a record's permissions are unknown, it doesn't cross. When this gate fails, it should fail by being too careful.</p>
-<h2>Closing the loop</h2>
-<p>The difference between a feedback funnel and a feedback loop is the return arrows. Users who hear "you said, we did" keep talking. Users who hear nothing eventually stop. The model that improves changes the product, which changes what people say about it, which becomes new signal.</p>
-<p>The dashed circle next to Users matters as much as the solid one. The segments with no voice in your evidence aren't satisfied; they're unmeasured, and their silence is a gap in coverage.</p>
-<p>If you're building anything like this, start where I did: at the exit side, with the two questions. Build the plumbing after.</p>
+<h2>Every source is biased</h2>
+<p>Support tickets over-represent what's broken; nobody files a ticket about a feature they love. Social media is the loudest room, and the loudest room is self-selected. Usage data shows what people <em>do</em> but never <em>why</em>. No single source tells the truth, so you need several.</p>
+<h2>The middle has three jobs</h2>
+<p>Forwarding feedback just gives you a sorted pile. The middle has to <strong>screen</strong> it (is this from real, representative people?), <strong>classify</strong> it (a bug to fix, or a deliberate tradeoff people dislike?), and <strong>weigh</strong> it, with severity, reach, recency, and revenue kept as separate, visible dials. If the score is one mystery number, nobody trusts it.</p>
+<h2>Each team needs a different view</h2>
+<p>Feedback goes to five teams doing five jobs, and the same issue means something different to each. Leadership needs its own category for deliberate choices, like pricing people dislike, where "just fix it" is the wrong instruction. In Cherry, that became one triage with a separate view for each audience.</p>
+<p>For an AI product, one more exit matters most: feedback showing the model itself falls short should shape what it gets trained on next. That path needs a gate, because not all customer data can be used for training. If a record's permissions are unknown, it doesn't cross.</p>
+<h2>Close the loop</h2>
+<p>A funnel becomes a loop when people hear back. Users who hear "you said, we did" keep talking. Users who hear nothing stop. And the customers who never speak up aren't happy; they're just unmeasured.</p>
+<p>If you're building one of these, start at the exit side with the two questions. Build the plumbing after.</p>
     </div>
   </article>
 

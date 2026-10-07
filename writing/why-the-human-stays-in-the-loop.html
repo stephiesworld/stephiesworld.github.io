@@ -41,29 +41,16 @@
     <header>
       <p class="kicker hud"><span class="red">No. 03</span> &nbsp;&middot;&nbsp; Field guides</p>
       <h1>An opinion with edit access</h1>
-      <p class="meta hud">July 2026 &nbsp;&middot;&nbsp; 4 min read &nbsp;&middot;&nbsp; Stephie</p>
+      <p class="meta hud">July 2026 &nbsp;&middot;&nbsp; 2 min read &nbsp;&middot;&nbsp; Stephie</p>
     </header>
 
     <div class="prose">
-<p><em>If the model is good enough to triage feedback, why should a person still review it?</em> It's a fair question. The point of automating a first pass is to stop doing the first pass, and from a distance, keeping a human in the loop looks like keeping the thing you were trying to remove.</p>
-<p>I built the correction step into <a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">Cherry</a>, my triage tool, from the beginning, and the longer I've worked on it, the more permanent it looks.</p>
-<h2>The model can't know what it was never told</h2>
-<p>Say Cherry reads this: <em>"Checkout is terrible."</em> A reasonable classification: bug, route to the checkout team. But the PM reading the triage knows something no model could infer. <em>We redesigned checkout yesterday, on purpose, and people are reacting to the redesign.</em> Or: <em>this customer is on the mobile app; web checkout is fine.</em></p>
-<p>That context lives in the organization: in yesterday's launch, last week's decision, the tribal knowledge of who shipped what. A model can only reason over what it's given, and the freshest, most decision-relevant context is exactly what nobody has written down yet. The human in the loop is how that context gets in.</p>
-<h2>Someone has to decide what good looks like</h2>
-<p>My favorite question about any AI system is <em>who decides when it's wrong?</em> It has to be a person. Asking the model would be circular.</p>
-<p>Say Cherry clusters forty comments into one issue: "customers hate pricing." A PM looks at it and says no, this is three problems wearing one trench coat: a confusing pricing <em>page</em>, unexpected <em>fees</em>, and enterprise <em>billing</em>, each with its own owner and fix.</p>
-<p>That correction also defines what better synthesis looks like, and the PM is the person qualified to define it. Over time, the system's standard of quality becomes human judgment, captured one correction at a time.</p>
-<h2>Sarcasm, and other human sports</h2>
-<p><em>"I LOVE waiting 45 minutes for support."</em></p>
-<p>A person reads that and winces. A model might file it as positive. Models have gotten remarkably good at this, but the tail of human expression is long: irony, in-jokes, industry shorthand, the customer who says "fine" in a way that means the opposite. The edge cases are where automated confidence is least deserved, so Cherry shows its <em>least</em> confident calls for review first. Human attention is scarce, and it should go where the model is shakiest.</p>
-<h2>Trust comes from showing your work</h2>
-<p>Imagine you own a roadmap and someone hands you a priority list. Which would you rather hear?</p>
-<p><em>"The model says these are the top five issues."</em></p>
-<p>Or: <em>"The model proposed these five. Here's the evidence for each. I reviewed them and made two corrections."</em></p>
-<p>The second is the one a responsible decision-maker can act on, even if the two lists are identical, because judgment was visibly applied and someone put their name on it. That's what makes the output something a person will stake a quarter on.</p>
-<h2>Measuring the correction</h2>
-<p>Without a correction step, the system is a line: feedback goes in, an answer comes out, and tomorrow's answer is exactly as good as today's. A correction step turns the line into a loop, where each improvement builds on the last.</p>
+<p>If a model is good enough to triage feedback, why should a person still review it? I built a correction step into <a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">Cherry</a>, my triage tool, from day one, and the longer I work on it, the more permanent it looks. Three reasons.</p>
+<p><strong>The model doesn't know what it was never told.</strong> Cherry reads "Checkout is terrible" and routes it as a bug. The PM knows checkout was redesigned yesterday, on purpose, and people are reacting to the change. The most useful context is the stuff nobody has written down yet. A person is how it gets in.</p>
+<p><strong>Someone has to decide what good looks like.</strong> Cherry groups forty comments into "customers hate pricing." A PM says no: that's three problems wearing one trench coat, a confusing pricing page, surprise fees, and enterprise billing, each with its own owner. That correction defines what better looks like, and only a person can make it.</p>
+<p><strong>People are strange.</strong> "I LOVE waiting 45 minutes for support" might get filed as positive. Sarcasm, in-jokes, and the customer who says "fine" and means the opposite are where the model is shakiest. So Cherry shows its least confident calls first.</p>
+<h2>Measure the correction</h2>
+<p>Without corrections, tomorrow's answer is exactly as good as today's. With them, the system improves, but only if you measure what each correction changed.</p>
 <figure class="plate"><svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Without correction: feedback to model to output, a straight line. With correction: the model proposes, a human edits, the edit is measured, and the improvement feeds back into the model's future behavior." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
     <marker id="ha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker>
@@ -100,11 +87,9 @@
   <path d="M 582 168 C 620 210, 260 226, 219 172" fill="none" stroke="#B01E36" stroke-width="1.6" marker-end="url(#hc)"/>
   <text x="400" y="216" text-anchor="middle" class="hsm" fill="#B01E36">what helped becomes tomorrow's behavior · prompts, retrieval, evals</text>
 </svg></figure>
-<p>Most people skip the third box, <em>measure</em>. A correction you don't measure is just an opinion with edit access.</p>
-<p>In Cherry, an independent evaluator grades the model's original output against the human-corrected version on grounding, clustering, ranking, routing, and actionability. The layers that keep that evaluator honest are in the <a href="eval-cheat-sheet.html">eval cheat sheet</a>.</p>
-<p>I learned why this matters the embarrassing way. Early on, Cherry's quality score went <em>down</em> after I made a genuinely good correction. The measurement was the problem. Applying a correction re-ran the entire triage from scratch, so the grader was comparing two different random drafts, and the noise drowned out the signal. The fix was to apply corrections surgically: change only what the person's judgment requires and leave everything else identical, so the score moves only because of the correction. After that, the number was trustworthy. It rises when a correction genuinely helps, and a falling correction <em>rate</em> over time means the system is learning. "It gets better" became something I could measure.</p>
-<h2>Where that leaves the human</h2>
-<p>The goal is for the model to take the repetitive first-pass work, so human attention lands where it can't be replaced: the calls that need context the model was never given, and the standards only a person can set. The system's job is to measure whether those corrections made it better, so tomorrow starts ahead of today.</p>
+<p>A correction you don't measure is just an opinion with edit access.</p>
+<p>I learned this the embarrassing way. Early on, Cherry's quality score went <em>down</em> after I made a genuinely good correction. The problem was the measurement: applying a correction re-ran the whole triage, so the grader was comparing two different random drafts. The fix was to change only what the correction required and leave everything else identical. After that, the score rose when a correction helped, and a falling correction rate meant the system was actually learning.</p>
+<p>The goal isn't to keep people busy. It's to let the model do the repetitive first pass, so people spend their attention on the context and standards only they can supply.</p>
     </div>
   </article>
 
