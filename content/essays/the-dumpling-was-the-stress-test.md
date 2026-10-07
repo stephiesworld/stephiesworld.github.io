@@ -8,7 +8,9 @@ dek: "Trying to automate a good dumpling at Little Bun taught me three things. T
 
 At Little Bun, I spent a long time on a question that sounds trivial and isn't: what would it take to automate a genuinely good dumpling?
 
-I never fully solved it. But it taught me three things, and years later, building AI agents, I keep running into the same three problems.
+We worked with automated manufacturing partners to bring the cost down, and I spent a lot of time with their R&D teams. Honestly, the teams we worked with in the East were stronger than the ones in the West.
+
+It taught me three things, and years later, building AI agents, I keep running into the same three problems.
 
 ## 1. The judgment is invisible
 
