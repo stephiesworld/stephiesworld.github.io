@@ -1,7 +1,7 @@
 ---
 title: "Customer feedback, start to finish"
 date: "2026-07-22"
-order: 4
+order: 3
 category: "Field guides"
 dek: "What an AI first pass does to 10,000 pieces of feedback, why a person still reviews it, and why the answer belongs in a graph."
 ---

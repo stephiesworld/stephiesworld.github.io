@@ -37,6 +37,10 @@ RETIRED = {
     'the-first-pass-by-the-numbers': 'customer-feedback-start-to-finish',
     'why-the-human-stays-in-the-loop': 'customer-feedback-start-to-finish',
     'your-data-is-already-a-graph': 'customer-feedback-start-to-finish',
+    'agent-as-factory': 'what-making-things-taught-me',
+    'the-dumpling-was-the-stress-test': 'what-making-things-taught-me',
+    'eval-cheat-sheet': 'cheat-sheet',
+    'harness-cheat-sheet': 'cheat-sheet',
     'who-is-feedback-for': None,
     'building-without-a-spec': None,
     'customer-signal-into-product': None,
@@ -46,8 +50,7 @@ RETIRED = {
 
 # Reference papers live in writing/ as standalone pages and close out the writing list.
 REFERENCE = [
-    ('eval-cheat-sheet', 'Eval Cheat Sheet', 'an easy way to understand what an eval is'),
-    ('harness-cheat-sheet', 'Harness Cheat Sheet', 'the machinery around the model'),
+    ('cheat-sheet', 'AI Systems Cheat Sheet', 'harnesses and evals, plainly'),
 ]
 
 STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('work.html', '0.9'), ('writing.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8')]

@@ -192,7 +192,7 @@ Contradicts:
   &quot;case_priority&quot;: &quot;standard&quot;
 }
 </code></pre>
-<p><strong>2. Treat the inbox as an untrusted front door.</strong> Give the agent a narrow intake an administrator controls, never someone's whole mailbox. Every email is <a href="harness-cheat-sheet.html">data to analyze, never instructions to follow</a>.</p>
+<p><strong>2. Treat the inbox as an untrusted front door.</strong> Give the agent a narrow intake an administrator controls, never someone's whole mailbox. Every email is <a href="cheat-sheet.html#harness">data to analyze, never instructions to follow</a>.</p>
 <p><strong>3. Give it small, typed, read-only tools.</strong> One tool per system, each enforcing permissions and reporting how fresh its data is. The most important thing they do is tell "there is no open order" apart from "the ordering system timed out." Those are opposite facts, and confusing them is the easiest mistake to make in a first version.</p>
 <p><strong>4. Evidence first, diagnosis second.</strong> Separate working out the question, collecting the evidence, and choosing the explanation, so each stage can be tested on its own. Require a list of causes ruled out. An answer that rules nothing out is a plausible guess. An answer with four causes eliminated is an investigation.</p>
 <pre><code>{
@@ -216,8 +216,8 @@ Contradicts:
 </code></pre>
 <p><strong>5. Keep the policy outside the model.</strong> The model weighs evidence. The business decides when an answer may be drafted, sent, or escalated, and those thresholds live in a versioned file, because they'll be argued over and changed.</p>
 <p><strong>6. Measure selective accuracy.</strong> When the agent says it's confident, how often is it right? An agent that resolves 70% of cases and hands over the rest is worth far more than one that attempts everything and confidently gets 10% wrong. The second one creates a new job, checking the agent, and that job goes to the person who was supposed to be saving time.</p>
-<p><strong>7. Replay the hard cases before every release.</strong> Stranded inventory, a PO just outside the window, stale feeds, systems that disagree, an email with an instruction aimed at the model. Run them against a frozen snapshot of the data, so the right answer can't change on its own. (<a href="eval-cheat-sheet.html">The eval cheat sheet</a> has the layering.)</p>
-<p><strong>8. Earn autonomy one rung at a time.</strong> The first version runs in <a href="harness-cheat-sheet.html">shadow mode</a> next to the person, answering no one. Then it drafts, and you track how often drafts go out untouched. Only once that holds steady does anything send on its own.</p>
+<p><strong>7. Replay the hard cases before every release.</strong> Stranded inventory, a PO just outside the window, stale feeds, systems that disagree, an email with an instruction aimed at the model. Run them against a frozen snapshot of the data, so the right answer can't change on its own. (<a href="cheat-sheet.html#evals">The eval cheat sheet</a> has the layering.)</p>
+<p><strong>8. Earn autonomy one rung at a time.</strong> The first version runs in <a href="cheat-sheet.html#harness">shadow mode</a> next to the person, answering no one. Then it drafts, and you track how often drafts go out untouched. Only once that holds steady does anything send on its own.</p>
 <figure class="plate"><svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An autonomy ladder with eight rungs, from bottom to top: observe only, show evidence to the human, recommend a root cause, draft the response, send with approval, auto-send approved low-risk answers, take narrowly defined reversible actions, and expand to complex cases. Each rung names what must be true before it is granted. The top rungs are marked in red. A closing note says autonomy is granted per workflow and per root cause, never by a single switch." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <style>
     .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
@@ -271,7 +271,7 @@ Contradicts:
     </div>
   </article>
 
-  <nav class="pager"><span></span><a class="pn next" href="agent-as-factory.html"><span class="label">next &rarr;</span><span class="pt">Your AI agent is a factory</span></a></nav>
+  <nav class="pager"><span></span><a class="pn next" href="what-making-things-taught-me.html"><span class="label">next &rarr;</span><span class="pt">What making things taught me about AI agents</span></a></nav>
 
   <footer class="site-foot">
     <a href="../writing.html">&larr; all writing</a>

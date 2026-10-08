@@ -183,7 +183,7 @@ becomes a case the agent can work with:
 }
 ```
 
-**2. Treat the inbox as an untrusted front door.** Give the agent a narrow intake an administrator controls, never someone's whole mailbox. Every email is [data to analyze, never instructions to follow](/harness-cheat-sheet.html).
+**2. Treat the inbox as an untrusted front door.** Give the agent a narrow intake an administrator controls, never someone's whole mailbox. Every email is [data to analyze, never instructions to follow](cheat-sheet.html#harness).
 
 **3. Give it small, typed, read-only tools.** One tool per system, each enforcing permissions and reporting how fresh its data is. The most important thing they do is tell "there is no open order" apart from "the ordering system timed out." Those are opposite facts, and confusing them is the easiest mistake to make in a first version.
 
@@ -214,9 +214,9 @@ becomes a case the agent can work with:
 
 **6. Measure selective accuracy.** When the agent says it's confident, how often is it right? An agent that resolves 70% of cases and hands over the rest is worth far more than one that attempts everything and confidently gets 10% wrong. The second one creates a new job, checking the agent, and that job goes to the person who was supposed to be saving time.
 
-**7. Replay the hard cases before every release.** Stranded inventory, a PO just outside the window, stale feeds, systems that disagree, an email with an instruction aimed at the model. Run them against a frozen snapshot of the data, so the right answer can't change on its own. ([The eval cheat sheet](/eval-cheat-sheet.html) has the layering.)
+**7. Replay the hard cases before every release.** Stranded inventory, a PO just outside the window, stale feeds, systems that disagree, an email with an instruction aimed at the model. Run them against a frozen snapshot of the data, so the right answer can't change on its own. ([The eval cheat sheet](cheat-sheet.html#evals) has the layering.)
 
-**8. Earn autonomy one rung at a time.** The first version runs in [shadow mode](/harness-cheat-sheet.html) next to the person, answering no one. Then it drafts, and you track how often drafts go out untouched. Only once that holds steady does anything send on its own.
+**8. Earn autonomy one rung at a time.** The first version runs in [shadow mode](cheat-sheet.html#harness) next to the person, answering no one. Then it drafts, and you track how often drafts go out untouched. Only once that holds steady does anything send on its own.
 
 <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An autonomy ladder with eight rungs, from bottom to top: observe only, show evidence to the human, recommend a root cause, draft the response, send with approval, auto-send approved low-risk answers, take narrowly defined reversible actions, and expand to complex cases. Each rung names what must be true before it is granted. The top rungs are marked in red. A closing note says autonomy is granted per workflow and per root cause, never by a single switch." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <style>
