@@ -1,7 +1,7 @@
 ---
 title: "The thread that replied in poetry"
 date: "2026-07-02"
-order: 6
+order: 5
 category: "Notes"
 dek: "A Claude thread that started writing in poetry, the summaries that couldn't bring it back, and what that taught me about building memory."
 ---

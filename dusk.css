@@ -1,0 +1,54 @@
+/* ─── Stephie's World · dusk theme ───
+   The reading pages (work, writing, essays): the same neon city an hour earlier.
+   Blue-violet sky instead of black, signs in their own colors, no rain or scanlines. */
+
+:root {
+  --bg: #161a2e;
+  --ink: #f3ece2;
+  --ink-dim: #d9d2c8;
+  --ink-faint: #9a98a8;
+  --line: rgba(243, 236, 226, 0.12);
+  --amber: #ffb15c;
+  --teal: #6fcfc0;
+  --pink: #ff7a92;
+  --henry: #8fbcff;
+  --delphi: #8dffa0;
+  --cherry: #ff7a92;
+  --c: var(--amber);
+  --read: 'Newsreader', Georgia, serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --neon: 'Tilt Neon', var(--mono);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh; color: var(--ink); font-family: var(--read); -webkit-font-smoothing: antialiased;
+  background: radial-gradient(ellipse 90% 60% at 50% 0%, #262a4a 0%, transparent 70%), linear-gradient(180deg, #1b1f37 0%, #141729 100%) fixed;
+  background-color: var(--bg);
+}
+a { color: inherit; text-decoration: none; }
+.label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+
+/* Signs: one family, each lit in its own color */
+.top { max-width: 1080px; margin: 0 auto; padding: 1.8rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.top .home { font-family: var(--neon); font-size: 0.9rem; letter-spacing: 0.16em; text-transform: uppercase; color: #fff1dc; text-shadow: 0 0 6px rgba(255, 177, 92, 0.6); }
+.top nav { display: flex; gap: 1.6rem; }
+.top nav a { font-family: var(--neon); font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); transition: color 0.2s ease, text-shadow 0.2s ease; }
+.top nav a:hover { color: var(--ink); }
+.top nav a.teal:hover { color: #dffff9; text-shadow: 0 0 8px var(--teal); }
+.top nav a.amber:hover { color: #fff1dc; text-shadow: 0 0 8px var(--amber); }
+.top nav a.pink:hover, .top nav a[aria-current] { color: #ffe3e8; text-shadow: 0 0 6px var(--pink); }
+
+.title-sign { font-family: var(--neon); font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: #fff4e6; text-shadow: 0 0 8px rgba(255, 177, 92, 0.55), 0 0 22px rgba(255, 177, 92, 0.25); }
+.sign-name { display: flex; align-items: center; gap: 0.7rem; font-family: var(--neon); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); text-shadow: 0 0 6px var(--c), 0 0 18px color-mix(in srgb, var(--c) 45%, transparent); }
+.ico { width: 1.6rem; height: 1.6rem; fill: none; stroke: var(--c); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; flex: none; filter: drop-shadow(0 0 4px var(--c)); }
+
+.site-foot { max-width: 1080px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+.site-foot a { font-family: var(--neon); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.8rem; color: var(--ink-faint); }
+.site-foot a:hover { color: var(--ink); }
+
+@media (max-width: 600px) {
+  .top { padding: 1.2rem 1rem; flex-wrap: wrap; }
+  .top nav { gap: 1rem; }
+  .site-foot { padding: 2rem 1rem 3rem; }
+}

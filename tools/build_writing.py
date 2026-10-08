@@ -3,7 +3,8 @@
 
 Reads content/essays/*.md (front matter: title, date, category, dek, optional order) and writes:
   - writing/<slug>.html         one page per essay
-  - the essay list in work.html  (between <!-- essays:start --> and <!-- essays:end -->)
+  - the essay list in writing.html  (between <!-- essays:start --> and <!-- essays:end -->)
+  - redirect stubs for retired essays, so old links land somewhere useful
   - sitemap.xml
 
 Run after adding or editing an essay:
@@ -28,19 +29,28 @@ SRC = ROOT / 'content' / 'essays'
 OUT = ROOT / 'writing'
 SITE = 'https://stephiesworld.com'
 
-# Shelves on the work index, in this order. Field guides are how to deploy agents; notes are how I think.
+# Few posts, in `order:`. Field guides are how to deploy agents; notes are how I think.
 CATEGORY_ORDER = ['Field guides', 'Notes']
 
-# Pinned to the top of the writing column on work.html, in this order.
-START_HERE = ['investigations-not-just-code', 'agent-as-factory', 'the-dumpling-was-the-stress-test']
+# Retired essays -> where their ideas live now (None = the writing index)
+RETIRED = {
+    'the-first-pass-by-the-numbers': 'customer-feedback-start-to-finish',
+    'why-the-human-stays-in-the-loop': 'customer-feedback-start-to-finish',
+    'your-data-is-already-a-graph': 'customer-feedback-start-to-finish',
+    'who-is-feedback-for': None,
+    'building-without-a-spec': None,
+    'customer-signal-into-product': None,
+    'enterprise-ai-opportunity': None,
+    'million-decisions': None,
+}
 
-# Reference papers live in writing/ as standalone pages and close out the writing column.
+# Reference papers live in writing/ as standalone pages and close out the writing list.
 REFERENCE = [
     ('eval-cheat-sheet', 'Eval Cheat Sheet', 'an easy way to understand what an eval is'),
     ('harness-cheat-sheet', 'Harness Cheat Sheet', 'the machinery around the model'),
 ]
 
-STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('work.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8')]
+STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('work.html', '0.9'), ('writing.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8')]
 
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
           'September', 'October', 'November', 'December']
@@ -103,9 +113,7 @@ def description(body_html):
 def ordered(essays):
     # By `order:` in front matter when set, otherwise newest first; then grouped by section
     essays = sorted(essays, key=lambda e: e['raw_date'], reverse=True)
-    essays = sorted(essays, key=lambda e: e['order'] if e['order'] is not None else 0)
-    cats = CATEGORY_ORDER + sorted({e['category'] for e in essays} - set(CATEGORY_ORDER))
-    return [e for c in cats for e in essays if e['category'] == c]
+    return sorted(essays, key=lambda e: e['order'] if e['order'] is not None else 99)
 
 
 def main():
@@ -119,11 +127,11 @@ def main():
         next_e = essays[i + 1] if i + 1 < len(essays) else None
         nav = ''
         if prev_e:
-            nav += f'<a class="pn prev" href="{prev_e["slug"]}.html"><span class="hud">&larr; previous</span><span class="pt">{html.escape(prev_e["title"])}</span></a>'
+            nav += f'<a class="pn prev" href="{prev_e["slug"]}.html"><span class="label">&larr; previous</span><span class="pt">{html.escape(prev_e["title"])}</span></a>'
         else:
             nav += '<span></span>'
         if next_e:
-            nav += f'<a class="pn next" href="{next_e["slug"]}.html"><span class="hud">next &rarr;</span><span class="pt">{html.escape(next_e["title"])}</span></a>'
+            nav += f'<a class="pn next" href="{next_e["slug"]}.html"><span class="label">next &rarr;</span><span class="pt">{html.escape(next_e["title"])}</span></a>'
         e['minutes'] = max(1, math.ceil(words / 230))
         e['dek'] = e['dek'] or description(body)
         (OUT / f'{e["slug"]}.html').write_text(page.substitute(
@@ -138,37 +146,47 @@ def main():
             nav=nav,
         ), encoding='utf-8')
 
-    # ─── Writing list on work.html: start here, then each shelf newest first, then the cheat sheets ───
-    by_slug = {e['slug']: e for e in essays}
-    pinned = [by_slug[s] for s in START_HERE if s in by_slug]
-
-    def tile(e, kicker=''):
-        cat = f'<span class="cat hud">{kicker}</span>' if kicker else ''
-        return (f'        <li class="tile"><a href="writing/{e["slug"]}.html">{cat}'
-                f'<span class="tt">{html.escape(e["title"])}</span><span class="dk">{html.escape(e["dek"])}</span>'
-                f'<span class="meta hud">{e["date"]} &middot; {e["minutes"]} min read</span></a></li>')
-
-    rows = ['        <li class="shelf hud">Start here</li>']
-    rows += [tile(e, html.escape(e['category'])) for e in pinned]
-    for cat in CATEGORY_ORDER + sorted({e['category'] for e in essays} - set(CATEGORY_ORDER)):
-        shelf = sorted([e for e in essays if e['category'] == cat and e not in pinned],
-                       key=lambda e: (e['raw_date'], e['order'] or 0), reverse=True)
-        if shelf:
-            rows.append(f'        <li class="shelf hud">{html.escape(cat)}</li>')
-            rows += [tile(e) for e in shelf]
-    rows.append('        <li class="shelf hud">Cheat sheets</li>')
+    # ─── Writing index: each post with its first diagram as a lit thumbnail ───
+    rows = []
+    for i, e in enumerate(essays):
+        m = re.search(r'<svg\b.*?</svg>', e['body'], re.S)
+        thumb = f'<span class="thumb" aria-hidden="true">{m.group(0)}</span>' if m else '<span class="thumb none" aria-hidden="true"></span>'
+        rows.append(
+            f'        <li class="post"><a href="writing/{e["slug"]}.html">'
+            f'<span class="no">{i + 1:02d}</span>'
+            f'<span class="txt"><span class="cat label">{html.escape(e["category"])} &middot; {e["minutes"]} min</span>'
+            f'<span class="tt">{html.escape(e["title"])}</span><span class="dk">{html.escape(e["dek"])}</span></span>'
+            f'{thumb}</a></li>')
     for slug, name, sub in REFERENCE:
         rows.append(
-            f'        <li class="tile ref"><a href="writing/{slug}.html">'
-            f'<span class="tt">{name}</span><span class="dk">{sub[0].upper() + sub[1:]}.</span></a></li>')
-    for name in ('work.html', 'work-preview.html'):
-        work = ROOT / name
-        if not work.exists():
-            continue
-        src = work.read_text(encoding='utf-8')
-        src = re.sub(r'(<!-- essays:start -->\n).*?(\s*<!-- essays:end -->)',
-                     lambda m: m.group(1) + '\n'.join(rows) + m.group(2), src, flags=re.S)
-        work.write_text(src, encoding='utf-8')
+            f'        <li class="ref"><a href="writing/{slug}.html">'
+            f'<span class="tt">{name}</span><span class="dk">{sub[0].upper() + sub[1:]}.</span><span class="ar label">&rarr;</span></a></li>')
+    index = ROOT / 'writing.html'
+    src = index.read_text(encoding='utf-8')
+    src = re.sub(r'(<!-- essays:start -->\n).*?(\s*<!-- essays:end -->)',
+                 lambda m: m.group(1) + '\n'.join(rows) + m.group(2), src, flags=re.S)
+    index.write_text(src, encoding='utf-8')
+
+    # ─── Retired essays: tiny redirect pages ───
+    for slug, to in RETIRED.items():
+        url = f'{to}.html' if to else '../writing.html'
+        canon = f'{SITE}/writing/{to}.html' if to else f'{SITE}/writing.html'
+        (OUT / f'{slug}.html').write_text(f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Retired essay, folded into another. Kept so old links still land. -->
+  <title>Writing · Stephie</title>
+  <link rel="canonical" href="{canon}">
+  <meta http-equiv="refresh" content="0; url={url}">
+  <meta name="robots" content="noindex">
+  <style>body {{ background: #161a2e; }}</style>
+</head>
+<body>
+  <script>location.replace('{url}');</script>
+</body>
+</html>
+''', encoding='utf-8')
 
     # ─── Sitemap ───
     today = datetime.date.today().isoformat()
@@ -181,7 +199,7 @@ def main():
     xml.append('</urlset>')
     (ROOT / 'sitemap.xml').write_text('\n'.join(xml) + '\n', encoding='utf-8')
 
-    print(f'Built {len(essays)} essays, work.html index, sitemap.xml')
+    print(f'Built {len(essays)} essays, writing.html index, {len(RETIRED)} redirects, sitemap.xml')
 
 
 if __name__ == '__main__':

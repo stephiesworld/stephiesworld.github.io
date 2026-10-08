@@ -13,7 +13,7 @@ function cityMap(cfg) {
   var HOME = Object.assign({ bearing: cfg.bearing || 0, padding: PAD }, cfg.home);
   if (mobile) HOME.zoom -= 0.8;
 
-  // ─── Night style over OpenFreeMap vector tiles ───
+  // ─── Dusk style over OpenFreeMap vector tiles ───
   var roadMajor = ['in', ['get', 'class'], ['literal', ['motorway', 'trunk', 'primary', 'secondary']]];
   var roadMinor = ['in', ['get', 'class'], ['literal', ['tertiary', 'minor', 'service']]];
   var name = ['upcase', ['coalesce', ['get', 'name:en'], ['get', 'name']]];
@@ -24,22 +24,22 @@ function cityMap(cfg) {
     light: { anchor: 'viewport', color: '#ffffff', intensity: 0.2, position: [1.4, 210, 35] },
     sources: { omt: { type: 'vector', url: 'https://tiles.openfreemap.org/planet' } },
     layers: [
-      { id: 'bg', type: 'background', paint: { 'background-color': '#08070a' } },
-      { id: 'park', type: 'fill', source: 'omt', 'source-layer': 'park', paint: { 'fill-color': '#0c0b0d' } },
-      { id: 'water', type: 'fill', source: 'omt', 'source-layer': 'water', paint: { 'fill-color': '#040509' } },
+      { id: 'bg', type: 'background', paint: { 'background-color': '#161a2e' } },
+      { id: 'park', type: 'fill', source: 'omt', 'source-layer': 'park', paint: { 'fill-color': '#1a2036' } },
+      { id: 'water', type: 'fill', source: 'omt', 'source-layer': 'water', paint: { 'fill-color': '#0f1226' } },
       { id: 'shore-glow', type: 'line', source: 'omt', 'source-layer': 'water',
         paint: { 'line-color': '#ffb15c', 'line-opacity': 0.18, 'line-blur': 4, 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 2, 16, 8] } },
       { id: 'shore', type: 'line', source: 'omt', 'source-layer': 'water',
         paint: { 'line-color': '#ffb15c', 'line-opacity': 0.4, 'line-width': 0.6 } },
       { id: 'road-minor', type: 'line', source: 'omt', 'source-layer': 'transportation', filter: roadMinor,
-        paint: { 'line-color': '#4a1620', 'line-opacity': 0.55, 'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.3, 16, 1.6] } },
+        paint: { 'line-color': '#4a4f80', 'line-opacity': 0.6, 'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.3, 16, 1.6] } },
       { id: 'road-major-glow', type: 'line', source: 'omt', 'source-layer': 'transportation', filter: roadMajor,
-        paint: { 'line-color': '#ff2d4a', 'line-opacity': 0.1, 'line-blur': 5, 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 3, 16, 14] } },
+        paint: { 'line-color': '#ff7a92', 'line-opacity': 0.12, 'line-blur': 5, 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 3, 16, 14] } },
       { id: 'road-major', type: 'line', source: 'omt', 'source-layer': 'transportation', filter: roadMajor,
-        paint: { 'line-color': '#c8354c', 'line-opacity': 0.5, 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 0.4, 16, 1.6] } },
+        paint: { 'line-color': '#e889a8', 'line-opacity': 0.55, 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 0.4, 16, 1.6] } },
       { id: 'buildings', type: 'fill-extrusion', source: 'omt', 'source-layer': 'building', minzoom: 12,
         paint: {
-          'fill-extrusion-color': ['interpolate', ['linear'], ['coalesce', ['get', 'render_height'], 0], 0, '#0b0609', 80, '#13070d', 250, '#1e0912'],
+          'fill-extrusion-color': ['interpolate', ['linear'], ['coalesce', ['get', 'render_height'], 0], 0, '#1d2140', 80, '#252a50', 250, '#30366a'],
           'fill-extrusion-height': ['coalesce', ['get', 'render_height'], 0],
           'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
           'fill-extrusion-opacity': 0.92
@@ -51,7 +51,7 @@ function cityMap(cfg) {
       { id: 'hood', type: 'symbol', source: 'omt', 'source-layer': 'place',
         filter: ['in', ['get', 'class'], ['literal', ['neighbourhood', 'suburb', 'quarter']]],
         layout: { 'text-field': name, 'text-font': ['Noto Sans Regular'], 'text-size': 9, 'text-letter-spacing': 0.35 },
-        paint: { 'text-color': 'rgba(239,228,214,0.22)', 'text-halo-color': '#08070a', 'text-halo-width': 1.2 } }
+        paint: { 'text-color': 'rgba(239,228,214,0.22)', 'text-halo-color': '#161a2e', 'text-halo-width': 1.2 } }
     ]
   };
 

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index of Work — Stephie</title>
-  <meta name="description" content="Stephie is curious about AI, markets, and stories. Builds, essays on evals and agent reliability, and a career across Amazon, Harry&rsquo;s, Morgan Stanley, and a startup of her own.">
-  <meta property="og:title" content="Index of Work — Stephie">
-  <meta property="og:description" content="Builds, essays, and a career in AI and products.">
+  <title>Work — Stephie</title>
+  <meta name="description" content="Selected builds by Stephie: Delphi, Henry, and Cherry.">
+  <meta property="og:title" content="Work — Stephie">
+  <meta property="og:description" content="Delphi, Henry, and Cherry: three builds and why I made them.">
   <link rel="canonical" href="https://stephiesworld.com/work.html">
   <meta property="og:image" content="https://stephiesworld.com/og.png">
   <meta property="og:image:width" content="1200">
@@ -15,368 +15,122 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="neon.css?v=20261001b">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dusk.css?v=20261008">
   <style>
-    body { font-weight: 400; }
-    body { overflow-y: auto; overflow-x: hidden; }
-
-    /* Readable in daylight: this page is skimmed, so its greys run brighter and its effects quieter */
-    :root {
-      --cream-dim: rgba(239, 228, 214, 0.82);
-      --cream-faint: rgba(239, 228, 214, 0.62);
-      --line: rgba(239, 228, 214, 0.14);
-      /* One serif on this page: anything that asked for the display serif gets the reading one */
-      --serif: var(--read);
-    }
-    .fx-scan { opacity: 0.12; }
-    .fx-grain { opacity: 0.05; }
-    .fx-vignette { opacity: 0.55; }
-    .hud { letter-spacing: 0.12em; }
-
-    .top {
-      position: fixed; z-index: 10; top: 0; left: 0; right: 0;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.8rem 2.4rem 1.2rem;
-      background: linear-gradient(to bottom, rgba(5, 5, 7, 0.95), transparent);
-    }
-    .top .nav { display: flex; gap: 1.6rem; }
-
-    .page {
-      position: relative; z-index: 3;
-      max-width: 1240px; margin: 0 auto; padding: 8.5rem 2.4rem 4rem;
-    }
-
-    /* Builds and writing side by side, so neither is buried below the other */
-    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 3.2rem; align-items: start; }
-    .split > section { min-width: 0; }
-
-
-    /* ─── Sections ─── */
-    section { padding-bottom: 5rem; scroll-margin-top: 8rem; opacity: 0; animation: appear 1.2s ease forwards; }
-    section:nth-of-type(1) { animation-delay: 0.5s; }
-    section:nth-of-type(n+2) { animation-delay: 0.7s; }
-
-    .sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.6rem; }
-    .sec-head .num { font-size: 0.64rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
-    .sec-head h2 { font-family: var(--read); font-weight: 500; font-size: 1.35rem; color: var(--cream); }
-    .sec-head::after { content: ''; flex: 1; height: 1px; background: var(--line); align-self: center; }
-    .intro { padding-bottom: 4rem; opacity: 0; animation: appear 1.2s ease 0.3s forwards; }
-    .intro .idx { font-size: 1.1rem; }
-    .intro .bio { margin-top: 1.4rem; max-width: 40em; }
-    .intro .bio p { font-family: var(--read); font-size: 1.12rem; line-height: 1.7; color: var(--cream-dim); }
-    .intro .bio p + p { margin-top: 0.9rem; }
-    .intro-links { margin-top: 1.2rem; display: flex; gap: 1.8rem; font-size: 0.7rem; }
-    .intro-links a { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
-    .intro-links a:hover { letter-spacing: 0.22em; }
-    .intro-links .jump { display: none; }
-    .intro-links { flex-wrap: wrap; row-gap: 0.6rem; }
-    .intro-links a { white-space: nowrap; }
-
-    /* ─── Writing tiles ─── */
-    .tiles { list-style: none; }
-    .tile a {
-      display: flex; flex-direction: column; gap: 0.4rem; padding: 1.15rem 0.2rem 1.1rem;
-      border-bottom: 1px solid var(--line);
-      transition: padding 0.4s ease, background 0.4s ease;
-    }
-    .tile a:hover { padding-left: 0.8rem; background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); }
-    .tile .cat { font-size: 0.6rem; color: var(--cream-faint); }
-    .shelf { padding: 1.6rem 0 0.6rem; font-size: 0.62rem; color: var(--neon); border-bottom: 1px solid var(--line); }
-    .tiles .shelf:first-child { padding-top: 0; }
-    .tile .tt { font-family: var(--read); font-weight: 500; font-size: 1.2rem; line-height: 1.3; color: var(--cream); }
-    .tile .dk {
-      font-family: var(--read); font-size: 0.98rem; line-height: 1.55; color: var(--cream-faint);
-      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .tile .meta { margin-top: 0.2rem; font-size: 0.6rem; color: var(--cream-faint); }
-    .tile.ref .tt { font-size: 1.1rem; }
-    .lede { font-family: var(--read); font-size: 1.02rem; line-height: 1.65; color: var(--cream-dim); max-width: 36em; margin-bottom: 1.1rem; }
-    .patterns { display: grid; gap: 0.75rem; margin-bottom: 2rem; padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .patterns dt { font-size: 0.62rem; color: var(--neon); }
-    .patterns dt .in { margin-left: 0.5rem; color: var(--cream-faint); }
-    .patterns dd { margin-top: 0.15rem; font-family: var(--read); font-size: 0.98rem; line-height: 1.5; color: var(--cream-faint); }
-
-
-    /* ─── Builds ─── */
-    .builds-label { font-size: 0.64rem; color: var(--neon); margin-bottom: 0.8rem; }
-    .builds { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
-    .build { display: flex; flex-direction: column; padding: 1.6rem 1.5rem 1.4rem; background: var(--ink); transition: background 0.4s ease; position: relative; }
-    .build:hover { background: #0d070a; }
-    .build::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--neon); box-shadow: 0 0 10px var(--neon); opacity: 0; transition: opacity 0.4s ease; }
-    .build:hover::after { opacity: 1; }
-    .build h3 { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.6rem; color: var(--cream); }
-    .build h3 a { display: flex; justify-content: space-between; align-items: baseline; width: 100%; color: inherit; }
-    .build h3 a:hover { text-shadow: 0 0 12px var(--neon-soft); }
-    .build details { margin-top: 1rem; }
-    .build summary { list-style: none; cursor: pointer; font-size: 0.64rem; color: var(--cream-faint); transition: color 0.3s ease; }
-    .build summary::-webkit-details-marker { display: none; }
-    .build summary::before { content: '+ '; color: var(--neon); }
-    .build details[open] summary::before { content: '\2212  '; }
-    .build summary:hover { color: var(--cream); }
-    .build details dl { margin-top: 0.9rem; }
-    .build .foot .url:hover { color: var(--cream); }
-    .build h3 span { font-family: var(--mono); font-style: normal; font-size: 0.8rem; color: var(--cream-faint); transition: color 0.3s ease; }
-    .build:hover h3 span { color: var(--neon); }
-    .build .what { margin-top: 0.2rem; font-family: var(--read); font-size: 1.05rem; color: var(--cream-dim); }
-    .build dl { margin-top: 1.1rem; display: grid; gap: 0.8rem; }
-    .build dt { font-size: 0.64rem; color: var(--neon); }
-    .build dd { margin-top: 0.25rem; font-size: 0.7rem; line-height: 1.75; color: var(--cream-faint); letter-spacing: 0.01em; }
-    .build .foot { margin-top: auto; padding-top: 1.2rem; display: flex; justify-content: space-between; gap: 1rem; font-size: 0.64rem; }
-    .build .foot .url { color: var(--cream-dim); text-transform: none; letter-spacing: 0.06em; }
-    .build .foot .kind { color: var(--amber); text-align: right; }
-
-    /* ─── Book ─── */
-    .book { display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; padding: 2rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .book .big { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 5rem; line-height: 0.9; color: var(--neon); text-shadow: 0 0 20px var(--neon-soft), 0 0 60px var(--neon-faint); }
-    .book .k { font-size: 0.7rem; }
-    .book .more { display: inline-block; margin-top: 0.8rem; font-size: 0.64rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
-    .book .more:hover { letter-spacing: 0.22em; }
-    .book p.d { margin-top: 0.6rem; font-family: var(--read); font-size: 1.15rem; line-height: 1.6; color: var(--cream-dim); }
-
-    /* ─── Experience ─── */
-
-    /* ─── Contact ─── */
-    .contact { display: flex; flex-wrap: wrap; gap: 2rem; }
-    .contact a { font-size: 0.7rem; color: var(--cream-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
-    .contact a:hover { color: var(--cream); text-shadow: 0 0 10px var(--neon-soft); }
-
-    @media (max-width: 760px) {
-      .top { padding: 1.2rem 1rem 1rem; }
-      .top .nav { gap: 1rem; }
-      .page { padding: 6rem 1rem 2rem; }
-      .intro .bio p { font-size: 1.05rem; }
-      .intro-links { gap: 1.2rem; }
-      .sec-head h2 { font-size: 1.6rem; }
-      .builds { grid-template-columns: 1fr; }
-      .book { grid-template-columns: 1fr; gap: 1rem; }
-    }
-  
-    main, .fcard, .fbody, .mb > div { min-width: 0; }
-    .shot img, .mb img { max-width: 100%; }
-
-    /* ─── Ways home ─── */
-    .outro { position: relative; z-index: 3; padding: 2rem 1rem 6rem; text-align: center; }
-    .outro a { display: inline-flex; flex-direction: column; align-items: center; gap: 0.6rem; padding: 2rem 3rem; border-top: 1px solid var(--line); }
-    .outro .w { font-family: var(--read); font-weight: 400; font-size: 1.8rem; color: var(--cream); transition: text-shadow 0.4s ease; }
-    .outro .hud { font-size: 0.7rem; }
-    .outro a:hover .w { text-shadow: 0 0 18px var(--neon-soft), 0 0 40px var(--neon-faint); }
-    .outro a:hover .hud:last-child { color: var(--neon); }
-
-    /* ─── Featured builds ─── */
-    .feature { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
-    .fcard { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--ink); transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease; }
-    .fcard:hover { border-color: var(--neon-soft); box-shadow: 0 0 30px rgba(255, 45, 74, 0.12); transform: translateY(-2px); }
-    .shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); position: relative; }
-    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: saturate(0.85) brightness(0.85); transition: filter 0.4s ease, transform 0.6s ease; }
-    .fcard:hover .shot img { filter: none; transform: scale(1.03); }
-    .fbody { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.2rem 1.2rem 1.1rem; flex: 1; }
-    .fbody h3 { font-family: var(--read); font-weight: 500; font-size: 1.3rem; line-height: 1.2; color: var(--cream); }
-    .fbody .what { font-family: var(--read); font-size: 1.02rem; color: var(--cream-dim); }
-    .fbody .how { font-family: var(--read); font-size: 0.98rem; line-height: 1.6; color: var(--cream-faint); }
-    .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .chip { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: lowercase; color: var(--cream-faint); border: 1px solid var(--line); padding: 0.2rem 0.45rem; }
-    .flinks { margin-top: auto; padding-top: 0.6rem; display: flex; gap: 1.2rem; font-size: 0.7rem; }
-    .flinks a { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
-    .flinks a:hover { letter-spacing: 0.2em; }
-
-    .grave { margin-top: 3rem; }
-    .grave-h { font-family: var(--read); font-weight: 500; font-size: 1.1rem; color: var(--cream-dim); }
-    .grave-note { margin-top: 0.5rem; max-width: 36em; font-family: var(--read); font-size: 0.98rem; line-height: 1.55; color: var(--cream-faint); }
-    .grave .mb img { filter: grayscale(0.7) brightness(0.65); }
-    .more-builds { list-style: none; margin-top: 1.2rem; border-top: 1px solid var(--line); }
-    .mb { display: grid; grid-template-columns: 96px 1fr auto; gap: 1.1rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
-    .mb img { width: 96px; height: auto; display: block; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border: 1px solid var(--line); filter: saturate(0.8) brightness(0.8); transition: filter 0.3s ease; }
-    .mb:hover img { filter: none; }
-    .mb .t { font-family: var(--read); font-size: 1.15rem; color: var(--cream); }
-    .mb .d { margin-top: 0.15rem; font-family: var(--read); font-size: 0.98rem; color: var(--cream-faint); }
-    .mb .l { display: flex; gap: 1rem; font-size: 0.7rem; white-space: nowrap; }
-    .mb .l a { color: var(--neon); }
-    .mb .tag { font-size: 0.55rem; color: var(--cream-faint); }
-
-
-
-    /* ─── Before ─── */
-    .before { list-style: none; border-top: 1px solid var(--line); }
-    .before a { display: grid; grid-template-columns: 6.5rem 1fr auto; gap: 1rem; align-items: baseline; padding: 0.9rem 0.2rem; border-bottom: 1px solid var(--line); transition: padding 0.4s ease, background 0.4s ease; }
-    .before a:hover { padding-left: 0.8rem; background: linear-gradient(90deg, rgba(255, 45, 74, 0.06), transparent 70%); }
-    .before .yr { font-size: 0.7rem; color: var(--neon); font-variant-numeric: tabular-nums; }
-    .before .co { font-family: var(--read); font-size: 1.2rem; color: var(--cream); }
-    .before .role { display: block; margin-top: 0.2rem; font-size: 0.7rem; color: var(--cream-faint); letter-spacing: 0.04em; }
-    .before .ar { font-size: 0.64rem; color: var(--cream-faint); }
-    .before a:hover .ar { color: var(--neon); }
-
-    @media (max-width: 960px) {
-      .split { grid-template-columns: 1fr; gap: 0; }
-      .intro-links .jump { display: inline; }
-    }
-    @media (max-width: 760px) {
-      .mb { grid-template-columns: 72px 1fr; }
-      .mb img { width: 72px; height: auto; }
-      .mb .l { grid-column: 2; }
-      .before a { grid-template-columns: 1fr auto; }
-      .before .yr { grid-column: 1 / -1; }
+    .page { max-width: 1080px; margin: 0 auto; padding: 3rem 2rem 2rem; }
+    .intro h1 { font-size: 2.6rem; }
+    .intro p { margin-top: 0.8rem; font-size: 1.15rem; color: var(--ink-dim); }
+    .build { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.8rem; align-items: start; padding: 3rem 0; border-top: 1px solid var(--line); }
+    .intro + .build { margin-top: 2.6rem; }
+    .build.henry { --c: var(--henry); } .build.delphi { --c: var(--delphi); } .build.cherry { --c: var(--cherry); }
+    .shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 6px; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .shot:hover { transform: translateY(-2px); border-color: var(--c); box-shadow: 0 0 0 1px var(--c), 0 0 30px color-mix(in srgb, var(--c) 25%, transparent); }
+    .story { min-width: 0; }
+    .story .num { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); }
+    .story .sign-name { margin-top: 0.4rem; font-size: 2.2rem; }
+    .story .what { margin-top: 0.4rem; font-style: italic; font-size: 1.1rem; color: var(--ink-faint); }
+    .story p.body { margin-top: 1.1rem; font-size: 1.12rem; line-height: 1.7; color: var(--ink-dim); }
+    .story p.body + p.body { margin-top: 0.8rem; }
+    .story .aside { font-size: 0.98rem; font-style: italic; color: var(--ink-faint); }
+    .flinks { margin-top: 1.4rem; display: flex; gap: 1.4rem; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .flinks a { color: var(--c); border-bottom: 1px solid transparent; transition: border-color 0.2s ease; }
+    .flinks a:hover { border-bottom-color: var(--c); }
+    .also { padding-top: 2.6rem; border-top: 1px solid var(--line); }
+    .also ul { list-style: none; margin-top: 0.9rem; }
+    .also li a { display: grid; grid-template-columns: 7rem 1fr auto; gap: 1rem; align-items: baseline; padding: 0.65rem 0; border-bottom: 1px solid var(--line); }
+    .also .t { font-size: 1.08rem; color: var(--ink); }
+    .also .d { font-size: 1.02rem; color: var(--ink-faint); }
+    .also .ar { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-faint); }
+    .also li a:hover .d { color: var(--ink-dim); }
+    .contact { margin-top: 3rem; display: flex; flex-wrap: wrap; gap: 1.8rem; }
+    .contact a:hover { color: var(--ink); }
+    @media (max-width: 860px) { .build { grid-template-columns: 1fr; gap: 1.4rem; padding: 2.4rem 0; } }
+    @media (max-width: 600px) {
+      .page { padding: 1.6rem 1rem 1rem; }
+      .intro h1 { font-size: 2rem; } .story .sign-name { font-size: 1.8rem; }
+      .also li a { grid-template-columns: 1fr auto; } .also .d { grid-column: 1 / -1; grid-row: 2; }
     }
   </style>
 </head>
 <body>
-
-  <canvas class="fx fx-rain" id="rain"></canvas>
-  <div class="fx fx-vignette"></div>
-  <div class="fx fx-scan"></div>
-  <div class="fx fx-grain"></div>
-
-  <div class="top">
-    <a href="index.html" class="home-link">Stephie&rsquo;s World</a>
-    <nav class="signs" aria-label="Site">
-      <a href="about.html" class="sign teal">about</a>
-      <a href="books.html" class="sign amber">reading</a>
-      <a href="work.html" class="sign pink framed" aria-current="page">work &rarr;</a>
+  <header class="top">
+    <a href="index.html" class="home">Stephie&rsquo;s World</a>
+    <nav aria-label="Site">
+      <a href="about.html" class="teal">about</a>
+      <a href="books.html" class="amber">reading</a>
+      <a href="writing.html" class="teal">writing</a>
+      <a href="work.html" class="pink" aria-current="page">work</a>
     </nav>
-  </div>
+  </header>
 
-  <div class="page">
+  <main class="page">
 
-    <header class="intro">
-      <h1 class="title-sign pink idx">Index of Work</h1>
-      <div class="bio">
-        <p>I&rsquo;ve spent over a decade learning how systems work inside highly regulated environments, and where the tipping point sits between moving fast and launching correctly. I&rsquo;ve worked with teams across Asia, North America, and Europe.</p>
-        <p>I grew up between Shanghai and the United States, in a family with Italian and Chinese roots, and I&rsquo;m endlessly curious about the world. AI has collapsed the time it takes to make things and opened up what&rsquo;s possible to build, and that&rsquo;s what excites me most right now. I love solving problems with technology and behavior change, alongside people who are sharp, driven, and optimistic. Based in New York.</p>
-      </div>
-      <p class="intro-links hud">
-        <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
-        <a href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
-        <a href="https://github.com/stephiesworld" target="_blank" rel="noopener">github &#8599;</a>
-        <a class="jump" href="#writing">writing &darr;</a>
-      </p>
-    </header>
-
-    <div class="split">
-      <section id="builds">
-        <div class="sec-head"><span class="num hud">01</span><h2>Selected builds</h2></div>
-        <p class="lede">The three builds solve different problems, but they draw on a shared set of patterns. Each one applies to any AI agent doing work where a mistake is expensive:</p>
-        <dl class="patterns">
-          <div><dt class="hud">Split the work <span class="in">Henry</span></dt><dd>The model handles language and judgment; deterministic code handles math, rules, and facts.</dd></div>
-          <div><dt class="hud">Constrain the output <span class="in">Henry</span></dt><dd>Forced function calls and validated schemas, so every answer arrives in a shape software can check.</dd></div>
-          <div><dt class="hud">Ground every claim <span class="in">Delphi</span></dt><dd>Answers cite their sources, and data is prepared ahead of time rather than fetched live.</dd></div>
-          <div><dt class="hud">Measure, don&rsquo;t eyeball <span class="in">Henry &middot; Cherry</span></dt><dd>Labeled eval sets and LLM-as-judge checks, plus model benchmarks on quality, latency, and cost.</dd></div>
-          <div><dt class="hud">Keep a human in the loop <span class="in">Cherry</span></dt><dd>Reviewer corrections are captured and fed back, so the system improves where it was wrong.</dd></div>
-        </dl>
-        <div class="feature">
-          <article class="fcard">
-            <a class="shot" href="https://henry-ten.vercel.app" target="_blank" rel="noopener"><img src="images/builds/henry.jpg" alt="Henry, live" loading="lazy" width="960" height="600"></a>
-            <div class="fbody">
-              <h3>Henry</h3>
-              <p class="what">Amazon 1P vendor operations.</p>
-              <p class="how">What I imagine the perfect 1P vendor portal would be, shaped by hundreds of hours of conversations with some of the largest US businesses selling on Amazon. It classifies chargebacks by root cause and drafts the dispute.</p>
-              <div class="chips"><span class="chip">tool use</span><span class="chip">evals</span><span class="chip">deterministic math</span></div>
-              <p class="flinks hud"><a href="https://henry-ten.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/henry" target="_blank" rel="noopener">code &#8599;</a></p>
-            </div>
-          </article>
-          <article class="fcard">
-            <a class="shot" href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener"><img src="images/builds/delphi.jpg" alt="Delphi, live" loading="lazy" width="960" height="600"></a>
-            <div class="fbody">
-              <h3>Delphi</h3>
-              <p class="what">Stock stories.</p>
-              <p class="how">I built Delphi to give readers a pulse on the 100 most popular stocks on Robinhood. Markets and the world move each other, so knowing what the market is doing tells you a lot about what&rsquo;s going on everywhere else.</p>
-              <p class="how">Each company gets curated writing on its profile, context, competitive landscape, and what its latest earnings showed. Every story is sourced, and the site refreshes daily after the close.</p>
-              <div class="chips"><span class="chip">story template</span><span class="chip">writing bar</span><span class="chip">sourced claims</span><span class="chip">daily data</span></div>
-              <p class="flinks hud"><a href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p>
-            </div>
-          </article>
-          <article class="fcard">
-            <a class="shot" href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener"><img src="images/builds/cherry.jpg?v=20261001b" alt="Cherry, live" loading="lazy" width="960" height="600"></a>
-            <div class="fbody">
-              <h3>Cherry</h3>
-              <p class="what">Voice-of-customer triage.</p>
-              <p class="how">Searches the open web for feedback, clusters it into issues, and ranks them by severity, then reach, then recency. Your corrections re-rank it.</p>
-              <div class="chips"><span class="chip">clustering</span><span class="chip">ranking</span><span class="chip">human-in-the-loop</span></div>
-              <p class="flinks hud"><a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/cherry" target="_blank" rel="noopener">code &#8599;</a></p>
-            </div>
-          </article>
-        </div>
-        <div class="grave" id="graveyard">
-          <h3 class="grave-h">Graveyard orbit</h3>
-          <p class="grave-note">Bits and pieces from research into memory architecture and back-end infrastructure.</p>
-        <ul class="more-builds">
-          <li class="mb"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><img src="images/builds/stanley.jpg" alt="Stanley" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">Stanley</p><p class="d">A calendar agent you talk to over Telegram. <span class="hud tag">&nbsp;voice &middot; gated writes</span></p></div>
-            <p class="l hud"><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/stanley" target="_blank" rel="noopener">code &#8599;</a></p></li>
-          <li class="mb"><a href="https://getofframp.vercel.app" target="_blank" rel="noopener"><img src="images/builds/offramp.jpg" alt="offramp" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">offramp</p><p class="d">Personal finance, debriefed. <span class="hud tag">&nbsp;eval loop &middot; client-side</span></p></div>
-            <p class="l hud"><a href="https://getofframp.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p></li>
-          <li class="mb"><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener"><img src="images/builds/loop.jpg" alt="Loop" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">Loop</p><p class="d">The org-wide feedback loop, as a product. <span class="hud tag">&nbsp;internal tools &middot; prototype</span></p></div>
-            <p class="l hud"><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p></li>
-          <li class="mb"><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener"><img src="images/builds/portraits.jpg" alt="Portraits" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">Portraits</p><p class="d">Live data storytelling. <span class="hud tag">&nbsp;live public data</span></p></div>
-            <p class="l hud"><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/portraits" target="_blank" rel="noopener">code &#8599;</a></p></li>
-          <li class="mb"><a href="https://eluna.space" target="_blank" rel="noopener"><img src="images/builds/eluna.jpg" alt="Eluna" loading="lazy" width="960" height="600"></a>
-            <div><p class="t">Eluna</p><p class="d">Memory architecture. <span class="hud tag">&nbsp;memory layer</span></p></div>
-            <p class="l hud"><a href="https://eluna.space" target="_blank" rel="noopener">live &#8599;</a></p></li>
-        </ul>
-        </div>
-      </section>
-
-      <section id="writing">
-        <div class="sec-head"><span class="num hud">02</span><h2>Writing</h2></div>
-        <ul class="tiles">
-        <!-- essays:start -->
-        <li class="shelf hud">Start here</li>
-        <li class="tile"><a href="writing/investigations-not-just-code.html"><span class="cat hud">Field guides</span><span class="tt">Agent workflows aren&#x27;t just for engineers</span><span class="dk">An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent: the real workflow, the taxonomy, and autonomy earned one rung at a time.</span><span class="meta hud">July 2026 &middot; 7 min read</span></a></li>
-        <li class="tile"><a href="writing/agent-as-factory.html"><span class="cat hud">Field guides</span><span class="tt">Your AI agent is a factory</span><span class="dk">Agent reliability, run the way a factory runs quality: inspect the process, stop the line on real defects, and count the cost of every output that gets accepted.</span><span class="meta hud">July 2026 &middot; 5 min read</span></a></li>
-        <li class="tile"><a href="writing/the-dumpling-was-the-stress-test.html"><span class="cat hud">Notes</span><span class="tt">What a dumpling taught me about AI agents</span><span class="dk">Trying to automate a good dumpling at Little Bun taught me three things. They turned out to be the three hardest problems in deploying AI agents.</span><span class="meta hud">July 2026 &middot; 4 min read</span></a></li>
-        <li class="shelf hud">Field guides</li>
-        <li class="tile"><a href="writing/your-data-is-already-a-graph.html"><span class="tt">Your data is already a graph</span><span class="dk">Graph engineering explained with customer feedback: store the relationships, not just the rows, so the expensive judgments outlive the query.</span><span class="meta hud">July 2026 &middot; 2 min read</span></a></li>
-        <li class="tile"><a href="writing/the-first-pass-by-the-numbers.html"><span class="tt">The first pass, by the numbers</span><span class="dk">What an AI first pass does to 10,000 pieces of customer feedback, what the model should and shouldn&#x27;t touch, and the job that&#x27;s left for people.</span><span class="meta hud">July 2026 &middot; 2 min read</span></a></li>
-        <li class="tile"><a href="writing/why-the-human-stays-in-the-loop.html"><span class="tt">An opinion with edit access</span><span class="dk">Why a person still reviews an AI triage, and why a correction only counts once you measure what it changed.</span><span class="meta hud">July 2026 &middot; 2 min read</span></a></li>
-        <li class="shelf hud">Notes</li>
-        <li class="tile"><a href="writing/memory-architecture.html"><span class="tt">The thread that replied in poetry</span><span class="dk">A Claude thread that started writing in poetry, the summaries that couldn&#x27;t bring it back, and what that taught me about building memory.</span><span class="meta hud">July 2026 &middot; 2 min read</span></a></li>
-        <li class="shelf hud">Cheat sheets</li>
-        <li class="tile ref"><a href="writing/eval-cheat-sheet.html"><span class="tt">Eval Cheat Sheet</span><span class="dk">An easy way to understand what an eval is.</span></a></li>
-        <li class="tile ref"><a href="writing/harness-cheat-sheet.html"><span class="tt">Harness Cheat Sheet</span><span class="dk">The machinery around the model.</span></a></li>
-        <!-- essays:end -->
-        </ul>
-      </section>
+    <div class="intro">
+      <h1 class="title-sign">Selected builds</h1>
+      <p>Three things I made to understand a problem from the inside.</p>
     </div>
 
-      <section id="book">
-        <div class="sec-head"><span class="num hud">03</span><h2>Book</h2></div>
-        <div class="book">
-          <span class="big tube">29</span>
-          <div>
-            <p class="k hud">literary speculative novel &middot; in progress</p>
-            <p class="d">An alien infiltrates Wall Street and slowly falls in love with the ordinary business of being human.</p>
-          </div>
-        </div>
-      </section>
+    <article class="build delphi" id="delphi">
+      <a class="shot" href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener"><img src="images/builds/delphi.jpg" alt="Delphi, live" loading="lazy" width="960" height="600"></a>
+      <div class="story">
+        <span class="num">01</span>
+        <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M12 2.5v19M19 6v13"/><rect x="3.5" y="10" width="3" height="6" rx=".5"/><rect x="10.5" y="5.5" width="3" height="9" rx=".5"/><rect x="17.5" y="8" width="3" height="7" rx=".5"/></svg>Delphi</h2>
+        <p class="what">a knowledge base for the stocks people actually trade</p>
+        <p class="body">I wanted to understand the companies retail investors trade most. Robinhood&rsquo;s AI-written summaries told me what happened, but not why it mattered. The clearest explanations I&rsquo;d ever gotten came from a few people I know who can talk about a company like it&rsquo;s someone they know.</p>
+        <p class="body">Delphi is an extrapolation of those conversations. Pick any of the top stocks and see the market dynamics, the open questions, and what the company means for the world. Each one also gets a buy, hold, or sell view based on its 12-month forward guidance.</p>
+        <p class="body aside">The ratings are my opinion, not investment advice.</p>
+        <p class="flinks"><a href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p>
+      </div>
+    </article>
 
+    <article class="build henry" id="henry">
+      <a class="shot" href="https://henry-ten.vercel.app" target="_blank" rel="noopener"><img src="images/builds/henry.jpg" alt="Henry, live" loading="lazy" width="960" height="600"></a>
+      <div class="story">
+        <span class="num">02</span>
+        <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="11" rx="1.5"/><path d="M9 9V6.5h6V9M3 13.5h18M11 12.5v2.5h2v-2.5"/></svg>Henry</h2>
+        <p class="what">the portal Amazon&rsquo;s biggest sellers deserve</p>
+        <p class="body">A sample of what the world could look like if Amazon&rsquo;s enterprise customers had the perfect portal. At Amazon I worked with the largest businesses selling on the platform, and I was surprised there was no one-stop shop that simply answered their questions.</p>
+        <p class="body">Henry is that shop. It handles everyday P&amp;L tasks, maps the competitive landscape including pricing, shows where margin goes, and gives instant supply chain help.</p>
+        <p class="flinks"><a href="https://henry-ten.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/henry" target="_blank" rel="noopener">code &#8599;</a></p>
+      </div>
+    </article>
 
-      <section id="before">
-        <div class="sec-head"><span class="num hud">04</span><h2>Before</h2></div>
-        <ul class="before">
-          <li><a href="nyc.html#amazon"><span class="yr hud">2024 &ndash; 2026</span><span><span class="co">Amazon</span><span class="role hud">Senior Customer Success Manager &middot; Pricing SME</span></span><span class="ar hud">on the map &rarr;</span></a></li>
-          <li><a href="nyc.html#littlebun"><span class="yr hud">2022 &ndash; 2024</span><span><span class="co">Little Bun</span><span class="role hud">Founder &amp; CEO</span></span><span class="ar hud">on the map &rarr;</span></a></li>
-          <li><a href="nyc.html#harrys"><span class="yr hud">2019 &ndash; 2021</span><span><span class="co">Harry&rsquo;s</span><span class="role hud">Senior Associate Program Manager &middot; Global R&amp;D</span></span><span class="ar hud">on the map &rarr;</span></a></li>
-          <li><a href="nyc.html#morganstanley"><span class="yr hud">2018 &ndash; 2019</span><span><span class="co">Morgan Stanley</span><span class="role hud">Senior Data Science Analyst &middot; AI for Wealth Management</span></span><span class="ar hud">on the map &rarr;</span></a></li>
-        </ul>
-      </section>
+    <article class="build cherry" id="cherry">
+      <a class="shot" href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener"><img src="images/builds/cherry.jpg?v=20261001b" alt="Cherry, live" loading="lazy" width="960" height="600"></a>
+      <div class="story">
+        <span class="num">03</span>
+        <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="17" r="3.6"/><circle cx="16.5" cy="18" r="3.6"/><path d="M7 13.4C8 9 10.5 5.5 14 3.5M16.5 14.4C16 10 15 6.5 14 3.5M14 3.5c2.5-1 5.5-.4 6.5 1.6-2.6.9-5 .4-6.5-1.6z"/></svg>Cherry</h2>
+        <p class="what">customer feedback, routed to the team that should hear it</p>
+        <p class="body">An exercise in understanding the full feedback loop, from what a customer says to the internal team that acts on it. I pictured a company like Anthropic, with several products (Claude, Claude Code, Claude Design, Cowork), feedback arriving from everywhere, and a system that has to triage each piece to the right team.</p>
+        <p class="body">The fun challenge was writing the evals: what counts as a credible piece of feedback, and which team it belongs to.</p>
+        <p class="flinks"><a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/cherry" target="_blank" rel="noopener">code &#8599;</a></p>
+      </div>
+    </article>
 
-  </div>
+    <section class="also" aria-labelledby="also-h">
+      <h2  id="also-h">Also built</h2>
+      <ul>
+        <li><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><span class="t">Stanley</span><span class="d">A calendar agent you talk to over Telegram.</span><span class="ar">&#8599;</span></a></li>
+        <li><a href="https://getofframp.vercel.app" target="_blank" rel="noopener"><span class="t">offramp</span><span class="d">Personal finance, debriefed.</span><span class="ar">&#8599;</span></a></li>
+        <li><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener"><span class="t">Loop</span><span class="d">The org-wide feedback loop, as a product.</span><span class="ar">&#8599;</span></a></li>
+        <li><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener"><span class="t">Portraits</span><span class="d">Live data storytelling.</span><span class="ar">&#8599;</span></a></li>
+        <li><a href="https://eluna.space" target="_blank" rel="noopener"><span class="t">Eluna</span><span class="d">Memory architecture.</span><span class="ar">&#8599;</span></a></li>
+      </ul>
+    </section>
 
-  <footer class="outro">
-    <a href="index.html">
-      <span class="hud">the rest of</span>
-      <span class="w">Stephie&rsquo;s World</span>
-      <span class="hud">the globe, the cities, the books &rarr;</span>
-    </a>
+    <p class="contact label">
+      <a href="https://github.com/stephiesworld" target="_blank" rel="noopener">github &#8599;</a>
+      <a href="https://www.linkedin.com/in/sdelpaggio" target="_blank" rel="noopener">linkedin &#8599;</a>
+      <a href="mailto:stephiesuniverse@gmail.com">email &#8599;</a>
+    </p>
+
+  </main>
+
+  <footer class="site-foot">
+    <a href="index.html">&larr; back to the globe</a>
   </footer>
-
-  <script src="rain.js"></script>
-  <script>
-    startRain(document.getElementById('rain'), 0.25);
-
-  </script>
 
   <script src="secret.js"></script>
 </body>

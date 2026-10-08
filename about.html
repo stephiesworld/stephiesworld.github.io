@@ -16,8 +16,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&family=Doto:wght@900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="neon.css?v=20261001b">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="neon.css?v=20261008">
   <style>
     body { font-weight: 400; }
     body { overflow-y: auto; overflow-x: hidden; }
@@ -31,7 +31,7 @@
       position: fixed; z-index: 10; top: 0; left: 0; right: 0;
       display: flex; justify-content: space-between; align-items: center;
       padding: 1.8rem 2.4rem 1.2rem;
-      background: linear-gradient(to bottom, rgba(5, 5, 7, 0.95), transparent);
+      background: linear-gradient(to bottom, rgba(22, 26, 46, 0.95), transparent);
     }
     .top .nav { display: flex; gap: 1.6rem; }
 
@@ -119,6 +119,7 @@
     <nav class="signs" aria-label="Site">
       <a href="about.html" class="sign teal" aria-current="page">about</a>
       <a href="books.html" class="sign amber">reading</a>
+      <a href="writing.html" class="sign teal">writing</a>
       <a href="work.html" class="sign pink framed">work &rarr;</a>
     </nav>
   </div>
@@ -135,7 +136,7 @@
         <div class="sec-head"><h2 class="title-sign teal" style="font-size: 1.5rem;">About</h2></div>
         <div class="prose">
           <p>I&rsquo;m Stephie. I grew up between Shanghai and Texas and live in New York City. Most days I&rsquo;m somewhere in AI: reading about it, trying the new agents, or building something in Claude.</p>
-          <p>I&rsquo;m also writing <a href="work.html#book"><em>29</em></a>, a novel about an alien who infiltrates Wall Street and slowly falls in love with the ordinary business of being human. Between the two, I keep coming back to what it means to be a person, and whether the line between that and artificial intelligence is as clear as we think.</p>
+          <p>I&rsquo;m also writing <em>29</em>, a novel about an alien who infiltrates Wall Street and slowly falls in love with the ordinary business of being human. Between the two, I keep coming back to what it means to be a person, and whether the line between that and artificial intelligence is as clear as we think.</p>
           <p>What stays with me, in books, films, and people, is someone choosing a life that looks strange from the outside and obvious once you know them.</p>
         </div>
         <p class="open-label hud">open to</p>
@@ -156,7 +157,7 @@
     </main>
   </div>
 
-  <script src="rain.js"></script>
+  <script src="rain.js?v=20261008"></script>
   <script>
     startRain(document.getElementById('rain'), 0.5);
 

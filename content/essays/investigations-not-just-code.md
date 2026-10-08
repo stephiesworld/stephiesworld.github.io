@@ -1,7 +1,7 @@
 ---
 title: "Agent workflows aren't just for engineers"
 date: "2026-07-22"
-order: 8
+order: 1
 category: "Field guides"
 dek: "An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent: the real workflow, the taxonomy, and autonomy earned one rung at a time."
 ---
@@ -32,81 +32,81 @@ An agent can reorganize the whole thing.
 
 <svg viewBox="0 0 700 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two ways to answer the same email. On the left, a sequential investigation: read the email, find the identifier, then check the ordering system, inventory, demand, catalog, pricing, and supply one at a time before writing an answer, where each step decides the next and the whole thing takes twenty minutes to several hours. On the right, a parallel investigation: read and resolve the case once, fan out to eight evidence checks that run simultaneously, then rank by evidence and draft a response for review in about two minutes." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
-    <marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker>
-    <marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B01E36"/></marker>
+    <marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a7a3c4"/></marker>
+    <marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff7a92"/></marker>
   </defs>
   <style>
-    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
-    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#666;}
-    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
-    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
+    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
+    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
   </style>
   <text x="350" y="14" text-anchor="middle" class="band">TWO WAYS TO ANSWER THE SAME EMAIL</text>
-  <line x1="346" y1="26" x2="346" y2="392" stroke="#ececec" stroke-width="1"/>
+  <line x1="346" y1="26" x2="346" y2="392" stroke="#3a3f62" stroke-width="1"/>
   <text x="20" y="42" class="smb">SEQUENTIAL · one cause at a time</text>
-  <rect x="20" y="52" width="250" height="24" fill="#f3f3f3" stroke="#000" stroke-width="1.2"/>
+  <rect x="20" y="52" width="250" height="24" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="68" class="smb">read the email</text>
-  <line x1="145" y1="76" x2="145" y2="86" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="86" width="250" height="24" fill="#f3f3f3" stroke="#000" stroke-width="1.2"/>
+  <line x1="145" y1="76" x2="145" y2="86" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="20" y="86" width="250" height="24" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="102" class="smb">find the product identifier</text>
-  <line x1="145" y1="110" x2="145" y2="120" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="120" width="250" height="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <line x1="145" y1="110" x2="145" y2="120" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="20" y="120" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="136" class="sm">check the ordering system</text>
-  <line x1="145" y1="144" x2="145" y2="154" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="154" width="250" height="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <line x1="145" y1="144" x2="145" y2="154" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="20" y="154" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="170" class="sm">check inventory</text>
-  <line x1="145" y1="178" x2="145" y2="188" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="188" width="250" height="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <line x1="145" y1="178" x2="145" y2="188" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="20" y="188" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="204" class="sm">check demand and forecast</text>
-  <line x1="145" y1="212" x2="145" y2="222" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="222" width="250" height="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <line x1="145" y1="212" x2="145" y2="222" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="20" y="222" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="238" class="sm">check catalog status</text>
-  <line x1="145" y1="246" x2="145" y2="256" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="256" width="250" height="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <line x1="145" y1="246" x2="145" y2="256" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="20" y="256" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="272" class="sm">check pricing and compliance</text>
-  <line x1="145" y1="280" x2="145" y2="290" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="290" width="250" height="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <line x1="145" y1="280" x2="145" y2="290" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="20" y="290" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="306" class="sm">check vendor supply</text>
-  <line x1="145" y1="314" x2="145" y2="324" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="324" width="250" height="24" fill="#f3f3f3" stroke="#000" stroke-width="1.2"/>
+  <line x1="145" y1="314" x2="145" y2="324" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="20" y="324" width="250" height="24" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="30" y="340" class="smb">write the answer</text>
   <text x="20" y="368" class="sm">each step decides the next one</text>
   <text x="20" y="382" class="smb">20 minutes simple · hours when not</text>
   <text x="376" y="42" class="smb">PARALLEL · one fan-out</text>
-  <rect x="450" y="52" width="180" height="24" fill="#f3f3f3" stroke="#000" stroke-width="1.2"/>
+  <rect x="450" y="52" width="180" height="24" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="460" y="68" class="smb">read + resolve the case</text>
-  <line x1="500" y1="76" x2="450" y2="96" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <line x1="540" y1="76" x2="540" y2="96" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <line x1="580" y1="76" x2="630" y2="96" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="376" y="100" width="150" height="22" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <line x1="500" y1="76" x2="450" y2="96" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <line x1="540" y1="76" x2="540" y2="96" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <line x1="580" y1="76" x2="630" y2="96" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="376" y="100" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="384" y="115" class="sm">order history</text>
-  <rect x="536" y="100" width="150" height="22" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <rect x="536" y="100" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="544" y="115" class="sm">inventory position</text>
-  <rect x="376" y="128" width="150" height="22" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <rect x="376" y="128" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="384" y="143" class="sm">demand forecast</text>
-  <rect x="536" y="128" width="150" height="22" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <rect x="536" y="128" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="544" y="143" class="sm">catalog status</text>
-  <rect x="376" y="156" width="150" height="22" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <rect x="376" y="156" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="384" y="171" class="sm">vendor supply</text>
-  <rect x="536" y="156" width="150" height="22" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <rect x="536" y="156" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="544" y="171" class="sm">open purchase orders</text>
-  <rect x="376" y="184" width="150" height="22" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <rect x="376" y="184" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="384" y="199" class="sm">pricing + compliance</text>
-  <rect x="536" y="184" width="150" height="22" fill="#fff" stroke="#000" stroke-width="1.2"/>
+  <rect x="536" y="184" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="544" y="199" class="sm">related products</text>
   <text x="531" y="224" text-anchor="middle" class="sm">all at once · none waits on another</text>
-  <line x1="451" y1="206" x2="500" y2="238" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <line x1="611" y1="206" x2="562" y2="238" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="446" y="242" width="170" height="26" fill="#f3f3f3" stroke="#000" stroke-width="1.2"/>
+  <line x1="451" y1="206" x2="500" y2="238" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <line x1="611" y1="206" x2="562" y2="238" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="446" y="242" width="170" height="26" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="531" y="259" text-anchor="middle" class="smb">rank by evidence</text>
-  <line x1="531" y1="268" x2="531" y2="282" stroke="#000" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="446" y="286" width="170" height="26" fill="#f3f3f3" stroke="#000" stroke-width="1.2"/>
+  <line x1="531" y1="268" x2="531" y2="282" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
+  <rect x="446" y="286" width="170" height="26" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
   <text x="531" y="303" text-anchor="middle" class="smb">draft, or escalate</text>
-  <line x1="531" y1="312" x2="531" y2="326" stroke="#B01E36" stroke-width="1.4" marker-end="url(#pc)"/>
-  <rect x="446" y="330" width="170" height="26" fill="#B01E36"/>
+  <line x1="531" y1="312" x2="531" y2="326" stroke="#ff7a92" stroke-width="1.4" marker-end="url(#pc)"/>
+  <rect x="446" y="330" width="170" height="26" fill="#6b2346"/>
   <text x="531" y="347" text-anchor="middle" style="font:600 8.5px 'IBM Plex Mono',monospace;fill:#fff;">a human reviews it</text>
   <text x="376" y="382" class="smb">a two-minute review</text>
-  <line x1="8" y1="404" x2="692" y2="404" stroke="#000" stroke-width="1"/>
+  <line x1="8" y1="404" x2="692" y2="404" stroke="#8f8cab" stroke-width="1"/>
   <text x="8" y="424" class="sm">The fan-out is also less suggestible. A person who sees high inventory first tends to stop looking, because they</text>
   <text x="8" y="438" class="sm">have found an answer that fits. The parallel run still checks whether that inventory is stranded, and notices when it is.</text>
 </svg>
@@ -220,47 +220,47 @@ becomes a case the agent can work with:
 
 <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An autonomy ladder with eight rungs, from bottom to top: observe only, show evidence to the human, recommend a root cause, draft the response, send with approval, auto-send approved low-risk answers, take narrowly defined reversible actions, and expand to complex cases. Each rung names what must be true before it is granted. The top rungs are marked in red. A closing note says autonomy is granted per workflow and per root cause, never by a single switch." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <style>
-    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
-    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#666;}
-    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
-    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#000;}
+    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
+    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
   </style>
   <text x="350" y="14" text-anchor="middle" class="band">THE AUTONOMY LADDER · climbed per root cause, not per agent</text>
-  <line x1="60" y1="46" x2="60" y2="392" stroke="#000" stroke-width="1.6"/>
-  <line x1="104" y1="46" x2="104" y2="392" stroke="#000" stroke-width="1.6"/>
-  <line x1="60" y1="376" x2="104" y2="376" stroke="#000" stroke-width="1.4"/>
+  <line x1="60" y1="46" x2="60" y2="392" stroke="#8f8cab" stroke-width="1.6"/>
+  <line x1="104" y1="46" x2="104" y2="392" stroke="#8f8cab" stroke-width="1.6"/>
+  <line x1="60" y1="376" x2="104" y2="376" stroke="#8f8cab" stroke-width="1.4"/>
   <text x="30" y="380" class="lbl">1</text>
   <text x="120" y="372" class="smb">OBSERVE ONLY</text>
   <text x="120" y="386" class="sm">shadow mode · it investigates, nobody sees the output</text>
-  <line x1="60" y1="329" x2="104" y2="329" stroke="#000" stroke-width="1.4"/>
+  <line x1="60" y1="329" x2="104" y2="329" stroke="#8f8cab" stroke-width="1.4"/>
   <text x="30" y="333" class="lbl">2</text>
   <text x="120" y="325" class="smb">SHOW THE EVIDENCE</text>
   <text x="120" y="339" class="sm">the trail is visible; the conclusion is not offered yet</text>
-  <line x1="60" y1="282" x2="104" y2="282" stroke="#000" stroke-width="1.4"/>
+  <line x1="60" y1="282" x2="104" y2="282" stroke="#8f8cab" stroke-width="1.4"/>
   <text x="30" y="286" class="lbl">3</text>
   <text x="120" y="278" class="smb">RECOMMEND A CAUSE</text>
   <text x="120" y="292" class="sm">once shadow agreement holds on the common cases</text>
-  <line x1="60" y1="235" x2="104" y2="235" stroke="#000" stroke-width="1.4"/>
+  <line x1="60" y1="235" x2="104" y2="235" stroke="#8f8cab" stroke-width="1.4"/>
   <text x="30" y="239" class="lbl">4</text>
   <text x="120" y="231" class="smb">DRAFT THE RESPONSE</text>
   <text x="120" y="245" class="sm">every edit a human makes is now training data</text>
-  <line x1="60" y1="188" x2="104" y2="188" stroke="#000" stroke-width="1.4"/>
+  <line x1="60" y1="188" x2="104" y2="188" stroke="#8f8cab" stroke-width="1.4"/>
   <text x="30" y="192" class="lbl">5</text>
   <text x="120" y="184" class="smb">SEND WITH APPROVAL</text>
   <text x="120" y="198" class="sm">a named person signs each one</text>
-  <line x1="60" y1="141" x2="104" y2="141" stroke="#B01E36" stroke-width="1.6"/>
-  <text x="30" y="145" class="lbl" fill="#B01E36">6</text>
-  <text x="120" y="137" class="smb" fill="#B01E36">AUTO-SEND, LOW RISK ONLY</text>
+  <line x1="60" y1="141" x2="104" y2="141" stroke="#ff7a92" stroke-width="1.6"/>
+  <text x="30" y="145" class="lbl" fill="#ff7a92">6</text>
+  <text x="120" y="137" class="smb" fill="#ff7a92">AUTO-SEND, LOW RISK ONLY</text>
   <text x="120" y="151" class="sm">approved causes, approved language, no promises</text>
-  <line x1="60" y1="94" x2="104" y2="94" stroke="#B01E36" stroke-width="1.6"/>
-  <text x="30" y="98" class="lbl" fill="#B01E36">7</text>
-  <text x="120" y="90" class="smb" fill="#B01E36">NARROW REVERSIBLE ACTIONS</text>
+  <line x1="60" y1="94" x2="104" y2="94" stroke="#ff7a92" stroke-width="1.6"/>
+  <text x="30" y="98" class="lbl" fill="#ff7a92">7</text>
+  <text x="120" y="90" class="smb" fill="#ff7a92">NARROW REVERSIBLE ACTIONS</text>
   <text x="120" y="104" class="sm">one defined action at a time, each of them undoable</text>
-  <line x1="60" y1="47" x2="104" y2="47" stroke="#B01E36" stroke-width="1.6"/>
-  <text x="30" y="51" class="lbl" fill="#B01E36">8</text>
-  <text x="120" y="43" class="smb" fill="#B01E36">EXPAND THE CASE TYPES</text>
+  <line x1="60" y1="47" x2="104" y2="47" stroke="#ff7a92" stroke-width="1.6"/>
+  <text x="30" y="51" class="lbl" fill="#ff7a92">8</text>
+  <text x="120" y="43" class="smb" fill="#ff7a92">EXPAND THE CASE TYPES</text>
   <text x="120" y="57" class="sm">start the ladder again for each new investigation</text>
-  <line x1="8" y1="408" x2="692" y2="408" stroke="#000" stroke-width="1"/>
+  <line x1="8" y1="408" x2="692" y2="408" stroke="#8f8cab" stroke-width="1"/>
   <text x="8" y="424" class="sm">Autonomy is granted per workflow and per root cause.</text>
   <text x="8" y="438" class="sm">There is no single switch that makes an agent autonomous.</text>
 </svg>

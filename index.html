@@ -27,12 +27,30 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&family=Tilt+Neon&family=Doto:wght@900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&family=Tilt+Neon&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&text=上海&display=swap" rel="stylesheet">
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json" as="fetch" crossorigin>
-  <link rel="stylesheet" href="neon.css?v=20261001b">
+  <link rel="stylesheet" href="neon.css?v=20261008">
   <style>
-    :root { --cream-dim: rgba(239, 228, 214, 0.55); --cream-faint: rgba(239, 228, 214, 0.28); }
+    /* Dusk: the same city an hour earlier. Indigo sky, soft pink for home, amber for my cities. */
+    :root {
+      --ink: #141729;
+      --cream-dim: rgba(243, 236, 226, 0.66); --cream-faint: rgba(243, 236, 226, 0.4);
+      --line: rgba(243, 236, 226, 0.12);
+      --neon: #ff7a92; --neon-soft: rgba(255, 122, 146, 0.55); --neon-faint: rgba(255, 122, 146, 0.14);
+    }
+    body {
+      background:
+        radial-gradient(circle at 50% 52%, rgba(98, 108, 210, 0.22) 0%, rgba(60, 64, 140, 0.1) 32%, transparent 60%),
+        radial-gradient(ellipse 120% 80% at 50% 0%, #252a4c 0%, transparent 65%),
+        linear-gradient(180deg, #1b1f37 0%, #121527 100%);
+    }
+    .fx-vignette { background: radial-gradient(ellipse at center, transparent 50%, rgba(8, 9, 20, 0.6) 100%); opacity: 1; }
+
+    .sign.pink { text-shadow: 0 0 2px #fff, 0 0 5px #ff8aa0, 0 0 12px #ff7a92, 0 0 24px rgba(255, 122, 146, 0.45); }
+
+    /* Who this is, said once, quietly */
+    .tagline { margin-top: 0.7rem; font-family: 'Newsreader', Georgia, serif; font-style: italic; font-size: 0.98rem; letter-spacing: 0; text-transform: none; color: var(--cream-dim); }
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
     #globe:active { cursor: grabbing; }
 
@@ -47,11 +65,10 @@
     .bl { bottom: 2rem; left: 2.4rem; animation-delay: 1.2s; line-height: 2.1; }
     .br { bottom: 2rem; right: 2.4rem; animation-delay: 1.4s; text-align: right; line-height: 2.1; }
 
-    .tagline { margin-top: 0.5rem; font-size: 0.55rem; }
     .nav { display: flex; gap: 1.6rem; align-items: center; }
 
     @media (prefers-reduced-motion: reduce) {
-      .nav a.sign, .blade, .blade .bad { animation: none; }
+      .nav a.sign { animation: none; }
     }
 
     .now-dot {
@@ -120,10 +137,11 @@
       transition: opacity 0.6s ease, transform 0.6s ease;
       display: grid; grid-template-columns: auto 1fr; gap: 1.4rem;
       padding: 2rem 1.8rem 1.8rem 1.4rem;
-      background: linear-gradient(160deg, rgba(20, 8, 12, 0.72), rgba(5, 5, 7, 0.82));
+      background: linear-gradient(160deg, rgba(36, 41, 72, 0.78), rgba(20, 23, 41, 0.86));
       border: 1px solid var(--line);
       border-left: 1px solid var(--neon-soft);
-      box-shadow: -8px 0 40px rgba(255, 45, 74, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
     }
@@ -136,11 +154,11 @@
     }
     .panel-zh.amber { color: var(--amber); text-shadow: 0 0 14px var(--amber-soft); }
 
-    .panel-name { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2rem; line-height: 1.1; color: var(--cream); }
+    .panel-name { font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: 1.9rem; line-height: 1.1; color: var(--cream); }
     .panel-meta { margin-top: 0.7rem; line-height: 1.9; font-size: 0.55rem; }
     .panel-copy .places { display: block; margin-top: 0.7rem; font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-faint); }
     .panel-copy a { color: var(--cream); border-bottom: 1px solid var(--neon-soft); }
-    .panel-copy { margin-top: 1.1rem; font-family: var(--serif); font-size: 1rem; line-height: 1.6; color: var(--cream-dim); }
+    .panel-copy { margin-top: 1.1rem; font-family: 'Newsreader', Georgia, serif; font-size: 1.02rem; line-height: 1.6; color: var(--cream-dim); }
     .panel-links { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
     .panel-links a { font-size: 0.6rem; color: var(--cream-dim); transition: color 0.3s ease, letter-spacing 0.3s ease; }
     .panel-links a:hover { color: var(--cream); letter-spacing: 0.22em; }
@@ -155,7 +173,8 @@
 
     @media (max-width: 720px) {
       .tl { top: 1.4rem; left: 1rem; }
-      .tr { top: 4.1rem; left: 1rem; right: auto; }
+      .tr { top: 5.9rem; left: 1rem; right: auto; }
+      .tagline { font-size: 0.86rem; margin-top: 0.5rem; }
       .nav { gap: 1rem; }
       .bl { left: 1rem; bottom: 1.2rem; }
       .br, .hint { display: none; }
@@ -169,34 +188,6 @@
       .panel-zh { font-size: 1.5rem; }
     }
 
-    /* Blade sign: a tall Hong Kong sign bolted to the right edge */
-    .blade {
-      position: fixed; z-index: 12; top: 24vh; right: 2.2rem;
-      display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
-      padding: 1rem 0.75rem 0.9rem;
-      background: linear-gradient(180deg, rgba(20, 8, 12, 0.92), rgba(8, 5, 8, 0.92));
-      border: 1px solid rgba(239, 228, 214, 0.08); border-radius: 6px;
-      box-shadow: 0 0 40px rgba(255, 45, 74, 0.18), 0 12px 30px rgba(0, 0, 0, 0.6);
-      animation: sign-on 2.4s steps(1, end) 1.4s both;
-    }
-    .blade::before { content: ''; position: absolute; top: 1.2rem; right: -2.2rem; width: 2.2rem; height: 2px; background: rgba(239, 228, 214, 0.18); }
-    .blade::after { content: ''; position: absolute; bottom: 1.2rem; right: -2.2rem; width: 2.2rem; height: 2px; background: rgba(239, 228, 214, 0.18); }
-    .blade span {
-      font-family: 'Tilt Neon', var(--mono); font-size: 1.9rem; line-height: 1.12; color: #ffe3e8;
-      text-shadow: 0 0 2px #fff, 0 0 6px #ff5a78, 0 0 14px #ff2d4a, 0 0 30px #ff2d4a, 0 0 54px rgba(255, 45, 74, 0.55);
-    }
-    .blade .bad { animation: tube 9s steps(1, end) 5s infinite; }
-    .blade .arrow { margin-top: 0.3rem; font-size: 1.1rem; color: #fff1dc; text-shadow: 0 0 2px #fff, 0 0 6px #ffc27a, 0 0 14px #ffb15c; }
-    .blade:hover { filter: brightness(1.25); }
-    @media (max-width: 720px) {
-      .blade { top: 1.2rem; right: 1rem; padding: 0.6rem 0.45rem; }
-      .blade span { font-size: 1.1rem; }
-      .blade::before, .blade::after { right: -1rem; width: 1rem; }
-    }
-    .blade { transition: opacity 0.5s ease, transform 0.5s ease; }
-    @media (min-width: 721px) {
-      body.panel-open .blade { opacity: 0 !important; transform: translateX(30px); pointer-events: none; }
-    }
 
     /* The name is the shop sign: warm amber block tubes */
     .corner.tl .brand {
@@ -213,22 +204,19 @@
       color: #fff1dc; text-shadow: 0 0 2px #fff, 0 0 5px #ffc27a, 0 0 11px #ffb15c, 0 0 22px rgba(255, 177, 92, 0.5);
     }
     .pin.is-current .pin-label .pin-en, .pin.is-current .pin-label .pin-en:first-child {
-      color: #ffe3e8; text-shadow: 0 0 2px #fff, 0 0 5px #ff5a78, 0 0 12px #ff2d4a, 0 0 24px rgba(255, 45, 74, 0.55);
+      color: #ffe3e8; text-shadow: 0 0 2px #fff, 0 0 5px #ff8aa0, 0 0 12px #ff7a92, 0 0 24px rgba(255, 122, 146, 0.45);
     }
-    .pin-here { font-family: 'Tilt Neon', var(--mono); font-size: 0.6rem; color: #ffe3e8; text-shadow: 0 0 6px #ff2d4a; }
+    .pin-here { font-family: 'Tilt Neon', var(--mono); font-size: 0.6rem; color: #ffe3e8; text-shadow: 0 0 6px #ff7a92; }
     .pin.is-day .pin-label { opacity: 0.55; }
 
-    /* Live readouts are amber dot-matrix LED boards, like the red minibuses' destination signs */
+    /* Live readouts: small amber signs, no boxes */
     #status, #coords, #hint {
-      font-family: 'Doto', var(--mono); font-weight: 900; font-size: 0.86rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: #ffb15c; text-shadow: 0 0 4px rgba(255, 177, 92, 0.8), 0 0 12px rgba(255, 177, 92, 0.35);
-      padding: 0.45rem 0.8rem; line-height: 1.7;
-      background: rgba(18, 9, 4, 0.72); border: 1px solid rgba(255, 177, 92, 0.16); border-radius: 3px;
-      box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.8);
+      font-family: 'Tilt Neon', var(--mono); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255, 228, 196, 0.85); text-shadow: 0 0 6px rgba(255, 177, 92, 0.45); line-height: 1.8;
     }
-    #status b, #coords b { font-weight: 900; color: #ffd08a; }
-    #status .now-dot { background: #ff5a3c; box-shadow: 0 0 6px #ff5a3c; }
-    #hint { font-size: 0.72rem; }
+    #status b, #coords b { font-weight: 400; color: #fff1dc; }
+    #status .now-dot { background: var(--neon); box-shadow: 0 0 6px var(--neon); }
+    #hint { font-size: 0.66rem; color: var(--cream-faint); text-shadow: none; }
 
     /* ─── Satellites: the builds, in orbit ─── */
     #sats { position: fixed; inset: 0; z-index: 5; pointer-events: none; }
@@ -293,16 +281,17 @@
 
   <canvas class="fx fx-rain" id="rain"></canvas>
   <div class="fx fx-vignette"></div>
-  <div class="fx fx-scan"></div>
-  <div class="fx fx-grain"></div>
 
   <header class="corner tl">
     <p class="brand">Stephie's World</p>
+    <p class="tagline">Building with AI, writing a novel, living in New York.</p>
   </header>
 
   <nav class="corner tr hud nav">
     <a href="about.html" class="sign teal">about</a>
     <a href="books.html" class="sign amber">reading</a>
+    <a href="writing.html" class="sign teal">writing</a>
+    <a href="work.html" class="sign pink">work</a>
     <a href="https://github.com/stephiesworld" class="sign pink" target="_blank" rel="noopener">github</a>
     <a href="https://www.linkedin.com/in/sdelpaggio" class="sign teal" target="_blank" rel="noopener">linkedin</a>
   </nav>
@@ -310,8 +299,6 @@
   <div class="corner bl hud" id="status"></div>
   <div class="corner br hud" id="coords"></div>
   <p class="hint hud" id="hint">drag to turn &middot; touch a light</p>
-
-  <a class="blade" href="work.html" aria-label="Work"><span>W</span><span>O</span><span class="bad">R</span><span>K</span><span class="arrow">&darr;</span></a>
 
   <aside class="panel" id="panel" aria-live="polite">
     <button class="panel-close" id="panelClose" aria-label="Close">&times;</button>
@@ -326,7 +313,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0"></script>
-  <script src="rain.js"></script>
+  <script src="rain.js?v=20261008"></script>
   <script>
     // ─── Home ───
     // The red pin marks home base. Deliberately no live location or travel dates:
@@ -399,15 +386,15 @@
       .height(window.innerHeight)
       .backgroundColor('rgba(0,0,0,0)')
       .showAtmosphere(true)
-      .atmosphereColor('#ff2d4a')
-      .atmosphereAltitude(0.16)
+      .atmosphereColor('#8d97ff')
+      .atmosphereAltitude(0.2)
       .showGraticules(true)
       .htmlElementsData(points)
       .htmlAltitude(0.01)
       .htmlElement(makePin)
       .ringsData([HERE])
       .ringLat('lat').ringLng('lng')
-      .ringColor(function (d) { return d.lake ? function (t) { return 'rgba(255,177,92,' + (1 - t) * 0.9 + ')'; } : function (t) { return 'rgba(255,45,74,' + (1 - t) * 0.8 + ')'; }; })
+      .ringColor(function (d) { return d.lake ? function (t) { return 'rgba(255,177,92,' + (1 - t) * 0.9 + ')'; } : function (t) { return 'rgba(255,122,146,' + (1 - t) * 0.85 + ')'; }; })
       .ringMaxRadius(3.2)
       .ringPropagationSpeed(1.2)
       .ringRepeatPeriod(1600)
@@ -420,10 +407,10 @@
       });
     }
 
-    // Ink-dark sphere with a faint red rim
+    // Indigo sphere, lit faintly from within
     var mat = world.globeMaterial();
-    mat.color.set('#070506');
-    mat.emissive && mat.emissive.set('#0c0205');
+    mat.color.set('#1a1e3c');
+    mat.emissive && mat.emissive.set('#0e1128');
     mat.shininess = 8;
 
     // ─── The real sun ───
@@ -473,13 +460,13 @@
     var SATS = [
       { id: 'henry', name: 'Henry', rgb: '127,178,255', incl: 24, node: 10, alt: 0.3, period: 150, phase: 40,
         meta: 'Amazon 1P vendor ops', copy: 'What I imagine the perfect 1P vendor portal would be, shaped by hundreds of hours of conversations with some of the largest US businesses selling on Amazon.',
-        links: [{ href: 'https://henry-ten.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
+        links: [{ href: 'https://henry-ten.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#henry', label: 'On the work page &rarr;' }] },
       { id: 'cherry', name: 'Cherry', rgb: '255,90,120', incl: 58, node: 75, alt: 0.38, period: 190, phase: 160,
         meta: 'Voice-of-customer triage', copy: 'Finds feedback across the open web, clusters it into issues, and ranks them. Your corrections re-rank it.',
-        links: [{ href: 'https://cherry-topaz.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] },
+        links: [{ href: 'https://cherry-topaz.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#cherry', label: 'On the work page &rarr;' }] },
       { id: 'delphi', name: 'Delphi', rgb: '141,255,160', incl: 40, node: 230, alt: 0.55, period: 270, phase: 100,
         meta: 'Stock stories', copy: 'A pulse on the 100 most popular stocks on Robinhood: each company&rsquo;s story, rivals, and latest earnings, refreshed daily after the close.',
-        links: [{ href: 'https://delphi-stocks.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#builds', label: 'On the work page &rarr;' }] }
+        links: [{ href: 'https://delphi-stocks.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#delphi', label: 'On the work page &rarr;' }] }
     ];
 
     // 24×24 line drawings: a cherry, Henry's toolbox, Delphi's candlesticks
@@ -536,8 +523,8 @@
     function landColor(f) {
       var night = Math.min(1, Math.max(0, (0.12 - dot(SUN, f.__v)) / 0.24));
       var mine = MINE.indexOf(f.properties.name) > -1;
-      var a = mine ? 0.3 + 0.35 * night : 0.2 + 0.24 * night;
-      return mine ? 'rgba(255,177,92,' + a.toFixed(3) + ')' : 'rgba(255,60,85,' + a.toFixed(3) + ')';
+      var a = mine ? 0.4 + 0.4 * night : 0.22 + 0.2 * night;
+      return mine ? 'rgba(255,177,92,' + a.toFixed(3) + ')' : 'rgba(196,192,240,' + a.toFixed(3) + ')';
     }
     function paintSky() {
       var sun = subsolar(new Date());
@@ -742,7 +729,7 @@
       world.width(window.innerWidth).height(window.innerHeight);
     });
 
-    startRain(document.getElementById('rain'), 0.8);
+    startRain(document.getElementById('rain'), 0.35);
 
     // The hint fades once you've found your footing
     setTimeout(function () { document.getElementById('hint').classList.add('gone'); }, 9000);

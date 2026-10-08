@@ -63,7 +63,7 @@ function startRain(canvas, density) {
       } else {
         ctx.lineWidth = 0.7;
         ctx.strokeStyle = d.red
-          ? 'rgba(255,45,74,' + (d.alpha * 1.6) + ')'
+          ? 'rgba(255,122,146,' + (d.alpha * 1.6) + ')'
           : 'rgba(239,228,214,' + d.alpha + ')';
         ctx.beginPath();
         ctx.moveTo(d.x, d.y);
