@@ -1,0 +1,104 @@
+---
+title: "The Mental Side of Tennis"
+date: "2025-09-09"
+category: "Tennis"
+dek: "My hypothesis on why Sinner keeps losing finals to Alcaraz, written the week after the 2025 US Open."
+---
+
+*Written in September 2025, the week after the US Open final, and first published on [my Substack](https://stephiesuniverse.substack.com/p/the-mental-side-of-tennis). In March 2026 Sinner won the Sunshine Double without dropping a set, so read this as a snapshot of where he was.*
+
+Some sports show who we are around other people. Tennis shows who we are when we're completely alone.
+
+Discipline, talent and training can all line up perfectly and still collapse if the mind falters. That's why I've loved watching the Sinner–Alcaraz rivalry this season. Underneath the serves and rallies, a lot of it is psychology.
+
+Pro tennis is an individual sport, and that strips away many of the variables team sports have. Even Formula 1, which looks individual, isn't. A driver's mentality matters (look at Max this year, in a bad car and still doing great), but results are shaped by the team, the sponsors and the engineering limits of each car. Mid- and back-field cars rarely reach the podium without rain, a mechanical failure or a team error.
+
+In tennis, the engineering is your own body. The team is you and your coaches. Once you step on court, it's just you. You could have every resource and all the tech, and if your mind isn't there, you lose the match.
+
+## Sinner vs Alcaraz
+
+This year we were blessed with finals. Almost every tournament they both played ended with them meeting in the final: Rome, Roland-Garros, Wimbledon, Cincinnati (Sinner retired) and the US Open. Last year we only got Beijing, because Alcaraz was ranked third and often landed on Sinner's side of the draw.
+
+Of all those finals, Sinner won one: Wimbledon.
+
+After every final the same headlines appear. His first serve needs fixing. His shot variety isn't there. He plays like a robot. Alcaraz played the best tennis of his life.
+
+What I think the analysis misses is that Alcaraz gets to Sinner's otherwise stoic mental state.
+
+Against the rest of the tour, Sinner hands out bagels and breadsticks. He can beat most players in an hour, and in key matches he sometimes wins over 90% of his first-serve points. Then in a final against Alcaraz the serve falters. He double-faults. He lets balls go. It looks like a different player is on court. I don't think skill is what's missing. I think the pressure is derailing him.
+
+Since 2024, Sinner is 109–4 against the rest of the tour and 1–7 against Alcaraz.
+
+| Final | Result | Sinner 1st serve in | Alcaraz 1st serve in |
+|---|---|---|---|
+| Rome 2025 | Alcaraz in two sets | 60% | |
+| Roland-Garros 2025 | Alcaraz in five, 5h29m, after saving 3 championship points | 54% | 58% |
+| Wimbledon 2025 | Sinner in four | 62% | 53% |
+| Cincinnati 2025 | Sinner retired at 0–5 | | |
+| US Open 2025 | Alcaraz in four | 48% | 65% |
+
+Sinner regresses in pressure finals against Alcaraz. Alcaraz rises, especially on second-serve points, the stat that so often flips a match. At the US Open, Alcaraz won 57% of his second-serve points to Sinner's 48%. Alcaraz seems to turn emotion into fuel. Sinner hasn't figured out what to do with his yet.
+
+So I don't think the question is technical anymore. To beat Alcaraz consistently, Sinner's next step is to let himself be more expressive, more vulnerable and more open.
+
+## Alcaraz's own year
+
+Alcaraz had a lot of downs last year. He lost to lower-ranked players. He went through a rough patch with his mental health, escaped to Ibiza, and admitted he'd lost his joy for tennis. Plenty of people read that need for joy as a weakness, because he was losing.
+
+Then he found it again. After every match he stayed expressive and reflective. He talked about what went wrong, what he'd been thinking and what he needed to do better, and he went looking for whatever would bring the joy back.
+
+Sinner gives the same speech after every match and the same answers in every press conference. In finals against Alcaraz it's always some version of "You have the best team, you have the best family. Keep going."
+
+At Roland-Garros, when both of them were frustrated, Alcaraz yelled at his box. Sinner stayed stoic. He had three championship points and lost. I think his emotions had nowhere to go, so they consumed him. With only one Grand Slam final as evidence, the hypothesis wasn't fully formed yet.
+
+Then at Wimbledon he was more expressive and more communicative than his fans had ever seen him, and he won, landing 62% of his first serves. That's correlation, not proof, but it's worth noting.
+
+Staying calm and keeping it all inside beats 99% of his opponents. Alcaraz is a different energy. Sinner has said he lives in his head, and he looks like a different person against Alcaraz than against anyone else.
+
+## The next phase
+
+Alcaraz is his perfect kryptonite because he's the opposite: loud, expressive, open. They're also each other's equals, or they wouldn't affect each other this way.
+
+Sinner got this far by shutting his emotions down, and his stoicism is a real strength. The irony is that beating Alcaraz will take the opposite. He doesn't need a better serve or faster drop-shot defense. He can always improve, and his touch at the net isn't as sharp as Alcaraz's, but he has already proven he can beat him on a good day.
+
+Watch a few minutes of these finals and you can see when he's mentally gone. In the US Open final I honestly thought he was injured, but his average serve speed was still over 120 mph and his forehand still sat at 70 to 80. What changed was the double faults. Those usually come from a change in the serve, tricky conditions or mental distress. The roof was closed and his motion hadn't changed, which leaves the mind.
+
+He once said he can look calm while there's "a swirl of chaos underneath." When that pressure has nowhere to go, it can implode. After the US Open final he said this:
+
+> "When the scoreline [or] matches before are comfortable, you always do the same things, like I did, for example, during this tournament, I didn't make one serve-volley, didn't use a lot of drop shots, and then you arrive to a point where you play against Carlos where you have to go out of the comfort zone.
+>
+> "So I'm going to aim to maybe even lose some matches from now on, but trying to do some changes, trying to be a bit more unpredictable as a player, because I think that's what I have to do, trying to become a better tennis player."
+
+"You have to go out of the comfort zone" applies to more than his shot selection.
+
+Each player's superpower is the other's learning arc. Alcaraz needed consistency and discipline. Sinner needs expression and release. Right now he carries all of the pressure alone, in his own head. Letting people in could let some of it out, like the valve on a rice cooker. And whenever he does let a bit of his personality show, people love it.
+
+## The Federer precedent
+
+Everyone has to let their emotions out somehow, and it doesn't have to mean smashing a racquet. Djokovic vents to the crowd. Sabalenka talks out loud to herself and her box. Federer did it through the depth of his interviews.
+
+Federer went through a strikingly similar arc. Early on he was moody and temperamental. He kept his emotions compartmentalized and his relationships private, and gave polite, controlled answers in press. It got him to a certain level of winning and no further.
+
+Two things changed him. The first was Mirka, whom he met at the 2000 Sydney Olympics while he was still an inconsistent player outside the top 25. She gave him the stability to grow from a wild talent into a grounded competitor. The second was the death of his childhood coach, Peter Carter, in a car crash in South Africa in 2002, on a trip Federer had encouraged him to take. That grief was a turning point. Federer stopped suppressing his emotions and started using them.
+
+He won Wimbledon the next year. By the late 2000s he was the gentleman champion, playful and gracious, crying openly on the podium after the 2009 Australian Open final against Nadal, laughing with crowds and turning press conferences into real reflection. When he retired, he sobbed, unashamed. He hadn't lost control. He'd gained freedom.
+
+Alcaraz has some of that freedom now. After losing Wimbledon, he said his first thought was what he needed to do to beat Sinner at the next Slam, on Sinner's best surface. On court he smiles, grimaces, pumps his fist and feeds off the crowd, and it makes him better.
+
+So far Sinner has expressed himself almost entirely through his tennis: relentless baseline aggression, taking the ball early, taking time away from his opponents until they suffocate. It's brilliant, and it's why I became a fan. Against Alcaraz it isn't enough. Like Federer, he may have to stop compartmentalizing and start channeling.
+
+## Backstories
+
+I think it's harder for Sinner to become expressive than it was for Alcaraz to become disciplined, and their childhoods are why.
+
+Sinner left home at 13. His father is a chef and his mother was a waitress, in the Dolomites. In the ATP's documentary on the 2019 Next Gen Finals, which he entered as a wildcard, there's a scene where he calls his mother with an update and she tells him she has more important things to worry about than his tennis. It was his biggest stage so far, and he went on to win the tournament, beating Alex de Minaur in the final. The message from home was still clear: don't make too much of yourself. Even now his mother sometimes leaves his matches partway through because of the stress.
+
+Alcaraz's home base is still his childhood bedroom. Both parents come to his matches, along with siblings, uncles and cousins, and they are visibly warm and invested. His environment encouraged expression. Sinner's muted it. If Sinner does break through, his growth arc will be the bigger one, and harder won.
+
+## What success would look like
+
+In a word, trust. When Sinner can be expressive, it will mean he trusts himself enough to let go of control and has seen that vulnerability makes him stronger. I think that trust is what Alcaraz spent the past year rebuilding, along with his game.
+
+An expressive Sinner would be unstoppable. His peak could be higher than Federer's.
+
+The Slams are done for the year, and the US Open put Alcaraz back at number one. I'm happy for him. Over the last twelve months he showed what it looks like to face your own vulnerability and rebuild your joy. Now it's Sinner's turn. His real test may not be whether he can beat Alcaraz. It may be whether he can show up fully as himself when he's alone on court.

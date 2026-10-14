@@ -7,6 +7,9 @@ Reads content/essays/*.md (front matter: title, date, category, dek, optional or
   - redirect stubs for retired essays, so old links land somewhere useful
   - sitemap.xml
 
+Tennis pieces live in content/tennis/*.md. They build to writing/<slug>.html too, but are listed
+on tennis.html (between <!-- tennis:start --> and <!-- tennis:end -->) instead of writing.html.
+
 Run after adding or editing an essay:
   .venv/bin/python tools/build_writing.py
 First time only:
@@ -26,6 +29,7 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / 'content' / 'essays'
+TENNIS_SRC = ROOT / 'content' / 'tennis'
 OUT = ROOT / 'writing'
 SITE = 'https://stephiesworld.com'
 
@@ -53,7 +57,7 @@ REFERENCE = [
     ('cheat-sheet', 'AI Systems Cheat Sheet', 'harnesses and evals, plainly'),
 ]
 
-STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('work.html', '0.9'), ('writing.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8')]
+STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('work.html', '0.9'), ('writing.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8'), ('tennis.html', '0.6')]
 
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
           'September', 'October', 'November', 'December']
@@ -119,10 +123,7 @@ def ordered(essays):
     return sorted(essays, key=lambda e: e['order'] if e['order'] is not None else 99)
 
 
-def main():
-    essays = ordered([parse(p) for p in sorted(SRC.glob('*.md'))])
-    page = Template((ROOT / 'tools' / 'essay_template.html').read_text(encoding='utf-8'))
-
+def write_pages(essays, page, back_href, back_label):
     for i, e in enumerate(essays):
         body = render(e['body'])
         words = len(re.sub(r'<svg.*?</svg>|<[^>]+>', ' ', body, flags=re.S).split())
@@ -147,7 +148,18 @@ def main():
             minutes=max(1, math.ceil(words / 230)),
             body=body,
             nav=nav,
+            back_href=back_href,
+            back_label=back_label,
         ), encoding='utf-8')
+
+
+def main():
+    essays = ordered([parse(p) for p in sorted(SRC.glob('*.md'))])
+    page = Template((ROOT / 'tools' / 'essay_template.html').read_text(encoding='utf-8'))
+
+    write_pages(essays, page, '../writing.html', 'all writing')
+    tennis = sorted([parse(p) for p in sorted(TENNIS_SRC.glob('*.md'))], key=lambda e: e['raw_date'], reverse=True)
+    write_pages(tennis, page, '../tennis.html', 'all tennis')
 
     # ─── Writing index: each post with its first diagram as a lit thumbnail ───
     rows = []
@@ -169,6 +181,18 @@ def main():
     src = re.sub(r'(<!-- essays:start -->\n).*?(\s*<!-- essays:end -->)',
                  lambda m: m.group(1) + '\n'.join(rows) + m.group(2), src, flags=re.S)
     index.write_text(src, encoding='utf-8')
+
+    # ─── Tennis index ───
+    trows = [(f'        <li class="post"><a href="writing/{e["slug"]}.html">'
+              f'<span class="no">{i + 1:02d}</span>'
+              f'<span class="txt"><span class="cat label">{e["date"]} &middot; {e["minutes"]} min</span>'
+              f'<span class="tt">{html.escape(e["title"])}</span><span class="dk">{html.escape(e["dek"])}</span></span></a></li>')
+             for i, e in enumerate(tennis)]
+    tpage = ROOT / 'tennis.html'
+    src = tpage.read_text(encoding='utf-8')
+    src = re.sub(r'(<!-- tennis:start -->\n).*?(\s*<!-- tennis:end -->)',
+                 lambda m: m.group(1) + '\n'.join(trows) + m.group(2), src, flags=re.S)
+    tpage.write_text(src, encoding='utf-8')
 
     # ─── Retired essays: tiny redirect pages ───
     for slug, to in RETIRED.items():
@@ -196,13 +220,14 @@ def main():
     urls = [(f'{SITE}/{p}', pr) for p, pr in STATIC_PAGES]
     urls += [(f'{SITE}/writing/{e["slug"]}.html', '0.7') for e in essays]
     urls += [(f'{SITE}/writing/{slug}.html', '0.6') for slug, _, _ in REFERENCE]
+    urls += [(f'{SITE}/writing/{e["slug"]}.html', '0.5') for e in tennis]
     xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for loc, pr in urls:
         xml += ['  <url>', f'    <loc>{loc}</loc>', f'    <lastmod>{today}</lastmod>', f'    <priority>{pr}</priority>', '  </url>']
     xml.append('</urlset>')
     (ROOT / 'sitemap.xml').write_text('\n'.join(xml) + '\n', encoding='utf-8')
 
-    print(f'Built {len(essays)} essays, writing.html index, {len(RETIRED)} redirects, sitemap.xml')
+    print(f'Built {len(essays)} essays, {len(tennis)} tennis pieces, writing.html and tennis.html indexes, {len(RETIRED)} redirects, sitemap.xml')
 
 
 if __name__ == '__main__':
