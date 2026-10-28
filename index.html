@@ -949,7 +949,7 @@
 
     // ─── The prompt ───
     var cmdIn = document.getElementById('cmdIn'), cmdOut = document.getElementById('cmdOut');
-    var PAGES = { work: 'work.html', writing: 'writing.html', about: 'about.html', reading: 'books.html', books: 'books.html' };
+    var PAGES = { work: 'work.html', writing: 'writing.html', about: 'about.html', reading: 'books.html', books: 'books.html', guestbook: 'about.html#guestbook', sign: 'about.html#guestbook' };
     var AWAY = { github: 'https://github.com/stephiesworld', linkedin: 'https://www.linkedin.com/in/sdelpaggio' };
     var CITY_WORDS = { nyc: 'newyork', 'new york': 'newyork', newyork: 'newyork', london: 'london', paris: 'paris',
       shanghai: 'shanghai', madrid: 'madrid', grindelwald: 'grindelwald' };
@@ -960,7 +960,7 @@
       var w = raw.trim().toLowerCase().replace(/^\$/, ''), t = w.toUpperCase();
       if (!w) return say('');
       if (w === 'help' || w === '?') {
-        return say('a ticker (NVDA, TSLA) &middot; work &middot; writing &middot; about &middot; reading &middot; delphi &middot; markets &middot; a city &middot; clear');
+        return say('a ticker (NVDA, TSLA) &middot; work &middot; writing &middot; about &middot; reading &middot; guestbook &middot; delphi &middot; markets &middot; a city &middot; clear');
       }
       if (w === 'clear' || w === 'home') { closePanel(); return say(''); }
       if (w === 'markets') {

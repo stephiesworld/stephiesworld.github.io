@@ -79,30 +79,39 @@
     .more { display: inline-block; margin-top: 1.4rem; font-size: 0.64rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
     .more:hover { letter-spacing: 0.22em; }
 
-    /* Guestbook: one line, mailed to me through FormSubmit */
-    .guestbook { margin-top: 3rem; max-width: 36em; }
-    .gb-lede { font-family: var(--read); font-size: 1.12rem; color: var(--cream); margin-bottom: 0.9rem; }
-    .gb-field {
-      display: flex; align-items: center; padding-left: 1rem;
-      border: 1px solid rgba(111, 207, 192, 0.18); border-radius: 6px; background: rgba(20, 23, 41, 0.5);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    /* Guestbook: a teal sign and a prompt line, like the homepage; notes are mailed to me through FormSubmit */
+    .guestbook { margin-top: 3.4rem; max-width: 36em; }
+    .gb-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .gb-sign {
+      font-family: 'Tilt Neon', var(--mono); font-size: 0.86rem; letter-spacing: 0.2em; text-transform: uppercase; color: #dffff9;
+      text-shadow: 0 0 2px #fff, 0 0 5px #6fcfc0, 0 0 12px #3fb8ac, 0 0 24px rgba(63, 184, 172, 0.55);
+      animation: sign-on 2s steps(1, end) 1.2s both;
     }
-    .gb-field:hover, .gb-field:focus-within { border-color: rgba(111, 207, 192, 0.45); box-shadow: 0 0 18px rgba(111, 207, 192, 0.08); }
-    .gb-field input {
-      flex: 1; min-width: 0; padding: 0.95rem 0; border: 0; outline: none; background: transparent;
-      font-family: var(--mono); font-size: 0.85rem; color: var(--cream);
+    .gb-note { font-size: 0.6rem; }
+    .gb-lede { margin: 0.7rem 0 0.9rem; font-family: var(--read); font-style: italic; font-size: 1.1rem; color: var(--cream-dim); }
+    .gb-line {
+      display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(111, 207, 192, 0.22); transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    .gb-field input::placeholder { color: rgba(239, 228, 214, 0.35); }
-    .gb-field input:focus::placeholder { color: rgba(239, 228, 214, 0.48); }
-    .gb-field button {
-      padding: 0.95rem 1rem; border: 0; background: none; cursor: pointer;
-      font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--teal); text-shadow: 0 0 8px var(--teal-soft); transition: filter 0.3s ease, opacity 0.3s ease;
+    .gb-line:focus-within { border-color: rgba(111, 207, 192, 0.6); box-shadow: 0 10px 18px -14px rgba(111, 207, 192, 0.7); }
+    .gb-ps { font-family: var(--mono); font-size: 0.9rem; color: var(--teal); text-shadow: 0 0 8px var(--teal-soft); }
+    .gb-line input {
+      flex: 1; min-width: 0; padding: 0.4rem 0; border: 0; outline: none; background: transparent;
+      font-family: var(--mono); font-size: 0.85rem; color: var(--cream); caret-color: var(--teal);
     }
-    .gb-field button:hover { filter: brightness(1.3); }
-    .gb-field button:disabled { opacity: 0.45; cursor: default; }
+    .gb-line input::placeholder { color: rgba(239, 228, 214, 0.35); }
+    .gb-line button {
+      padding: 0.4rem 0 0.4rem 0.6rem; border: 0; background: none; cursor: pointer; white-space: nowrap;
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(111, 207, 192, 0.45); transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    /* The send key lights up once there's something to send */
+    .gb-line:has(input:not(:placeholder-shown)) button, .gb-line button:hover { color: var(--teal); text-shadow: 0 0 8px var(--teal-soft); }
+    .gb-line button:disabled { opacity: 0.45; cursor: default; }
     .gb-status { margin-top: 0.7rem; min-height: 1em; font-size: 0.64rem; color: var(--teal); }
     .gb-status.err { color: var(--neon); }
+    .gb-status a { border-bottom: 1px solid currentColor; }
+    @media (prefers-reduced-motion: reduce) { .gb-sign { animation: none; } }
     .gb-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
     /* Projects */
@@ -126,7 +135,7 @@
       .toc ol { display: none; }
       .sec-head h2 { font-size: 1.6rem; }
       .prose p { font-size: 1.05rem; }
-      .gb-field input { font-size: 16px; }
+      .gb-line input { font-size: 16px; }
     }
   </style>
 </head>
@@ -167,11 +176,13 @@
         <a class="more hud" href="work.html">work &rarr;</a> &nbsp;&nbsp; <a class="more hud" href="writing.html">writing &rarr;</a> &nbsp;&nbsp; <a class="more hud" href="mailto:stephiesuniverse@gmail.com">email &#8599;</a> &nbsp;&nbsp; <a class="more hud" href="https://github.com/stephiesworld" target="_blank" rel="noopener">github &#8599;</a>
 
         <form class="guestbook" id="guestbook" action="https://formsubmit.co/stephiesuniverse@gmail.com" method="POST">
-          <p class="gb-lede">Leave a message in my guestbook.</p>
-          <div class="gb-field">
+          <div class="gb-head"><span class="gb-sign">Guestbook</span><span class="gb-note hud">it comes straight to me</span></div>
+          <p class="gb-lede">Passing through? Leave a note.</p>
+          <div class="gb-line">
+            <span class="gb-ps" aria-hidden="true">&gt;</span>
             <label for="gb-msg" class="sr-only">Message</label>
-            <input type="text" id="gb-msg" name="message" placeholder="Message" maxlength="500" autocomplete="off" required>
-            <button type="submit">Send</button>
+            <input type="text" id="gb-msg" name="message" placeholder="type a note, press enter" maxlength="500" autocomplete="off" required>
+            <button type="submit">&crarr; send</button>
           </div>
           <input type="text" name="_honey" class="gb-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input type="hidden" name="_subject" value="A note in your guestbook">
@@ -210,11 +221,11 @@
       var text = input.value.trim();
       if (!text) return;
       var done = function () {
-        input.value = ''; input.placeholder = 'Another?';
-        status.className = 'gb-status hud'; status.textContent = 'Got it. Thank you.';
+        input.value = ''; input.placeholder = 'another?';
+        status.className = 'gb-status hud'; status.textContent = '\u2713 received. thank you.';
       };
       if (gb._honey.value) return done();
-      btn.disabled = true; status.className = 'gb-status hud'; status.textContent = 'Sending…';
+      btn.disabled = true; status.className = 'gb-status hud'; status.textContent = 'sending\u2026';
       fetch(gb.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
