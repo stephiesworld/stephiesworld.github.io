@@ -54,6 +54,9 @@
     .lede { margin-top: 0.9rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-faint); }
     .lede b { font-weight: 400; color: var(--cream-dim); }
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
+    /* The real sky, behind everything, arriving a beat after the globe */
+    #stars { z-index: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 4s ease 1.2s; }
+    #stars.ready { opacity: 1; }
     #globe:active { cursor: grabbing; }
 
     /* Globe fades up out of the dark */
@@ -327,6 +330,8 @@
 
   <h1 class="sr-only">Stephie</h1>
 
+  <canvas class="fx" id="stars" aria-hidden="true"></canvas>
+
   <div id="globe" aria-label="Globe of the cities in Stephie's world"></div>
 
   <div id="sats" aria-label="Builds in orbit"></div>
@@ -336,7 +341,7 @@
 
   <header class="corner tl">
     <p class="brand">Stephie's World</p>
-    <p class="tagline">Building with AI, writing a novel, living in New York.</p>
+    <p class="tagline">Building with AI, writing a novel.<br>New&nbsp;York, sometimes Paris or London.</p>
     <p class="lede"><b>3 builds</b> in orbit &middot; touch one</p>
   </header>
 
@@ -370,6 +375,7 @@
   <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0"></script>
   <script src="rain.js?v=20261008"></script>
+  <script src="stars.js?v=20261028d"></script>
   <script>
     // ─── Home ───
     // The red pin marks home base. Deliberately no live location or travel dates:
@@ -923,6 +929,8 @@
     setInterval(renderMarkets, 30000);
 
     startRain(document.getElementById('rain'), 0.35);
+    startStars(document.getElementById('stars'), world);
+    document.getElementById('stars').classList.add('ready');
 
     // The hint fades once you've found your footing
     setTimeout(function () { document.getElementById('hint').classList.add('gone'); }, 9000);
