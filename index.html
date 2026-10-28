@@ -50,7 +50,9 @@
     .sign.pink { text-shadow: 0 0 2px #fff, 0 0 5px #ff8aa0, 0 0 12px #ff7a92, 0 0 24px rgba(255, 122, 146, 0.45); }
 
     /* Who this is, said once, quietly */
-    .tagline { margin-top: 0.7rem; font-family: 'Newsreader', Georgia, serif; font-style: italic; font-size: 0.98rem; letter-spacing: 0; text-transform: none; color: var(--cream-dim); }
+    .tagline { margin-top: 0.7rem; max-width: 30ch; font-family: 'Newsreader', Georgia, serif; font-style: italic; font-size: 1.22rem; line-height: 1.4; letter-spacing: 0; text-transform: none; color: rgba(243, 236, 226, 0.86); }
+    .lede { margin-top: 0.9rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-faint); }
+    .lede b { font-weight: 400; color: var(--cream-dim); }
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
     #globe:active { cursor: grabbing; }
 
@@ -60,8 +62,8 @@
 
     /* ─── Corners ─── */
     .corner { position: fixed; z-index: 10; opacity: 0; animation: appear 1.4s ease forwards; }
-    .tl { top: 3.2rem; left: 2.4rem; animation-delay: 0.6s; }
-    .tr { top: 3.45rem; right: 2.4rem; animation-delay: 0.8s; }
+    .tl { top: 2.2rem; left: 2.4rem; animation-delay: 0.6s; }
+    .tr { top: 2.45rem; right: 2.4rem; animation-delay: 0.8s; }
     .bl { bottom: 2rem; left: 2.4rem; animation-delay: 1.2s; line-height: 2.1; }
     .br { bottom: 2rem; right: 2.4rem; animation-delay: 1.4s; text-align: right; line-height: 2.1; }
 
@@ -115,7 +117,6 @@
     .pin-label .pin-en:first-child { font-size: 0.62rem; color: var(--amber); text-shadow: 0 0 10px var(--amber-soft); }
     .pin.is-current .pin-label .pin-en:first-child { color: var(--neon); text-shadow: 0 0 10px var(--neon-soft), 0 0 22px var(--neon-faint); }
     .pin.is-current .pin-zh { color: var(--neon); text-shadow: 0 0 10px var(--neon-soft), 0 0 22px var(--neon-faint); }
-    .pin-here { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--neon); }
 
     .pin.label-below .pin-label { top: 4px; }
     .pin.label-above .pin-label { top: -22px; }
@@ -172,9 +173,10 @@
     .panel-close:hover { color: var(--cream); }
 
     @media (max-width: 720px) {
-      .tl { top: 2.7rem; left: 1rem; }
-      .tr { top: 7.2rem; left: 1rem; right: auto; }
-      .tagline { font-size: 0.86rem; margin-top: 0.5rem; }
+      .tl { top: 1.6rem; left: 1rem; right: 1rem; }
+      .tr { top: 9.4rem; left: 1rem; right: auto; }
+      .tagline { font-size: 1rem; margin-top: 0.5rem; }
+      .lede { margin-top: 0.6rem; }
       .nav { gap: 1rem; }
       .bl { left: 1rem; bottom: 1.2rem; }
       .br, .hint { display: none; }
@@ -198,15 +200,14 @@
     }
     @media (max-width: 720px) { .corner.tl .brand { font-size: 0.95rem; } }
 
-    /* City names are signs: small neon tubes, amber for my cities, pink for home */
+    /* City names are faint warm lights, so the builds stay the signs; pink for home */
     .pin-label .pin-en, .pin-label .pin-en:first-child {
-      font-family: 'Tilt Neon', var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: #fff1dc; text-shadow: 0 0 2px #fff, 0 0 5px #ffc27a, 0 0 11px #ffb15c, 0 0 22px rgba(255, 177, 92, 0.5);
+      font-family: 'Tilt Neon', var(--mono); font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #fff1dc; opacity: 0.45; text-shadow: 0 0 6px rgba(255, 177, 92, 0.35);
     }
     .pin.is-current .pin-label .pin-en, .pin.is-current .pin-label .pin-en:first-child {
-      color: #ffe3e8; text-shadow: 0 0 2px #fff, 0 0 5px #ff8aa0, 0 0 12px #ff7a92, 0 0 24px rgba(255, 122, 146, 0.45);
+      color: #ffe3e8; opacity: 0.7; text-shadow: 0 0 6px rgba(255, 122, 146, 0.4);
     }
-    .pin-here { font-family: 'Tilt Neon', var(--mono); font-size: 0.6rem; color: #ffe3e8; text-shadow: 0 0 6px #ff7a92; }
     .pin.is-day .pin-label { opacity: 0.55; }
 
     /* Live readouts: small amber signs, no boxes */
@@ -220,53 +221,9 @@
     /* ─── Markets ─── Delphi's green means open; amber is a lunch break; closed is just dim */
     :root { --mkt: #8dffa0; --mkt-soft: rgba(141, 255, 160, 0.45); }
 
-    /* The tape: one thin LED line across the top, like the zipper on a building */
-    .tape {
-      position: fixed; z-index: 12; top: 0; left: 0; right: 0; height: 1.75rem;
-      display: flex; align-items: center; gap: 1.4rem; padding: 0 2.4rem;
-      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--cream-faint);
-      background: linear-gradient(180deg, rgba(14, 16, 32, 0.7), rgba(14, 16, 32, 0.35));
-      border-bottom: 1px solid var(--line);
-      opacity: 0; animation: appear 1.4s ease 0.3s forwards;
-    }
-    .tape b { font-weight: 400; color: var(--cream-dim); }
-    .tape .now-dot { margin-right: 0.5rem; }
-    .tape-clock, .tape-delphi { flex: none; white-space: nowrap; }
-    .tape-run {
-      flex: 1; overflow: hidden; white-space: nowrap;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-              mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-    }
-    .tape-track { display: inline-block; animation: tape 70s linear infinite; }
-    .tape-run:hover .tape-track { animation-play-state: paused; }
-    @keyframes tape { to { transform: translateX(-50%); } }
-    .tk { margin-right: 2.2rem; }
-    .tk i { font-style: normal; }
-    .tk.open b, .tk.open i { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
-    .tk.lunch b, .tk.lunch i { color: var(--amber); }
-    .tape-delphi { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); transition: filter 0.3s ease; }
-    .tape-delphi:hover { filter: brightness(1.3); }
-
-    /* Exchanges on the globe: quiet LED codes, so my cities stay the signs */
-    .ex .ex-dot {
-      position: absolute; left: -2px; top: -2px; width: 4px; height: 4px;
-      background: rgba(239, 228, 214, 0.35);
-    }
-    .ex .pin-label { left: 8px; top: -6px; }
-    .ex-code { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; color: var(--cream-faint); }
-    .ex.is-open .ex-dot { background: var(--mkt); box-shadow: 0 0 6px var(--mkt), 0 0 14px var(--mkt-soft); }
-    .ex.is-open .ex-code { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
-    .ex.is-lunch .ex-dot { background: var(--amber); box-shadow: 0 0 6px var(--amber-soft); }
-    .ex.is-lunch .ex-code { color: var(--amber); }
-    /* A city with its own exchange carries the code beside its name */
-    .pin-ex { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; color: var(--cream-faint); }
-    .pin-ex.is-open { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
-    .pin-ex.is-lunch { color: var(--amber); }
-    .mkt-open { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
-
     /* The prompt: a way around for people who'd rather type */
-    #cmd { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; }
+    #cmd { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; opacity: 0.55; transition: opacity 0.3s ease; }
+    #cmd:hover, #cmd:focus-within { opacity: 1; }
     .cmd-out {
       max-width: 34ch; margin-bottom: 0.3rem; line-height: 1.7;
       font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-faint);
@@ -284,12 +241,7 @@
     #cmdIn:focus { border-bottom-color: var(--line); }
 
     @media (max-width: 720px) {
-      .tape { padding: 0 1rem; gap: 0.9rem; }
-      .tape-clock { display: none; }
       #cmdIn { width: calc(100vw - 3.5rem); font-size: 16px; } /* 16px keeps iOS from zooming in */
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .tape-track { animation: none; }
     }
 
     /* ─── Satellites: the builds, in orbit ─── */
@@ -338,41 +290,35 @@
     .sat-text { display: flex; flex-direction: column; gap: 0.15rem; }
     .sat-sub { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-faint); }
     .sat-sub:empty { display: none; }
-    .sat-halo { display: none; }
-
-    /* The earlier builds are small moons now */
-    .sat:not(.delphi) .sat-label { opacity: 0.78; }
-    .sat:not(.delphi) .sat-name { font-size: 0.58rem; }
-    .sat:not(.delphi) .sat-icon { width: 15px; height: 15px; }
-    .sat:not(.delphi) .sat-body { transform: rotate(45deg) scale(0.75); }
-
-    /* Delphi is the moon: a lit disc with a slow halo, the biggest thing in the sky */
-    .sat.delphi .sat-wing { display: none; }
-    .sat.delphi .sat-body {
+    /* Every build is a moon: a lit disc with a slow halo, and a plain line on what it is */
+    .sat-wing { display: none; }
+    .sat-body {
       left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; transform: none;
-      background: radial-gradient(circle at 38% 35%, #f2fff4 0%, var(--c) 55%, #4fd46a 100%);
-      box-shadow: 0 0 8px var(--c), 0 0 22px var(--c-soft), 0 0 44px rgba(141, 255, 160, 0.2);
+      background: radial-gradient(circle at 38% 35%, #fff 0%, var(--c) 60%);
+      box-shadow: 0 0 8px var(--c), 0 0 22px var(--c-soft), 0 0 44px var(--c-soft);
     }
-    .sat.delphi .sat-halo {
-      display: block; position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%;
+    .sat-halo {
+      position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%;
       border: 1px solid var(--c); animation: halo 3.2s ease-out infinite;
     }
+    .sat.henry .sat-halo { animation-delay: 1.1s; }
+    .sat.cherry .sat-halo { animation-delay: 2.1s; }
     @keyframes halo { from { transform: scale(1); opacity: 0.8; } to { transform: scale(4.2); opacity: 0; } }
-    .sat.delphi .sat-label { left: 22px; top: -14px; }
-    .sat.delphi.flip .sat-label { right: 22px; }
-    .sat.delphi .sat-name { font-size: 0.95rem; letter-spacing: 0.18em; }
-    .sat.delphi .sat-icon { width: 24px; height: 24px; }
-    .sat.delphi.flip .sat-text { align-items: flex-end; }
-    @media (prefers-reduced-motion: reduce) { .sat.delphi .sat-halo { animation: none; opacity: 0.3; } }
+    .sat-label { left: 22px; top: -14px; }
+    .sat.flip .sat-label { right: 22px; }
+    .sat.flip .sat-text { align-items: flex-end; }
+    .sat-name { font-size: 0.95rem; letter-spacing: 0.18em; }
+    .sat-icon { width: 24px; height: 24px; }
+    .sat-sub { font-size: 0.56rem; color: var(--cream-dim); }
+    @media (prefers-reduced-motion: reduce) { .sat-halo { animation: none; opacity: 0.3; } }
 
-    /* On a phone the names shrink a little so they stay quieter than the cities */
+    /* On a phone the names shrink a little to fit */
     @media (max-width: 720px) {
-      .sat.delphi .sat-name { font-size: 0.76rem; }
-      .sat.delphi .sat-icon { width: 19px; height: 19px; }
-      .sat-name { font-size: 0.56rem; letter-spacing: 0.12em; }
-      .sat-icon { width: 15px; height: 15px; }
-      .sat-label { left: 12px; top: -8px; gap: 0.35rem; }
-      .sat.flip .sat-label { right: 12px; }
+      .sat-name { font-size: 0.72rem; letter-spacing: 0.14em; }
+      .sat-sub { display: none; }
+      .sat-icon { width: 18px; height: 18px; }
+      .sat-label { left: 16px; top: -11px; gap: 0.35rem; }
+      .sat.flip .sat-label { right: 16px; }
     }
 
   </style>
@@ -388,15 +334,10 @@
   <canvas class="fx fx-rain" id="rain"></canvas>
   <div class="fx fx-vignette"></div>
 
-  <div class="tape" aria-label="World markets right now">
-    <span class="tape-clock" id="tapeClock"></span>
-    <span class="tape-run"><span class="tape-track" id="tapeTrack"></span></span>
-    <a class="tape-delphi" href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener">Delphi &#8599;</a>
-  </div>
-
   <header class="corner tl">
     <p class="brand">Stephie's World</p>
     <p class="tagline">Building with AI, writing a novel, living in New York.</p>
+    <p class="lede"><b>3 builds</b> in orbit &middot; touch one</p>
   </header>
 
   <nav class="corner tr hud nav">
@@ -518,23 +459,7 @@
     var GLYPH = { open: '&#9679;', lunch: '&#9680;', closed: '&#9675;' };
 
     function renderMarkets() {
-      var open = 0, runs = '';
-      EXCHANGES.forEach(function (x) {
-        x.now = marketState(x);
-        if (x.now.state === 'open') open++;
-        runs += '<span class="tk ' + x.now.state + '"><b>' + x.code + '</b> <i>' + GLYPH[x.now.state] + ' ' + stateText(x.now) + '</i></span>';
-        document.querySelectorAll('[data-ex="' + x.code + '"]').forEach(function (n) {
-          n.classList.toggle('is-open', x.now.state === 'open');
-          n.classList.toggle('is-lunch', x.now.state === 'lunch');
-        });
-      });
-      runs = '<span class="tk"><b>' + open + '/' + EXCHANGES.length + '</b> markets open</span>' + runs;
-      // Twice over, so the loop is seamless
-      document.getElementById('tapeTrack').innerHTML = runs + runs;
-      document.getElementById('tapeClock').innerHTML =
-        '<span class="now-dot"></span>home <b>' + HERE.name + '</b> &middot; ' + localTime(HERE.tz);
-      var delphi = document.querySelector('.sat.delphi .sat-sub');
-      if (delphi) delphi.innerHTML = US.now.state === 'open' ? 'market open &middot; ' + span(US.now.left) + ' left' : 'market closed';
+      EXCHANGES.forEach(function (x) { x.now = marketState(x); });
       if (typeof world !== 'undefined') paintRings();
     }
 
@@ -546,9 +471,7 @@
     var points = Object.keys(CITIES).map(function (id) {
       var c = CITIES[id];
       return { id: id, lat: c.lat, lng: c.lng, city: c, current: c === HERE };
-    }).concat(EXCHANGES.filter(function (x) { return !x.city; }).map(function (x) {
-      return { id: 'ex-' + x.code, lat: x.lat, lng: x.lng, ex: x };
-    }));
+    });
 
     var world = Globe({ animateIn: false })(el)
       .width(window.innerWidth)
@@ -629,13 +552,13 @@
     // Cities are where I've been; satellites are what I've launched from here.
     // Each orbit is a tilted circle (inclination, node) at its own height; period in seconds.
     var SATS = [
-      { id: 'henry', name: 'Henry', rgb: '127,178,255', incl: 24, node: 10, alt: 0.3, period: 150, phase: 40,
+      { id: 'henry', name: 'Henry', sub: 'Amazon vendor portal', rgb: '127,178,255', incl: 24, node: 10, alt: 0.3, period: 150, phase: 300,
         meta: 'Amazon 1P vendor ops', copy: 'What I imagine the perfect 1P vendor portal would be, shaped by hundreds of hours of conversations with some of the largest US businesses selling on Amazon.',
         links: [{ href: 'https://henry-ten.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#henry', label: 'On the work page &rarr;' }] },
-      { id: 'cherry', name: 'Cherry', rgb: '255,90,120', incl: 58, node: 75, alt: 0.38, period: 190, phase: 160,
+      { id: 'cherry', name: 'Cherry', sub: 'Customer feedback triage', rgb: '255,90,120', incl: 58, node: 75, alt: 0.38, period: 190, phase: 165,
         meta: 'Voice-of-customer triage', copy: 'Finds feedback across the open web, clusters it into issues, and ranks them. Your corrections re-rank it.',
         links: [{ href: 'https://cherry-topaz.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#cherry', label: 'On the work page &rarr;' }] },
-      { id: 'delphi', name: 'Delphi', rgb: '141,255,160', incl: 40, node: 230, alt: 0.55, period: 270, phase: 100,
+      { id: 'delphi', name: 'Delphi', sub: 'Stock stories, daily', rgb: '141,255,160', incl: 40, node: 230, alt: 0.55, period: 270, phase: 135,
         meta: 'Stock stories &middot; what I&rsquo;m building now', copy: 'A pulse on the 100 most popular stocks on Robinhood: each company&rsquo;s story, rivals, and latest earnings, refreshed daily after the close.',
         links: [{ href: 'https://delphi-stocks.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#delphi', label: 'On the work page &rarr;' }] }
     ];
@@ -657,8 +580,7 @@
     var ORBIT_PATHS = SATS.map(function (s) {
       var pts = [];
       for (var d = 0; d <= 360; d += 3) { var q = orbitPoint(s, d); pts.push([q[0], q[1], s.alt]); }
-      var main = s.id === 'delphi';
-      return { points: pts, color: 'rgba(' + s.rgb + (main ? ',0.6)' : ',0.24)'), stroke: main ? 0.9 : 0.5, dash: 1, gap: 0 };
+      return { points: pts, color: 'rgba(' + s.rgb + ',0.42)', stroke: 0.7, dash: 1, gap: 0 };
     });
 
     // Countries that hold one of my cities burn a little warmer
@@ -762,21 +684,7 @@
     }
 
     // Pins can be built after the first renderMarkets, so each one starts in the right state
-    function exClass(x) { var s = marketState(x).state; return s === 'open' ? ' is-open' : s === 'lunch' ? ' is-lunch' : ''; }
-
-    function makeExchange(d) {
-      var pin = document.createElement('div');
-      pin.className = 'pin ex' + exClass(d.ex);
-      pin.dataset.id = d.id;
-      pin.dataset.ex = d.ex.code;
-      pin.innerHTML = '<span class="ex-dot"></span><span class="pin-label"><span class="ex-code">' + d.ex.code + '</span></span>';
-      pin.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
-      pin.addEventListener('click', function (e) { e.stopPropagation(); openExchange(d.ex); });
-      return pin;
-    }
-
     function makePin(d) {
-      if (d.ex) return makeExchange(d);
       var pin = document.createElement('div');
       pin.className = 'pin' + (d.current ? ' is-current' : '') + (d.city.label ? ' label-' + d.city.label : '') +
         (isNight(d.lat, d.lng) ? '' : ' is-day');
@@ -785,8 +693,7 @@
         '<span class="pin-dot"></span>' +
         '<span class="pin-label">' + (d.city.zh ? '<span class="pin-zh">' + d.city.zh + '</span>' : '') +
         '<span class="pin-en">' + d.city.name + '</span>' +
-        (d.current ? '<span class="pin-here">&middot; home</span>' : '') +
-        (d.city.ex ? '<span class="pin-ex' + exClass(d.city.ex) + '" data-ex="' + d.city.ex.code + '">' + d.city.ex.code + '</span>' : '') + '</span>';
+        '</span>';
       // Keep the orbit controls from capturing the pointer, or the click never lands
       pin.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
       pin.addEventListener('click', function (e) { e.stopPropagation(); openCity(d.id); });
@@ -890,11 +797,12 @@
       n.setAttribute('aria-label', s.name);
       n.innerHTML = '<span class="sat-halo"></span><span class="sat-wing l"></span><span class="sat-body"></span><span class="sat-wing r"></span>' +
         '<span class="sat-label"><svg class="sat-icon" viewBox="0 0 24 24" aria-hidden="true">' + ICONS[s.id] + '</svg>' +
-        '<span class="sat-text"><span class="sat-name">' + s.name + '</span><span class="sat-sub"></span></span></span>';
+        '<span class="sat-text"><span class="sat-name">' + s.name + '</span><span class="sat-sub">' + s.sub + '</span></span></span>';
       n.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
       n.addEventListener('click', function (e) { e.stopPropagation(); openSat(s); });
       satLayer.appendChild(n);
       s.el = n;
+      s.labelW = n.querySelector('.sat-label').offsetWidth + 40;
       s.angle = s.phase;
     });
 
@@ -918,7 +826,7 @@
         s.el.style.transform = 'translate(' + sc.x.toFixed(1) + 'px,' + sc.y.toFixed(1) + 'px)';
         s.el.classList.toggle('up', !hidden);
         s.el.classList.toggle('down', hidden);
-        s.el.classList.toggle('flip', sc.x + (s.id === 'delphi' ? 220 : 120) > window.innerWidth);
+        s.el.classList.toggle('flip', sc.x + s.labelW > window.innerWidth);
       });
       requestAnimationFrame(flySats);
     })(lastT);
