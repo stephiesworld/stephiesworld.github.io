@@ -47,8 +47,8 @@ RETIRED = {
     'harness-cheat-sheet': 'cheat-sheet',
     'who-is-feedback-for': None,
     'building-without-a-spec': None,
-    'customer-signal-into-product': None,
-    'enterprise-ai-opportunity': None,
+    'customer-signal-into-product': 'why-am-i-still-answering-this',
+    'enterprise-ai-opportunity': 'why-am-i-still-answering-this',
     'million-decisions': None,
 }
 

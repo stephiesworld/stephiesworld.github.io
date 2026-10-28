@@ -10,7 +10,7 @@ dek: "An investigation I ran by hand for two and a half years, and what it would
 
 Conversations about AI agents usually start with software engineering, where the work is structured and the results can be tested. But a lot of knowledge work is made of repeatable investigations too. I spent two and a half years doing one of them.
 
-I was a customer success manager on large retail accounts, and some version of this email arrived constantly:
+I worked with large retail vendors at Amazon, and some version of this email arrived constantly:
 
 > Why didn't you place an order for this product this week?
 

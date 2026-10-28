@@ -68,3 +68,9 @@
   .pager { grid-template-columns: 1fr; padding: 0 1rem; }
   .pn.next { text-align: left; }
 }
+
+/* Dense diagrams (data-wide) keep their size on phones and scroll sideways instead of shrinking */
+@media (max-width: 760px) {
+  .prose .plate:has(svg[data-wide]) { overflow-x: auto; }
+  .prose .plate svg[data-wide] { min-width: 600px; }
+}

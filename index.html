@@ -60,8 +60,8 @@
 
     /* ─── Corners ─── */
     .corner { position: fixed; z-index: 10; opacity: 0; animation: appear 1.4s ease forwards; }
-    .tl { top: 2rem; left: 2.4rem; animation-delay: 0.6s; }
-    .tr { top: 2.25rem; right: 2.4rem; animation-delay: 0.8s; }
+    .tl { top: 3.2rem; left: 2.4rem; animation-delay: 0.6s; }
+    .tr { top: 3.45rem; right: 2.4rem; animation-delay: 0.8s; }
     .bl { bottom: 2rem; left: 2.4rem; animation-delay: 1.2s; line-height: 2.1; }
     .br { bottom: 2rem; right: 2.4rem; animation-delay: 1.4s; text-align: right; line-height: 2.1; }
 
@@ -162,7 +162,7 @@
     .panel-links { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
     .panel-links a { font-size: 0.6rem; color: var(--cream-dim); transition: color 0.3s ease, letter-spacing 0.3s ease; }
     .panel-links a:hover { color: var(--cream); letter-spacing: 0.22em; }
-    .panel-links a.primary { color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
+    .panel-links a.primary { color: var(--sat-c, var(--neon)); text-shadow: 0 0 8px var(--sat-c, var(--neon-soft)); }
     .panel-soon { font-size: 0.55rem; }
 
     .panel-close {
@@ -172,8 +172,8 @@
     .panel-close:hover { color: var(--cream); }
 
     @media (max-width: 720px) {
-      .tl { top: 1.4rem; left: 1rem; }
-      .tr { top: 5.9rem; left: 1rem; right: auto; }
+      .tl { top: 2.7rem; left: 1rem; }
+      .tr { top: 7.2rem; left: 1rem; right: auto; }
       .tagline { font-size: 0.86rem; margin-top: 0.5rem; }
       .nav { gap: 1rem; }
       .bl { left: 1rem; bottom: 1.2rem; }
@@ -210,13 +210,87 @@
     .pin.is-day .pin-label { opacity: 0.55; }
 
     /* Live readouts: small amber signs, no boxes */
-    #status, #coords, #hint {
+    #coords, #hint {
       font-family: 'Tilt Neon', var(--mono); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: rgba(255, 228, 196, 0.85); text-shadow: 0 0 6px rgba(255, 177, 92, 0.45); line-height: 1.8;
     }
-    #status b, #coords b { font-weight: 400; color: #fff1dc; }
-    #status .now-dot { background: var(--neon); box-shadow: 0 0 6px var(--neon); }
+    #coords b { font-weight: 400; color: #fff1dc; }
     #hint { font-size: 0.66rem; color: var(--cream-faint); text-shadow: none; }
+
+    /* ─── Markets ─── Delphi's green means open; amber is a lunch break; closed is just dim */
+    :root { --mkt: #8dffa0; --mkt-soft: rgba(141, 255, 160, 0.45); }
+
+    /* The tape: one thin LED line across the top, like the zipper on a building */
+    .tape {
+      position: fixed; z-index: 12; top: 0; left: 0; right: 0; height: 1.75rem;
+      display: flex; align-items: center; gap: 1.4rem; padding: 0 2.4rem;
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--cream-faint);
+      background: linear-gradient(180deg, rgba(14, 16, 32, 0.7), rgba(14, 16, 32, 0.35));
+      border-bottom: 1px solid var(--line);
+      opacity: 0; animation: appear 1.4s ease 0.3s forwards;
+    }
+    .tape b { font-weight: 400; color: var(--cream-dim); }
+    .tape .now-dot { margin-right: 0.5rem; }
+    .tape-clock, .tape-delphi { flex: none; white-space: nowrap; }
+    .tape-run {
+      flex: 1; overflow: hidden; white-space: nowrap;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    }
+    .tape-track { display: inline-block; animation: tape 70s linear infinite; }
+    .tape-run:hover .tape-track { animation-play-state: paused; }
+    @keyframes tape { to { transform: translateX(-50%); } }
+    .tk { margin-right: 2.2rem; }
+    .tk i { font-style: normal; }
+    .tk.open b, .tk.open i { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
+    .tk.lunch b, .tk.lunch i { color: var(--amber); }
+    .tape-delphi { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); transition: filter 0.3s ease; }
+    .tape-delphi:hover { filter: brightness(1.3); }
+
+    /* Exchanges on the globe: quiet LED codes, so my cities stay the signs */
+    .ex .ex-dot {
+      position: absolute; left: -2px; top: -2px; width: 4px; height: 4px;
+      background: rgba(239, 228, 214, 0.35);
+    }
+    .ex .pin-label { left: 8px; top: -6px; }
+    .ex-code { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; color: var(--cream-faint); }
+    .ex.is-open .ex-dot { background: var(--mkt); box-shadow: 0 0 6px var(--mkt), 0 0 14px var(--mkt-soft); }
+    .ex.is-open .ex-code { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
+    .ex.is-lunch .ex-dot { background: var(--amber); box-shadow: 0 0 6px var(--amber-soft); }
+    .ex.is-lunch .ex-code { color: var(--amber); }
+    /* A city with its own exchange carries the code beside its name */
+    .pin-ex { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; color: var(--cream-faint); }
+    .pin-ex.is-open { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
+    .pin-ex.is-lunch { color: var(--amber); }
+    .mkt-open { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
+
+    /* The prompt: a way around for people who'd rather type */
+    #cmd { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; }
+    .cmd-out {
+      max-width: 34ch; margin-bottom: 0.3rem; line-height: 1.7;
+      font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-faint);
+    }
+    .cmd-out:empty { display: none; }
+    .cmd-out a { color: var(--mkt); }
+    #cmd label { display: flex; align-items: center; gap: 0.6rem; cursor: text; }
+    .cmd-ps { color: var(--mkt); text-shadow: 0 0 8px var(--mkt-soft); }
+    #cmdIn {
+      width: 26ch; background: none; border: none; outline: none; padding: 0.2rem 0;
+      font: inherit; letter-spacing: inherit; color: var(--cream); caret-color: var(--mkt);
+      border-bottom: 1px solid transparent; transition: border-color 0.3s ease;
+    }
+    #cmdIn::placeholder { color: var(--cream-faint); opacity: 0.7; }
+    #cmdIn:focus { border-bottom-color: var(--line); }
+
+    @media (max-width: 720px) {
+      .tape { padding: 0 1rem; gap: 0.9rem; }
+      .tape-clock { display: none; }
+      #cmdIn { width: calc(100vw - 3.5rem); font-size: 16px; } /* 16px keeps iOS from zooming in */
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tape-track { animation: none; }
+    }
 
     /* ─── Satellites: the builds, in orbit ─── */
     #sats { position: fixed; inset: 0; z-index: 5; pointer-events: none; }
@@ -261,8 +335,40 @@
 
     .panel-meta .sat-c { color: var(--sat-c, var(--cream)); text-shadow: 0 0 8px var(--sat-c, transparent); }
 
+    .sat-text { display: flex; flex-direction: column; gap: 0.15rem; }
+    .sat-sub { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-faint); }
+    .sat-sub:empty { display: none; }
+    .sat-halo { display: none; }
+
+    /* The earlier builds are small moons now */
+    .sat:not(.delphi) .sat-label { opacity: 0.78; }
+    .sat:not(.delphi) .sat-name { font-size: 0.58rem; }
+    .sat:not(.delphi) .sat-icon { width: 15px; height: 15px; }
+    .sat:not(.delphi) .sat-body { transform: rotate(45deg) scale(0.75); }
+
+    /* Delphi is the moon: a lit disc with a slow halo, the biggest thing in the sky */
+    .sat.delphi .sat-wing { display: none; }
+    .sat.delphi .sat-body {
+      left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; transform: none;
+      background: radial-gradient(circle at 38% 35%, #f2fff4 0%, var(--c) 55%, #4fd46a 100%);
+      box-shadow: 0 0 8px var(--c), 0 0 22px var(--c-soft), 0 0 44px rgba(141, 255, 160, 0.2);
+    }
+    .sat.delphi .sat-halo {
+      display: block; position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%;
+      border: 1px solid var(--c); animation: halo 3.2s ease-out infinite;
+    }
+    @keyframes halo { from { transform: scale(1); opacity: 0.8; } to { transform: scale(4.2); opacity: 0; } }
+    .sat.delphi .sat-label { left: 22px; top: -14px; }
+    .sat.delphi.flip .sat-label { right: 22px; }
+    .sat.delphi .sat-name { font-size: 0.95rem; letter-spacing: 0.18em; }
+    .sat.delphi .sat-icon { width: 24px; height: 24px; }
+    .sat.delphi.flip .sat-text { align-items: flex-end; }
+    @media (prefers-reduced-motion: reduce) { .sat.delphi .sat-halo { animation: none; opacity: 0.3; } }
+
     /* On a phone the names shrink a little so they stay quieter than the cities */
     @media (max-width: 720px) {
+      .sat.delphi .sat-name { font-size: 0.76rem; }
+      .sat.delphi .sat-icon { width: 19px; height: 19px; }
       .sat-name { font-size: 0.56rem; letter-spacing: 0.12em; }
       .sat-icon { width: 15px; height: 15px; }
       .sat-label { left: 12px; top: -8px; gap: 0.35rem; }
@@ -282,6 +388,12 @@
   <canvas class="fx fx-rain" id="rain"></canvas>
   <div class="fx fx-vignette"></div>
 
+  <div class="tape" aria-label="World markets right now">
+    <span class="tape-clock" id="tapeClock"></span>
+    <span class="tape-run"><span class="tape-track" id="tapeTrack"></span></span>
+    <a class="tape-delphi" href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener">Delphi &#8599;</a>
+  </div>
+
   <header class="corner tl">
     <p class="brand">Stephie's World</p>
     <p class="tagline">Building with AI, writing a novel, living in New York.</p>
@@ -296,7 +408,10 @@
     <a href="https://www.linkedin.com/in/sdelpaggio" class="sign teal" target="_blank" rel="noopener">linkedin</a>
   </nav>
 
-  <div class="corner bl hud" id="status"></div>
+  <form class="corner bl" id="cmd" autocomplete="off">
+    <p class="cmd-out" id="cmdOut" aria-live="polite"></p>
+    <label><span class="cmd-ps">&gt;</span><input id="cmdIn" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="try NVDA, work, or help" aria-label="Type a command or a ticker"></label>
+  </form>
   <div class="corner br hud" id="coords"></div>
   <p class="hint hud" id="hint">drag to turn &middot; touch a light</p>
 
@@ -364,12 +479,64 @@
     }
 
 
-    function renderStatus() {
-      document.getElementById('status').innerHTML =
-        '<span class="now-dot"></span>home <b>' + HERE.name + '</b> &middot; ' + localTime(HERE.tz);
+    // ─── Markets ───
+    // The globe doubles as a market clock: each exchange lights up while it's trading.
+    // Regular sessions in local time (9.5 = 9:30), weekdays only. Holidays aren't known here.
+    var EXCHANGES = [
+      { code: 'NYSE', name: 'New York Stock Exchange', city: 'newyork', tz: 'America/New_York', hours: [[9.5, 16]] },
+      { code: 'LSE', name: 'London Stock Exchange', city: 'london', tz: 'Europe/London', hours: [[8, 16.5]] },
+      { code: 'EURONEXT', name: 'Euronext Paris', city: 'paris', tz: 'Europe/Paris', hours: [[9, 17.5]] },
+      { code: 'SSE', name: 'Shanghai Stock Exchange', city: 'shanghai', tz: 'Asia/Shanghai', hours: [[9.5, 11.5], [13, 15]] },
+      { code: 'TSE', name: 'Tokyo Stock Exchange', lat: 35.6812, lng: 139.7671, tz: 'Asia/Tokyo', hours: [[9, 11.5], [12.5, 15.5]] },
+      { code: 'HKEX', name: 'Hong Kong Exchange', lat: 22.2855, lng: 114.1577, tz: 'Asia/Hong_Kong', hours: [[9.5, 12], [13, 16]] },
+      { code: 'NSE', name: 'National Stock Exchange of India', lat: 19.076, lng: 72.8777, tz: 'Asia/Kolkata', hours: [[9.25, 15.5]] },
+      { code: 'ASX', name: 'Australian Securities Exchange', lat: -33.8688, lng: 151.2093, tz: 'Australia/Sydney', hours: [[10, 16]] },
+      { code: 'B3', name: 'B3 S&atilde;o Paulo', lat: -23.5505, lng: -46.6333, tz: 'America/Sao_Paulo', hours: [[10, 17]] }
+    ];
+    var US = EXCHANGES[0];
+    EXCHANGES.forEach(function (x) {
+      if (x.city) { x.lat = CITIES[x.city].lat; x.lng = CITIES[x.city].lng; CITIES[x.city].ex = x; }
+    });
+
+    function marketState(x) {
+      var parts = {};
+      new Intl.DateTimeFormat('en-US', { timeZone: x.tz, weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+        .formatToParts(new Date()).forEach(function (p) { parts[p.type] = p.value; });
+      if (parts.weekday === 'Sat' || parts.weekday === 'Sun') return { state: 'closed' };
+      var now = Number(parts.hour) * 60 + Number(parts.minute);
+      for (var i = 0; i < x.hours.length; i++) {
+        var open = x.hours[i][0] * 60, close = x.hours[i][1] * 60;
+        if (now >= open && now < close) return { state: 'open', left: close - now };
+        if (i > 0 && now >= x.hours[i - 1][1] * 60 && now < open) return { state: 'lunch' };
+      }
+      return { state: 'closed' };
     }
-    renderStatus();
-    setInterval(renderStatus, 30000);
+    function span(m) { return (m >= 60 ? Math.floor(m / 60) + 'h ' : '') + (m % 60) + 'm'; }
+    function stateText(s) {
+      return s.state === 'open' ? 'open &middot; ' + span(s.left) + ' left' : s.state === 'lunch' ? 'lunch break' : 'closed';
+    }
+    var GLYPH = { open: '&#9679;', lunch: '&#9680;', closed: '&#9675;' };
+
+    function renderMarkets() {
+      var open = 0, runs = '';
+      EXCHANGES.forEach(function (x) {
+        x.now = marketState(x);
+        if (x.now.state === 'open') open++;
+        runs += '<span class="tk ' + x.now.state + '"><b>' + x.code + '</b> <i>' + GLYPH[x.now.state] + ' ' + stateText(x.now) + '</i></span>';
+        document.querySelectorAll('[data-ex="' + x.code + '"]').forEach(function (n) {
+          n.classList.toggle('is-open', x.now.state === 'open');
+          n.classList.toggle('is-lunch', x.now.state === 'lunch');
+        });
+      });
+      runs = '<span class="tk"><b>' + open + '/' + EXCHANGES.length + '</b> markets open</span>' + runs;
+      // Twice over, so the loop is seamless
+      document.getElementById('tapeTrack').innerHTML = runs + runs;
+      document.getElementById('tapeClock').innerHTML =
+        '<span class="now-dot"></span>home <b>' + HERE.name + '</b> &middot; ' + localTime(HERE.tz);
+      var delphi = document.querySelector('.sat.delphi .sat-sub');
+      if (delphi) delphi.innerHTML = US.now.state === 'open' ? 'market open &middot; ' + span(US.now.left) + ' left' : 'market closed';
+      if (typeof world !== 'undefined') paintRings();
+    }
 
     // ─── Globe ───
     var el = document.getElementById('globe');
@@ -379,7 +546,9 @@
     var points = Object.keys(CITIES).map(function (id) {
       var c = CITIES[id];
       return { id: id, lat: c.lat, lng: c.lng, city: c, current: c === HERE };
-    });
+    }).concat(EXCHANGES.filter(function (x) { return !x.city; }).map(function (x) {
+      return { id: 'ex-' + x.code, lat: x.lat, lng: x.lng, ex: x };
+    }));
 
     var world = Globe({ animateIn: false })(el)
       .width(window.innerWidth)
@@ -392,12 +561,14 @@
       .htmlElementsData(points)
       .htmlAltitude(0.01)
       .htmlElement(makePin)
-      .ringsData([HERE])
       .ringLat('lat').ringLng('lng')
-      .ringColor(function (d) { return d.lake ? function (t) { return 'rgba(255,177,92,' + (1 - t) * 0.9 + ')'; } : function (t) { return 'rgba(255,122,146,' + (1 - t) * 0.85 + ')'; }; })
-      .ringMaxRadius(3.2)
+      .ringColor(function (d) {
+        var rgb = d.lake ? '255,177,92' : d.code ? '141,255,160' : '255,122,146';
+        return function (t) { return 'rgba(' + rgb + ',' + (1 - t) * (d.code ? 0.6 : 0.85) + ')'; };
+      })
+      .ringMaxRadius(function (d) { return d.code ? 1.8 : 3.2; })
       .ringPropagationSpeed(1.2)
-      .ringRepeatPeriod(1600)
+      .ringRepeatPeriod(function (d) { return d.code ? 2600 : 1600; })
       .onGlobeClick(closePanel);
 
     if (world.htmlElementVisibilityModifier) {
@@ -465,7 +636,7 @@
         meta: 'Voice-of-customer triage', copy: 'Finds feedback across the open web, clusters it into issues, and ranks them. Your corrections re-rank it.',
         links: [{ href: 'https://cherry-topaz.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#cherry', label: 'On the work page &rarr;' }] },
       { id: 'delphi', name: 'Delphi', rgb: '141,255,160', incl: 40, node: 230, alt: 0.55, period: 270, phase: 100,
-        meta: 'Stock stories', copy: 'A pulse on the 100 most popular stocks on Robinhood: each company&rsquo;s story, rivals, and latest earnings, refreshed daily after the close.',
+        meta: 'Stock stories &middot; what I&rsquo;m building now', copy: 'A pulse on the 100 most popular stocks on Robinhood: each company&rsquo;s story, rivals, and latest earnings, refreshed daily after the close.',
         links: [{ href: 'https://delphi-stocks.vercel.app', label: 'Live &#8599;', primary: true, ext: true }, { href: 'work.html#delphi', label: 'On the work page &rarr;' }] }
     ];
 
@@ -486,7 +657,8 @@
     var ORBIT_PATHS = SATS.map(function (s) {
       var pts = [];
       for (var d = 0; d <= 360; d += 3) { var q = orbitPoint(s, d); pts.push([q[0], q[1], s.alt]); }
-      return { points: pts, color: 'rgba(' + s.rgb + ',0.42)', stroke: 0.6, dash: 1, gap: 0 };
+      var main = s.id === 'delphi';
+      return { points: pts, color: 'rgba(' + s.rgb + (main ? ',0.6)' : ',0.24)'), stroke: main ? 0.9 : 0.5, dash: 1, gap: 0 };
     });
 
     // Countries that hold one of my cities burn a little warmer
@@ -581,7 +753,30 @@
     world.onZoom(renderCoords);
     renderCoords();
 
+    // Home rings pink; every market that's trading rings green
+    var extraRings = [];
+    function paintRings() {
+      world.ringsData([HERE].concat(extraRings, EXCHANGES.filter(function (x) {
+        return x.now && x.now.state === 'open' && CITIES[x.city] !== HERE;
+      })));
+    }
+
+    // Pins can be built after the first renderMarkets, so each one starts in the right state
+    function exClass(x) { var s = marketState(x).state; return s === 'open' ? ' is-open' : s === 'lunch' ? ' is-lunch' : ''; }
+
+    function makeExchange(d) {
+      var pin = document.createElement('div');
+      pin.className = 'pin ex' + exClass(d.ex);
+      pin.dataset.id = d.id;
+      pin.dataset.ex = d.ex.code;
+      pin.innerHTML = '<span class="ex-dot"></span><span class="pin-label"><span class="ex-code">' + d.ex.code + '</span></span>';
+      pin.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+      pin.addEventListener('click', function (e) { e.stopPropagation(); openExchange(d.ex); });
+      return pin;
+    }
+
     function makePin(d) {
+      if (d.ex) return makeExchange(d);
       var pin = document.createElement('div');
       pin.className = 'pin' + (d.current ? ' is-current' : '') + (d.city.label ? ' label-' + d.city.label : '') +
         (isNight(d.lat, d.lng) ? '' : ' is-day');
@@ -590,7 +785,8 @@
         '<span class="pin-dot"></span>' +
         '<span class="pin-label">' + (d.city.zh ? '<span class="pin-zh">' + d.city.zh + '</span>' : '') +
         '<span class="pin-en">' + d.city.name + '</span>' +
-        (d.current ? '<span class="pin-here">&middot; home</span>' : '') + '</span>';
+        (d.current ? '<span class="pin-here">&middot; home</span>' : '') +
+        (d.city.ex ? '<span class="pin-ex' + exClass(d.city.ex) + '" data-ex="' + d.city.ex.code + '">' + d.city.ex.code + '</span>' : '') + '</span>';
       // Keep the orbit controls from capturing the pointer, or the click never lands
       pin.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
       pin.addEventListener('click', function (e) { e.stopPropagation(); openCity(d.id); });
@@ -624,9 +820,11 @@
       panel.style.gridTemplateColumns = c.zh ? '' : '1fr';
       document.getElementById('pZh').className = 'panel-zh' + (c === HERE ? '' : ' amber');
       document.getElementById('pName').textContent = c.name;
+      panel.style.removeProperty('--sat-c');
       document.getElementById('pMeta').innerHTML =
         fmt(c.lat, 'N', 'S') + ' ' + fmt(c.lng, 'E', 'W') + '<br>' +
-        'local ' + localTime(c.tz) + ' &middot; ' + (isNight(c.lat, c.lng) ? 'night' : 'day') + (status ? ' &middot; ' + status : '');
+        'local ' + localTime(c.tz) + ' &middot; ' + (isNight(c.lat, c.lng) ? 'night' : 'day') + (status ? ' &middot; ' + status : '') +
+        (c.ex ? '<br>' + marketLine(c.ex) : '');
       document.getElementById('pCopy').innerHTML = c.copy;
       document.getElementById('pCopy').style.display = c.copy ? '' : 'none';
       document.getElementById('pLinks').innerHTML =
@@ -635,6 +833,39 @@
         }).join('') + (c.soon ? '<span class="panel-soon">' + c.soon + '</span>' : '');
       panel.classList.add('open');
       document.body.classList.add('panel-open');
+    }
+
+    function marketLine(x) {
+      var s = marketState(x);
+      return (s.state === 'open' ? '<span class="mkt-open">' + x.code + ' ' + stateText(s) + '</span>' : x.code + ' ' + stateText(s));
+    }
+
+    // A panel without the Chinese column: for satellites, exchanges and tickers
+    function openPlain(name, meta, copy, links, rgb) {
+      pauseSpin(0);
+      document.getElementById('hint').classList.add('gone');
+      document.getElementById('pZh').style.display = 'none';
+      panel.style.gridTemplateColumns = '1fr';
+      document.getElementById('pName').textContent = name;
+      panel.style.setProperty('--sat-c', 'rgb(' + rgb + ')');
+      document.getElementById('pMeta').innerHTML = meta;
+      document.getElementById('pCopy').innerHTML = copy;
+      document.getElementById('pCopy').style.display = copy ? '' : 'none';
+      document.getElementById('pLinks').innerHTML =
+        links.map(function (l) {
+          return '<a href="' + l.href + '"' + (l.primary ? ' class="primary"' : '') + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + l.label + '</a>';
+        }).join('');
+      panel.classList.add('open');
+      document.body.classList.add('panel-open');
+    }
+
+    function lookAt(lat, lng) {
+      world.pointOfView({ lat: lat - (mobile ? 12 : 0), lng: lng + (mobile ? 0 : 22), altitude: mobile ? 3 : 1.35 }, 1600);
+    }
+
+    function openExchange(x) {
+      lookAt(x.lat, x.lng);
+      openPlain(x.name, x.code + ' &middot; local ' + localTime(x.tz) + '<br>' + marketLine(x), '', [], '141,255,160');
     }
 
     function closePanel() {
@@ -657,9 +888,9 @@
       n.className = 'sat ' + s.id;
       n.setAttribute('role', 'button');
       n.setAttribute('aria-label', s.name);
-      n.innerHTML = '<span class="sat-wing l"></span><span class="sat-body"></span><span class="sat-wing r"></span>' +
+      n.innerHTML = '<span class="sat-halo"></span><span class="sat-wing l"></span><span class="sat-body"></span><span class="sat-wing r"></span>' +
         '<span class="sat-label"><svg class="sat-icon" viewBox="0 0 24 24" aria-hidden="true">' + ICONS[s.id] + '</svg>' +
-        '<span class="sat-name">' + s.name + '</span></span>';
+        '<span class="sat-text"><span class="sat-name">' + s.name + '</span><span class="sat-sub"></span></span></span>';
       n.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
       n.addEventListener('click', function (e) { e.stopPropagation(); openSat(s); });
       satLayer.appendChild(n);
@@ -687,31 +918,81 @@
         s.el.style.transform = 'translate(' + sc.x.toFixed(1) + 'px,' + sc.y.toFixed(1) + 'px)';
         s.el.classList.toggle('up', !hidden);
         s.el.classList.toggle('down', hidden);
-        s.el.classList.toggle('flip', sc.x + 120 > window.innerWidth);
+        s.el.classList.toggle('flip', sc.x + (s.id === 'delphi' ? 220 : 120) > window.innerWidth);
       });
       requestAnimationFrame(flySats);
     })(lastT);
 
     function openSat(s) {
-      pauseSpin(0);
       satsHeld = true;
-      document.getElementById('hint').classList.add('gone');
-      document.getElementById('pZh').style.display = 'none';
-      panel.style.gridTemplateColumns = '1fr';
-      document.getElementById('pName').textContent = s.name;
-      var meta = document.getElementById('pMeta');
-      meta.style.setProperty('--sat-c', 'rgb(' + s.rgb + ')');
-      meta.innerHTML = '<span class="sat-c">' + 'in orbit' + '</span> &middot; alt ' +
-        Math.round(s.alt * 6371).toLocaleString('en-US') + ' km<br>' + s.meta;
-      document.getElementById('pCopy').innerHTML = s.copy;
-      document.getElementById('pCopy').style.display = '';
-      document.getElementById('pLinks').innerHTML =
-        s.links.map(function (l) {
-          return '<a href="' + l.href + '"' + (l.primary ? ' class="primary"' : '') + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + l.label + '</a>';
-        }).join('');
-      panel.classList.add('open');
-      document.body.classList.add('panel-open');
+      openPlain(s.name, '<span class="sat-c">' + 'in orbit' + '</span> &middot; alt ' +
+        Math.round(s.alt * 6371).toLocaleString('en-US') + ' km<br>' + s.meta, s.copy, s.links, s.rgb);
     }
+
+    // ─── Tickers ───
+    // Delphi's Retail 100 (snapshot of its list, Oct 2026). Typing one opens its page on Delphi.
+    var DELPHI = 'https://delphi-stocks.vercel.app';
+    var RETAIL_100 = {"NVDA":"NVIDIA","AAPL":"Apple","TSLA":"Tesla","AMZN":"Amazon","VOO":"ETF","MSFT":"Microsoft","SPCX":"SpaceX","SPY":"ETF","VTI":"ETF","META":"Meta Platforms","GOOGL":"Alphabet Class A","AMC":"AMC Entertainment","BND":"ETF","F":"Ford Motor","VEA":"ETF","VWO":"ETF","QQQ":"ETF","IVV":"ETF","NFLX":"Netflix","AMD":"AMD","SCHD":"ETF","PLTR":"Palantir Technologies","DIS":"Disney","SNDL":"SNDL","SPMO":"ETF","MU":"Micron Technology","AVGO":"Broadcom","LCID":"Lucid Group","INTC":"Intel","NIO":"NIO","GLD":"ETF","HOOD":"Robinhood Markets","GOOG":"Alphabet Class C","KO":"Coca-Cola","COST":"Costco","TSM":"Taiwan Semiconductor Manufacturing","RIVN":"Rivian Automotive","WMT":"Walmart","SOFI":"SoFi Technologies","PFE":"Pfizer","SGOV":"ETF","SNAP":"Snap","LLY":"Eli Lilly","CRWD":"CrowdStrike Holdings","CVX":"Chevron","PLUG":"Plug Power","MRVL":"Marvell Technology","GME":"GameStop","JNJ":"Johnson & Johnson","VB":"ETF","BABA":"Alibaba","NOK":"Nokia","BAC":"Bank of America","UBER":"Uber","AAL":"American Airlines","V":"Visa","RKLB":"Rocket Lab Corporation","VONG":"ETF","SBUX":"Starbucks","QQQM":"ETF","ORCL":"Oracle","IWM":"ETF","CCL":"Carnival Corporation","NOW":"ServiceNow","NKE":"Nike","VXUS":"ETF","BE":"Bloom Energy","XOM":"ExxonMobil Holdings Corporation","VST":"Vistra","BRK.B":"Berkshire Hathaway Inc. Class B","TLRY":"Tilray Brands","QUAL":"ETF","DAL":"Delta Air Lines","SHOP":"Shopify","DXJ":"ETF","COIN":"Coinbase","T":"AT&T","SOUN":"SoundHound AI","GE":"General Electric","VYM":"ETF","QCOM":"Qualcomm","ABBV":"AbbVie","DJT":"Trump Media & Technology Group","IONQ":"IonQ","SCHG":"ETF","QBTS":"D-Wave Quantum","EMXC":"ETF","ASHR":"ETF","IJR":"ETF","IREN":"IREN Limited","MRK":"Merck","BA":"Boeing","SPHQ":"ETF","JPM":"JPMorgan Chase","RGTI":"Rigetti Computing","O":"Realty Income","VGT":"ETF","PYPL":"PayPal","SPCE":"Virgin Galactic Holdings","LRCX":"Lam Research Corp"};
+
+    function openTicker(t) {
+      var name = RETAIL_100[t], etf = name === 'ETF';
+      satsHeld = true;
+      lookAt(US.lat, US.lng);
+      openPlain(etf ? t : name,
+        '<span class="sat-c">' + t + '</span>' + (etf ? ' &middot; ETF' : '') + ' &middot; in the Retail 100<br>' +
+        'US market ' + stateText(marketState(US)),
+        '', [
+          { href: DELPHI + '/' + encodeURIComponent(t), label: 'Read it on Delphi &#8599;', primary: true, ext: true },
+          { href: 'work.html#delphi', label: 'What Delphi is &rarr;' }
+        ], '141,255,160');
+    }
+
+    // ─── The prompt ───
+    var cmdIn = document.getElementById('cmdIn'), cmdOut = document.getElementById('cmdOut');
+    var PAGES = { work: 'work.html', writing: 'writing.html', about: 'about.html', reading: 'books.html', books: 'books.html' };
+    var AWAY = { github: 'https://github.com/stephiesworld', linkedin: 'https://www.linkedin.com/in/sdelpaggio' };
+    var CITY_WORDS = { nyc: 'newyork', 'new york': 'newyork', newyork: 'newyork', london: 'london', paris: 'paris',
+      shanghai: 'shanghai', madrid: 'madrid', grindelwald: 'grindelwald' };
+
+    function say(html) { cmdOut.innerHTML = html; }
+
+    function run(raw) {
+      var w = raw.trim().toLowerCase().replace(/^\$/, ''), t = w.toUpperCase();
+      if (!w) return say('');
+      if (w === 'help' || w === '?') {
+        return say('a ticker (NVDA, TSLA) &middot; work &middot; writing &middot; about &middot; reading &middot; delphi &middot; markets &middot; a city &middot; clear');
+      }
+      if (w === 'clear' || w === 'home') { closePanel(); return say(''); }
+      if (w === 'markets') {
+        return say(EXCHANGES.map(function (x) { return x.code + ' ' + GLYPH[marketState(x).state]; }).join(' &middot; '));
+      }
+      if (w === '29' && window.__twentyNine) { say(''); return window.__twentyNine(); }
+      if (PAGES[w]) { location.href = PAGES[w]; return; }
+      if (AWAY[w]) { window.open(AWAY[w], '_blank', 'noopener'); return say(''); }
+      if (CITY_WORDS[w]) { say(''); return openCity(CITY_WORDS[w]); }
+      var sat = SATS.filter(function (s) { return s.id === w; })[0];
+      if (sat) { say(''); return openSat(sat); }
+      if (RETAIL_100[t]) { say(''); return openTicker(t); }
+      if (/^[a-z.]{1,5}$/.test(w)) {
+        return say(t + ' isn&rsquo;t in Delphi&rsquo;s Retail 100 &middot; <a href="' + DELPHI + '" target="_blank" rel="noopener">see the list &#8599;</a>');
+      }
+      say('not a command: ' + w.replace(/[<>&"]/g, '') + ' &middot; try help');
+    }
+
+    document.getElementById('cmd').addEventListener('submit', function (e) {
+      e.preventDefault();
+      run(cmdIn.value);
+      cmdIn.value = '';
+    });
+    cmdIn.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { cmdIn.blur(); say(''); }
+    });
+    // "/" jumps to the prompt, like most terminals and search boxes
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== '/' || e.target === cmdIn || /^(input|textarea|select)$/i.test(e.target.tagName)) return;
+      e.preventDefault();
+      cmdIn.focus();
+    });
 
     document.getElementById('panelClose').addEventListener('click', closePanel);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
@@ -721,13 +1002,17 @@
       openCity('grindelwald');
       document.getElementById('pCopy').innerHTML = 'where 29 began';
       document.getElementById('pCopy').style.display = '';
-      world.ringsData([HERE, { lat: 46.6696, lng: 8.0210, lake: true }]);
+      extraRings = [{ lat: 46.6696, lng: 8.0210, lake: true }];
+      paintRings();
     };
     if (location.hash === '#29') setTimeout(window.__twentyNine, 2200);
 
     window.addEventListener('resize', function () {
       world.width(window.innerWidth).height(window.innerHeight);
     });
+
+    renderMarkets();
+    setInterval(renderMarkets, 30000);
 
     startRain(document.getElementById('rain'), 0.35);
 
