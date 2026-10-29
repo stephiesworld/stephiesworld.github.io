@@ -133,13 +133,15 @@ def write_pages(essays, page, back_href, back_label):
         words = len(re.sub(r'<svg.*?</svg>|<[^>]+>', ' ', body, flags=re.S).split())
         prev_e = essays[i - 1] if i > 0 else None
         next_e = essays[i + 1] if i + 1 < len(essays) else None
+        # The back of each zine: the next issue waits on the rack, the previous one is a quiet link
         nav = ''
-        if prev_e:
-            nav += f'<a class="pn prev" href="{prev_e["slug"]}.html"><span class="label">&larr; previous</span><span class="pt">{html.escape(prev_e["title"])}</span></a>'
-        else:
-            nav += '<span></span>'
         if next_e:
-            nav += f'<a class="pn next" href="{next_e["slug"]}.html"><span class="label">next &rarr;</span><span class="pt">{html.escape(next_e["title"])}</span></a>'
+            n = i + 1
+            nav += (f'<a class="nextz" href="{next_e["slug"]}.html" style="--c:{ZINE_COLORS[n % len(ZINE_COLORS)]}">'
+                    f'<span class="label">next issue</span><span class="big">{n + 1:02d}</span>'
+                    f'<span class="tt">{html.escape(next_e["title"])}</span></a>')
+        if prev_e:
+            nav += f'<a class="pn prev" href="{prev_e["slug"]}.html"><span class="label">&larr; previous issue</span> {html.escape(prev_e["title"])}</a>'
         e['minutes'] = max(1, math.ceil(words / 230))
         e['dek'] = e['dek'] or description(body)
         (OUT / f'{e["slug"]}.html').write_text(page.substitute(
@@ -147,6 +149,7 @@ def write_pages(essays, page, back_href, back_label):
             description=html.escape(e['dek']),
             slug=e['slug'],
             num=f'{i + 1:02d}',
+            color=ZINE_COLORS[i % len(ZINE_COLORS)],
             category=html.escape(e['category']),
             date=e['date'],
             minutes=max(1, math.ceil(words / 230)),
