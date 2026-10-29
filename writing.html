@@ -18,39 +18,49 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="dusk.css?v=20261008">
   <style>
-    .page { max-width: 1080px; margin: 0 auto; padding: 3rem 2rem 2rem; }
-    .intro h1 { font-size: 2.6rem; }
-    .intro p { margin-top: 0.8rem; font-size: 1.15rem; color: var(--ink-dim); }
+    .page { max-width: 1100px; margin: 0 auto; padding: 2.4rem 2rem 2rem; }
 
-    .posts { list-style: none; margin-top: 2.6rem; border-top: 1px solid var(--line); }
-    .post a { display: grid; grid-template-columns: 3.4rem 1fr 280px; gap: 1.8rem; align-items: center; padding: 2rem 0; border-bottom: 1px solid var(--line); }
-    .post .no { align-self: start; padding-top: 0.2rem; font-family: var(--neon); font-size: 1.6rem; color: var(--teal); text-shadow: 0 0 6px var(--teal), 0 0 16px rgba(111, 207, 192, 0.35); }
-    .post .txt { display: flex; flex-direction: column; gap: 0.45rem; min-width: 0; }
-    .post .tt { font-size: 1.55rem; font-weight: 500; line-height: 1.2; color: var(--ink); transition: color 0.2s ease; }
-    .post .dk { font-size: 1.05rem; line-height: 1.55; color: var(--ink-faint); }
-    .post a:hover .tt { color: #fff4e6; }
-    /* the post's first diagram, hung as a small lit poster */
-    .thumb { display: block; aspect-ratio: 16 / 10; overflow: hidden; padding: 0.6rem; border-radius: 8px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(38, 43, 74, 0.6), rgba(24, 28, 50, 0.6)); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .thumb svg { width: 100% !important; height: 100% !important; margin: 0 !important; }
-    .thumb.none { background: radial-gradient(ellipse at 50% 40%, rgba(111, 207, 192, 0.18), transparent 70%); box-shadow: none; border: 1px solid var(--line); }
-    .post a:hover .thumb { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--teal), 0 0 26px rgba(111, 207, 192, 0.2); }
+    /* ─── The newsstand: each essay as a zine on a late-night rack ─── */
+    .stand { position: relative; }
+    .stand::before { content: ""; position: absolute; left: 50%; top: -5rem; width: min(900px, 100%); height: 520px; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 0%, rgba(255, 206, 140, 0.14), transparent 65%); pointer-events: none; }
+    .awning { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 1.4rem; border-radius: 6px 6px 0 0; background: repeating-linear-gradient(90deg, #6b2346 0 44px, #4a1a35 44px 88px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+    .awning h1 { font-family: var(--neon); font-weight: 400; font-size: 1.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: #fff1f4; text-shadow: 0 0 8px var(--pink), 0 0 22px rgba(255, 122, 146, 0.6); }
+    .awning .label { color: #ffd3dc; }
+    .rack { position: relative; list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 2.2rem; padding: 2.4rem 1.6rem 0; background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent); }
+    .rack li { position: relative; padding-bottom: 2.6rem; }
+    .rack li::after { content: ""; position: absolute; left: -1.6rem; right: -1.6rem; bottom: 1.1rem; height: 8px; background: linear-gradient(180deg, #3b3f66, #23264a); border-top: 1px solid rgba(255, 255, 255, 0.18); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); }
+    .zine { --c: var(--amber); position: relative; display: flex; flex-direction: column; aspect-ratio: 3 / 4; padding: 1.1rem 1.1rem 1rem; overflow: hidden; border-radius: 3px; border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); background: linear-gradient(160deg, color-mix(in srgb, var(--c) 22%, #1d2140), #141729 70%); box-shadow: 0 18px 30px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.04); transform: rotate(var(--r, 0deg)); transition: transform 0.35s ease, box-shadow 0.35s ease; }
+    .zine::before { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.07) 50%, transparent 60%); pointer-events: none; }
+    .zine .mast { color: color-mix(in srgb, var(--c) 70%, #fff); }
+    .zine .big { margin-top: 0.6rem; font-family: var(--neon); font-size: 4.4rem; line-height: 0.9; color: var(--c); text-shadow: 0 0 12px color-mix(in srgb, var(--c) 60%, transparent); }
+    .zine .tt { margin-top: auto; font-size: 1.45rem; font-weight: 500; line-height: 1.15; color: #fff8ee; }
+    .zine .dk { margin-top: 0.55rem; font-size: 0.9rem; line-height: 1.45; color: #c9c5d6; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .zine .price { position: absolute; top: 2.2rem; right: -0.2rem; padding: 0.25rem 0.55rem; background: #ffe9a8; color: #2a2440; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; transform: rotate(6deg); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); }
+    .zine:hover, .zine:focus-visible { transform: rotate(0) translateY(-10px) scale(1.02); box-shadow: 0 30px 50px rgba(0, 0, 0, 0.55), 0 0 30px color-mix(in srgb, var(--c) 30%, transparent); }
+    .rack li:first-child .zine { outline: 2px solid var(--pink); outline-offset: 4px; }
 
-    .refs-h { margin-top: 3rem; }
+    .refs-h { margin-top: 2.4rem; }
     .refs { list-style: none; margin-top: 0.9rem; }
     .ref a { display: grid; grid-template-columns: 12rem 1fr auto; gap: 1rem; align-items: baseline; padding: 0.65rem 0; border-bottom: 1px solid var(--line); }
     .ref .tt { font-size: 1.08rem; color: var(--ink); }
     .ref .dk { font-size: 1.02rem; color: var(--ink-faint); }
     .ref a:hover .ar { color: var(--teal); }
 
+    @media (prefers-reduced-motion: reduce) {
+      .zine, .zine:hover { transition: none; }
+    }
     @media (max-width: 860px) {
-      .post a { grid-template-columns: 2.6rem 1fr; }
-      .thumb { grid-column: 2; max-width: 360px; }
+      .rack { grid-template-columns: 1fr 1fr; gap: 0 1.4rem; padding: 2rem 1rem 0; }
+      .rack li::after { left: -1rem; right: -1rem; }
+      .zine .big { font-size: 3.2rem; } .zine .tt { font-size: 1.15rem; } .zine .dk { display: none; }
     }
     @media (max-width: 600px) {
-      .page { padding: 1.6rem 1rem 1rem; }
-      .intro h1 { font-size: 2rem; }
-      .post .tt { font-size: 1.3rem; }
+      .page { padding: 1rem 1rem 1rem; }
       .ref a { grid-template-columns: 1fr auto; } .ref .dk { grid-column: 1 / -1; grid-row: 2; }
+    }
+    @media (max-width: 480px) {
+      .awning h1 { font-size: 1.3rem; } .awning .label { display: none; }
+      .zine .big { font-size: 2.4rem; } .zine .tt { font-size: 1rem; } .zine .price { display: none; }
     }
   </style>
 </head>
@@ -67,405 +77,26 @@
   </header>
 
   <main class="page">
-    <div class="intro">
-      <h1 class="title-sign">Writing</h1>
-    </div>
-
-    <ul class="posts">
+    <section class="stand">
+      <div class="awning"><h1>Writing</h1><span class="label">late edition &middot; most mine first</span></div>
+      <ul class="rack">
     <!-- essays:start -->
-        <li class="post"><a href="writing/building-without-permission.html"><span class="no">01</span><span class="txt"><span class="cat label">Notes &middot; 3 min</span><span class="tt">Building without permission</span><span class="dk">When I ran Little Bun, every software idea waited on an engineer and a perfect spec. Building with AI took away the most expensive roadblock, and with it the pressure to get things right before I started.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
-        <li class="post"><a href="writing/why-am-i-still-answering-this.html"><span class="no">02</span><span class="txt"><span class="cat label">Notes &middot; 3 min</span><span class="tt">Why am I still the one answering this?</span><span class="dk">Two and a half years with some of Amazon&#x27;s biggest vendors, the same questions on repeat, and why I built Henry to answer them once, for everyone.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
-        <li class="post"><a href="writing/memory-architecture.html"><span class="no">03</span><span class="txt"><span class="cat label">Notes &middot; 2 min</span><span class="tt">The thread that replied in poetry</span><span class="dk">A Claude thread that started writing in poetry, the summaries that couldn&#x27;t bring it back, and what that taught me about building memory.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
-        <li class="post"><a href="writing/every-deployment-needs-a-fundraiser.html"><span class="no">04</span><span class="txt"><span class="cat label">Notes &middot; 6 min</span><span class="tt">Every AI deployment needs a fundraiser</span><span class="dk">The forward deployed engineer gets the system working. Someone else has to get people to care about it, inside the building and out, one buyer at a time. Why that second seat matters, and why it&#x27;s rarely the same person.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 470 418" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Eight behaviors sold after the contract, each with a different buyer. Try the product: a curious engineer. Use agents: that engineer, then a teammate. Change the workflow: a team lead. Create proof: whoever owns the metric. Share the proof: a manager who can get it in a room. Get another team on: a peer with their own pain. Standardize: someone who owns process. Expand: an executive who already saw the proof." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <style>
-    .db-t{font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.2em;}
-    .db-h{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.18em;fill:#a9a6b8;}
-    .db-n{font:600 11px "IBM Plex Mono",ui-monospace,monospace;}
-    .db-b{font:500 11px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .db-w{font:400 11px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
-  </style>
-  <text x="235" y="16" text-anchor="middle" class="db-t" fill="#ff7a92">EVERY STEP HAS A DIFFERENT BUYER</text>
-  <text x="16" y="48" class="db-h">THE NEXT BEHAVIOR</text>
-  <text x="192" y="48" class="db-h">WHO HAS TO SAY YES</text>
-  <g>
-    <rect x="6" y="60" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="83" class="db-n" fill="#ff7a92">1</text><text x="36" y="83" class="db-b">try the product</text><text x="192" y="83" class="db-w">a curious engineer</text>
-    <rect x="6" y="104" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="127" class="db-n" fill="#ff7a92">2</text><text x="36" y="127" class="db-b">use agents</text><text x="192" y="127" class="db-w">that engineer, then a teammate</text>
-    <rect x="6" y="148" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="171" class="db-n" fill="#ff7a92">3</text><text x="36" y="171" class="db-b">change the workflow</text><text x="192" y="171" class="db-w">a team lead</text>
-    <rect x="6" y="192" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="215" class="db-n" fill="#ff7a92">4</text><text x="36" y="215" class="db-b">create proof</text><text x="192" y="215" class="db-w">whoever owns the metric</text>
-    <rect x="6" y="236" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="259" class="db-n" fill="#ff7a92">5</text><text x="36" y="259" class="db-b">share the proof</text><text x="192" y="259" class="db-w">a manager who can get it in a room</text>
-    <rect x="6" y="280" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="303" class="db-n" fill="#ff7a92">6</text><text x="36" y="303" class="db-b">get another team on</text><text x="192" y="303" class="db-w">a peer with their own pain</text>
-    <rect x="6" y="324" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="347" class="db-n" fill="#ff7a92">7</text><text x="36" y="347" class="db-b">standardize</text><text x="192" y="347" class="db-w">someone who owns process</text>
-    <rect x="6" y="368" width="458" height="38" rx="5" fill="#6b2346" fill-opacity=".55" stroke="#ff7a92" stroke-width="1.2"/>
-    <text x="16" y="391" class="db-n" fill="#ff7a92">8</text><text x="36" y="391" class="db-b">expand</text><text x="192" y="391" class="db-w">an executive who already saw the proof</text>
-  </g>
-  <line x1="180" y1="60" x2="180" y2="406" stroke="#8f8cab" stroke-opacity=".3" stroke-dasharray="2 3"/>
-</svg></span></a></li>
-        <li class="post"><a href="writing/what-making-things-taught-me.html"><span class="no">05</span><span class="txt"><span class="cat label">Field guides &middot; 3 min</span><span class="tt">What making things taught me about AI agents</span><span class="dk">A razor factory and a dumpling line taught me the hardest problems in deploying AI agents: hidden judgment, what to automate, how to inspect, and what it costs.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One refund request outside the return window, broken into the seven judgments an experienced person makes before approving it, each labelled with where that knowledge lives. Three live in a record: the shipping log, the account history, and the customer's own message. Four, shown in red, live nowhere at all: the unwritten exception to the no-exceptions policy, the regional difference in how the damaged-goods rule is enforced, the knowledge of which of two disagreeing systems to trust on a given field, and the advice to log the reason in the structured field because nobody reads free text." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <defs>
-    <marker id="rf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a7a3c4"/></marker>
-  </defs>
-  <style>
-    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .no{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-    .none{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#ff7a92;}
-  </style>
-  <text x="350" y="14" text-anchor="middle" class="band">ONE REFUND REQUEST, AT DUMPLING RESOLUTION</text>
-  <rect x="130" y="26" width="440" height="30" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="350" y="45" text-anchor="middle" class="smb">A REFUND REQUESTED OUTSIDE THE RETURN WINDOW</text>
-  <line x1="350" y1="56" x2="350" y2="68" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#rf)"/>
-  <text x="350" y="82" text-anchor="middle" class="lbl">THE RULE SAYS NO.</text>
-  <text x="44" y="106" class="smb">WHAT THE EXPERIENCED PERSON CHECKS ANYWAY</text>
-  <text x="486" y="106" class="smb">WHERE THAT LIVES</text>
-  <line x1="20" y1="112" x2="692" y2="112" stroke="#8f8cab" stroke-width="1.5"/>
-  <text x="24" y="136" class="no">1</text>
-  <text x="44" y="136" class="sm">Was the delay ours, or the customer's?</text>
-  <text x="486" y="136" class="smb">the shipping record</text>
-  <line x1="20" y1="146" x2="692" y2="146" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="170" class="no">2</text>
-  <text x="44" y="170" class="sm">Third order from an account that has never returned anything</text>
-  <text x="486" y="170" class="smb">the account history</text>
-  <line x1="20" y1="180" x2="692" y2="180" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="204" class="no">3</text>
-  <text x="44" y="204" class="sm">"No exceptions" has an exception for a documented delivery failure</text>
-  <text x="486" y="204" class="none">nowhere · unwritten</text>
-  <line x1="20" y1="214" x2="692" y2="214" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="238" class="no">4</text>
-  <text x="44" y="238" class="sm">The damaged-goods rule is loose in one region, strict in another</text>
-  <text x="486" y="238" class="none">nowhere · local practice</text>
-  <line x1="20" y1="248" x2="692" y2="248" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="272" class="no">5</text>
-  <text x="44" y="272" class="sm">Two systems disagree on the date; one is right about that field</text>
-  <text x="486" y="272" class="none">nowhere · system lore</text>
-  <line x1="20" y1="282" x2="692" y2="282" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="306" class="no">6</text>
-  <text x="44" y="306" class="sm">They mentioned it was a gift · changes nothing, changes the reply</text>
-  <text x="486" y="306" class="smb">the message itself</text>
-  <line x1="20" y1="316" x2="692" y2="316" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="340" class="no">7</text>
-  <text x="44" y="340" class="sm">Log the reason in the structured field; nobody reads free text</text>
-  <text x="486" y="340" class="none">nowhere · a colleague, once</text>
-  <line x1="20" y1="350" x2="692" y2="350" stroke="#8f8cab" stroke-width="1.5"/>
-  <rect x="130" y="364" width="440" height="30" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="350" y="383" text-anchor="middle" class="smb">APPROVED · in under a minute</text>
-  <line x1="20" y1="414" x2="692" y2="414" stroke="#8f8cab" stroke-width="1"/>
-  <text x="20" y="434" class="none">Four of the seven are written down nowhere at all.</text>
-  <text x="20" y="450" class="sm">That is the filling. A system that automates this either gets told those four, or it reads the policy, applies the rule,</text>
-  <text x="20" y="464" class="sm">and says no · correctly, by the only standard it was given.</text>
-</svg></span></a></li>
-        <li class="post"><a href="writing/investigations-not-just-code.html"><span class="no">06</span><span class="txt"><span class="cat label">Field guides &middot; 7 min</span><span class="tt">Agent workflows aren&#x27;t just for engineers</span><span class="dk">An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent: the real workflow, the taxonomy, and autonomy earned one rung at a time.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 700 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two ways to answer the same email. On the left, a sequential investigation: read the email, find the identifier, then check the ordering system, inventory, demand, catalog, pricing, and supply one at a time before writing an answer, where each step decides the next and the whole thing takes twenty minutes to several hours. On the right, a parallel investigation: read and resolve the case once, fan out to eight evidence checks that run simultaneously, then rank by evidence and draft a response for review in about two minutes." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <defs>
-    <marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a7a3c4"/></marker>
-    <marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff7a92"/></marker>
-  </defs>
-  <style>
-    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-  </style>
-  <text x="350" y="14" text-anchor="middle" class="band">TWO WAYS TO ANSWER THE SAME EMAIL</text>
-  <line x1="346" y1="26" x2="346" y2="392" stroke="#3a3f62" stroke-width="1"/>
-  <text x="20" y="42" class="smb">SEQUENTIAL · one cause at a time</text>
-  <rect x="20" y="52" width="250" height="24" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="68" class="smb">read the email</text>
-  <line x1="145" y1="76" x2="145" y2="86" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="86" width="250" height="24" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="102" class="smb">find the product identifier</text>
-  <line x1="145" y1="110" x2="145" y2="120" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="120" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="136" class="sm">check the ordering system</text>
-  <line x1="145" y1="144" x2="145" y2="154" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="154" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="170" class="sm">check inventory</text>
-  <line x1="145" y1="178" x2="145" y2="188" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="188" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="204" class="sm">check demand and forecast</text>
-  <line x1="145" y1="212" x2="145" y2="222" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="222" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="238" class="sm">check catalog status</text>
-  <line x1="145" y1="246" x2="145" y2="256" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="256" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="272" class="sm">check pricing and compliance</text>
-  <line x1="145" y1="280" x2="145" y2="290" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="290" width="250" height="24" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="306" class="sm">check vendor supply</text>
-  <line x1="145" y1="314" x2="145" y2="324" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="20" y="324" width="250" height="24" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="30" y="340" class="smb">write the answer</text>
-  <text x="20" y="368" class="sm">each step decides the next one</text>
-  <text x="20" y="382" class="smb">20 minutes simple · hours when not</text>
-  <text x="376" y="42" class="smb">PARALLEL · one fan-out</text>
-  <rect x="450" y="52" width="180" height="24" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="460" y="68" class="smb">read + resolve the case</text>
-  <line x1="500" y1="76" x2="450" y2="96" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <line x1="540" y1="76" x2="540" y2="96" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <line x1="580" y1="76" x2="630" y2="96" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="376" y="100" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="384" y="115" class="sm">order history</text>
-  <rect x="536" y="100" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="544" y="115" class="sm">inventory position</text>
-  <rect x="376" y="128" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="384" y="143" class="sm">demand forecast</text>
-  <rect x="536" y="128" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="544" y="143" class="sm">catalog status</text>
-  <rect x="376" y="156" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="384" y="171" class="sm">vendor supply</text>
-  <rect x="536" y="156" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="544" y="171" class="sm">open purchase orders</text>
-  <rect x="376" y="184" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="384" y="199" class="sm">pricing + compliance</text>
-  <rect x="536" y="184" width="150" height="22" fill="#20253f" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="544" y="199" class="sm">related products</text>
-  <text x="531" y="224" text-anchor="middle" class="sm">all at once · none waits on another</text>
-  <line x1="451" y1="206" x2="500" y2="238" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <line x1="611" y1="206" x2="562" y2="238" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="446" y="242" width="170" height="26" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="531" y="259" text-anchor="middle" class="smb">rank by evidence</text>
-  <line x1="531" y1="268" x2="531" y2="282" stroke="#8f8cab" stroke-width="1.1" marker-end="url(#pa)"/>
-  <rect x="446" y="286" width="170" height="26" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="531" y="303" text-anchor="middle" class="smb">draft, or escalate</text>
-  <line x1="531" y1="312" x2="531" y2="326" stroke="#ff7a92" stroke-width="1.4" marker-end="url(#pc)"/>
-  <rect x="446" y="330" width="170" height="26" fill="#6b2346"/>
-  <text x="531" y="347" text-anchor="middle" style="font:600 8.5px 'IBM Plex Mono',monospace;fill:#fff;">a human reviews it</text>
-  <text x="376" y="382" class="smb">a two-minute review</text>
-  <line x1="8" y1="404" x2="692" y2="404" stroke="#8f8cab" stroke-width="1"/>
-  <text x="8" y="424" class="sm">The fan-out is also less suggestible. A person who sees high inventory first tends to stop looking, because they</text>
-  <text x="8" y="438" class="sm">have found an answer that fits. The parallel run still checks whether that inventory is stranded, and notices when it is.</text>
-</svg></span></a></li>
-        <li class="post"><a href="writing/the-ai-stack.html"><span class="no">07</span><span class="txt"><span class="cat label">Field guides &middot; 10 min</span><span class="tt">The AI stack, from sand to software</span><span class="dk">Eight layers between a grain of sand and the answer on your screen, who makes each one, and where the power sits.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 680 552" xmlns="http://www.w3.org/2000/svg" data-wide role="img" aria-label="The AI stack as eight layers. Software: applications, tooling, models, inference. Infrastructure: cloud, data centers. Hardware: chips and systems, manufacturing. A prompt travels down from you to the chips and the answer streams back up." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <style>
-    .st-n{font:600 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.08em;}
-    .st-d{font:italic 400 10px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-    .st-c{font:400 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
-    .st-z{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.22em;}
-    .st-k{font:400 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
-    .st-a{animation-duration:9s;animation-iteration-count:infinite;animation-timing-function:linear;}
-    .st-down{animation-name:st-down;} .st-up{animation-name:st-up;}
-    @keyframes st-down{0%{transform:translateY(0);opacity:0}3%{opacity:1}40%{transform:translateY(409.0px);opacity:1}45%{transform:translateY(409.0px);opacity:0}100%{transform:translateY(409.0px);opacity:0}}
-    @keyframes st-up{0%,45%{transform:translateY(409.0px);opacity:0}50%{transform:translateY(409.0px);opacity:1}88%{transform:translateY(0);opacity:1}93%,100%{transform:translateY(0);opacity:0}}
-    @keyframes st-work{0%,38%{opacity:0}42%,48%{opacity:1}52%,100%{opacity:0}}
-    .st-work{animation-name:st-work;}
-    @media (prefers-reduced-motion: reduce){.st-a{animation:none;}.st-pk{display:none;}}
-    @keyframes st-l0{0%{opacity:0}5.7%{opacity:0}8.7%{opacity:1}12.7%{opacity:0}79.1%{opacity:0}82.1%{opacity:1}86.1%{opacity:0}100%{opacity:0}} .st-l0{animation-name:st-l0;}
-    @keyframes st-l1{0%{opacity:0}10.5%{opacity:0}13.5%{opacity:1}17.5%{opacity:0}74.2%{opacity:0}77.2%{opacity:1}81.2%{opacity:0}100%{opacity:0}} .st-l1{animation-name:st-l1;}
-    @keyframes st-l2{0%{opacity:0}15.3%{opacity:0}18.3%{opacity:1}22.3%{opacity:0}69.3%{opacity:0}72.3%{opacity:1}76.3%{opacity:0}100%{opacity:0}} .st-l2{animation-name:st-l2;}
-    @keyframes st-l3{0%{opacity:0}20.1%{opacity:0}23.1%{opacity:1}27.1%{opacity:0}64.4%{opacity:0}67.4%{opacity:1}71.4%{opacity:0}100%{opacity:0}} .st-l3{animation-name:st-l3;}
-    @keyframes st-l4{0%{opacity:0}26.1%{opacity:0}29.1%{opacity:1}33.1%{opacity:0}58.1%{opacity:0}61.1%{opacity:1}65.1%{opacity:0}100%{opacity:0}} .st-l4{animation-name:st-l4;}
-    @keyframes st-l5{0%{opacity:0}30.9%{opacity:0}33.9%{opacity:1}37.9%{opacity:0}53.2%{opacity:0}56.2%{opacity:1}60.2%{opacity:0}100%{opacity:0}} .st-l5{animation-name:st-l5;}
-    @keyframes st-l6{0%{opacity:0}37.0%{opacity:0}40.0%{opacity:1}44.0%{opacity:0}47.0%{opacity:0}50.0%{opacity:1}54.0%{opacity:0}100%{opacity:0}} .st-l6{animation-name:st-l6;}
-  </style>
-  <rect x="88" y="70" width="580" height="46" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55" stroke-width="1"/>
-  <rect class="st-a st-l0" x="88" y="70" width="580" height="46" rx="5" fill="#ff7a92" fill-opacity=".1" stroke="#ff7a92" stroke-width="1.3" opacity="0" style="filter:drop-shadow(0 0 6px #ff7a92)"/>
-  <line x1="66" y1="93.0" x2="88" y2="93.0" stroke="#8f8cab" stroke-opacity=".5" stroke-dasharray="2 3"/>
-  <text x="102" y="89" class="st-n" fill="#ff7a92">APPLICATIONS</text>
-  <text x="204.8" y="89" class="st-d">what you actually touch</text>
-  <text x="102" y="105" class="st-c">ChatGPT · Claude · Cursor · Cognition · HappyRobot · Bland · Harvey · Perplexity</text>
-  <rect x="88" y="123" width="580" height="46" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55" stroke-width="1"/>
-  <rect class="st-a st-l1" x="88" y="123" width="580" height="46" rx="5" fill="#ff7a92" fill-opacity=".1" stroke="#ff7a92" stroke-width="1.3" opacity="0" style="filter:drop-shadow(0 0 6px #ff7a92)"/>
-  <line x1="66" y1="146.0" x2="88" y2="146.0" stroke="#8f8cab" stroke-opacity=".5" stroke-dasharray="2 3"/>
-  <text x="102" y="142" class="st-n" fill="#ff7a92">TOOLING</text>
-  <text x="167.8" y="142" class="st-d">the glue between model and app</text>
-  <text x="102" y="158" class="st-c">MCP · LangChain · Pinecone · Braintrust · Scale AI · Mercor</text>
-  <rect x="88" y="176" width="580" height="46" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55" stroke-width="1"/>
-  <rect class="st-a st-l2" x="88" y="176" width="580" height="46" rx="5" fill="#ff7a92" fill-opacity=".1" stroke="#ff7a92" stroke-width="1.3" opacity="0" style="filter:drop-shadow(0 0 6px #ff7a92)"/>
-  <line x1="66" y1="199.0" x2="88" y2="199.0" stroke="#8f8cab" stroke-opacity=".5" stroke-dasharray="2 3"/>
-  <text x="102" y="195" class="st-n" fill="#ff7a92">MODELS</text>
-  <text x="160.4" y="195" class="st-d">the brains, trained once at huge cost</text>
-  <text x="102" y="211" class="st-c">Anthropic · OpenAI · Google DeepMind · Meta · xAI · Mistral · DeepSeek · Qwen</text>
-  <rect x="88" y="229" width="580" height="46" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55" stroke-width="1"/>
-  <rect class="st-a st-l3" x="88" y="229" width="580" height="46" rx="5" fill="#ff7a92" fill-opacity=".1" stroke="#ff7a92" stroke-width="1.3" opacity="0" style="filter:drop-shadow(0 0 6px #ff7a92)"/>
-  <line x1="66" y1="252.0" x2="88" y2="252.0" stroke="#8f8cab" stroke-opacity=".5" stroke-dasharray="2 3"/>
-  <text x="102" y="248" class="st-n" fill="#ff7a92">INFERENCE</text>
-  <text x="182.60000000000002" y="248" class="st-d">running a model, billions of times a day</text>
-  <text x="102" y="264" class="st-c">Bedrock · Vertex · Azure Foundry · Together · Fireworks · Baseten · vLLM</text>
-  <rect x="88" y="296" width="580" height="46" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55" stroke-width="1"/>
-  <rect class="st-a st-l4" x="88" y="296" width="580" height="46" rx="5" fill="#6fcfc0" fill-opacity=".1" stroke="#6fcfc0" stroke-width="1.3" opacity="0" style="filter:drop-shadow(0 0 6px #6fcfc0)"/>
-  <line x1="66" y1="319.0" x2="88" y2="319.0" stroke="#8f8cab" stroke-opacity=".5" stroke-dasharray="2 3"/>
-  <text x="102" y="315" class="st-n" fill="#6fcfc0">CLOUD</text>
-  <text x="153.0" y="315" class="st-d">renting out compute by the hour</text>
-  <text x="102" y="331" class="st-c">AWS · Microsoft Azure · Google Cloud · Oracle · CoreWeave · Nebius · Lambda</text>
-  <rect x="88" y="349" width="580" height="46" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55" stroke-width="1"/>
-  <rect class="st-a st-l5" x="88" y="349" width="580" height="46" rx="5" fill="#6fcfc0" fill-opacity=".1" stroke="#6fcfc0" stroke-width="1.3" opacity="0" style="filter:drop-shadow(0 0 6px #6fcfc0)"/>
-  <line x1="66" y1="372.0" x2="88" y2="372.0" stroke="#8f8cab" stroke-opacity=".5" stroke-dasharray="2 3"/>
-  <text x="102" y="368" class="st-n" fill="#6fcfc0">DATA CENTERS</text>
-  <text x="204.8" y="368" class="st-d">buildings full of chips, plus power</text>
-  <text x="102" y="384" class="st-c">Stargate · Crusoe · Equinix · Vertiv · GE Vernova · your local utility</text>
-  <rect x="88" y="416" width="580" height="46" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55" stroke-width="1"/>
-  <rect class="st-a st-l6" x="88" y="416" width="580" height="46" rx="5" fill="#ffb15c" fill-opacity=".1" stroke="#ffb15c" stroke-width="1.3" opacity="0" style="filter:drop-shadow(0 0 6px #ffb15c)"/>
-  <line x1="66" y1="439.0" x2="88" y2="439.0" stroke="#8f8cab" stroke-opacity=".5" stroke-dasharray="2 3"/>
-  <text x="102" y="435" class="st-n" fill="#ffb15c">CHIPS + SYSTEMS</text>
-  <text x="227.0" y="435" class="st-d">GPUs and accelerators, wired into racks</text>
-  <text x="102" y="451" class="st-c">Nvidia · AMD · Google TPU · AWS Trainium · Broadcom · Arm · Synopsys</text>
-  <rect x="88" y="469" width="580" height="46" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55" stroke-width="1"/>
-  <text x="102" y="488" class="st-n" fill="#ffb15c">MANUFACTURING</text>
-  <text x="212.2" y="488" class="st-d">turning sand into chips</text>
-  <text x="102" y="504" class="st-c">TSMC · Samsung · Intel · ASML · SK Hynix · Micron · Applied Materials</text>
-  <line x1="22" y1="72" x2="22" y2="273" stroke="#ff7a92" stroke-width="1.4" stroke-opacity=".8"/>
-  <text x="14" y="172.5" class="st-z" fill="#ff7a92" text-anchor="middle" transform="rotate(-90 14 172.5)">SOFTWARE</text>
-  <line x1="22" y1="298" x2="22" y2="393" stroke="#6fcfc0" stroke-width="1.4" stroke-opacity=".8"/>
-  <text x="14" y="345.5" class="st-z" fill="#6fcfc0" text-anchor="middle" transform="rotate(-90 14 345.5)">INFRA</text>
-  <line x1="22" y1="418" x2="22" y2="513" stroke="#ffb15c" stroke-width="1.4" stroke-opacity=".8"/>
-  <text x="14" y="465.5" class="st-z" fill="#ffb15c" text-anchor="middle" transform="rotate(-90 14 465.5)">HARDWARE</text>
-  <rect class="st-a st-work" x="88" y="416" width="580" height="46" rx="5" fill="#ffb15c" fill-opacity=".16" stroke="#ffb15c" stroke-width="1.6" opacity="0" style="filter:drop-shadow(0 0 10px #ffb15c)"/>
-  <line x1="66" y1="30" x2="66" y2="439.0" stroke="#8f8cab" stroke-opacity=".6" stroke-width="1.1"/>
-  <circle cx="66" cy="30" r="11" fill="#2b3054" stroke="#f3ece2" stroke-width="1.1"/>
-  <text x="66" y="33.5" text-anchor="middle" class="st-k" style="fill:#f3ece2;font-size:9px">you</text>
-  <circle cx="96" cy="26" r="4" fill="#ff7a92"/><text x="106" y="29" class="st-k">your prompt travels down</text>
-  <circle cx="96" cy="42" r="4" fill="#fff4e6"/><text x="106" y="45" class="st-k">the answer streams back up, one token at a time</text>
-  <g class="st-pk"><circle class="st-a st-down" cx="66" cy="30" r="5" fill="#ff7a92" style="filter:drop-shadow(0 0 5px #ff7a92)"/><circle class="st-a st-up" cx="66" cy="30" r="5" fill="#fff4e6" opacity="0" style="filter:drop-shadow(0 0 5px #fff4e6)"/></g>
-  <text x="62" y="495.0" text-anchor="end" class="st-k" style="font-size:8px;fill:#a9a6b8">built</text>
-  <text x="62" y="505.0" text-anchor="end" class="st-k" style="font-size:8px;fill:#a9a6b8">earlier</text>
-  <line x1="66" y1="469" x2="66" y2="515" stroke="#ffb15c" stroke-opacity=".5" stroke-dasharray="1 3"/>
-</svg></span></a></li>
-        <li class="post"><a href="writing/customer-feedback-start-to-finish.html"><span class="no">08</span><span class="txt"><span class="cat label">Field guides &middot; 2 min</span><span class="tt">Customer feedback, start to finish</span><span class="dk">What an AI first pass does to 10,000 pieces of feedback, why a person still reviews it, and why the answer belongs in a graph.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 680 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A funnel: 10,000 raw records shrink to 8,500 with substance, 5,500 after deduplication, about 180 candidate clusters, about 40 new issues, and roughly 18 items a human deeply reads · 15 ambiguous clusters plus 3 escalations." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <style>
-    .fn-n{font:700 13px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .fn-nw{font:700 13px "IBM Plex Mono",ui-monospace,monospace;fill:#fff4e6;}
-    .fn-l{font:400 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
-    .fn-s{font:400 9px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-  </style>
-  <rect x="20" y="16" width="640" height="50" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="38" text-anchor="middle" class="fn-n">10,000</text>
-  <text x="340" y="54" text-anchor="middle" class="fn-l">raw records · one week, every channel</text>
-  <line x1="340" y1="66" x2="340" y2="82" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="78" class="fn-s">− 1,500 with nothing actionable</text>
-  <rect x="70" y="82" width="540" height="50" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="104" text-anchor="middle" class="fn-n">~8,500</text>
-  <text x="340" y="120" text-anchor="middle" class="fn-l">contain something actionable</text>
-  <line x1="340" y1="132" x2="340" y2="148" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="144" class="fn-s">− 3,000 near-duplicates collapse</text>
-  <rect x="125" y="148" width="430" height="50" rx="5" fill="#2b3054" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="170" text-anchor="middle" class="fn-n">~5,500</text>
-  <text x="340" y="186" text-anchor="middle" class="fn-l">substantive, after dedupe</text>
-  <line x1="340" y1="198" x2="340" y2="214" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="210" class="fn-s">semantic clustering, evidence attached</text>
-  <rect x="220" y="214" width="240" height="50" rx="5" fill="#31365c" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="236" text-anchor="middle" class="fn-n">~180</text>
-  <text x="340" y="252" text-anchor="middle" class="fn-l">candidate clusters</text>
-  <line x1="340" y1="264" x2="340" y2="280" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="276" class="fn-s">120 attach to existing work instead</text>
-  <rect x="265" y="280" width="150" height="50" rx="5" fill="#383d66" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="302" text-anchor="middle" class="fn-n">~40</text>
-  <text x="340" y="318" text-anchor="middle" class="fn-l">genuinely new issues</text>
-  <line x1="340" y1="330" x2="340" y2="346" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="342" class="fn-s">25 route with high confidence</text>
-  <rect x="294" y="346" width="92" height="50" rx="5" fill="#6b2346" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="376" text-anchor="middle" class="fn-nw">~18</text>
-  <text x="400" y="368" class="fn-n" fill="#ff7a92">deeply read by humans</text>
-  <text x="400" y="384" class="fn-l">15 ambiguous clusters + 3 escalations</text>
-  <text x="20" y="426" class="fn-s">Bar widths are compressed · drawn to true scale, the bottom rows would be invisible, which is the point.</text>
-  <text x="20" y="440" class="fn-s">Everything outside the red band gets sampled and audited rather than read.</text>
-</svg></span></a></li>
-        <li class="post"><a href="writing/who-answers-the-phone.html"><span class="no">09</span><span class="txt"><span class="cat label">Notes &middot; 7 min</span><span class="tt">Who&#x27;s going to answer the phone</span><span class="dk">A map of the voice agent market in fall 2026: who sells models, who sells platforms, who sells finished agents, and why they are all walking toward the same phone line.</span></span><span class="thumb" aria-hidden="true"><svg data-wide viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Market map of voice agent companies. Vertical axis: how finished the product is, from models at the bottom to builder platforms to finished agents at the top. Horizontal axis: who buys, from developers to any business to one industry. Models: OpenAI Realtime, Gemini Live, Deepgram, Cartesia, Mistral Voxtral. Platforms: Vapi, Retell, LiveKit, Synthflow, Bland, ElevenLabs. Finished agents: Sierra, Decagon, Parloa, PolyAI, and the vertical players Hippocratic AI, HappyRobot and Assort Health. Pink arrows show ElevenLabs, Bland, Mistral and HappyRobot all moving toward the enterprise phone line at the top." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <style>
-    .vm-row{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#9a98a8;letter-spacing:.08em;}
-    .vm-col{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#9a98a8;letter-spacing:.1em;}
-    .vm-ax{font:400 9px "IBM Plex Mono",ui-monospace,monospace;fill:#7f7d92;}
-    .vm-n{font:500 11.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .vm-s{font:400 9px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
-    .vm-p{font:400 9px "IBM Plex Mono",ui-monospace,monospace;fill:#ff7a92;}
-    .vm-prize{font:600 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#ff7a92;letter-spacing:.12em;}
-    .vm-flow{stroke-dasharray:4 5;animation:vm-flow 1.4s linear infinite;}
-    .vm-ring{animation:vm-pulse 3.2s ease-in-out infinite;}
-    .vm-co{cursor:default;}
-    .vm-co:hover circle{stroke:#fff4e6;stroke-width:2;}
-    @keyframes vm-flow{to{stroke-dashoffset:-18;}}
-    @keyframes vm-pulse{0%,100%{opacity:.45;}50%{opacity:1;}}
-    @media (prefers-reduced-motion: reduce){.vm-flow,.vm-ring{animation:none;}.vm-comet{display:none;}}
-  </style>
-
-  <!-- grid -->
-  <rect x="90" y="40" width="580" height="420" rx="6" fill="#1f2340" stroke="rgba(243,236,226,0.12)"/>
-  <line x1="283" y1="40" x2="283" y2="460" stroke="rgba(243,236,226,0.10)"/>
-  <line x1="477" y1="40" x2="477" y2="460" stroke="rgba(243,236,226,0.10)"/>
-  <line x1="90" y1="180" x2="670" y2="180" stroke="rgba(243,236,226,0.10)"/>
-  <line x1="90" y1="320" x2="670" y2="320" stroke="rgba(243,236,226,0.10)"/>
-
-  <!-- row labels -->
-  <text x="82" y="104" text-anchor="end" class="vm-row">FINISHED</text>
-  <text x="82" y="116" text-anchor="end" class="vm-row">AGENTS</text>
-  <text x="82" y="244" text-anchor="end" class="vm-row">BUILDER</text>
-  <text x="82" y="256" text-anchor="end" class="vm-row">PLATFORMS</text>
-  <text x="82" y="394" text-anchor="end" class="vm-row">MODELS</text>
-  <text x="14" y="40" class="vm-ax">more</text>
-  <text x="14" y="51" class="vm-ax">finished</text>
-  <text x="14" y="62" class="vm-ax">&#8593;</text>
-
-  <!-- column labels -->
-  <text x="186" y="480" text-anchor="middle" class="vm-col">DEVELOPERS</text>
-  <text x="380" y="480" text-anchor="middle" class="vm-col">ANY BUSINESS</text>
-  <text x="573" y="480" text-anchor="middle" class="vm-col">ONE INDUSTRY</text>
-  <text x="670" y="496" text-anchor="end" class="vm-ax">who signs the check &#8594;</text>
-
-  <!-- the prize -->
-  <ellipse class="vm-ring" cx="445" cy="106" rx="178" ry="60" fill="rgba(255,122,146,0.06)" stroke="#ff7a92" stroke-width="1.2" stroke-dasharray="2 4"/>
-  <text x="445" y="32" text-anchor="middle" class="vm-prize">THE PRIZE · THE ENTERPRISE PHONE LINE</text>
-
-  <!-- movement: where companies are heading -->
-  <path class="vm-flow" d="M245 345 C 300 300, 360 240, 392 206" fill="none" stroke="#ff7a92" stroke-width="1.3"/>
-  <path class="vm-flow" d="M402 192 C 410 165, 420 150, 440 140" fill="none" stroke="#ff7a92" stroke-width="1.3"/>
-  <path class="vm-flow" d="M340 238 C 380 225, 420 200, 455 168" fill="none" stroke="#ff7a92" stroke-width="1.3"/>
-  <path class="vm-flow" d="M216 416 C 300 425, 370 418, 430 404" fill="none" stroke="#ff7a92" stroke-width="1.3"/>
-  <path class="vm-flow" d="M555 110 C 535 112, 510 112, 486 110" fill="none" stroke="#ff7a92" stroke-width="1.3"/>
-  <path d="M440 140 l-8 -1 l5 6 z M455 168 l-8 1 l6 -6 z M430 404 l-8 -3 l2 7 z M486 110 l7 -4 l0 8 z" fill="#ff7a92"/>
-  <text x="256" y="349" class="vm-p">ElevenLabs: voices to agents</text>
-  <text x="425" y="226" class="vm-p">Bland: upmarket</text>
-  <text x="300" y="440" class="vm-p">Mistral: open weights, on-prem</text>
-  <text x="488" y="128" class="vm-p">beyond freight</text>
-
-  <!-- comets riding the arrows -->
-  <circle class="vm-comet" r="3" opacity="0" fill="#ffd1da"><animateMotion dur="4.5s" repeatCount="indefinite" path="M245 345 C 300 300, 360 240, 392 206 C 410 165, 420 150, 440 140"/><animate attributeName="opacity" values="0;1;1;0" dur="4.5s" repeatCount="indefinite"/></circle>
-  <circle class="vm-comet" r="3" opacity="0" fill="#ffd1da"><animateMotion dur="3.6s" begin="1s" repeatCount="indefinite" path="M340 238 C 380 225, 420 200, 455 168"/><animate attributeName="opacity" values="0;1;1;0" dur="3.6s" begin="1s" repeatCount="indefinite"/></circle>
-  <circle class="vm-comet" r="3" opacity="0" fill="#ffd1da"><animateMotion dur="5s" begin="2s" repeatCount="indefinite" path="M216 416 C 300 425, 370 418, 430 404"/><animate attributeName="opacity" values="0;1;1;0" dur="5s" begin="2s" repeatCount="indefinite"/></circle>
-  <circle class="vm-comet" r="3" opacity="0" fill="#ffd1da"><animateMotion dur="2.8s" begin=".5s" repeatCount="indefinite" path="M555 110 C 535 112, 510 112, 486 110"/><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin=".5s" repeatCount="indefinite"/></circle>
-
-  <!-- models (blue) -->
-  <g class="vm-co"><title>OpenAI Realtime · speech-to-speech in one model, strong reasoning and tool use · sells to developers via API</title><circle cx="110" cy="352" r="6" fill="#5592e8" stroke="#1f2340" stroke-width="2"/><text x="122" y="356" class="vm-n">OpenAI Realtime</text></g>
-  <g class="vm-co"><title>Gemini Live · speech-to-speech, sees camera and screen, cheapest audio of the big labs · sells to developers via API</title><circle cx="110" cy="392" r="6" fill="#5592e8" stroke="#1f2340" stroke-width="2"/><text x="122" y="396" class="vm-n">Gemini Live</text></g>
-  <g class="vm-co"><title>Deepgram · fast transcription, now a full voice agent API · sells to developers and platforms</title><circle cx="110" cy="432" r="6" fill="#5592e8" stroke="#1f2340" stroke-width="2"/><text x="122" y="436" class="vm-n">Deepgram</text></g>
-  <g class="vm-co"><title>Cartesia · very low latency speech models, plus an agent toolkit · sells to developers and platforms</title><circle cx="210" cy="372" r="6" fill="#5592e8" stroke="#1f2340" stroke-width="2"/><text x="222" y="376" class="vm-n">Cartesia</text></g>
-  <g class="vm-co"><title>Mistral Voxtral · open-weight transcription and speech you can run in your own data center · sells to developers today, regulated European enterprises next</title><circle cx="210" cy="412" r="6" fill="#5592e8" stroke="#1f2340" stroke-width="2"/><text x="222" y="408" class="vm-n">Mistral</text></g>
-  <circle cx="245" cy="345" r="5" fill="none" stroke="#5592e8" stroke-width="1.2" stroke-dasharray="2 2"/>
-  <text x="233" y="338" text-anchor="end" class="vm-s">ElevenLabs, 2023</text>
-
-  <!-- platforms (amber) -->
-  <g class="vm-co"><title>Vapi · developer API for phone agents, over a billion calls processed · sells to developers and startups</title><circle cx="110" cy="214" r="6" fill="#d07a24" stroke="#1f2340" stroke-width="2"/><text x="122" y="218" class="vm-n">Vapi</text></g>
-  <g class="vm-co"><title>Retell · developer platform with strong testing and call analytics, fast-growing · sells to developers and mid-market teams</title><circle cx="110" cy="254" r="6" fill="#d07a24" stroke="#1f2340" stroke-width="2"/><text x="122" y="258" class="vm-n">Retell</text></g>
-  <g class="vm-co"><title>LiveKit · open-source realtime audio and video plumbing under many voice agents · sells to developers</title><circle cx="110" cy="294" r="6" fill="#d07a24" stroke="#1f2340" stroke-width="2"/><text x="122" y="298" class="vm-n">LiveKit</text></g>
-  <g class="vm-co"><title>Synthflow · no-code agent builder · sells to small and mid-size businesses and agencies</title><circle cx="310" cy="290" r="6" fill="#d07a24" stroke="#1f2340" stroke-width="2"/><text x="322" y="294" class="vm-n">Synthflow</text></g>
-  <g class="vm-co"><title>Bland · its own models, runs in your cloud or on-prem · sells to large enterprises</title><circle cx="330" cy="244" r="6" fill="#d07a24" stroke="#1f2340" stroke-width="2"/><text x="296" y="262" class="vm-n">Bland</text></g>
-  <g class="vm-co"><title>ElevenLabs · the best-known voices, now an agent platform (ElevenAgents) · sells to enterprises like Deutsche Telekom, plus a huge self-serve base</title><circle cx="398" cy="200" r="6" fill="#d07a24" stroke="#1f2340" stroke-width="2"/><text x="410" y="204" class="vm-n">ElevenLabs</text></g>
-
-  <!-- finished agents (green) -->
-  <g class="vm-co"><title>Sierra · finished customer service agents, voice now its main channel · sells to large consumer brands</title><circle cx="318" cy="86" r="6" fill="#36ad70" stroke="#1f2340" stroke-width="2"/><text x="330" y="90" class="vm-n">Sierra</text></g>
-  <g class="vm-co"><title>Decagon · finished support agents, chat-first and adding voice · sells to fast-growing tech companies</title><circle cx="318" cy="126" r="6" fill="#36ad70" stroke="#1f2340" stroke-width="2"/><text x="330" y="130" class="vm-n">Decagon</text></g>
-  <g class="vm-co"><title>Parloa · fleets of voice agents beside human reps in large contact centers · sells to European and US enterprises</title><circle cx="406" cy="70" r="6" fill="#36ad70" stroke="#1f2340" stroke-width="2"/><text x="418" y="74" class="vm-n">Parloa</text></g>
-  <g class="vm-co"><title>PolyAI · voice-first, many languages, deep in hospitality and banking · sells to enterprise contact centers</title><circle cx="406" cy="108" r="6" fill="#36ad70" stroke="#1f2340" stroke-width="2"/><text x="418" y="112" class="vm-n">PolyAI</text></g>
-  <g class="vm-co"><title>Hippocratic AI · clinical voice agents for patient outreach · sells to health systems</title><circle cx="565" cy="70" r="6" fill="#36ad70" stroke="#1f2340" stroke-width="2"/><text x="577" y="74" class="vm-n">Hippocratic</text></g>
-  <g class="vm-co"><title>HappyRobot · started with freight broker calls, now utilities, telecom, insurance and airlines · sells to logistics companies first</title><circle cx="565" cy="110" r="6" fill="#36ad70" stroke="#1f2340" stroke-width="2"/><text x="577" y="114" class="vm-n">HappyRobot</text></g>
-  <g class="vm-co"><title>Assort Health · scheduling, intake, refills and referrals · sells to specialty medical practices</title><circle cx="565" cy="150" r="6" fill="#36ad70" stroke="#1f2340" stroke-width="2"/><text x="577" y="154" class="vm-n">Assort</text></g>
-
-  <!-- legend -->
-  <circle cx="96" cy="522" r="5" fill="#5592e8"/><text x="106" y="525" class="vm-s">models</text>
-  <circle cx="166" cy="522" r="5" fill="#d07a24"/><text x="176" y="525" class="vm-s">builder platforms</text>
-  <circle cx="290" cy="522" r="5" fill="#36ad70"/><text x="300" y="525" class="vm-s">finished agents</text>
-  <line x1="404" y1="522" x2="428" y2="522" stroke="#ff7a92" stroke-width="1.3" stroke-dasharray="4 5"/><text x="434" y="525" class="vm-s">where they're heading</text>
-</svg></span></a></li>
-        <li class="ref"><a href="writing/cheat-sheet.html"><span class="tt">AI Systems Cheat Sheet</span><span class="dk">Harnesses and evals, plainly.</span><span class="ar label">&rarr;</span></a></li>    <!-- essays:end -->
-    </ul>
+        <li><a class="zine" href="writing/building-without-permission.html" style="--c:#ffb15c; --r:-1.5deg"><span class="mast label">Notes</span><span class="big">01</span><span class="tt">Building without permission</span><span class="dk">When I ran Little Bun, every software idea waited on an engineer and a perfect spec. Building with AI took away the most expensive roadblock, and with it the pressure to get things right before I started.</span><span class="price">3 min</span></a></li>
+        <li><a class="zine" href="writing/why-am-i-still-answering-this.html" style="--c:#6fcfc0; --r:1deg"><span class="mast label">Notes</span><span class="big">02</span><span class="tt">Why am I still the one answering this?</span><span class="dk">Two and a half years with some of Amazon&#x27;s biggest vendors, the same questions on repeat, and why I built Henry to answer them once, for everyone.</span><span class="price">3 min</span></a></li>
+        <li><a class="zine" href="writing/memory-architecture.html" style="--c:#ff7a92; --r:-0.6deg"><span class="mast label">Notes</span><span class="big">03</span><span class="tt">The thread that replied in poetry</span><span class="dk">A Claude thread that started writing in poetry, the summaries that couldn&#x27;t bring it back, and what that taught me about building memory.</span><span class="price">2 min</span></a></li>
+        <li><a class="zine" href="writing/every-deployment-needs-a-fundraiser.html" style="--c:#8fbcff; --r:1.4deg"><span class="mast label">Notes</span><span class="big">04</span><span class="tt">Every AI deployment needs a fundraiser</span><span class="dk">The forward deployed engineer gets the system working. Someone else has to get people to care about it, inside the building and out, one buyer at a time. Why that second seat matters, and why it&#x27;s rarely the same person.</span><span class="price">6 min</span></a></li>
+        <li><a class="zine" href="writing/what-making-things-taught-me.html" style="--c:#8dffa0; --r:-1deg"><span class="mast label">Field guides</span><span class="big">05</span><span class="tt">What making things taught me about AI agents</span><span class="dk">A razor factory and a dumpling line taught me the hardest problems in deploying AI agents: hidden judgment, what to automate, how to inspect, and what it costs.</span><span class="price">3 min</span></a></li>
+        <li><a class="zine" href="writing/investigations-not-just-code.html" style="--c:#c9a0ff; --r:0.7deg"><span class="mast label">Field guides</span><span class="big">06</span><span class="tt">Agent workflows aren&#x27;t just for engineers</span><span class="dk">An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent: the real workflow, the taxonomy, and autonomy earned one rung at a time.</span><span class="price">7 min</span></a></li>
+        <li><a class="zine" href="writing/the-ai-stack.html" style="--c:#ffb15c; --r:-1.3deg"><span class="mast label">Field guides</span><span class="big">07</span><span class="tt">The AI stack, from sand to software</span><span class="dk">Eight layers between a grain of sand and the answer on your screen, who makes each one, and where the power sits.</span><span class="price">10 min</span></a></li>
+        <li><a class="zine" href="writing/customer-feedback-start-to-finish.html" style="--c:#6fcfc0; --r:1.2deg"><span class="mast label">Field guides</span><span class="big">08</span><span class="tt">Customer feedback, start to finish</span><span class="dk">What an AI first pass does to 10,000 pieces of feedback, why a person still reviews it, and why the answer belongs in a graph.</span><span class="price">2 min</span></a></li>
+        <li><a class="zine" href="writing/who-answers-the-phone.html" style="--c:#ff7a92; --r:-0.4deg"><span class="mast label">Notes</span><span class="big">09</span><span class="tt">Who&#x27;s going to answer the phone</span><span class="dk">A map of the voice agent market in fall 2026: who sells models, who sells platforms, who sells finished agents, and why they are all walking toward the same phone line.</span><span class="price">7 min</span></a></li>    <!-- essays:end -->
+      </ul>
+    </section>
 
     <p class="refs-h label">Elsewhere</p>
     <ul class="refs">
+    <!-- refs:start -->
+      <li class="ref"><a href="writing/cheat-sheet.html"><span class="tt">AI Systems Cheat Sheet</span><span class="dk">Harnesses and evals, plainly.</span><span class="ar label">&rarr;</span></a></li>    <!-- refs:end -->
       <li class="ref"><a href="tennis.html"><span class="tt">Tennis</span><span class="dk">Sinner, Alcaraz, and the mental side of the game.</span><span class="ar label">&rarr;</span></a></li>
     </ul>
   </main>

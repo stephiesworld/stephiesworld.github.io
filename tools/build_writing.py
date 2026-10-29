@@ -57,6 +57,10 @@ REFERENCE = [
     ('cheat-sheet', 'AI Systems Cheat Sheet', 'harnesses and evals, plainly'),
 ]
 
+# Zines on the rack take the site's sign colors in turn, each hung a little crooked
+ZINE_COLORS = ['#ffb15c', '#6fcfc0', '#ff7a92', '#8fbcff', '#8dffa0', '#c9a0ff']
+ZINE_TILTS = ['-1.5deg', '1deg', '-0.6deg', '1.4deg', '-1deg', '0.7deg', '-1.3deg', '1.2deg', '-0.4deg']
+
 STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('builds.html', '0.9'), ('writing.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8'), ('tennis.html', '0.6')]
 
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
@@ -161,25 +165,24 @@ def main():
     tennis = sorted([parse(p) for p in sorted(TENNIS_SRC.glob('*.md'))], key=lambda e: e['raw_date'], reverse=True)
     write_pages(tennis, page, '../tennis.html', 'all tennis')
 
-    # ─── Writing index: each post with its first diagram as a lit thumbnail ───
-    rows = []
+    # ─── Writing index: each essay as a zine on a late-night newsstand rack ───
+    rack = []
     for i, e in enumerate(essays):
-        m = re.search(r'<svg\b.*?</svg>', e['body'], re.S)
-        thumb = f'<span class="thumb" aria-hidden="true">{m.group(0)}</span>' if m else '<span class="thumb none" aria-hidden="true"></span>'
-        rows.append(
-            f'        <li class="post"><a href="writing/{e["slug"]}.html">'
-            f'<span class="no">{i + 1:02d}</span>'
-            f'<span class="txt"><span class="cat label">{html.escape(e["category"])} &middot; {e["minutes"]} min</span>'
-            f'<span class="tt">{html.escape(e["title"])}</span><span class="dk">{html.escape(e["dek"])}</span></span>'
-            f'{thumb}</a></li>')
-    for slug, name, sub in REFERENCE:
-        rows.append(
-            f'        <li class="ref"><a href="writing/{slug}.html">'
-            f'<span class="tt">{name}</span><span class="dk">{sub[0].upper() + sub[1:]}.</span><span class="ar label">&rarr;</span></a></li>')
+        no = f'{i + 1:02d}'
+        title = html.escape(e['title'])
+        rack.append(
+            f'        <li><a class="zine" href="writing/{e["slug"]}.html" style="--c:{ZINE_COLORS[i % len(ZINE_COLORS)]}; --r:{ZINE_TILTS[i % len(ZINE_TILTS)]}">'
+            f'<span class="mast label">{html.escape(e["category"])}</span><span class="big">{no}</span>'
+            f'<span class="tt">{title}</span><span class="dk">{html.escape(e["dek"])}</span>'
+            f'<span class="price">{e["minutes"]} min</span></a></li>')
+    refs = [f'      <li class="ref"><a href="writing/{slug}.html"><span class="tt">{name}</span>'
+            f'<span class="dk">{sub[0].upper() + sub[1:]}.</span><span class="ar label">&rarr;</span></a></li>'
+            for slug, name, sub in REFERENCE]
     index = ROOT / 'writing.html'
     src = index.read_text(encoding='utf-8')
-    src = re.sub(r'(<!-- essays:start -->\n).*?(\s*<!-- essays:end -->)',
-                 lambda m: m.group(1) + '\n'.join(rows) + m.group(2), src, flags=re.S)
+    for marker, lines in (('essays', rack), ('refs', refs)):
+        src = re.sub(rf'(<!-- {marker}:start -->\n).*?(\s*<!-- {marker}:end -->)',
+                     lambda m: m.group(1) + '\n'.join(lines) + m.group(2), src, flags=re.S)
     index.write_text(src, encoding='utf-8')
 
     # ─── Tennis index ───
