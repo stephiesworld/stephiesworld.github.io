@@ -53,6 +53,9 @@
     .tagline { margin-top: 0.7rem; max-width: 30ch; font-family: 'Newsreader', Georgia, serif; font-style: italic; font-size: 1.22rem; line-height: 1.4; letter-spacing: 0; text-transform: none; color: rgba(243, 236, 226, 0.86); }
     .lede { margin-top: 0.9rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-faint); }
     .lede b { font-weight: 400; color: var(--cream-dim); }
+    .lede + .lede { margin-top: 0.45rem; }
+    .lede a:hover, .lede a:focus-visible { color: #fff1dc; text-shadow: 0 0 6px var(--amber); }
+    .lede a:hover b, .lede a:focus-visible b { color: inherit; }
     #globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
     /* The real sky, behind everything, arriving a beat after the globe */
     #stars { z-index: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 4s ease 1.2s; }
@@ -343,6 +346,7 @@
     <p class="brand">Stephie's World</p>
     <p class="tagline">Building with AI, writing a novel.<br>New&nbsp;York, sometimes Paris or London.</p>
     <p class="lede"><b>3 builds</b> in orbit &middot; touch one</p>
+    <p class="lede"><a href="cities.html"><b>6 cities</b> &middot; departures &rarr;</a></p>
   </header>
 
   <nav class="corner tr hud nav">

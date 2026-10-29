@@ -61,7 +61,7 @@ REFERENCE = [
 ZINE_COLORS = ['#ffb15c', '#6fcfc0', '#ff7a92', '#8fbcff', '#8dffa0', '#c9a0ff']
 ZINE_TILTS = ['-1.5deg', '1deg', '-0.6deg', '1.4deg', '-1deg', '0.7deg', '-1.3deg', '1.2deg', '-0.4deg']
 
-STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('builds.html', '0.9'), ('writing.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8'), ('tennis.html', '0.6')]
+STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('builds.html', '0.9'), ('writing.html', '0.9'), ('cities.html', '0.8'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8'), ('tennis.html', '0.6')]
 
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
           'September', 'October', 'November', 'December']
