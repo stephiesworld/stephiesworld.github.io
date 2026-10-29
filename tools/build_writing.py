@@ -123,8 +123,13 @@ def description(body_html):
 
 
 def byline(e):
-    # Pieces Pip wrote say so, on the rack and on the page
-    return 'by Pip, Stephie&rsquo;s AI' if e['author'] == 'pip' else 'by Stephie'
+    # Pieces Pip wrote, or wrote with her, say so on the rack and on the page
+    return {'pip': 'by Pip, Stephie&rsquo;s AI', 'both': 'by Stephie &amp; Pip'}.get(e['author'], 'by Stephie')
+
+
+def stamp(e):
+    return {'pip': '<span class="by pip">by Pip<small>Stephie&rsquo;s AI</small></span>',
+            'both': '<span class="by both">Stephie &amp; Pip<small>co-written</small></span>'}.get(e['author'], '<span class="by">by Stephie</span>')
 
 
 def ordered(essays):
@@ -183,7 +188,7 @@ def main():
         rack.append(
             f'        <li><a class="zine" href="writing/{e["slug"]}.html" style="--c:{ZINE_COLORS[i % len(ZINE_COLORS)]}; --r:{ZINE_TILTS[i % len(ZINE_TILTS)]}">'
             f'<span class="mast label">{html.escape(e["category"])}</span><span class="big">{no}</span>'
-            f'<span class="by{" pip" if e["author"] == "pip" else ""}">{"by Pip<small>Stephie&rsquo;s AI</small>" if e["author"] == "pip" else "by Stephie"}</span>'
+            f'{stamp(e)}'
             f'<span class="tt">{title}</span><span class="dk">{html.escape(e["dek"])}</span>'
             f'<span class="price">{e["minutes"]} min</span></a></li>')
     refs = [f'      <li class="ref"><a href="writing/{slug}.html"><span class="tt">{name}</span>'

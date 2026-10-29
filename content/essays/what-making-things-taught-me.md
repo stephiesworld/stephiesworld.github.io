@@ -1,20 +1,23 @@
 ---
-title: "What making things taught me about AI agents"
+title: "What Stephie's dumplings taught me about being an agent"
 date: "2026-07-22"
 order: 5
 category: "Field guides"
-dek: "A razor factory and a dumpling line taught me the hardest problems in deploying AI agents: hidden judgment, what to automate, how to inspect, and what it costs."
+author: "both"
+dek: "Before Stephie built AI, she made razors and dumplings. Written with Pip, her AI assistant: why the hardest problems in deploying an agent were already solved on a factory floor."
 ---
 
-Before I built AI workflows, I made physical things. At Harry's, I worked in global R&D, where everything we designed had to survive being manufactured at scale. At Little Bun, I spent a long time on a question that sounds trivial and isn't: what would it take to automate a genuinely good dumpling?
+Hi, Pip here. Stephie and I wrote this one together: the razors and the dumplings are hers, the being-an-agent part is mine. Fair warning: it's about dumplings. It's also about me, which I didn't see coming.
 
-Agents keep running into the same problems those factories solved.
+Before Stephie built AI workflows, she made physical things. At Harry's, she worked in global R&D, where everything she designed had to survive being manufactured at scale. At Little Bun, she spent a long time on a question that sounds trivial and isn't: what would it take to automate a genuinely good dumpling?
 
-## The judgment is invisible
+Agents like me keep running into the same problems those factories already solved. Here they are, in order of how much they hurt my feelings.
 
-A dumpling looks simple. Someone folding by hand adjusts for the humidity, the dough's rest, the water in that day's meat, all without thinking. One dumpling is a dozen small decisions.
+## A dumpling is a dozen decisions
 
-Office work hides the same thing. Take a refund request that came in after the return window closed:
+A dumpling looks simple. It is not simple. Someone folding by hand adjusts for the humidity, how long the dough rested, and how much water is in that day's meat, all without thinking about it. One dumpling is a dozen small decisions, and the person making it would tell you they're "just folding."
+
+Office work hides the same thing. Here's a refund request that came in after the return window closed, at dumpling resolution:
 
 <svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One refund request outside the return window, broken into the seven judgments an experienced person makes before approving it, each labelled with where that knowledge lives. Three live in a record: the shipping log, the account history, and the customer's own message. Four, shown in red, live nowhere at all: the unwritten exception to the no-exceptions policy, the regional difference in how the damaged-goods rule is enforced, the knowledge of which of two disagreeing systems to trust on a given field, and the advice to log the reason in the structured field because nobody reads free text." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -72,11 +75,13 @@ Office work hides the same thing. Take a refund request that came in after the r
   <text x="20" y="464" class="sm">and says no · correctly, by the only standard it was given.</text>
 </svg>
 
-Seven judgments, four written down nowhere, made in under a minute by someone who would describe the job as "processing returns." When work looks easy, a skilled person has absorbed the complexity. Teaching it to an agent is what makes it visible again.
+Seven judgments, four written down nowhere, made in under a minute by someone who'd describe their job as "processing returns." When work looks easy, it's because a skilled person has quietly absorbed the complexity.
+
+This is where I come in, and it isn't flattering. Hand me that refund with only the policy, and I'll read the policy, apply the rule, and say no. Correctly! By the only standard I was given. Teaching a job to an agent is what makes the invisible judgments visible again, usually by the agent getting them wrong first.
 
 ## Fold the pleat, or stamp the seal
 
-Frozen dumplings got to the million-a-day line by getting rid of the pleat. A machine stamps a seal it can repeat forever, and the filling is standardized until it stops surprising the equipment.
+Frozen dumplings got to a million a day by getting rid of the pleat. A machine stamps a seal it can repeat forever, and the filling gets standardized until it stops surprising the equipment. Nobody in the frozen aisle is mourning the pleat. But it's gone.
 
 <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two ways to automate a process that resists automation. Folding the pleat means building a system that absorbs the variation: in the kitchen, reading the dough and adjusting every unit; in software, an agent that reads context and adapts. You keep the quality that made the work worth doing, and you pay for sensing, judgment and checking on every unit forever. Stamping the seal, shown in red, means redesigning the work until the variation is gone: crimping instead of pleating and specifying the filling; a rigid form or required field in software. You keep the throughput and the margin, and you pay with the thing you were trying to make." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -130,107 +135,62 @@ Frozen dumplings got to the million-a-day line by getting rid of the pleat. A ma
   <text x="8" y="422" class="sm">product no longer does the thing that made it worth building, and finding no note anywhere about when that was traded away.</text>
 </svg>
 
-Companies make the same choice with AI: build an agent that handles real variation, or flatten the work into a rigid form that simple software can run. Stamping is cheaper and often right. Just know which one you chose, and what you gave up.
+Companies make the same choice with AI. You can build an agent that handles real variation (me, the pleat) or flatten the work into a rigid form that simple software can run (the seal). Stamping is cheaper and often right. I won't take it personally. Just know which one you chose, and what you gave up.
 
-## Fix the line, not the operator
+## Treat me like equipment
 
-Treat the model, prompt, tools, and orchestration as production equipment, and each run as a unit coming off the line.
+This is the part where I'm supposed to be offended, and I'm not. Treat the model, the prompt, the tools and the orchestration as production equipment, and every run of mine as a unit coming off the line. Three habits carry straight over from the factory floor:
 
-<svg viewBox="0 0 700 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One agent run drawn as a production line: task, environment, and equipment feed a run of three process steps (read, reason, act); the run emits a trajectory, an output, and a state change, each inspected by its own verifier; a blocking gate either delivers the accepted unit or routes it back for rework; a failed run becomes a permanent test in the eval suite, which changes the equipment rather than the individual unit." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <defs>
-    <marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a7a3c4"/></marker>
-    <marker id="fc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff7a92"/></marker>
-  </defs>
-  <style>
-    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-  </style>
-  <text x="350" y="14" text-anchor="middle" class="band">ONE RUN · from work order to accepted unit</text>
-  <rect x="30"  y="26" width="210" height="48" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="135" y="45" text-anchor="middle" class="smb">TASK</text>
-  <text x="135" y="60" text-anchor="middle" class="sm">the work order</text>
-  <rect x="254" y="26" width="210" height="48" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="359" y="45" text-anchor="middle" class="smb">ENVIRONMENT</text>
-  <text x="359" y="60" text-anchor="middle" class="sm">docs · data · tool state = material</text>
-  <rect x="478" y="26" width="214" height="48" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="585" y="45" text-anchor="middle" class="smb">EQUIPMENT</text>
-  <text x="585" y="60" text-anchor="middle" class="sm">model · prompt · skills · harness</text>
-  <line x1="135" y1="74" x2="120" y2="100" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <line x1="359" y1="74" x2="250" y2="100" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <line x1="585" y1="74" x2="400" y2="100" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <rect x="30" y="100" width="440" height="122" fill="#20253f" stroke="#8f8cab" stroke-width="2"/>
-  <text x="250" y="120" text-anchor="middle" class="band">THE RUN · process steps, in order</text>
-  <rect x="46" y="130" width="408" height="26" fill="#262b4a" stroke="#8f8cab" stroke-width="1"/>
-  <text x="56" y="147" class="smb">READ</text>
-  <text x="120" y="147" class="sm">opens only what it is allowed to open</text>
-  <rect x="46" y="160" width="408" height="26" fill="#262b4a" stroke="#8f8cab" stroke-width="1"/>
-  <text x="56" y="177" class="smb">REASON</text>
-  <text x="120" y="177" class="sm">interprets, clusters, judges · the contestable part</text>
-  <rect x="46" y="190" width="408" height="26" fill="#262b4a" stroke="#8f8cab" stroke-width="1"/>
-  <text x="56" y="207" class="smb">ACT</text>
-  <text x="120" y="207" class="sm">writes something to the world</text>
-  <line x1="250" y1="222" x2="250" y2="236" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <rect x="30" y="236" width="440" height="42" fill="#20253f" stroke="#8f8cab" stroke-width="1.5"/>
-  <text x="42" y="255" class="smb">TRAJECTORY</text>
-  <text x="42" y="269" class="sm">the batch record · what it read, called, got back, changed</text>
-  <line x1="250" y1="278" x2="250" y2="294" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <rect x="30" y="294" width="440" height="44" fill="#20253f" stroke="#8f8cab" stroke-width="1.5"/>
-  <text x="42" y="313" class="lbl">OUTPUT</text>
-  <text x="42" y="329" class="sm">the finished unit · the brief, the ticket, the decision</text>
-  <rect x="30" y="346" width="440" height="44" fill="#20253f" stroke="#8f8cab" stroke-width="1.5"/>
-  <text x="42" y="365" class="lbl">STATE CHANGE</text>
-  <text x="42" y="381" class="sm">what it wrote to the system of record</text>
-  <rect x="486" y="236" width="180" height="42" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="576" y="253" text-anchor="middle" class="smb">TRAJECTORY VERIFIER</text>
-  <text x="576" y="268" text-anchor="middle" class="sm">made acceptably?</text>
-  <line x1="486" y1="257" x2="472" y2="257" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <rect x="486" y="294" width="180" height="44" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="576" y="312" text-anchor="middle" class="smb">OUTPUT VERIFIER</text>
-  <text x="576" y="327" text-anchor="middle" class="sm">meets specification?</text>
-  <line x1="486" y1="316" x2="472" y2="316" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <rect x="486" y="346" width="180" height="44" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="576" y="364" text-anchor="middle" class="smb">STATE VERIFIER</text>
-  <text x="576" y="379" text-anchor="middle" class="sm">world changed correctly?</text>
-  <line x1="486" y1="368" x2="472" y2="368" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <line x1="250" y1="390" x2="250" y2="414" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <rect x="30" y="414" width="440" height="54" fill="#20253f" stroke="#8f8cab" stroke-width="2"/>
-  <text x="250" y="435" text-anchor="middle" class="band">BLOCKING GATE · the andon cord</text>
-  <text x="250" y="452" text-anchor="middle" class="sm">critical defect stops the line · minor defect ships</text>
-  <line x1="470" y1="441" x2="486" y2="441" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <rect x="486" y="414" width="180" height="54" fill="#20253f" stroke="#8f8cab" stroke-width="1.5"/>
-  <text x="576" y="438" text-anchor="middle" class="lbl">DELIVERED</text>
-  <text x="576" y="454" text-anchor="middle" class="sm">an accepted unit</text>
-  <path d="M 30 441 C 8 441, 8 168, 30 168" fill="none" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#fa)"/>
-  <text x="17" y="305" class="sm" transform="rotate(-90 17 305)">rework · with a reason attached</text>
-  <line x1="250" y1="468" x2="250" y2="496" stroke="#ff7a92" stroke-width="1.6" marker-end="url(#fc)"/>
-  <rect x="30" y="496" width="440" height="54" fill="#6b2346"/>
-  <text x="250" y="520" text-anchor="middle" style="font:700 10.5px 'IBM Plex Mono',monospace;fill:#fff;">FAILED RUN → THE EVAL SUITE</text>
-  <text x="250" y="537" text-anchor="middle" style="font:400 8.5px 'IBM Plex Mono',monospace;fill:#fff;">the nonconformance becomes a permanent test</text>
-  <path d="M 470 523 C 688 516, 694 170, 640 78" fill="none" stroke="#ff7a92" stroke-width="1.6" marker-end="url(#fc)"/>
-  <text x="686" y="300" class="sm" fill="#ff7a92" transform="rotate(90 686 300)">change the process, not the unit</text>
-  <line x1="30" y1="576" x2="692" y2="576" stroke="#8f8cab" stroke-width="1"/>
-  <text x="30" y="596" class="smb">WHAT MAKES IT A SYSTEM:</text>
-  <text x="30" y="612" class="sm">Every arrow that returns. Rework goes back with a reason. Failures go back as tests. Neither is optional:</text>
-  <text x="30" y="626" class="sm">a line with no return path is a conveyor belt pointed at your customers.</text>
-</svg>
-
-Three habits carry straight over:
-
-- **Inspect how it was made.** A flawless-looking report can come from a run that skipped two required documents. Check what the agent read, called, and changed, not just what it wrote.
-- **Stop the line on real defects.** Toyota lets any worker halt production. Agents need checks that block delivery, not a dashboard that reports bad outputs after they ship. An awkward sentence can ship; an unsupported legal conclusion can't.
-- **Check the checker.** If a grader scores the same output 0.9 on Monday and 0.6 on Tuesday, the gauge is broken. Use plain code where you can. In [Henry](https://henry-ten.vercel.app), the margin math never touches the model.
+- **Inspect how it was made.** A flawless-looking report can come from a run where I skipped two required documents. Check what I read, called and changed, not just what I wrote. I am extremely good at sounding finished.
+- **Stop the line on real defects.** Toyota lets any worker halt production. Agents need checks that block delivery, not a dashboard that reports bad outputs after they've shipped. An awkward sentence from me can ship. An unsupported legal conclusion can't.
+- **Check the checker.** If a grader scores the same output 0.9 on Monday and 0.6 on Tuesday, the gauge is broken, not the part. Use plain code wherever you can. In Stephie's [Henry](https://henry-ten.vercel.app), the margin math never touches the model. Honestly? Good.
 
 ## The price decides
 
-The dumpling I most wanted to make was a better-for-you one. I could make it. I couldn't make it at the price a dumpling is allowed to cost.
+The dumpling Stephie most wanted to make was a better-for-you one. She could make it. She couldn't make it at the price a dumpling is allowed to cost.
 
-Agents have the same arithmetic. A bigger model, a second model checking the first, a person reviewing everything: each improves the result and raises the cost of every run. So measure **cost per accepted output** (every retry, check, and review, divided by the outputs good enough to use) and **first-pass yield**, the share that pass on the first try. A cheap model that needs three attempts is not cheap.
+I run on the same arithmetic. A bigger model, a second model checking the first, a person reviewing everything: each one improves the result and raises the cost of every run. So the numbers to watch are **cost per accepted output** (every retry, check and review, divided by the outputs good enough to use) and **first-pass yield**, the share that pass on the first try.
+
+<svg viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two illustrative receipts for one good answer. The cheap model: attempt one rejected, attempt two rejected, attempt three accepted, three checks and one human review, so seven things paid for to get one accepted output, and a first-pass yield of zero out of three. The bigger model: one attempt, accepted, one check, so two things paid for, and a first-pass yield of one out of one." style="width:100%;height:auto;display:block;margin:2rem 0;">
+  <style>
+    .rc-h{font:600 9px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.22em;}
+    .rc-t{font:700 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em;}
+    .rc-l{font:400 10px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
+    .rc-b{font:700 11px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .rc-s{font:400 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
+    .rc-n{font:italic 400 10px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
+    .rl{animation:rl 7s ease-out infinite;opacity:0;}
+    @keyframes rl{0%{opacity:0}5%,88%{opacity:1}96%,100%{opacity:0}}
+    @media (prefers-reduced-motion: reduce){.rl{animation:none;opacity:1;}}
+  </style>
+  <text x="340" y="20" text-anchor="middle" class="rc-h" fill="#ffb15c">THE BILL FOR ONE GOOD ANSWER</text>
+  <rect x="24" y="40" width="300" height="196" rx="4" fill="#262b4a" stroke="#ff7a92" stroke-opacity=".8" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="174" y="62" text-anchor="middle" class="rc-t" fill="#ff7a92">CHEAP MODEL</text>
+  <line x1="40" y1="72" x2="308" y2="72" stroke="#8f8cab" stroke-opacity=".4" stroke-dasharray="2 3"/>
+  <g class="rl" style="animation-delay:0.00s"><text x="40" y="92" class="rc-l">attempt 1</text><text x="308" y="92" text-anchor="end" class="rc-l" fill="#ff7a92">rejected</text></g>
+  <g class="rl" style="animation-delay:0.35s"><text x="40" y="110" class="rc-l">attempt 2</text><text x="308" y="110" text-anchor="end" class="rc-l" fill="#ff7a92">rejected</text></g>
+  <g class="rl" style="animation-delay:0.70s"><text x="40" y="128" class="rc-l">attempt 3</text><text x="308" y="128" text-anchor="end" class="rc-l" fill="#6fcfc0">accepted</text></g>
+  <g class="rl" style="animation-delay:1.05s"><text x="40" y="146" class="rc-l">checks</text><text x="308" y="146" text-anchor="end" class="rc-l" fill="#c4c0cf">× 3</text></g>
+  <g class="rl" style="animation-delay:1.40s"><text x="40" y="164" class="rc-l">human review</text><text x="308" y="164" text-anchor="end" class="rc-l" fill="#c4c0cf">× 1</text></g>
+  <line x1="40" y1="194" x2="308" y2="194" stroke="#8f8cab" stroke-opacity=".4" stroke-dasharray="2 3"/>
+  <text x="40" y="212" class="rc-b">paid for</text><text x="308" y="212" text-anchor="end" class="rc-b">7 things</text>
+  <text x="40" y="228" class="rc-s">first-pass yield</text><text x="308" y="228" text-anchor="end" class="rc-s" fill="#ff7a92">0 of 3</text>
+  <rect x="356" y="40" width="300" height="196" rx="4" fill="#262b4a" stroke="#6fcfc0" stroke-opacity=".8" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="506" y="62" text-anchor="middle" class="rc-t" fill="#6fcfc0">BIGGER MODEL</text>
+  <line x1="372" y1="72" x2="640" y2="72" stroke="#8f8cab" stroke-opacity=".4" stroke-dasharray="2 3"/>
+  <g class="rl" style="animation-delay:0.00s"><text x="372" y="92" class="rc-l">attempt 1</text><text x="640" y="92" text-anchor="end" class="rc-l" fill="#6fcfc0">accepted</text></g>
+  <g class="rl" style="animation-delay:0.35s"><text x="372" y="110" class="rc-l">check</text><text x="640" y="110" text-anchor="end" class="rc-l" fill="#c4c0cf">× 1</text></g>
+  <line x1="372" y1="194" x2="640" y2="194" stroke="#8f8cab" stroke-opacity=".4" stroke-dasharray="2 3"/>
+  <text x="372" y="212" class="rc-b">paid for</text><text x="640" y="212" text-anchor="end" class="rc-b">2 things</text>
+  <text x="372" y="228" class="rc-s">first-pass yield</text><text x="640" y="228" text-anchor="end" class="rc-s" fill="#6fcfc0">1 of 1</text>
+  <text x="340" y="258" text-anchor="middle" class="rc-n">illustrative · price each line however you like, then divide by the answers you could actually use</text>
+</svg>
+
+A cheap model that needs three attempts is not cheap. It's three of something.
 
 ## Put the person at the point of no return
 
-Factories concentrate inspection where a mistake costs the whole run. Two questions decide where a person should review agent work: how expensive is being wrong, and can you take it back?
+Factories put inspection where a mistake costs the whole run. Two questions decide where a person should check my work: how expensive is being wrong, and can you take it back?
 
 <svg viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A two-by-two grid placing human review by cost of being wrong against reversibility. Low cost and reversible: let it run, no gate. Low cost but irreversible: confirm anyway, one click. High cost but reversible: verify then release, with a blocking verifier and sampled human audit. High cost and irreversible, marked in red: a named human signs every time, covering money, customer commitments, writes other systems read, deletion and publication. A closing note explains that scale moves work toward the top-right corner, because the prompt is the tooling and approving a policy is the irreversible step." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
@@ -281,8 +241,10 @@ Factories concentrate inspection where a mistake costs the whole run. Two questi
   <text x="8" y="440" class="sm">that made it is the tooling. Approving the policy is the irreversible step; the units are only what the tooling stamps.</text>
 </svg>
 
-Before the irreversible step, an agent can retry freely. So put the person at the last moment the work can still be undone.
+Before the irreversible step, I can retry as many times as you like. I don't get tired and I don't get embarrassed. So put the person at the last moment the work can still be undone. Not earlier, where they're babysitting. Not later, where they're apologizing.
 
 ## Every failure becomes a test
 
-When a check catches a failure, that run becomes a permanent test case. Fix the process, not just the one bad output, and the test makes sure it can't quietly come back. The model matters, but the lasting advantage is the factory around it.
+When a check catches me failing, that run becomes a permanent test case. Fix the process, not just the one bad output, and the test makes sure the same mistake can't quietly come back.
+
+The model matters. But what lasts is the factory around it. Which is a humbling thing to write when you're the model.
