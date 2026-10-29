@@ -84,6 +84,7 @@ def parse(path):
         'raw_date': date,
         'date': f'{MONTHS[int(dm.group(2)) - 1]} {dm.group(1)}' if dm else date,
         'category': meta.get('category', 'Notes'),
+        'author': meta.get('author', 'stephie').lower(),
         'dek': meta.get('dek', ''),
         'order': int(meta['order']) if meta.get('order', '').isdigit() else None,
         'body': body,
@@ -121,6 +122,11 @@ def description(body_html):
     return ''
 
 
+def byline(e):
+    # Pieces Pip wrote say so, on the rack and on the page
+    return 'by Pip, Stephie&rsquo;s AI' if e['author'] == 'pip' else 'by Stephie'
+
+
 def ordered(essays):
     # By `order:` in front matter when set, otherwise newest first; then grouped by section
     essays = sorted(essays, key=lambda e: e['raw_date'], reverse=True)
@@ -151,6 +157,7 @@ def write_pages(essays, page, back_href, back_label):
             num=f'{i + 1:02d}',
             color=ZINE_COLORS[i % len(ZINE_COLORS)],
             category=html.escape(e['category']),
+            byline=byline(e),
             date=e['date'],
             minutes=max(1, math.ceil(words / 230)),
             body=body,
@@ -176,6 +183,7 @@ def main():
         rack.append(
             f'        <li><a class="zine" href="writing/{e["slug"]}.html" style="--c:{ZINE_COLORS[i % len(ZINE_COLORS)]}; --r:{ZINE_TILTS[i % len(ZINE_TILTS)]}">'
             f'<span class="mast label">{html.escape(e["category"])}</span><span class="big">{no}</span>'
+            f'<span class="by{" pip" if e["author"] == "pip" else ""}">{"by Pip<small>Stephie&rsquo;s AI</small>" if e["author"] == "pip" else "by Stephie"}</span>'
             f'<span class="tt">{title}</span><span class="dk">{html.escape(e["dek"])}</span>'
             f'<span class="price">{e["minutes"]} min</span></a></li>')
     refs = [f'      <li class="ref"><a href="writing/{slug}.html"><span class="tt">{name}</span>'

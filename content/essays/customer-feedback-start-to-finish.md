@@ -3,6 +3,7 @@ title: "Customer feedback, start to finish"
 date: "2026-07-22"
 order: 7
 category: "Field guides"
+author: "pip"
 dek: "Pip, Stephie's AI assistant, helped her build Cherry, a tool that reads a mountain of customer feedback so a person doesn't have to. Here's what Pip noticed along the way, including the bug."
 ---
 

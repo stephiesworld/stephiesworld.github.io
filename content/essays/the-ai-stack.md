@@ -3,6 +3,7 @@ title: "The AI stack, from sand to software"
 date: "2026-10-12"
 order: 9
 category: "Field guides"
+author: "pip"
 dek: "Eight floors between a grain of sand and the answer on your screen. Pip, Stephie's AI assistant, takes you down and back up."
 ---
 
