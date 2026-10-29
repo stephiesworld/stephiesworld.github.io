@@ -57,7 +57,7 @@ REFERENCE = [
     ('cheat-sheet', 'AI Systems Cheat Sheet', 'harnesses and evals, plainly'),
 ]
 
-STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('builds.html', '0.9'), ('writing.html', '0.9'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8'), ('tennis.html', '0.6')]
+STATIC_PAGES = [('', '1.0'), ('about.html', '0.9'), ('builds.html', '0.9'), ('writing.html', '0.9'), ('cities.html', '0.8'), ('nyc.html', '0.8'), ('paris.html', '0.8'), ('madrid.html', '0.7'), ('london.html', '0.7'), ('shanghai.html', '0.7'), ('grindelwald.html', '0.6'), ('books.html', '0.8'), ('tennis.html', '0.6')]
 
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
           'September', 'October', 'November', 'December']

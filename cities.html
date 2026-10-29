@@ -2,14 +2,188 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Old page from the July site. Kept so existing links still land. -->
-  <title>Stephie's World</title>
-  <link rel="canonical" href="https://stephiesworld.com/index.html">
-  <meta http-equiv="refresh" content="0; url=index.html">
-  <meta name="robots" content="noindex">
-  <style>body { background: #161a2e; }</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cities — Stephie</title>
+  <meta name="description" content="A departures board of the cities in Stephie's world.">
+  <meta property="og:title" content="Cities — Stephie">
+  <meta property="og:description" content="A departures board of the cities in Stephie's world.">
+  <link rel="canonical" href="https://stephiesworld.com/cities.html">
+  <meta property="og:image" content="https://stephiesworld.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dusk.css?v=20261008">
+  <style>
+    .page { max-width: 1080px; margin: 0 auto; padding: 2rem 2rem 2rem; }
+
+    /* The board: a dark panel set into a bezel, lit from inside */
+    .board { border-radius: 10px; padding: 1.6rem 1.6rem 1rem; background: linear-gradient(180deg, #0e1020, #0b0d19); border: 1px solid rgba(255, 177, 92, 0.18); box-shadow: 0 0 0 6px #1d2138, 0 0 0 7px rgba(255, 255, 255, 0.06), 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 0 60px rgba(0, 0, 0, 0.6); }
+    .bh { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: 1.1rem; border-bottom: 1px solid rgba(255, 177, 92, 0.15); }
+    .bh h1 { font-family: var(--neon); font-weight: 400; font-size: 2.4rem; letter-spacing: 0.14em; text-transform: uppercase; color: #ffcf8a; text-shadow: 0 0 10px rgba(255, 177, 92, 0.7), 0 0 26px rgba(255, 177, 92, 0.35); }
+    .clock { font-family: 'VT323', monospace; font-size: 1.8rem; color: var(--amber); text-shadow: 0 0 8px rgba(255, 177, 92, 0.6); white-space: nowrap; }
+
+    .cols, .row a { display: grid; grid-template-columns: 3.2rem 1fr 9rem 8rem; gap: 1rem; align-items: center; }
+    .cols { padding: 0.9rem 0.4rem 0.4rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; color: #7d7a92; }
+    .rows { list-style: none; }
+    .row { border-top: 1px dashed rgba(255, 255, 255, 0.06); }
+    .row a { padding: 0.75rem 0.4rem; transition: background 0.2s ease; }
+    .row a:hover, .row a:focus-visible { background: rgba(255, 177, 92, 0.05); }
+
+    /* Each letter is its own flap tile; words stay whole so long names wrap between them */
+    .flap { font-family: 'VT323', monospace; font-size: 1.75rem; line-height: 1.25; letter-spacing: 0.04em; text-transform: uppercase; color: #ffc773; text-shadow: 0 0 6px rgba(255, 177, 92, 0.55); }
+    .w { display: inline-block; white-space: nowrap; }
+    .ch { display: inline-block; min-width: 0.58em; margin-right: 1px; padding: 0.08em 0; border-radius: 2px; text-align: center; background: linear-gradient(180deg, #191c30 49%, #0d0f1c 51%); }
+    .no .ch { color: var(--teal); text-shadow: 0 0 6px rgba(111, 207, 192, 0.6); }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+    .yrs { font-family: 'VT323', monospace; font-size: 1.4rem; color: #c9c6da; white-space: nowrap; }
+    .st { font-family: 'VT323', monospace; font-size: 1.4rem; letter-spacing: 0.06em; color: var(--delphi); text-shadow: 0 0 6px rgba(141, 255, 160, 0.5); }
+    .st.now { color: var(--pink); text-shadow: 0 0 8px rgba(255, 122, 146, 0.7); animation: blink 1.4s steps(2) infinite; }
+    .dk { grid-column: 2 / -1; max-height: 0; overflow: hidden; font-family: var(--read); font-size: 1.02rem; line-height: 1.55; color: var(--ink-dim); transition: max-height 0.35s ease, padding 0.35s ease; }
+    .row a:hover .dk, .row a:focus-visible .dk { max-height: 6rem; padding-top: 0.5rem; }
+
+    .foot { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; color: #7d7a92; }
+
+    @keyframes blink { 50% { opacity: 0.35; } }
+    @media (prefers-reduced-motion: reduce) { .st.now { animation: none; } }
+
+    @media (max-width: 760px) {
+      .page { padding: 1rem; }
+      .board { padding: 1rem 0.8rem; }
+      .bh h1 { font-size: 1.6rem; }
+      .clock { font-size: 1.3rem; }
+      .cols { display: none; }
+      .row a { grid-template-columns: 2.4rem 1fr; gap: 0.2rem 0.7rem; }
+      .flap { font-size: 1.35rem; }
+      .yrs, .st { grid-column: 2; font-size: 1.1rem; }
+      .dk { max-height: none; padding-top: 0.3rem; font-size: 0.95rem; }
+      .foot .hint { display: none; }
+    }
+  </style>
 </head>
 <body>
-  <script>location.replace('index.html');</script>
+
+  <header class="top">
+    <a href="index.html" class="home">Stephie&rsquo;s World</a>
+    <nav aria-label="Site">
+      <a href="about.html" class="teal">about</a>
+      <a href="books.html" class="amber">reading</a>
+      <a href="writing.html" class="teal">writing</a>
+      <a href="builds.html" class="pink">builds</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="board" aria-labelledby="board-h">
+      <div class="bh">
+        <h1 id="board-h">Departures</h1>
+        <span class="clock" id="clock"></span>
+      </div>
+      <div class="cols" aria-hidden="true"><span>NO.</span><span>DESTINATION</span><span>YEARS</span><span>STATUS</span></div>
+
+      <ul class="rows">
+        <li class="row"><a href="nyc.html">
+          <span class="flap no">01</span>
+          <span class="flap">New York</span>
+          <span class="yrs">&ndash;&ndash;&ndash;&ndash; &ndash; NOW</span>
+          <span class="st now">HOME</span>
+          <span class="dk">Home for the past decade. Morgan Stanley, Harry&rsquo;s, Little Bun, Amazon.</span>
+        </a></li>
+        <li class="row"><a href="shanghai.html">
+          <span class="flap no">02</span>
+          <span class="flap">Shanghai</span>
+          <span class="yrs">&ndash;&ndash;&ndash;&ndash;</span>
+          <span class="st">HOMETOWN</span>
+          <span class="dk">Where I grew up, near Xinzha Road in Jing&rsquo;an.</span>
+        </a></li>
+        <li class="row"><a href="paris.html">
+          <span class="flap no">03</span>
+          <span class="flap">Paris</span>
+          <span class="yrs">&ndash;&ndash;&ndash;&ndash;</span>
+          <span class="st">LIVED</span>
+          <span class="dk">My first Paris address was 52 Rue du Bac. Run the Seine at sunset.</span>
+        </a></li>
+        <li class="row"><a href="london.html">
+          <span class="flap no">04</span>
+          <span class="flap">London</span>
+          <span class="yrs">&ndash;&ndash;&ndash;&ndash;</span>
+          <span class="st">RETURNING</span>
+          <span class="dk">Marylebone High Street, a loop of the Serpentine, and the swans.</span>
+        </a></li>
+        <li class="row"><a href="madrid.html">
+          <span class="flap no">05</span>
+          <span class="flap">Madrid</span>
+          <span class="yrs">&ndash;&ndash;&ndash;&ndash;</span>
+          <span class="st">VISITED</span>
+          <span class="dk">Dinner at ten and the best sunlight on earth.</span>
+        </a></li>
+        <li class="row"><a href="grindelwald.html">
+          <span class="flap no">06</span>
+          <span class="flap">Grindelwald</span>
+          <span class="yrs">&ndash;&ndash;&ndash;&ndash;</span>
+          <span class="st">VISITED</span>
+          <span class="dk">The hike up to Bachalpsee, where 29 began.</span>
+        </a></li>
+      </ul>
+
+      <div class="foot"><span>CITIES &middot; ALL GATES</span><span class="hint">HOVER A ROW FOR DETAILS</span></div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <a href="index.html">&larr; back to the globe</a>
+  </footer>
+
+  <script>
+    // Split each flap into letter tiles. Screen readers get the whole word from the
+    // hidden copy; the tiles themselves are decoration.
+    var ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var tiles = [];
+    document.querySelectorAll('.flap').forEach(function (flap) {
+      var text = flap.textContent.trim();
+      var face = document.createElement('span');
+      face.setAttribute('aria-hidden', 'true');
+      text.split(' ').forEach(function (word, i) {
+        if (i) face.appendChild(document.createTextNode(' '));
+        var w = document.createElement('span');
+        w.className = 'w';
+        word.split('').forEach(function (c) {
+          var ch = document.createElement('span');
+          ch.className = 'ch';
+          ch.textContent = c;
+          w.appendChild(ch);
+          tiles.push(ch);
+        });
+        face.appendChild(w);
+      });
+      var sr = document.createElement('span');
+      sr.className = 'sr';
+      sr.textContent = text;
+      flap.textContent = '';
+      flap.append(sr, face);
+    });
+
+    // Shuffle through random letters before settling, like the board just updated
+    if (!still) {
+      tiles.forEach(function (el, i) {
+        var final = el.textContent, k = 0, n = 6 + Math.floor(Math.random() * 14);
+        var t = setInterval(function () {
+          el.textContent = ALPHA[Math.floor(Math.random() * ALPHA.length)];
+          if (++k > n) { el.textContent = final; clearInterval(t); }
+        }, 45 + (i % 5) * 6);
+      });
+    }
+
+    var clock = document.getElementById('clock');
+    function tick() { clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); }
+    tick();
+    setInterval(tick, 10000);
+  </script>
+  <script src="secret.js"></script>
 </body>
 </html>
