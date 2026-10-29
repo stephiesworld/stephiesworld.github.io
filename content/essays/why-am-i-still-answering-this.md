@@ -1,7 +1,7 @@
 ---
 title: "Why am I still the one answering this?"
 date: "2026-10-27"
-order: 8
+order: 2
 category: "Notes"
 dek: "Two and a half years with some of Amazon's biggest vendors, the same questions on repeat, and why I built Henry to answer them once, for everyone."
 ---

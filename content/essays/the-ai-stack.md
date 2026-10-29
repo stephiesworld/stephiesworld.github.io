@@ -1,7 +1,7 @@
 ---
 title: "The AI stack, from sand to software"
 date: "2026-10-12"
-order: 4
+order: 7
 category: "Field guides"
 dek: "Eight layers between a grain of sand and the answer on your screen, who makes each one, and where the power sits."
 ---

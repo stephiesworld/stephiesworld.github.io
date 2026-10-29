@@ -73,7 +73,96 @@
 
     <ul class="posts">
     <!-- essays:start -->
-        <li class="post"><a href="writing/investigations-not-just-code.html"><span class="no">01</span><span class="txt"><span class="cat label">Field guides &middot; 7 min</span><span class="tt">Agent workflows aren&#x27;t just for engineers</span><span class="dk">An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent: the real workflow, the taxonomy, and autonomy earned one rung at a time.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 700 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two ways to answer the same email. On the left, a sequential investigation: read the email, find the identifier, then check the ordering system, inventory, demand, catalog, pricing, and supply one at a time before writing an answer, where each step decides the next and the whole thing takes twenty minutes to several hours. On the right, a parallel investigation: read and resolve the case once, fan out to eight evidence checks that run simultaneously, then rank by evidence and draft a response for review in about two minutes." style="width:100%;height:auto;display:block;margin:2rem 0;">
+        <li class="post"><a href="writing/building-without-permission.html"><span class="no">01</span><span class="txt"><span class="cat label">Notes &middot; 3 min</span><span class="tt">Building without permission</span><span class="dk">When I ran Little Bun, every software idea waited on an engineer and a perfect spec. Building with AI took away the most expensive roadblock, and with it the pressure to get things right before I started.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
+        <li class="post"><a href="writing/why-am-i-still-answering-this.html"><span class="no">02</span><span class="txt"><span class="cat label">Notes &middot; 3 min</span><span class="tt">Why am I still the one answering this?</span><span class="dk">Two and a half years with some of Amazon&#x27;s biggest vendors, the same questions on repeat, and why I built Henry to answer them once, for everyone.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
+        <li class="post"><a href="writing/memory-architecture.html"><span class="no">03</span><span class="txt"><span class="cat label">Notes &middot; 2 min</span><span class="tt">The thread that replied in poetry</span><span class="dk">A Claude thread that started writing in poetry, the summaries that couldn&#x27;t bring it back, and what that taught me about building memory.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
+        <li class="post"><a href="writing/every-deployment-needs-a-fundraiser.html"><span class="no">04</span><span class="txt"><span class="cat label">Notes &middot; 6 min</span><span class="tt">Every AI deployment needs a fundraiser</span><span class="dk">The forward deployed engineer gets the system working. Someone else has to get people to care about it, inside the building and out, one buyer at a time. Why that second seat matters, and why it&#x27;s rarely the same person.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 470 418" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Eight behaviors sold after the contract, each with a different buyer. Try the product: a curious engineer. Use agents: that engineer, then a teammate. Change the workflow: a team lead. Create proof: whoever owns the metric. Share the proof: a manager who can get it in a room. Get another team on: a peer with their own pain. Standardize: someone who owns process. Expand: an executive who already saw the proof." style="width:100%;height:auto;display:block;margin:2rem 0;">
+  <style>
+    .db-t{font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.2em;}
+    .db-h{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.18em;fill:#a9a6b8;}
+    .db-n{font:600 11px "IBM Plex Mono",ui-monospace,monospace;}
+    .db-b{font:500 11px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .db-w{font:400 11px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
+  </style>
+  <text x="235" y="16" text-anchor="middle" class="db-t" fill="#ff7a92">EVERY STEP HAS A DIFFERENT BUYER</text>
+  <text x="16" y="48" class="db-h">THE NEXT BEHAVIOR</text>
+  <text x="192" y="48" class="db-h">WHO HAS TO SAY YES</text>
+  <g>
+    <rect x="6" y="60" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
+    <text x="16" y="83" class="db-n" fill="#ff7a92">1</text><text x="36" y="83" class="db-b">try the product</text><text x="192" y="83" class="db-w">a curious engineer</text>
+    <rect x="6" y="104" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
+    <text x="16" y="127" class="db-n" fill="#ff7a92">2</text><text x="36" y="127" class="db-b">use agents</text><text x="192" y="127" class="db-w">that engineer, then a teammate</text>
+    <rect x="6" y="148" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
+    <text x="16" y="171" class="db-n" fill="#ff7a92">3</text><text x="36" y="171" class="db-b">change the workflow</text><text x="192" y="171" class="db-w">a team lead</text>
+    <rect x="6" y="192" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
+    <text x="16" y="215" class="db-n" fill="#ff7a92">4</text><text x="36" y="215" class="db-b">create proof</text><text x="192" y="215" class="db-w">whoever owns the metric</text>
+    <rect x="6" y="236" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
+    <text x="16" y="259" class="db-n" fill="#ff7a92">5</text><text x="36" y="259" class="db-b">share the proof</text><text x="192" y="259" class="db-w">a manager who can get it in a room</text>
+    <rect x="6" y="280" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
+    <text x="16" y="303" class="db-n" fill="#ff7a92">6</text><text x="36" y="303" class="db-b">get another team on</text><text x="192" y="303" class="db-w">a peer with their own pain</text>
+    <rect x="6" y="324" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
+    <text x="16" y="347" class="db-n" fill="#ff7a92">7</text><text x="36" y="347" class="db-b">standardize</text><text x="192" y="347" class="db-w">someone who owns process</text>
+    <rect x="6" y="368" width="458" height="38" rx="5" fill="#6b2346" fill-opacity=".55" stroke="#ff7a92" stroke-width="1.2"/>
+    <text x="16" y="391" class="db-n" fill="#ff7a92">8</text><text x="36" y="391" class="db-b">expand</text><text x="192" y="391" class="db-w">an executive who already saw the proof</text>
+  </g>
+  <line x1="180" y1="60" x2="180" y2="406" stroke="#8f8cab" stroke-opacity=".3" stroke-dasharray="2 3"/>
+</svg></span></a></li>
+        <li class="post"><a href="writing/what-making-things-taught-me.html"><span class="no">05</span><span class="txt"><span class="cat label">Field guides &middot; 3 min</span><span class="tt">What making things taught me about AI agents</span><span class="dk">A razor factory and a dumpling line taught me the hardest problems in deploying AI agents: hidden judgment, what to automate, how to inspect, and what it costs.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One refund request outside the return window, broken into the seven judgments an experienced person makes before approving it, each labelled with where that knowledge lives. Three live in a record: the shipping log, the account history, and the customer's own message. Four, shown in red, live nowhere at all: the unwritten exception to the no-exceptions policy, the regional difference in how the damaged-goods rule is enforced, the knowledge of which of two disagreeing systems to trust on a given field, and the advice to log the reason in the structured field because nobody reads free text." style="width:100%;height:auto;display:block;margin:2rem 0;">
+  <defs>
+    <marker id="rf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a7a3c4"/></marker>
+  </defs>
+  <style>
+    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
+    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .no{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
+    .none{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#ff7a92;}
+  </style>
+  <text x="350" y="14" text-anchor="middle" class="band">ONE REFUND REQUEST, AT DUMPLING RESOLUTION</text>
+  <rect x="130" y="26" width="440" height="30" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
+  <text x="350" y="45" text-anchor="middle" class="smb">A REFUND REQUESTED OUTSIDE THE RETURN WINDOW</text>
+  <line x1="350" y1="56" x2="350" y2="68" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#rf)"/>
+  <text x="350" y="82" text-anchor="middle" class="lbl">THE RULE SAYS NO.</text>
+  <text x="44" y="106" class="smb">WHAT THE EXPERIENCED PERSON CHECKS ANYWAY</text>
+  <text x="486" y="106" class="smb">WHERE THAT LIVES</text>
+  <line x1="20" y1="112" x2="692" y2="112" stroke="#8f8cab" stroke-width="1.5"/>
+  <text x="24" y="136" class="no">1</text>
+  <text x="44" y="136" class="sm">Was the delay ours, or the customer's?</text>
+  <text x="486" y="136" class="smb">the shipping record</text>
+  <line x1="20" y1="146" x2="692" y2="146" stroke="#3a3f62" stroke-width="1"/>
+  <text x="24" y="170" class="no">2</text>
+  <text x="44" y="170" class="sm">Third order from an account that has never returned anything</text>
+  <text x="486" y="170" class="smb">the account history</text>
+  <line x1="20" y1="180" x2="692" y2="180" stroke="#3a3f62" stroke-width="1"/>
+  <text x="24" y="204" class="no">3</text>
+  <text x="44" y="204" class="sm">"No exceptions" has an exception for a documented delivery failure</text>
+  <text x="486" y="204" class="none">nowhere · unwritten</text>
+  <line x1="20" y1="214" x2="692" y2="214" stroke="#3a3f62" stroke-width="1"/>
+  <text x="24" y="238" class="no">4</text>
+  <text x="44" y="238" class="sm">The damaged-goods rule is loose in one region, strict in another</text>
+  <text x="486" y="238" class="none">nowhere · local practice</text>
+  <line x1="20" y1="248" x2="692" y2="248" stroke="#3a3f62" stroke-width="1"/>
+  <text x="24" y="272" class="no">5</text>
+  <text x="44" y="272" class="sm">Two systems disagree on the date; one is right about that field</text>
+  <text x="486" y="272" class="none">nowhere · system lore</text>
+  <line x1="20" y1="282" x2="692" y2="282" stroke="#3a3f62" stroke-width="1"/>
+  <text x="24" y="306" class="no">6</text>
+  <text x="44" y="306" class="sm">They mentioned it was a gift · changes nothing, changes the reply</text>
+  <text x="486" y="306" class="smb">the message itself</text>
+  <line x1="20" y1="316" x2="692" y2="316" stroke="#3a3f62" stroke-width="1"/>
+  <text x="24" y="340" class="no">7</text>
+  <text x="44" y="340" class="sm">Log the reason in the structured field; nobody reads free text</text>
+  <text x="486" y="340" class="none">nowhere · a colleague, once</text>
+  <line x1="20" y1="350" x2="692" y2="350" stroke="#8f8cab" stroke-width="1.5"/>
+  <rect x="130" y="364" width="440" height="30" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
+  <text x="350" y="383" text-anchor="middle" class="smb">APPROVED · in under a minute</text>
+  <line x1="20" y1="414" x2="692" y2="414" stroke="#8f8cab" stroke-width="1"/>
+  <text x="20" y="434" class="none">Four of the seven are written down nowhere at all.</text>
+  <text x="20" y="450" class="sm">That is the filling. A system that automates this either gets told those four, or it reads the policy, applies the rule,</text>
+  <text x="20" y="464" class="sm">and says no · correctly, by the only standard it was given.</text>
+</svg></span></a></li>
+        <li class="post"><a href="writing/investigations-not-just-code.html"><span class="no">06</span><span class="txt"><span class="cat label">Field guides &middot; 7 min</span><span class="tt">Agent workflows aren&#x27;t just for engineers</span><span class="dk">An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent: the real workflow, the taxonomy, and autonomy earned one rung at a time.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 700 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two ways to answer the same email. On the left, a sequential investigation: read the email, find the identifier, then check the ordering system, inventory, demand, catalog, pricing, and supply one at a time before writing an answer, where each step decides the next and the whole thing takes twenty minutes to several hours. On the right, a parallel investigation: read and resolve the case once, fan out to eight evidence checks that run simultaneously, then rank by evidence and draft a response for review in about two minutes." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <defs>
     <marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a7a3c4"/></marker>
     <marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff7a92"/></marker>
@@ -153,101 +242,7 @@
   <text x="8" y="424" class="sm">The fan-out is also less suggestible. A person who sees high inventory first tends to stop looking, because they</text>
   <text x="8" y="438" class="sm">have found an answer that fits. The parallel run still checks whether that inventory is stranded, and notices when it is.</text>
 </svg></span></a></li>
-        <li class="post"><a href="writing/what-making-things-taught-me.html"><span class="no">02</span><span class="txt"><span class="cat label">Field guides &middot; 3 min</span><span class="tt">What making things taught me about AI agents</span><span class="dk">A razor factory and a dumpling line taught me the hardest problems in deploying AI agents: hidden judgment, what to automate, how to inspect, and what it costs.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One refund request outside the return window, broken into the seven judgments an experienced person makes before approving it, each labelled with where that knowledge lives. Three live in a record: the shipping log, the account history, and the customer's own message. Four, shown in red, live nowhere at all: the unwritten exception to the no-exceptions policy, the regional difference in how the damaged-goods rule is enforced, the knowledge of which of two disagreeing systems to trust on a given field, and the advice to log the reason in the structured field because nobody reads free text." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <defs>
-    <marker id="rf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a7a3c4"/></marker>
-  </defs>
-  <style>
-    .lbl{font:600 10px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .sm{font:400 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-    .smb{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .band{font:700 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .no{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-    .none{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;fill:#ff7a92;}
-  </style>
-  <text x="350" y="14" text-anchor="middle" class="band">ONE REFUND REQUEST, AT DUMPLING RESOLUTION</text>
-  <rect x="130" y="26" width="440" height="30" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="350" y="45" text-anchor="middle" class="smb">A REFUND REQUESTED OUTSIDE THE RETURN WINDOW</text>
-  <line x1="350" y1="56" x2="350" y2="68" stroke="#8f8cab" stroke-width="1.2" marker-end="url(#rf)"/>
-  <text x="350" y="82" text-anchor="middle" class="lbl">THE RULE SAYS NO.</text>
-  <text x="44" y="106" class="smb">WHAT THE EXPERIENCED PERSON CHECKS ANYWAY</text>
-  <text x="486" y="106" class="smb">WHERE THAT LIVES</text>
-  <line x1="20" y1="112" x2="692" y2="112" stroke="#8f8cab" stroke-width="1.5"/>
-  <text x="24" y="136" class="no">1</text>
-  <text x="44" y="136" class="sm">Was the delay ours, or the customer's?</text>
-  <text x="486" y="136" class="smb">the shipping record</text>
-  <line x1="20" y1="146" x2="692" y2="146" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="170" class="no">2</text>
-  <text x="44" y="170" class="sm">Third order from an account that has never returned anything</text>
-  <text x="486" y="170" class="smb">the account history</text>
-  <line x1="20" y1="180" x2="692" y2="180" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="204" class="no">3</text>
-  <text x="44" y="204" class="sm">"No exceptions" has an exception for a documented delivery failure</text>
-  <text x="486" y="204" class="none">nowhere · unwritten</text>
-  <line x1="20" y1="214" x2="692" y2="214" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="238" class="no">4</text>
-  <text x="44" y="238" class="sm">The damaged-goods rule is loose in one region, strict in another</text>
-  <text x="486" y="238" class="none">nowhere · local practice</text>
-  <line x1="20" y1="248" x2="692" y2="248" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="272" class="no">5</text>
-  <text x="44" y="272" class="sm">Two systems disagree on the date; one is right about that field</text>
-  <text x="486" y="272" class="none">nowhere · system lore</text>
-  <line x1="20" y1="282" x2="692" y2="282" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="306" class="no">6</text>
-  <text x="44" y="306" class="sm">They mentioned it was a gift · changes nothing, changes the reply</text>
-  <text x="486" y="306" class="smb">the message itself</text>
-  <line x1="20" y1="316" x2="692" y2="316" stroke="#3a3f62" stroke-width="1"/>
-  <text x="24" y="340" class="no">7</text>
-  <text x="44" y="340" class="sm">Log the reason in the structured field; nobody reads free text</text>
-  <text x="486" y="340" class="none">nowhere · a colleague, once</text>
-  <line x1="20" y1="350" x2="692" y2="350" stroke="#8f8cab" stroke-width="1.5"/>
-  <rect x="130" y="364" width="440" height="30" fill="#262b4a" stroke="#8f8cab" stroke-width="1.3"/>
-  <text x="350" y="383" text-anchor="middle" class="smb">APPROVED · in under a minute</text>
-  <line x1="20" y1="414" x2="692" y2="414" stroke="#8f8cab" stroke-width="1"/>
-  <text x="20" y="434" class="none">Four of the seven are written down nowhere at all.</text>
-  <text x="20" y="450" class="sm">That is the filling. A system that automates this either gets told those four, or it reads the policy, applies the rule,</text>
-  <text x="20" y="464" class="sm">and says no · correctly, by the only standard it was given.</text>
-</svg></span></a></li>
-        <li class="post"><a href="writing/customer-feedback-start-to-finish.html"><span class="no">03</span><span class="txt"><span class="cat label">Field guides &middot; 2 min</span><span class="tt">Customer feedback, start to finish</span><span class="dk">What an AI first pass does to 10,000 pieces of feedback, why a person still reviews it, and why the answer belongs in a graph.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 680 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A funnel: 10,000 raw records shrink to 8,500 with substance, 5,500 after deduplication, about 180 candidate clusters, about 40 new issues, and roughly 18 items a human deeply reads · 15 ambiguous clusters plus 3 escalations." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <style>
-    .fn-n{font:700 13px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .fn-nw{font:700 13px "IBM Plex Mono",ui-monospace,monospace;fill:#fff4e6;}
-    .fn-l{font:400 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
-    .fn-s{font:400 9px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
-  </style>
-  <rect x="20" y="16" width="640" height="50" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="38" text-anchor="middle" class="fn-n">10,000</text>
-  <text x="340" y="54" text-anchor="middle" class="fn-l">raw records · one week, every channel</text>
-  <line x1="340" y1="66" x2="340" y2="82" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="78" class="fn-s">− 1,500 with nothing actionable</text>
-  <rect x="70" y="82" width="540" height="50" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="104" text-anchor="middle" class="fn-n">~8,500</text>
-  <text x="340" y="120" text-anchor="middle" class="fn-l">contain something actionable</text>
-  <line x1="340" y1="132" x2="340" y2="148" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="144" class="fn-s">− 3,000 near-duplicates collapse</text>
-  <rect x="125" y="148" width="430" height="50" rx="5" fill="#2b3054" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="170" text-anchor="middle" class="fn-n">~5,500</text>
-  <text x="340" y="186" text-anchor="middle" class="fn-l">substantive, after dedupe</text>
-  <line x1="340" y1="198" x2="340" y2="214" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="210" class="fn-s">semantic clustering, evidence attached</text>
-  <rect x="220" y="214" width="240" height="50" rx="5" fill="#31365c" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="236" text-anchor="middle" class="fn-n">~180</text>
-  <text x="340" y="252" text-anchor="middle" class="fn-l">candidate clusters</text>
-  <line x1="340" y1="264" x2="340" y2="280" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="276" class="fn-s">120 attach to existing work instead</text>
-  <rect x="265" y="280" width="150" height="50" rx="5" fill="#383d66" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="302" text-anchor="middle" class="fn-n">~40</text>
-  <text x="340" y="318" text-anchor="middle" class="fn-l">genuinely new issues</text>
-  <line x1="340" y1="330" x2="340" y2="346" stroke="#8f8cab" stroke-width="1.1"/>
-  <text x="354" y="342" class="fn-s">25 route with high confidence</text>
-  <rect x="294" y="346" width="92" height="50" rx="5" fill="#6b2346" stroke="#8f8cab" stroke-width="1.2"/>
-  <text x="340" y="376" text-anchor="middle" class="fn-nw">~18</text>
-  <text x="400" y="368" class="fn-n" fill="#ff7a92">deeply read by humans</text>
-  <text x="400" y="384" class="fn-l">15 ambiguous clusters + 3 escalations</text>
-  <text x="20" y="426" class="fn-s">Bar widths are compressed · drawn to true scale, the bottom rows would be invisible, which is the point.</text>
-  <text x="20" y="440" class="fn-s">Everything outside the red band gets sampled and audited rather than read.</text>
-</svg></span></a></li>
-        <li class="post"><a href="writing/the-ai-stack.html"><span class="no">04</span><span class="txt"><span class="cat label">Field guides &middot; 10 min</span><span class="tt">The AI stack, from sand to software</span><span class="dk">Eight layers between a grain of sand and the answer on your screen, who makes each one, and where the power sits.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 680 552" xmlns="http://www.w3.org/2000/svg" data-wide role="img" aria-label="The AI stack as eight layers. Software: applications, tooling, models, inference. Infrastructure: cloud, data centers. Hardware: chips and systems, manufacturing. A prompt travels down from you to the chips and the answer streams back up." style="width:100%;height:auto;display:block;margin:2rem 0;">
+        <li class="post"><a href="writing/the-ai-stack.html"><span class="no">07</span><span class="txt"><span class="cat label">Field guides &middot; 10 min</span><span class="tt">The AI stack, from sand to software</span><span class="dk">Eight layers between a grain of sand and the answer on your screen, who makes each one, and where the power sits.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 680 552" xmlns="http://www.w3.org/2000/svg" data-wide role="img" aria-label="The AI stack as eight layers. Software: applications, tooling, models, inference. Infrastructure: cloud, data centers. Hardware: chips and systems, manufacturing. A prompt travels down from you to the chips and the answer streams back up." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <style>
     .st-n{font:600 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.08em;}
     .st-d{font:italic 400 10px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
@@ -332,8 +327,46 @@
   <text x="62" y="505.0" text-anchor="end" class="st-k" style="font-size:8px;fill:#a9a6b8">earlier</text>
   <line x1="66" y1="469" x2="66" y2="515" stroke="#ffb15c" stroke-opacity=".5" stroke-dasharray="1 3"/>
 </svg></span></a></li>
-        <li class="post"><a href="writing/memory-architecture.html"><span class="no">05</span><span class="txt"><span class="cat label">Notes &middot; 2 min</span><span class="tt">The thread that replied in poetry</span><span class="dk">A Claude thread that started writing in poetry, the summaries that couldn&#x27;t bring it back, and what that taught me about building memory.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
-        <li class="post"><a href="writing/who-answers-the-phone.html"><span class="no">06</span><span class="txt"><span class="cat label">Notes &middot; 7 min</span><span class="tt">Who&#x27;s going to answer the phone</span><span class="dk">A map of the voice agent market in fall 2026: who sells models, who sells platforms, who sells finished agents, and why they are all walking toward the same phone line.</span></span><span class="thumb" aria-hidden="true"><svg data-wide viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Market map of voice agent companies. Vertical axis: how finished the product is, from models at the bottom to builder platforms to finished agents at the top. Horizontal axis: who buys, from developers to any business to one industry. Models: OpenAI Realtime, Gemini Live, Deepgram, Cartesia, Mistral Voxtral. Platforms: Vapi, Retell, LiveKit, Synthflow, Bland, ElevenLabs. Finished agents: Sierra, Decagon, Parloa, PolyAI, and the vertical players Hippocratic AI, HappyRobot and Assort Health. Pink arrows show ElevenLabs, Bland, Mistral and HappyRobot all moving toward the enterprise phone line at the top." style="width:100%;height:auto;display:block;margin:2rem 0;">
+        <li class="post"><a href="writing/customer-feedback-start-to-finish.html"><span class="no">08</span><span class="txt"><span class="cat label">Field guides &middot; 2 min</span><span class="tt">Customer feedback, start to finish</span><span class="dk">What an AI first pass does to 10,000 pieces of feedback, why a person still reviews it, and why the answer belongs in a graph.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 680 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A funnel: 10,000 raw records shrink to 8,500 with substance, 5,500 after deduplication, about 180 candidate clusters, about 40 new issues, and roughly 18 items a human deeply reads · 15 ambiguous clusters plus 3 escalations." style="width:100%;height:auto;display:block;margin:2rem 0;">
+  <style>
+    .fn-n{font:700 13px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
+    .fn-nw{font:700 13px "IBM Plex Mono",ui-monospace,monospace;fill:#fff4e6;}
+    .fn-l{font:400 9.5px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
+    .fn-s{font:400 9px "IBM Plex Mono",ui-monospace,monospace;fill:#a9a6b8;}
+  </style>
+  <rect x="20" y="16" width="640" height="50" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
+  <text x="340" y="38" text-anchor="middle" class="fn-n">10,000</text>
+  <text x="340" y="54" text-anchor="middle" class="fn-l">raw records · one week, every channel</text>
+  <line x1="340" y1="66" x2="340" y2="82" stroke="#8f8cab" stroke-width="1.1"/>
+  <text x="354" y="78" class="fn-s">− 1,500 with nothing actionable</text>
+  <rect x="70" y="82" width="540" height="50" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-width="1.2"/>
+  <text x="340" y="104" text-anchor="middle" class="fn-n">~8,500</text>
+  <text x="340" y="120" text-anchor="middle" class="fn-l">contain something actionable</text>
+  <line x1="340" y1="132" x2="340" y2="148" stroke="#8f8cab" stroke-width="1.1"/>
+  <text x="354" y="144" class="fn-s">− 3,000 near-duplicates collapse</text>
+  <rect x="125" y="148" width="430" height="50" rx="5" fill="#2b3054" stroke="#8f8cab" stroke-width="1.2"/>
+  <text x="340" y="170" text-anchor="middle" class="fn-n">~5,500</text>
+  <text x="340" y="186" text-anchor="middle" class="fn-l">substantive, after dedupe</text>
+  <line x1="340" y1="198" x2="340" y2="214" stroke="#8f8cab" stroke-width="1.1"/>
+  <text x="354" y="210" class="fn-s">semantic clustering, evidence attached</text>
+  <rect x="220" y="214" width="240" height="50" rx="5" fill="#31365c" stroke="#8f8cab" stroke-width="1.2"/>
+  <text x="340" y="236" text-anchor="middle" class="fn-n">~180</text>
+  <text x="340" y="252" text-anchor="middle" class="fn-l">candidate clusters</text>
+  <line x1="340" y1="264" x2="340" y2="280" stroke="#8f8cab" stroke-width="1.1"/>
+  <text x="354" y="276" class="fn-s">120 attach to existing work instead</text>
+  <rect x="265" y="280" width="150" height="50" rx="5" fill="#383d66" stroke="#8f8cab" stroke-width="1.2"/>
+  <text x="340" y="302" text-anchor="middle" class="fn-n">~40</text>
+  <text x="340" y="318" text-anchor="middle" class="fn-l">genuinely new issues</text>
+  <line x1="340" y1="330" x2="340" y2="346" stroke="#8f8cab" stroke-width="1.1"/>
+  <text x="354" y="342" class="fn-s">25 route with high confidence</text>
+  <rect x="294" y="346" width="92" height="50" rx="5" fill="#6b2346" stroke="#8f8cab" stroke-width="1.2"/>
+  <text x="340" y="376" text-anchor="middle" class="fn-nw">~18</text>
+  <text x="400" y="368" class="fn-n" fill="#ff7a92">deeply read by humans</text>
+  <text x="400" y="384" class="fn-l">15 ambiguous clusters + 3 escalations</text>
+  <text x="20" y="426" class="fn-s">Bar widths are compressed · drawn to true scale, the bottom rows would be invisible, which is the point.</text>
+  <text x="20" y="440" class="fn-s">Everything outside the red band gets sampled and audited rather than read.</text>
+</svg></span></a></li>
+        <li class="post"><a href="writing/who-answers-the-phone.html"><span class="no">09</span><span class="txt"><span class="cat label">Notes &middot; 7 min</span><span class="tt">Who&#x27;s going to answer the phone</span><span class="dk">A map of the voice agent market in fall 2026: who sells models, who sells platforms, who sells finished agents, and why they are all walking toward the same phone line.</span></span><span class="thumb" aria-hidden="true"><svg data-wide viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Market map of voice agent companies. Vertical axis: how finished the product is, from models at the bottom to builder platforms to finished agents at the top. Horizontal axis: who buys, from developers to any business to one industry. Models: OpenAI Realtime, Gemini Live, Deepgram, Cartesia, Mistral Voxtral. Platforms: Vapi, Retell, LiveKit, Synthflow, Bland, ElevenLabs. Finished agents: Sierra, Decagon, Parloa, PolyAI, and the vertical players Hippocratic AI, HappyRobot and Assort Health. Pink arrows show ElevenLabs, Bland, Mistral and HappyRobot all moving toward the enterprise phone line at the top." style="width:100%;height:auto;display:block;margin:2rem 0;">
   <style>
     .vm-row{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#9a98a8;letter-spacing:.08em;}
     .vm-col{font:600 9px "IBM Plex Mono",ui-monospace,monospace;fill:#9a98a8;letter-spacing:.1em;}
@@ -428,39 +461,6 @@
   <circle cx="290" cy="522" r="5" fill="#36ad70"/><text x="300" y="525" class="vm-s">finished agents</text>
   <line x1="404" y1="522" x2="428" y2="522" stroke="#ff7a92" stroke-width="1.3" stroke-dasharray="4 5"/><text x="434" y="525" class="vm-s">where they're heading</text>
 </svg></span></a></li>
-        <li class="post"><a href="writing/every-deployment-needs-a-fundraiser.html"><span class="no">07</span><span class="txt"><span class="cat label">Notes &middot; 6 min</span><span class="tt">Every AI deployment needs a fundraiser</span><span class="dk">The forward deployed engineer gets the system working. Someone else has to get people to care about it, inside the building and out, one buyer at a time. Why that second seat matters, and why it&#x27;s rarely the same person.</span></span><span class="thumb" aria-hidden="true"><svg viewBox="0 0 470 418" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Eight behaviors sold after the contract, each with a different buyer. Try the product: a curious engineer. Use agents: that engineer, then a teammate. Change the workflow: a team lead. Create proof: whoever owns the metric. Share the proof: a manager who can get it in a room. Get another team on: a peer with their own pain. Standardize: someone who owns process. Expand: an executive who already saw the proof." style="width:100%;height:auto;display:block;margin:2rem 0;">
-  <style>
-    .db-t{font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.2em;}
-    .db-h{font:600 8.5px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.18em;fill:#a9a6b8;}
-    .db-n{font:600 11px "IBM Plex Mono",ui-monospace,monospace;}
-    .db-b{font:500 11px "IBM Plex Mono",ui-monospace,monospace;fill:#f3ece2;}
-    .db-w{font:400 11px "IBM Plex Mono",ui-monospace,monospace;fill:#c4c0cf;}
-  </style>
-  <text x="235" y="16" text-anchor="middle" class="db-t" fill="#ff7a92">EVERY STEP HAS A DIFFERENT BUYER</text>
-  <text x="16" y="48" class="db-h">THE NEXT BEHAVIOR</text>
-  <text x="192" y="48" class="db-h">WHO HAS TO SAY YES</text>
-  <g>
-    <rect x="6" y="60" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="83" class="db-n" fill="#ff7a92">1</text><text x="36" y="83" class="db-b">try the product</text><text x="192" y="83" class="db-w">a curious engineer</text>
-    <rect x="6" y="104" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="127" class="db-n" fill="#ff7a92">2</text><text x="36" y="127" class="db-b">use agents</text><text x="192" y="127" class="db-w">that engineer, then a teammate</text>
-    <rect x="6" y="148" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="171" class="db-n" fill="#ff7a92">3</text><text x="36" y="171" class="db-b">change the workflow</text><text x="192" y="171" class="db-w">a team lead</text>
-    <rect x="6" y="192" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="215" class="db-n" fill="#ff7a92">4</text><text x="36" y="215" class="db-b">create proof</text><text x="192" y="215" class="db-w">whoever owns the metric</text>
-    <rect x="6" y="236" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="259" class="db-n" fill="#ff7a92">5</text><text x="36" y="259" class="db-b">share the proof</text><text x="192" y="259" class="db-w">a manager who can get it in a room</text>
-    <rect x="6" y="280" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="303" class="db-n" fill="#ff7a92">6</text><text x="36" y="303" class="db-b">get another team on</text><text x="192" y="303" class="db-w">a peer with their own pain</text>
-    <rect x="6" y="324" width="458" height="38" rx="5" fill="#262b4a" stroke="#8f8cab" stroke-opacity=".55"/>
-    <text x="16" y="347" class="db-n" fill="#ff7a92">7</text><text x="36" y="347" class="db-b">standardize</text><text x="192" y="347" class="db-w">someone who owns process</text>
-    <rect x="6" y="368" width="458" height="38" rx="5" fill="#6b2346" fill-opacity=".55" stroke="#ff7a92" stroke-width="1.2"/>
-    <text x="16" y="391" class="db-n" fill="#ff7a92">8</text><text x="36" y="391" class="db-b">expand</text><text x="192" y="391" class="db-w">an executive who already saw the proof</text>
-  </g>
-  <line x1="180" y1="60" x2="180" y2="406" stroke="#8f8cab" stroke-opacity=".3" stroke-dasharray="2 3"/>
-</svg></span></a></li>
-        <li class="post"><a href="writing/why-am-i-still-answering-this.html"><span class="no">08</span><span class="txt"><span class="cat label">Notes &middot; 3 min</span><span class="tt">Why am I still the one answering this?</span><span class="dk">Two and a half years with some of Amazon&#x27;s biggest vendors, the same questions on repeat, and why I built Henry to answer them once, for everyone.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
-        <li class="post"><a href="writing/building-without-permission.html"><span class="no">09</span><span class="txt"><span class="cat label">Notes &middot; 3 min</span><span class="tt">Building without permission</span><span class="dk">When I ran Little Bun, every software idea waited on an engineer and a perfect spec. Building with AI took away the most expensive roadblock, and with it the pressure to get things right before I started.</span></span><span class="thumb none" aria-hidden="true"></span></a></li>
         <li class="ref"><a href="writing/cheat-sheet.html"><span class="tt">AI Systems Cheat Sheet</span><span class="dk">Harnesses and evals, plainly.</span><span class="ar label">&rarr;</span></a></li>    <!-- essays:end -->
     </ul>
 

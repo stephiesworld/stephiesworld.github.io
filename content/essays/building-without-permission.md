@@ -1,7 +1,7 @@
 ---
 title: "Building without permission"
 date: "2026-10-28"
-order: 9
+order: 1
 category: "Notes"
 dek: "When I ran Little Bun, every software idea waited on an engineer and a perfect spec. Building with AI took away the most expensive roadblock, and with it the pressure to get things right before I started."
 ---

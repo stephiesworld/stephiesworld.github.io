@@ -1,7 +1,7 @@
 ---
 title: "Agent workflows aren't just for engineers"
 date: "2026-07-22"
-order: 1
+order: 6
 category: "Field guides"
 dek: "An investigation I ran by hand for two and a half years, and what it would take to hand it to an agent: the real workflow, the taxonomy, and autonomy earned one rung at a time."
 ---

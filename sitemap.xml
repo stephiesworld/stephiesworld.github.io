@@ -61,37 +61,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://stephiesworld.com/writing/investigations-not-just-code.html</loc>
-    <lastmod>2026-10-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/what-making-things-taught-me.html</loc>
-    <lastmod>2026-10-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/customer-feedback-start-to-finish.html</loc>
-    <lastmod>2026-10-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/the-ai-stack.html</loc>
-    <lastmod>2026-10-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/memory-architecture.html</loc>
-    <lastmod>2026-10-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/who-answers-the-phone.html</loc>
-    <lastmod>2026-10-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stephiesworld.com/writing/every-deployment-needs-a-fundraiser.html</loc>
+    <loc>https://stephiesworld.com/writing/building-without-permission.html</loc>
     <lastmod>2026-10-28</lastmod>
     <priority>0.7</priority>
   </url>
@@ -101,7 +71,37 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://stephiesworld.com/writing/building-without-permission.html</loc>
+    <loc>https://stephiesworld.com/writing/memory-architecture.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stephiesworld.com/writing/every-deployment-needs-a-fundraiser.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stephiesworld.com/writing/what-making-things-taught-me.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stephiesworld.com/writing/investigations-not-just-code.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stephiesworld.com/writing/the-ai-stack.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stephiesworld.com/writing/customer-feedback-start-to-finish.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stephiesworld.com/writing/who-answers-the-phone.html</loc>
     <lastmod>2026-10-28</lastmod>
     <priority>0.7</priority>
   </url>

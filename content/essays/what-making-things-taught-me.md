@@ -1,7 +1,7 @@
 ---
 title: "What making things taught me about AI agents"
 date: "2026-07-22"
-order: 2
+order: 5
 category: "Field guides"
 dek: "A razor factory and a dumpling line taught me the hardest problems in deploying AI agents: hidden judgment, what to automate, how to inspect, and what it costs."
 ---

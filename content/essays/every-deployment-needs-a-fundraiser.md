@@ -1,7 +1,7 @@
 ---
 title: "Every AI deployment needs a fundraiser"
 date: "2026-10-26"
-order: 7
+order: 4
 category: "Notes"
 dek: "The forward deployed engineer gets the system working. Someone else has to get people to care about it, inside the building and out, one buyer at a time. Why that second seat matters, and why it's rarely the same person."
 ---

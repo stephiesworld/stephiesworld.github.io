@@ -1,7 +1,7 @@
 ---
 title: "Who's going to answer the phone"
 date: "2026-10-12"
-order: 6
+order: 9
 category: "Notes"
 dek: "A map of the voice agent market in fall 2026: who sells models, who sells platforms, who sells finished agents, and why they are all walking toward the same phone line."
 ---
