@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cities — Stephie</title>
-  <meta name="description" content="A departures board of the cities in Stephie's world.">
+  <meta name="description" content="A destinations board of the places that matter to Stephie.">
   <meta property="og:title" content="Cities — Stephie">
-  <meta property="og:description" content="A departures board of the cities in Stephie's world.">
+  <meta property="og:description" content="A destinations board of the places that matter to Stephie.">
   <link rel="canonical" href="https://stephiesworld.com/cities.html">
   <meta property="og:image" content="https://stephiesworld.com/og.png">
   <meta property="og:image:width" content="1200">
@@ -26,12 +26,12 @@
     .bh h1 { font-family: var(--neon); font-weight: 400; font-size: 2.4rem; letter-spacing: 0.14em; text-transform: uppercase; color: #ffcf8a; text-shadow: 0 0 10px rgba(255, 177, 92, 0.7), 0 0 26px rgba(255, 177, 92, 0.35); }
     .clock { font-family: 'VT323', monospace; font-size: 1.8rem; color: var(--amber); text-shadow: 0 0 8px rgba(255, 177, 92, 0.6); white-space: nowrap; }
 
-    .cols, .row a { display: grid; grid-template-columns: 3.2rem 1fr 9rem 9.5rem; gap: 1rem; align-items: center; }
+    .cols, .leg { display: grid; grid-template-columns: 3.2rem 1fr 10.5rem 9.5rem; gap: 0 1rem; align-items: center; }
     .cols { padding: 0.9rem 0.4rem 0.4rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; color: #7d7a92; }
     .rows { list-style: none; }
     .row { border-top: 1px dashed rgba(255, 255, 255, 0.06); }
-    .row a { padding: 0.75rem 0.4rem; transition: background 0.2s ease; }
-    .row a:hover, .row a:focus-visible { background: rgba(255, 177, 92, 0.05); }
+    .leg { padding: 0.75rem 0.4rem; transition: background 0.2s ease; }
+    .leg:hover, .leg:focus-visible { background: rgba(255, 177, 92, 0.05); }
 
     /* Each letter is its own flap tile; words stay whole so long names wrap between them */
     .flap { font-family: 'VT323', monospace; font-size: 1.75rem; line-height: 1.25; letter-spacing: 0.04em; text-transform: uppercase; color: #ffc773; text-shadow: 0 0 6px rgba(255, 177, 92, 0.55); }
@@ -44,7 +44,7 @@
     .st { font-family: 'VT323', monospace; font-size: 1.4rem; letter-spacing: 0.06em; color: var(--delphi); text-shadow: 0 0 6px rgba(141, 255, 160, 0.5); }
     .st.now { color: var(--pink); text-shadow: 0 0 8px rgba(255, 122, 146, 0.7); animation: blink 1.4s steps(2) infinite; }
     .dk { grid-column: 2 / -1; max-height: 0; overflow: hidden; font-family: var(--read); font-size: 1.02rem; line-height: 1.55; color: var(--ink-dim); transition: max-height 0.35s ease, padding 0.35s ease; }
-    .row a:hover .dk, .row a:focus-visible .dk { max-height: 6rem; padding-top: 0.5rem; }
+    .leg:hover .dk, .leg:focus-visible .dk { max-height: 6rem; padding-top: 0.5rem; }
 
     .foot { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; color: #7d7a92; }
 
@@ -57,7 +57,7 @@
       .bh h1 { font-size: 1.6rem; }
       .clock { font-size: 1.3rem; }
       .cols { display: none; }
-      .row a { grid-template-columns: 2.4rem 1fr; gap: 0.2rem 0.7rem; }
+      .leg { grid-template-columns: 2.4rem 1fr; gap: 0.2rem 0.7rem; }
       .flap { font-size: 1.35rem; }
       .yrs, .st { grid-column: 2; font-size: 1.1rem; }
       .dk { max-height: none; padding-top: 0.3rem; font-size: 0.95rem; }
@@ -80,57 +80,71 @@
   <main class="page">
     <section class="board" aria-labelledby="board-h">
       <div class="bh">
-        <h1 id="board-h">Departures</h1>
+        <h1 id="board-h">Destinations</h1>
         <span class="clock" id="clock"></span>
       </div>
       <div class="cols" aria-hidden="true"><span>NO.</span><span>DESTINATION</span><span>YEARS</span><span>STATUS</span></div>
 
       <ul class="rows">
-        <li class="row"><a href="nyc.html">
+        <li class="row"><a class="leg" href="nyc.html">
           <span class="flap no">01</span>
           <span class="flap">New York</span>
           <span class="yrs">2017 &ndash; NOW</span>
           <span class="st now">NOW BOARDING</span>
-          <span class="dk">Home for the past decade. Morgan Stanley, Harry&rsquo;s, Little Bun, Amazon.</span>
+          <span class="dk">Home for the past decade. Will always be home.</span>
         </a></li>
-        <li class="row"><a href="shanghai.html">
+        <li class="row"><a class="leg" href="shanghai.html">
           <span class="flap no">02</span>
           <span class="flap">Shanghai</span>
           <span class="yrs">1995&ndash;2012, 2015</span>
           <span class="st">DEPARTED</span>
           <span class="dk">Where I grew up, near Xinzha Road in Jing&rsquo;an, and where I spent every summer through high school.</span>
         </a></li>
-        <li class="row"><a href="paris.html">
+        <li class="row"><a class="leg" href="paris.html">
           <span class="flap no">03</span>
           <span class="flap">Paris</span>
           <span class="yrs">2025</span>
           <span class="st">ON TIME</span>
-          <span class="dk">My first Paris address was 52 Rue du Bac. Run the Seine at sunset.</span>
+          <span class="dk">Home away from home.</span>
         </a></li>
-        <li class="row"><a href="london.html">
+        <li class="row"><a class="leg" href="london.html">
           <span class="flap no">04</span>
           <span class="flap">London</span>
           <span class="yrs">2026</span>
           <span class="st">ON TIME</span>
-          <span class="dk">Marylebone High Street, a loop of the Serpentine, and the swans.</span>
+          <span class="dk">Spending a lot of time here now.</span>
         </a></li>
-        <li class="row"><a href="madrid.html">
+        <li class="row"><a class="leg" href="madrid.html">
           <span class="flap no">05</span>
           <span class="flap">Madrid</span>
           <span class="yrs">2021</span>
           <span class="st">LANDED</span>
-          <span class="dk">Dinner at ten and the best sunlight on earth.</span>
+          <span class="dk">The first place I visited solo.</span>
         </a></li>
-        <li class="row"><a href="grindelwald.html">
+        <li class="row"><a class="leg" href="grindelwald.html">
           <span class="flap no">06</span>
           <span class="flap">Grindelwald</span>
           <span class="yrs">2022</span>
           <span class="st">LANDED</span>
           <span class="dk">The hike up to Bachalpsee, where 29 began.</span>
         </a></li>
+        <li class="row"><div class="leg">
+          <span class="flap no">07</span>
+          <span class="flap">Tokyo</span>
+          <span class="yrs">2020 &amp; MANY MORE</span>
+          <span class="st">ON TIME</span>
+          <span class="dk">A memorable city, and also the name of my first Siberian cat.</span>
+        </div></li>
+        <li class="row"><div class="leg">
+          <span class="flap no">08</span>
+          <span class="flap">Milan</span>
+          <span class="yrs">&ndash;&ndash;&ndash;&ndash;</span>
+          <span class="st">LANDED</span>
+          <span class="dk">My favorite city in Italy (where my surname is from!) and the name of my second Siberian cat.</span>
+        </div></li>
       </ul>
 
-      <div class="foot"><span>CITIES &middot; ALL GATES</span><span class="hint">HOVER A ROW FOR DETAILS</span></div>
+      <div class="foot"><span>PLACES THAT MATTER &middot; ALL GATES</span><span class="hint">HOVER A ROW FOR DETAILS</span></div>
     </section>
   </main>
 
