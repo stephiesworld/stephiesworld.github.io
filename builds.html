@@ -18,41 +18,70 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tilt+Neon&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="dusk.css?v=20261008">
   <style>
-    .page { max-width: 1080px; margin: 0 auto; padding: 3rem 2rem 2rem; }
+    .page { max-width: 1080px; margin: 0 auto; padding: 2.4rem 2rem 2rem; }
+    .intro { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
     .intro h1 { font-size: 2.6rem; }
-    .intro p { margin-top: 0.8rem; font-size: 1.15rem; color: var(--ink-dim); }
-    .build { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.8rem; align-items: start; padding: 3rem 0; border-top: 1px solid var(--line); }
-    .intro + .build { margin-top: 2.6rem; }
+    .intro p { margin-top: 0.8rem; max-width: 28em; font-size: 1.15rem; color: var(--ink-dim); }
+    .index { font-family: var(--mono); font-size: 0.72rem; line-height: 2; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); text-align: right; }
+    .index a { color: var(--ink-dim); transition: color 0.2s ease, text-shadow 0.2s ease; }
+    .index a:hover { color: var(--c); text-shadow: 0 0 6px var(--c); }
+    .index b { margin-right: 0.6rem; font-weight: 400; color: var(--ink-faint); }
+
+    /* Each build as a case file: why I made it, what it does, and a window onto it */
     .build.henry { --c: var(--henry); } .build.delphi { --c: var(--delphi); } .build.cherry { --c: var(--cherry); }
-    .shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 6px; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
-    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
-    .delphi .shot img { filter: brightness(0.8) contrast(0.95); transition: filter 0.3s ease; }
-    .delphi .shot:hover img { filter: none; }
-    .shot:hover { transform: translateY(-2px); border-color: var(--c); box-shadow: 0 0 0 1px var(--c), 0 0 30px color-mix(in srgb, var(--c) 25%, transparent); }
-    .story { min-width: 0; }
-    .story .num { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-faint); }
-    .story .sign-name { margin-top: 0.4rem; font-size: 2.2rem; }
-    .story .what { margin-top: 0.4rem; font-style: italic; font-size: 1.1rem; color: var(--ink-faint); }
-    .story p.body { margin-top: 1.1rem; font-size: 1.12rem; line-height: 1.7; color: var(--ink-dim); }
-    .story p.body + p.body { margin-top: 0.8rem; }
-    .story .aside { font-size: 0.98rem; font-style: italic; color: var(--ink-faint); }
-    .flinks { margin-top: 1.4rem; display: flex; gap: 1.4rem; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; }
-    .flinks a { color: var(--c); border-bottom: 1px solid transparent; transition: border-color 0.2s ease; }
-    .flinks a:hover { border-bottom-color: var(--c); }
-    .also { padding-top: 2.6rem; border-top: 1px solid var(--line); }
-    .also ul { list-style: none; margin-top: 0.9rem; }
-    .also li a { display: grid; grid-template-columns: 7rem 1fr auto; gap: 1rem; align-items: baseline; padding: 0.65rem 0; border-bottom: 1px solid var(--line); }
-    .also .t { font-size: 1.08rem; color: var(--ink); }
-    .also .d { font-size: 1.02rem; color: var(--ink-faint); }
-    .also .ar { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-faint); }
-    .also li a:hover .d { color: var(--ink-dim); }
+    .case { padding: 3.4rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: 1rem; }
+    .case-head { display: grid; grid-template-columns: 5.5rem 1fr auto; align-items: center; gap: 1.2rem; }
+    .case-num { font-family: var(--neon); font-size: 3.4rem; line-height: 1; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--c) 70%, transparent); text-shadow: 0 0 18px color-mix(in srgb, var(--c) 25%, transparent); }
+    .case-head .sign-name { font-size: 2.1rem; }
+    .case-head .what { margin-top: 0.3rem; font-style: italic; font-size: 1.08rem; color: var(--ink-faint); }
+    .flinks { display: flex; gap: 1.2rem; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .flinks a { padding: 0.35rem 0.6rem; border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); border-radius: 4px; color: var(--c); transition: background 0.2s ease; }
+    .flinks a:hover { background: color-mix(in srgb, var(--c) 12%, transparent); }
+
+    .case-body { margin-top: 2.2rem; display: grid; grid-template-columns: 1fr 1.25fr; gap: 2.8rem; align-items: start; }
+    .field + .field { margin-top: 1.6rem; }
+    .field .label { color: var(--c); opacity: 0.85; }
+    .field p { margin-top: 0.5rem; font-size: 1.08rem; line-height: 1.72; color: var(--ink-dim); }
+    .field .aside { font-size: 0.96rem; font-style: italic; color: var(--ink-faint); }
+
+    /* The screenshot in a browser window, address bar and all */
+    .browser { display: block; overflow: hidden; border-radius: 8px; border: 1px solid var(--line); background: #0f1224; box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.8), 0 0 50px -24px var(--c); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .browser:hover { transform: translateY(-3px); box-shadow: 0 30px 70px -24px rgba(0, 0, 0, 0.8), 0 0 60px -16px var(--c); }
+    .bar { display: flex; align-items: center; gap: 0.45rem; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); }
+    .bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(243, 236, 226, 0.16); }
+    .bar i:first-child { background: var(--c); box-shadow: 0 0 6px var(--c); }
+    .bar span { flex: 1; min-width: 0; margin-left: 0.6rem; padding: 0.2rem 0.7rem; border-radius: 4px; background: rgba(255, 255, 255, 0.04); font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .browser .view { aspect-ratio: 16 / 10; overflow: hidden; }
+    .browser img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .delphi .browser img { filter: brightness(0.8) contrast(0.95); transition: filter 0.3s ease; }
+    .delphi .browser:hover img { filter: none; }
+
+    /* Also built: a directory listing */
+    .also { margin-top: 3.4rem; }
+    .term { margin-top: 1rem; padding: 1.3rem 1.4rem; border: 1px solid var(--line); border-radius: 8px; background: rgba(10, 12, 26, 0.55); font-family: var(--mono); font-size: 0.85rem; color: var(--ink-dim); }
+    .term .ps { color: var(--teal); }
+    .term ul { list-style: none; margin-top: 0.8rem; }
+    .term li a { display: grid; grid-template-columns: 1.4rem 8rem 1fr; gap: 0.6rem; padding: 0.35rem 0; color: var(--ink-dim); }
+    .term .arr { color: var(--ink-faint); }
+    .term .nm { color: var(--amber); transition: color 0.2s ease, text-shadow 0.2s ease; }
+    .term .d { font-family: var(--read); font-size: 1rem; color: var(--ink-faint); }
+    .term li a:hover .nm { color: #fff1dc; text-shadow: 0 0 8px var(--amber); }
+    .term li a:hover .d { color: var(--ink-dim); }
     .contact { margin-top: 3rem; display: flex; flex-wrap: wrap; gap: 1.8rem; }
     .contact a:hover { color: var(--ink); }
-    @media (max-width: 860px) { .build { grid-template-columns: 1fr; gap: 1.4rem; padding: 2.4rem 0; } }
-    @media (max-width: 600px) {
-      .page { padding: 1.6rem 1rem 1rem; }
-      .intro h1 { font-size: 2rem; } .story .sign-name { font-size: 1.8rem; }
-      .also li a { grid-template-columns: 1fr auto; } .also .d { grid-column: 1 / -1; grid-row: 2; }
+
+    @media (max-width: 760px) {
+      .page { padding: 1.4rem 1rem 1rem; }
+      .intro { grid-template-columns: 1fr; } .intro h1 { font-size: 2rem; }
+      .index { text-align: left; }
+      .case { padding: 2.6rem 0; }
+      .case-head { grid-template-columns: 3.4rem 1fr; } .case-num { font-size: 2.4rem; }
+      .case-head .sign-name { font-size: 1.8rem; }
+      .case-head .flinks { grid-column: 1 / -1; }
+      .case-body { grid-template-columns: 1fr; gap: 1.6rem; margin-top: 1.6rem; }
+      .browser { order: -1; }
+      .term { padding: 1.1rem 1rem; }
+      .term li a { grid-template-columns: 1.2rem 1fr; } .term .d { grid-column: 2; }
     }
   </style>
 </head>
@@ -70,56 +99,111 @@
   <main class="page">
 
     <div class="intro">
-      <h1 class="title-sign">Selected builds</h1>
-      <p>Three things I made to turn complicated information into something anyone can follow.</p>
+      <div>
+        <h1 class="title-sign">Selected builds</h1>
+        <p>Three things I made to turn complicated information into something anyone can follow.</p>
+      </div>
+      <nav class="index" aria-label="Builds">
+        <div class="build delphi"><b>01</b><a href="#delphi">Delphi</a></div>
+        <div class="build henry"><b>02</b><a href="#henry">Henry</a></div>
+        <div class="build cherry"><b>03</b><a href="#cherry">Cherry</a></div>
+      </nav>
     </div>
 
-    <article class="build delphi" id="delphi">
-      <a class="shot" href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener"><img src="images/builds/delphi.jpg?v=20261009" alt="Delphi, live" loading="lazy" width="960" height="600"></a>
-      <div class="story">
-        <span class="num">01</span>
-        <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M12 2.5v19M19 6v13"/><rect x="3.5" y="10" width="3" height="6" rx=".5"/><rect x="10.5" y="5.5" width="3" height="9" rx=".5"/><rect x="17.5" y="8" width="3" height="7" rx=".5"/></svg>Delphi</h2>
-        <p class="what">a knowledge base for the stocks people actually trade</p>
-        <p class="body">I wanted to understand the companies retail investors trade most. Robinhood&rsquo;s AI-written summaries told me what happened, but not why it mattered. The clearest explanations I&rsquo;d ever gotten came from a few people I know who can talk about a company like it&rsquo;s someone they know.</p>
-        <p class="body">Delphi is an extrapolation of those conversations. Pick any of the top stocks and see the market dynamics, the open questions, and what the company means for the world. Each one also gets a buy, hold, or sell view based on its 12-month forward guidance.</p>
-        <p class="body aside">The ratings are my opinion, not investment advice.</p>
+    <article class="build case delphi" id="delphi">
+      <div class="case-head">
+        <span class="case-num" aria-hidden="true">01</span>
+        <div>
+          <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M12 2.5v19M19 6v13"/><rect x="3.5" y="10" width="3" height="6" rx=".5"/><rect x="10.5" y="5.5" width="3" height="9" rx=".5"/><rect x="17.5" y="8" width="3" height="7" rx=".5"/></svg>Delphi</h2>
+          <p class="what">a knowledge base for the stocks people actually trade</p>
+        </div>
         <p class="flinks"><a href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener">live &#8599;</a></p>
       </div>
-    </article>
-
-    <article class="build henry" id="henry">
-      <a class="shot" href="https://henry-ten.vercel.app" target="_blank" rel="noopener"><img src="images/builds/henry.jpg?v=20261009" alt="Henry, live" loading="lazy" width="960" height="600"></a>
-      <div class="story">
-        <span class="num">02</span>
-        <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="11" rx="1.5"/><path d="M9 9V6.5h6V9M3 13.5h18M11 12.5v2.5h2v-2.5"/></svg>Henry</h2>
-        <p class="what">the portal Amazon&rsquo;s biggest sellers deserve</p>
-        <p class="body">A sample of what the world could look like if Amazon&rsquo;s enterprise customers had the perfect portal. At Amazon I worked with the largest businesses selling on the platform, and I was surprised there was no one-stop shop that simply answered their questions.</p>
-        <p class="body">Henry is that shop. It handles everyday P&amp;L tasks, maps the competitive landscape including pricing, shows where margin goes, and gives instant supply chain help.</p>
-        <p class="flinks"><a href="https://henry-ten.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/henry" target="_blank" rel="noopener">code &#8599;</a></p>
+      <div class="case-body">
+        <div>
+          <div class="field">
+            <span class="label">Why I made it</span>
+            <p>I wanted to understand the companies retail investors trade most. Robinhood&rsquo;s AI-written summaries told me what happened, but not why it mattered. The clearest explanations I&rsquo;d ever gotten came from a few people I know who can talk about a company like it&rsquo;s someone they know.</p>
+          </div>
+          <div class="field">
+            <span class="label">What it does</span>
+            <p>Delphi is an extrapolation of those conversations. Pick any of the top stocks and see the market dynamics, the open questions, and what the company means for the world. Each one also gets a buy, hold, or sell view based on its 12-month forward guidance.</p>
+            <p class="aside">The ratings are my opinion, not investment advice.</p>
+          </div>
+        </div>
+        <a class="browser" href="https://delphi-stocks.vercel.app" target="_blank" rel="noopener">
+          <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>delphi-stocks.vercel.app</span></div>
+          <div class="view"><img src="images/builds/delphi.jpg?v=20261009" alt="Delphi, live" loading="lazy" width="960" height="600"></div>
+        </a>
       </div>
     </article>
 
-    <article class="build cherry" id="cherry">
-      <a class="shot" href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener"><img src="images/builds/cherry.jpg?v=20261009" alt="Cherry, live" loading="lazy" width="960" height="600"></a>
-      <div class="story">
-        <span class="num">03</span>
-        <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="17" r="3.6"/><circle cx="16.5" cy="18" r="3.6"/><path d="M7 13.4C8 9 10.5 5.5 14 3.5M16.5 14.4C16 10 15 6.5 14 3.5M14 3.5c2.5-1 5.5-.4 6.5 1.6-2.6.9-5 .4-6.5-1.6z"/></svg>Cherry</h2>
-        <p class="what">customer feedback, routed to the team that should hear it</p>
-        <p class="body">An exercise in understanding the full feedback loop, from what a customer says to the internal team that acts on it. I pictured a company like Anthropic, with several products (Claude, Claude Code, Claude Design, Cowork), feedback arriving from everywhere, and a system that has to triage each piece to the right team.</p>
-        <p class="body">The fun challenge was writing the evals: what counts as a credible piece of feedback, and which team it belongs to.</p>
+    <article class="build case henry" id="henry">
+      <div class="case-head">
+        <span class="case-num" aria-hidden="true">02</span>
+        <div>
+          <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="11" rx="1.5"/><path d="M9 9V6.5h6V9M3 13.5h18M11 12.5v2.5h2v-2.5"/></svg>Henry</h2>
+          <p class="what">the portal Amazon&rsquo;s biggest sellers deserve</p>
+        </div>
+        <p class="flinks"><a href="https://henry-ten.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/henry" target="_blank" rel="noopener">code &#8599;</a></p>
+      </div>
+      <div class="case-body">
+        <div>
+          <div class="field">
+            <span class="label">Why I made it</span>
+            <p>A sample of what the world could look like if Amazon&rsquo;s enterprise customers had the perfect portal. At Amazon I worked with the largest businesses selling on the platform, and I was surprised there was no one-stop shop that simply answered their questions.</p>
+          </div>
+          <div class="field">
+            <span class="label">What it does</span>
+            <p>Henry is that shop. It handles everyday P&amp;L tasks, maps the competitive landscape including pricing, shows where margin goes, and gives instant supply chain help.</p>
+          </div>
+        </div>
+        <a class="browser" href="https://henry-ten.vercel.app" target="_blank" rel="noopener">
+          <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>henry-ten.vercel.app</span></div>
+          <div class="view"><img src="images/builds/henry.jpg?v=20261009" alt="Henry, live" loading="lazy" width="960" height="600"></div>
+        </a>
+      </div>
+    </article>
+
+    <article class="build case cherry" id="cherry">
+      <div class="case-head">
+        <span class="case-num" aria-hidden="true">03</span>
+        <div>
+          <h2 class="sign-name"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="17" r="3.6"/><circle cx="16.5" cy="18" r="3.6"/><path d="M7 13.4C8 9 10.5 5.5 14 3.5M16.5 14.4C16 10 15 6.5 14 3.5M14 3.5c2.5-1 5.5-.4 6.5 1.6-2.6.9-5 .4-6.5-1.6z"/></svg>Cherry</h2>
+          <p class="what">customer feedback, routed to the team that should hear it</p>
+        </div>
         <p class="flinks"><a href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">live &#8599;</a><a href="https://github.com/stephiesworld/cherry" target="_blank" rel="noopener">code &#8599;</a></p>
+      </div>
+      <div class="case-body">
+        <div>
+          <div class="field">
+            <span class="label">Why I made it</span>
+            <p>An exercise in understanding the full feedback loop, from what a customer says to the internal team that acts on it. I pictured a company like Anthropic, with several products (Claude, Claude Code, Claude Design, Cowork), feedback arriving from everywhere, and a system that has to triage each piece to the right team.</p>
+          </div>
+          <div class="field">
+            <span class="label">What it does</span>
+            <p>The fun challenge was writing the evals: what counts as a credible piece of feedback, and which team it belongs to.</p>
+          </div>
+        </div>
+        <a class="browser" href="https://cherry-topaz.vercel.app" target="_blank" rel="noopener">
+          <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>cherry-topaz.vercel.app</span></div>
+          <div class="view"><img src="images/builds/cherry.jpg?v=20261009" alt="Cherry, live" loading="lazy" width="960" height="600"></div>
+        </a>
       </div>
     </article>
 
     <section class="also" aria-labelledby="also-h">
-      <h2  id="also-h">Also built</h2>
-      <ul>
-        <li><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><span class="t">Stanley</span><span class="d">A calendar agent you talk to over Telegram.</span><span class="ar">&#8599;</span></a></li>
-        <li><a href="https://getofframp.vercel.app" target="_blank" rel="noopener"><span class="t">offramp</span><span class="d">Personal finance, debriefed.</span><span class="ar">&#8599;</span></a></li>
-        <li><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener"><span class="t">Loop</span><span class="d">The org-wide feedback loop, as a product.</span><span class="ar">&#8599;</span></a></li>
-        <li><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener"><span class="t">Portraits</span><span class="d">Live data storytelling.</span><span class="ar">&#8599;</span></a></li>
-        <li><a href="https://eluna.space" target="_blank" rel="noopener"><span class="t">Eluna</span><span class="d">Memory architecture.</span><span class="ar">&#8599;</span></a></li>
-      </ul>
+      <h2 class="label" id="also-h">Also built</h2>
+      <div class="term">
+        <span class="ps">~/builds $</span> ls --also
+        <ul>
+          <li><a href="https://stanley-butler.vercel.app" target="_blank" rel="noopener"><span class="arr">&#8599;</span><span class="nm">Stanley</span><span class="d">A calendar agent you talk to over Telegram.</span></a></li>
+          <li><a href="https://getofframp.vercel.app" target="_blank" rel="noopener"><span class="arr">&#8599;</span><span class="nm">offramp</span><span class="d">Personal finance, debriefed.</span></a></li>
+          <li><a href="https://loop-vox.vercel.app" target="_blank" rel="noopener"><span class="arr">&#8599;</span><span class="nm">Loop</span><span class="d">The org-wide feedback loop, as a product.</span></a></li>
+          <li><a href="https://portraits-mu.vercel.app" target="_blank" rel="noopener"><span class="arr">&#8599;</span><span class="nm">Portraits</span><span class="d">Live data storytelling.</span></a></li>
+          <li><a href="https://eluna.space" target="_blank" rel="noopener"><span class="arr">&#8599;</span><span class="nm">Eluna</span><span class="d">Memory architecture.</span></a></li>
+        </ul>
+      </div>
     </section>
 
     <p class="contact label">
