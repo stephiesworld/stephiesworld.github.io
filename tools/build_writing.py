@@ -50,6 +50,7 @@ RETIRED = {
     'customer-signal-into-product': 'why-am-i-still-answering-this',
     'enterprise-ai-opportunity': 'why-am-i-still-answering-this',
     'million-decisions': None,
+    'who-answers-the-phone': None,
 }
 
 # Reference papers live in writing/ as standalone pages and close out the writing list.
