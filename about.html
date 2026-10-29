@@ -22,7 +22,7 @@
     body { font-weight: 400; }
     body { overflow-y: auto; overflow-x: hidden; background-attachment: fixed; }  /* sky stays put, no seam where it would tile */
     /* Readable in daylight, like the builds page */
-    :root { --cream-dim: rgba(239, 228, 214, 0.82); --cream-faint: rgba(239, 228, 214, 0.62); }
+    :root { --cream-dim: rgba(239, 228, 214, 0.84); --cream-faint: rgba(239, 228, 214, 0.6); }
     .fx-scan { opacity: 0.15; }
     .fx-grain { opacity: 0.06; }
     .fx-rain { position: fixed; }
@@ -33,54 +33,65 @@
       padding: 1.8rem 2.4rem 1.2rem;
       background: linear-gradient(to bottom, rgba(22, 26, 46, 0.95), transparent);
     }
-    .top .nav { display: flex; gap: 1.6rem; }
 
     .page {
       position: relative; z-index: 3;
-      max-width: 980px; margin: 0 auto; padding: 9rem 2.4rem 4rem;
-      display: grid; grid-template-columns: 200px 1fr; gap: 4rem;
+      max-width: 1060px; margin: 0 auto; padding: 9rem 2.4rem 5rem;
+      display: grid; grid-template-columns: 340px 1fr; gap: 4.5rem;
     }
 
-    /* ─── Sticky index ─── */
-    .toc { position: sticky; top: 9rem; align-self: start; opacity: 0; animation: appear 1.2s ease 0.3s forwards; }
-    /* Your name in the margin, as the same amber tube sign as the top-left */
-    .toc .brand {
-      font-family: 'Tilt Neon', var(--mono); font-style: normal; font-weight: 400;
-      font-size: 1.05rem; letter-spacing: 0.2em; text-transform: uppercase; color: #fff1dc;
-      text-shadow: 0 0 2px #fff, 0 0 5px #ffc27a, 0 0 12px #ffb15c, 0 0 26px rgba(255, 177, 92, 0.55);
+    /* ─── Resident card: you at a glance, lit from inside, stays put while you read ─── */
+    .card {
+      position: sticky; top: 8rem; align-self: start;
+      padding: 1.6rem 1.5rem 1.4rem; border: 1px solid rgba(111, 207, 192, 0.28); border-radius: 10px;
+      background: linear-gradient(160deg, rgba(40, 46, 80, 0.55), rgba(20, 23, 41, 0.75));
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7), 0 0 40px -20px rgba(111, 207, 192, 0.5);
+      opacity: 0; animation: appear 1.2s ease 0.3s forwards;
+    }
+    .card-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.58rem; }
+    /* Your name, as the same amber tube sign as the top-left */
+    .card h1 {
+      margin-top: 1.4rem; font-family: 'Tilt Neon', var(--mono); font-weight: 400;
+      font-size: 2rem; letter-spacing: 0.2em; text-transform: uppercase; color: #fff1dc;
+      text-shadow: 0 0 2px #fff, 0 0 6px #ffc27a, 0 0 16px #ffb15c, 0 0 34px rgba(255, 177, 92, 0.5);
       animation: sign-on 2.2s steps(1, end) 0.8s both;
     }
-    .toc .tagline { margin-top: 0.5rem; font-size: 0.64rem; }
-    .toc ol { list-style: none; margin-top: 2.4rem; }
-    .toc a {
-      display: flex; gap: 0.8rem; align-items: baseline; padding: 0.35rem 0;
-      font-size: 0.64rem; color: var(--cream-faint); transition: color 0.3s ease;
-    }
-    .toc a:hover, .toc a.on { color: var(--cream); }
+    .card .role { margin-top: 0.4rem; font-family: var(--read); font-style: italic; font-size: 1.02rem; color: var(--cream-dim); }
+    .card dl { margin-top: 1.4rem; border-top: 1px dashed rgba(239, 228, 214, 0.16); }
+    .card dl div { display: grid; grid-template-columns: 88px 1fr; gap: 0.8rem; padding: 0.7rem 0; border-bottom: 1px dashed rgba(239, 228, 214, 0.1); }
+    .card dt { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); padding-top: 0.15rem; }
+    .card dd { font-family: var(--read); font-size: 0.98rem; line-height: 1.45; color: var(--cream); }
+    .card dd a { border-bottom: 1px solid rgba(239, 228, 214, 0.2); transition: border-color 0.3s ease; }
+    .card dd a:hover { border-color: var(--teal); }
+    /* Each build's dot is its satellite colour on the homepage */
+    .dot { display: inline-block; width: 7px; height: 7px; margin-right: 0.45rem; border-radius: 50%; vertical-align: 0.08em; background: currentColor; box-shadow: 0 0 8px currentColor; }
+    .dot.delphi { color: #8dffa0; }
+    .dot.cherry { color: #ff5a78; }
+    .dot.henry { color: #7fb2ff; }
+    .status { margin-top: 1.2rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.6rem; color: var(--teal); }
+    .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 10px var(--teal); animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 50% { opacity: 0.35; } }
+    .barcode { margin-top: 1.2rem; height: 22px; opacity: 0.25; background: repeating-linear-gradient(90deg, var(--cream) 0 1px, transparent 1px 3px, var(--cream) 3px 5px, transparent 5px 6px, var(--cream) 6px 7px, transparent 7px 10px); }
 
-    /* ─── Sections ─── */
-    section { padding-bottom: 5rem; scroll-margin-top: 8rem; opacity: 0; animation: appear 1.2s ease forwards; }
-    section:nth-of-type(1) { animation-delay: 0.5s; }
-    section:nth-of-type(2) { animation-delay: 0.65s; }
-    section:nth-of-type(n+3) { animation-delay: 0.8s; }
-
-    .sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.8rem; }
-    .sec-head .num { font-size: 0.64rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); }
-    .sec-head h2 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.9rem; color: var(--cream); }
-    .sec-head::after { content: ''; flex: 1; height: 1px; background: var(--line); align-self: center; }
-
-    .prose p { font-family: var(--read); font-size: 1.12rem; line-height: 1.75; color: var(--cream-dim); max-width: 36em; }
-    .prose p + p { margin-top: 1.1rem; }
+    /* ─── Prose ─── */
+    main { opacity: 0; animation: appear 1.2s ease 0.6s forwards; }
+    .kicker { font-size: 0.62rem; color: var(--teal); }
+    .prose p { font-family: var(--read); font-size: 1.14rem; line-height: 1.8; color: var(--cream-dim); max-width: 34em; margin-top: 1.3rem; }
+    .prose .big { margin-top: 1rem; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.35; color: var(--cream); max-width: 22em; }
     .prose em { color: var(--cream); }
     .prose a { color: var(--cream); border-bottom: 1px solid var(--neon-soft); transition: border-color 0.3s ease, text-shadow 0.3s ease; }
     .prose a:hover { border-color: var(--neon); text-shadow: 0 0 10px var(--neon-faint); }
-
-    .coda { margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line); font-family: var(--read); font-style: italic; font-size: 1.15rem; line-height: 1.6; color: var(--cream-dim); }
-    .more { display: inline-block; margin-top: 1.4rem; font-size: 0.64rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
+    .prose .pull {
+      margin: 2.4rem 0; padding-left: 1.4rem; max-width: 28em;
+      border-left: 2px solid var(--neon); box-shadow: -8px 0 18px -14px var(--neon);
+      font-style: italic; font-size: 1.35rem; line-height: 1.5; color: var(--cream);
+    }
+    .links { margin-top: 1.6rem; display: flex; gap: 1.6rem; flex-wrap: wrap; }
+    .more { font-size: 0.64rem; color: var(--neon); text-shadow: 0 0 8px var(--neon-soft); transition: letter-spacing 0.3s ease; }
     .more:hover { letter-spacing: 0.22em; }
 
     /* Guestbook: a teal sign and a prompt line, like the homepage; notes are mailed to me through FormSubmit */
-    .guestbook { margin-top: 3.4rem; max-width: 36em; }
+    .guestbook { margin-top: 3.4rem; max-width: 34em; padding: 1.3rem 1.4rem; border: 1px solid rgba(111, 207, 192, 0.22); border-radius: 8px; background: rgba(20, 23, 41, 0.45); }
     .gb-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
     .gb-sign {
       font-family: 'Tilt Neon', var(--mono); font-size: 0.86rem; letter-spacing: 0.2em; text-transform: uppercase; color: #dffff9;
@@ -88,10 +99,9 @@
       animation: sign-on 2s steps(1, end) 1.2s both;
     }
     .gb-note { font-size: 0.6rem; }
-    .gb-lede { margin: 0.7rem 0 0.9rem; font-family: var(--read); font-style: italic; font-size: 1.1rem; color: var(--cream-dim); }
     .gb-line {
-      display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 0;
-      border-bottom: 1px solid rgba(111, 207, 192, 0.22); transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex; align-items: center; gap: 0.7rem; margin-top: 0.7rem; padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(111, 207, 192, 0.3); transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .gb-line:focus-within { border-color: rgba(111, 207, 192, 0.6); box-shadow: 0 10px 18px -14px rgba(111, 207, 192, 0.7); }
     .gb-ps { font-family: var(--mono); font-size: 0.9rem; color: var(--teal); text-shadow: 0 0 8px var(--teal-soft); }
@@ -111,30 +121,17 @@
     .gb-status { margin-top: 0.7rem; min-height: 1em; font-size: 0.64rem; color: var(--teal); }
     .gb-status.err { color: var(--neon); }
     .gb-status a { border-bottom: 1px solid currentColor; }
-    @media (prefers-reduced-motion: reduce) { .gb-sign { animation: none; } }
     .gb-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
-    /* Projects */
-    .proj { padding: 1.4rem 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto; gap: 0.3rem 1.5rem; }
-    .proj:last-child { border-bottom: 1px solid var(--line); }
-    .proj h3 { font-family: var(--read); font-weight: 400; font-size: 1.3rem; color: var(--cream); }
-    .proj .yr { font-size: 0.64rem; align-self: baseline; }
-    .proj .status { grid-column: 1 / -1; font-size: 0.64rem; color: var(--neon); }
-    .proj p { grid-column: 1 / -1; font-family: var(--read); font-size: 1.05rem; line-height: 1.7; color: var(--cream-dim); max-width: 36em; margin-top: 0.3rem; }
+    @media (prefers-reduced-motion: reduce) { .gb-sign, .card h1, .status i { animation: none; } }
 
-
-    .facts { margin-top: 1.6rem; display: grid; gap: 1rem; border-top: 1px solid var(--line); padding-top: 1.2rem; }
-    .facts dt { font-size: 0.64rem; color: var(--neon); }
-    .facts dd { margin-top: 0.35rem; font-size: 0.7rem; line-height: 1.8; color: var(--cream-dim); }
-
-    @media (max-width: 760px) {
+    @media (max-width: 860px) {
       .top { padding: 1.2rem 1rem 1rem; }
-      .top .nav { gap: 1rem; }
-      .page { grid-template-columns: 1fr; gap: 0; padding: 6rem 1rem 2rem; }
-      .toc { display: none; }
-      .toc ol { display: none; }
-      .sec-head h2 { font-size: 1.6rem; }
+      .page { grid-template-columns: 1fr; gap: 2.6rem; padding: 6.5rem 1rem 3rem; }
+      .card { position: static; }
       .prose p { font-size: 1.05rem; }
+      .prose .pull { font-size: 1.2rem; }
+      .guestbook { padding: 1.1rem 1rem; }
       .gb-line input { font-size: 16px; }
     }
   </style>
@@ -158,61 +155,52 @@
 
   <div class="page">
 
-    <aside class="toc">
-      <h1 class="brand">Stephie</h1>
+    <aside class="card" aria-label="At a glance">
+      <div class="card-top hud"><span>resident</span><span>NYC &middot; 40.71&deg;N</span></div>
+      <h1>Stephie</h1>
+      <p class="role">builder, systems thinker</p>
+      <dl>
+        <div><dt>Based in</dt><dd><a href="nyc.html">New York</a></dd></div>
+        <div><dt>Also in</dt><dd><a href="paris.html">Paris</a> &middot; <a href="london.html">London</a> &middot; <a href="shanghai.html">Shanghai</a></dd></div>
+        <div><dt>Building</dt><dd><a href="builds.html#delphi"><span class="dot delphi"></span>Delphi</a><br><a href="builds.html#cherry"><span class="dot cherry"></span>Cherry</a><br><a href="builds.html#henry"><span class="dot henry"></span>Henry</a></dd></div>
+        <div><dt>Writing</dt><dd><em>29</em>, a novel</dd></div>
+        <div><dt>Loves</dt><dd>design, philosophy, music, cities</dd></div>
+      </dl>
+      <p class="status hud"><i></i>always up for coffee</p>
+      <div class="barcode" aria-hidden="true"></div>
     </aside>
 
-    <main>
+    <main class="prose">
+      <p class="kicker hud">about</p>
+      <p class="big">I&rsquo;m Stephie, a builder who has worked across a number of industries, and I get excited about systems thinking.</p>
+      <p>I&rsquo;ve helped people save money and plan for the future, created body wash and razors across international markets, founded a company, and helped big brands grow on Amazon.</p>
+      <p>In my free time, I build things that help people easily find the information they need, particularly around the markets (<a href="builds.html#delphi">Delphi</a>), product feedback (<a href="builds.html#cherry">Cherry</a>), and white-glove e-commerce sales (<a href="builds.html#henry">Henry</a>).</p>
+      <p class="pull">I&rsquo;m also writing <em>29</em>, a novel about an alien on Wall Street who slowly falls in love with the ordinary business of being human.</p>
+      <p>I love design, philosophy, music, and cities. I&rsquo;m based in <a href="nyc.html">New York</a>, but sometimes you&rsquo;ll find me in <a href="paris.html">Paris</a>, <a href="london.html">London</a>, or <a href="shanghai.html">Shanghai</a>.</p>
+      <p>Say hi if you want to talk about building with agents, know a company I should see, have a song for me, or want to hit on the court. I&rsquo;m always up for coffee.</p>
+      <div class="links hud"><a class="more" href="builds.html">builds &rarr;</a><a class="more" href="writing.html">writing &rarr;</a><a class="more" href="mailto:stephiesuniverse@gmail.com">email &#8599;</a><a class="more" href="https://github.com/stephiesworld" target="_blank" rel="noopener">github &#8599;</a></div>
 
-      <section id="about">
-        <div class="sec-head"><h2 class="title-sign teal" style="font-size: 1.5rem;">About</h2></div>
-        <div class="prose">
-          <p>I&rsquo;m Stephie, a builder who has worked across a number of industries, and I get excited about systems thinking.</p>
-          <p>I&rsquo;ve helped people save money and plan for the future, created body wash and razors across international markets, founded a company, and helped big brands grow on Amazon.</p>
-          <p>In my free time, I build things that help people easily find the information they need, particularly around the markets (<a href="builds.html#delphi">Delphi</a>), product feedback (<a href="builds.html#cherry">Cherry</a>), and white-glove e-commerce sales (<a href="builds.html#henry">Henry</a>).</p>
-          <p>I&rsquo;m also writing <em>29</em>, a novel about an alien on Wall Street who slowly falls in love with the ordinary business of being human.</p>
-          <p>I love design, philosophy, music, and cities. I&rsquo;m based in <a href="nyc.html">New York</a>, but sometimes you&rsquo;ll find me in <a href="paris.html">Paris</a>, <a href="london.html">London</a>, or <a href="shanghai.html">Shanghai</a>.</p>
+      <form class="guestbook" id="guestbook" action="https://formsubmit.co/stephiesuniverse@gmail.com" method="POST">
+        <div class="gb-head"><span class="gb-sign">Guestbook</span><span class="gb-note hud">passing through? leave a note</span></div>
+        <div class="gb-line">
+          <span class="gb-ps" aria-hidden="true">&gt;</span>
+          <label for="gb-msg" class="sr-only">Message</label>
+          <input type="text" id="gb-msg" name="message" placeholder="type a note, press enter" maxlength="500" autocomplete="off" required>
+          <button type="submit">&crarr; send</button>
         </div>
-        <p class="coda">Say hi if you want to talk about building with agents, know a company I should see, have a song for me, or want to hit on the court. I&rsquo;m always up for coffee.</p>
-        <a class="more hud" href="builds.html">builds &rarr;</a> &nbsp;&nbsp; <a class="more hud" href="writing.html">writing &rarr;</a> &nbsp;&nbsp; <a class="more hud" href="mailto:stephiesuniverse@gmail.com">email &#8599;</a> &nbsp;&nbsp; <a class="more hud" href="https://github.com/stephiesworld" target="_blank" rel="noopener">github &#8599;</a>
-
-        <form class="guestbook" id="guestbook" action="https://formsubmit.co/stephiesuniverse@gmail.com" method="POST">
-          <div class="gb-head"><span class="gb-sign">Guestbook</span><span class="gb-note hud">it comes straight to me</span></div>
-          <p class="gb-lede">Passing through? Leave a note.</p>
-          <div class="gb-line">
-            <span class="gb-ps" aria-hidden="true">&gt;</span>
-            <label for="gb-msg" class="sr-only">Message</label>
-            <input type="text" id="gb-msg" name="message" placeholder="type a note, press enter" maxlength="500" autocomplete="off" required>
-            <button type="submit">&crarr; send</button>
-          </div>
-          <input type="text" name="_honey" class="gb-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <input type="hidden" name="_subject" value="A note in your guestbook">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" value="https://stephiesworld.com/about.html#guestbook">
-          <p class="gb-status hud" aria-live="polite"></p>
-        </form>
-      </section>
-
-
-
-
-
+        <input type="text" name="_honey" class="gb-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="_subject" value="A note in your guestbook">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://stephiesworld.com/about.html#guestbook">
+        <p class="gb-status hud" aria-live="polite"></p>
+      </form>
     </main>
+
   </div>
 
   <script src="rain.js?v=20261008"></script>
   <script>
-    startRain(document.getElementById('rain'), 0.5);
-
-    // Light up the section you're reading
-    var links = document.querySelectorAll('#toc a');
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
+    startRain(document.getElementById('rain'), 0.4);
 
     // Guestbook: send in place; without JS the form still posts and comes back here
     var gb = document.getElementById('guestbook');
@@ -223,10 +211,10 @@
       if (!text) return;
       var done = function () {
         input.value = ''; input.placeholder = 'another?';
-        status.className = 'gb-status hud'; status.textContent = '\u2713 received. thank you.';
+        status.className = 'gb-status hud'; status.textContent = '✓ received. thank you.';
       };
       if (gb._honey.value) return done();
-      btn.disabled = true; status.className = 'gb-status hud'; status.textContent = 'sending\u2026';
+      btn.disabled = true; status.className = 'gb-status hud'; status.textContent = 'sending…';
       fetch(gb.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
