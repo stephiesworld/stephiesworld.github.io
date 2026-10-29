@@ -33,8 +33,8 @@
     header .hud { margin-top: 0.8rem; font-size: 0.64rem; }
 
     /* The shelf: books stand on a lit ledge, full colour, like a shop window at night */
-    .shelves { position: relative; z-index: 3; max-width: 940px; margin: 2.6rem auto 7rem; padding: 0 2.4rem; }
-    .shelf { position: relative; display: grid; grid-template-columns: repeat(var(--per), 1fr); gap: 0 1.6rem; margin-bottom: 4.2rem; }
+    .shelves { position: relative; z-index: 3; max-width: 1000px; margin: 2.6rem auto 7rem; padding: 0 2.4rem; }
+    .shelf { position: relative; display: flex; justify-content: center; align-items: flex-start; gap: 0 2.2rem; margin-bottom: 4.6rem; }
     .shelf::before {
       content: ''; position: absolute; left: -1.2rem; right: -1.2rem; top: var(--stand); height: 2px; border-radius: 2px;
       background: linear-gradient(90deg, transparent, var(--amber) 12%, #ffe0b8 50%, var(--amber) 88%, transparent);
@@ -46,7 +46,7 @@
       background: radial-gradient(ellipse 60% 100% at 50% 0%, rgba(255, 177, 92, 0.13), transparent 70%);
     }
 
-    .book { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; color: inherit; opacity: 0; animation: rise 0.9s ease forwards; }
+    .book { flex: 0 0 var(--col); min-width: 0; display: flex; flex-direction: column; align-items: center; color: inherit; opacity: 0; animation: rise 0.9s ease forwards; }
     .stand { height: var(--stand); width: 100%; display: flex; align-items: flex-end; justify-content: center; }
     .tome {
       position: relative; width: var(--w); border-radius: 1px 3px 3px 1px;
@@ -65,17 +65,20 @@
     }
     .tome::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07); pointer-events: none; }
 
-    .book:hover .tome, .book:focus-visible .tome, .book.active .tome {
+    .book:hover .tome {
       transform: translateY(-12px) rotate(-1.2deg);
       box-shadow: 0 0 0 1px rgba(255, 177, 92, 0.5), 0 0 28px rgba(255, 177, 92, 0.35), 0 22px 40px rgba(0, 0, 0, 0.6);
     }
-    .book:hover img, .book:focus-visible img, .book.active img { filter: none; }
-    .book:focus-visible { outline: none; }
+    .book:hover img { filter: none; }
 
-    .caption { margin-top: 1.5rem; text-align: center; max-width: 11rem; }
+    .caption { margin-top: 1.5rem; width: 100%; text-align: center; }
     .book-title { display: block; font-family: var(--serif); font-style: italic; font-size: 1rem; line-height: 1.3; color: var(--cream-dim); transition: color 0.3s ease, text-shadow 0.3s ease; }
     .book-author { display: block; margin-top: 0.45rem; font-size: 0.58rem; color: var(--cream-faint); }
-    .book:hover .book-title, .book.active .book-title { color: #fff1dc; text-shadow: 0 0 12px rgba(255, 177, 92, 0.45); }
+    .book:hover .book-title { color: #fff1dc; text-shadow: 0 0 12px rgba(255, 177, 92, 0.45); }
+
+    /* her words, right under the book: no clicking to read them */
+    .blurb { margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid rgba(255, 177, 92, 0.18); text-align: left; font-family: var(--read); font-size: 0.92rem; line-height: 1.6; color: var(--cream-faint); transition: color 0.3s ease; }
+    .book:hover .blurb { color: var(--cream-dim); }
 
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .book { animation: none; opacity: 1; } .tome { transition: none; } }
@@ -93,23 +96,6 @@
     .now-note a:hover { color: var(--cream); }
     .fav-label { position: relative; z-index: 3; text-align: center; margin: 4.5rem 0 0; }
 
-    /* Detail */
-    .sheet {
-      position: fixed; z-index: 30; left: 50%; bottom: 0; width: min(620px, 100%);
-      transform: translate(-50%, 100%); transition: transform 0.5s ease;
-      padding: 2.2rem 2.4rem 2.6rem;
-      background: linear-gradient(160deg, rgba(36, 41, 72, 0.94), rgba(20, 23, 41, 0.97));
-      border: 1px solid var(--line); border-top: 1px solid var(--neon-soft);
-      box-shadow: 0 -10px 50px rgba(255, 122, 146, 0.1);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    }
-    .sheet.open { transform: translate(-50%, 0); }
-    .sheet .k { font-size: 0.64rem; color: var(--neon); }
-    .sheet h2 { margin-top: 0.6rem; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.9rem; line-height: 1.15; color: var(--cream); }
-    .sheet .a { margin-top: 0.4rem; font-size: 0.64rem; }
-    .sheet p.d { margin-top: 1.2rem; font-family: var(--read); font-size: 1.08rem; line-height: 1.65; color: var(--cream-dim); }
-    .close { position: absolute; top: 0.9rem; right: 1rem; background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 0.8rem; color: var(--cream-faint); }
-    .close:hover { color: var(--cream); }
 
 
     @media (max-width: 760px) {
@@ -120,7 +106,6 @@
       .shelf { gap: 0 1.2rem; margin-bottom: 3.4rem; }
       .now { padding: 0 1rem; }
       .now li { flex-direction: column; gap: 0.1rem; }
-      .sheet { padding: 1.8rem 1.2rem 2.2rem; }
     }
   </style>
 </head>
@@ -150,13 +135,6 @@
   <div class="shelves" id="shelves"></div>
 
 
-  <aside class="sheet" id="sheet" aria-live="polite">
-    <button class="close" id="close" aria-label="Close">&times;</button>
-    <p class="k hud">favorite</p>
-    <h2 id="dTitle"></h2>
-    <p class="a hud" id="dAuthor"></p>
-    <p class="d" id="dDesc"></p>
-  </aside>
 
   <script src="rain.js?v=20261008"></script>
   <script>
@@ -184,40 +162,33 @@
     ];
 
     var shelves = document.getElementById('shelves');
-    var sheet = document.getElementById('sheet');
-
-    function show(b, el) {
-      document.querySelectorAll('.book').forEach(function (x) { x.classList.toggle('active', x === el); });
-      document.getElementById('dTitle').innerHTML = b.title;
-      document.getElementById('dAuthor').textContent = b.author;
-      document.getElementById('dDesc').innerHTML = b.desc;
-      document.getElementById('dDesc').style.display = b.desc ? '' : 'none';
-      sheet.classList.add('open');
-    }
-
     // Lay the books out a shelf at a time, so every row stands on its own lit ledge
     var layout = '';
     function build() {
       var w = window.innerWidth;
-      var per = w < 560 ? 2 : w < 980 ? 4 : 5;
-      var size = w < 560 ? [118, 196] : [132, 214];
-      var key = per + ':' + size[0];
+      var per = w < 700 ? 2 : w < 900 ? 3 : 4;
+      var cs = getComputedStyle(shelves);
+      var room = shelves.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      var gap = w <= 760 ? 19 : 35;
+      var col = Math.min(210, Math.floor((room - gap * (per - 1)) / per));
+      var size = w < 560 ? [118, 196, col] : [136, 220, col];
+      var key = per + ':' + col;
       if (key === layout) return;
       layout = key;
       shelves.innerHTML = '';
       for (var r = 0; r < books.length; r += per) {
         var shelf = document.createElement('div');
         shelf.className = 'shelf';
-        shelf.style.cssText = '--per:' + per + ';--w:' + size[0] + 'px;--stand:' + size[1] + 'px';
+        shelf.style.cssText = '--w:' + size[0] + 'px;--stand:' + size[1] + 'px;--col:' + size[2] + 'px';
         books.slice(r, r + per).forEach(function (b, j) {
           var i = r + j;
-          var el = document.createElement('button');
+          var el = document.createElement('article');
           el.className = 'book';
           el.style.animationDelay = (0.25 + i * 0.07) + 's';
           el.innerHTML =
-            '<span class="stand"><span class="tome"><img alt="" src="images/books/' + b.cover + '.jpg"></span></span>' +
-            '<span class="caption"><span class="book-title">' + b.title + '</span><span class="book-author hud">' + b.author + '</span></span>';
-          el.addEventListener('click', function () { show(b, el); });
+            '<span class="stand"><span class="tome"><img alt="' + b.title + ' cover" src="images/books/' + b.cover + '.jpg"></span></span>' +
+            '<span class="caption"><span class="book-title">' + b.title + '</span><span class="book-author hud">' + b.author + '</span>' +
+            (b.desc ? '<p class="blurb">' + b.desc + '</p>' : '') + '</span>';
           shelf.appendChild(el);
         });
         shelves.appendChild(shelf);
@@ -226,12 +197,6 @@
     build();
     window.addEventListener('resize', build);
 
-    function close() {
-      sheet.classList.remove('open');
-      document.querySelectorAll('.book').forEach(function (x) { x.classList.remove('active'); });
-    }
-    document.getElementById('close').addEventListener('click', close);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
 
     startRain(document.getElementById('rain'), 0.5);
   </script>
